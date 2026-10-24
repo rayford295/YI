@@ -34,3 +34,11 @@ export function greatCircle(a: LatLng, b: LatLng, n = 64): LatLng[] {
   }
   return pts;
 }
+
+/** Point at `progress` (fraction of the whole line, wrapped into [0, 1)) along a polyline. */
+export function pointAlong(line: LatLng[], progress: number): LatLng {
+  const f = (((progress % 1) + 1) % 1) * (line.length - 1);
+  const i = Math.floor(f), k = f - i;
+  const a = line[i], b = line[Math.min(i + 1, line.length - 1)];
+  return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+}

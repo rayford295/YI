@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { greatCircle, pacificLng } from './arc';
+import { greatCircle, pacificLng, pointAlong } from './arc';
 
 const SZ: [number, number] = [22.5431, 114.0579];
 const CS: [number, number] = [30.628, pacificLng(-96.3344)];
@@ -24,5 +24,17 @@ describe('greatCircle', () => {
   });
   it('bows north over the Pacific', () => {
     expect(Math.max(...pts.map((p) => p[0]))).toBeGreaterThan(45);
+  });
+});
+
+describe('pointAlong', () => {
+  const line: [number, number][] = [[0, 0], [0, 10], [0, 20]];
+  it('interpolates by fraction of the whole line', () => {
+    expect(pointAlong(line, 0.25)).toEqual([0, 5]);
+    expect(pointAlong(line, 0.75)).toEqual([0, 15]);
+  });
+  it('wraps progress outside [0, 1) instead of reading past the ends', () => {
+    expect(pointAlong(line, -0.25)).toEqual([0, 15]);
+    expect(pointAlong(line, 1.25)).toEqual([0, 5]);
   });
 });
