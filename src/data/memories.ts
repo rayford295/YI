@@ -76,6 +76,21 @@ export const memories: Memory[] = [
     ],
   },
   {
+    id: 'first-games',
+    date: '2026-10-23',
+    place: PLACES.collegeStation,
+    title: { zh: '第一次一起下五子棋、玩你画我猜', en: 'Our first Gomoku and Pictionary' },
+    text: {
+      zh: '同一天，我们在 Zoom 的白板上下了第一盘五子棋，紫色是你，绿色是我；又一起玩你画我猜，你画的小猫把我难住了。你在深圳的深夜，我在德州的白天，笑声是同一个频道。',
+      en: 'On the same day we played our first game of Gomoku on a Zoom whiteboard — purple for you, green for me — and then Pictionary, where your little cat drawing stumped me. Late night in Shenzhen, daytime in Texas, and our laughter on the same channel.',
+    },
+    media: [
+      { type: 'image', src: 'media/first-games-zoom.jpg', alt: { zh: 'Zoom 上一起玩游戏', en: 'Playing games together on Zoom' } },
+      { type: 'image', src: 'media/first-gomoku.jpg', alt: { zh: '白板上的第一盘五子棋', en: 'Our first Gomoku game on a whiteboard' } },
+      { type: 'image', src: 'media/first-pictionary.jpg', alt: { zh: '你画我猜的画', en: 'A Pictionary drawing' } },
+    ],
+  },
+  {
     id: 'first-makeup',
     date: '2026-10-24',
     place: PLACES.shenzhen,
