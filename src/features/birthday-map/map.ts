@@ -7,6 +7,7 @@ import { config } from '../../core/config';
 import { letter } from './letter';
 import { greatCircle, pacificLng, pointAlong, type LatLng } from '../../core/geo';
 import { formatDate } from '../../core/dates';
+import { attachMediaFallback } from './media';
 
 const at = (lat: number, lng: number): LatLng => [lat, pacificLng(lng)];
 
@@ -118,11 +119,7 @@ export function renderMap(root: HTMLElement): () => void {
         <p>${pick(m.text)}</p>
       </div>
       <div class="card-nav">${nav}</div>`);
-    el.querySelectorAll('img').forEach((img) =>
-      img.addEventListener('error', () => {
-        img.outerHTML = `<p class="media-missing">${t('map.media.missing')}</p>`;
-      }),
-    );
+    attachMediaFallback(el, t('map.media.missing'));
     el.querySelector('[data-act="prev"]')?.addEventListener('click', () => openCard(list, i - 1));
     el.querySelector('[data-act="next"]')?.addEventListener('click', () => openCard(list, i + 1));
     el.querySelector('[data-act="story-next"]')?.addEventListener('click', () => onNext?.());
