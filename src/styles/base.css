@@ -1,0 +1,100 @@
+:root {
+  --paper: #fbf4ee;
+  --paper-2: #f6e6e0;
+  --card: rgba(255, 251, 248, 0.86);
+  --ink: #3b2430;
+  --muted: #8b6a76;
+  --rose: #d4506d;
+  --rose-deep: #a8324f;
+  --blush: #f3c4cd;
+  --gold: #c39a5c;
+  --night: #2c2340;
+  --line: rgba(168, 50, 79, 0.16);
+  --shadow: 0 18px 40px -22px rgba(120, 30, 60, 0.45);
+  --serif-zh: 'Noto Serif SC', 'Songti SC', serif;
+  --serif-en: 'Cormorant Garamond', Georgia, serif;
+  --hand: 'Ma Shan Zheng', 'Kaiti SC', cursive;
+  --radius: 22px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #fde2e4 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, #f9e1cf 0%, transparent 55%),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--serif-en), var(--serif-zh);
+  font-size: 17px;
+  line-height: 1.7;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+html[lang='zh-CN'] body { font-family: var(--serif-zh); font-size: 16px; }
+a { color: inherit; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 1000;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: rgba(251, 244, 238, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; flex-direction: column; text-decoration: none; line-height: 1.1; margin-right: auto; }
+.brand-zh { font-family: var(--hand); font-size: 24px; color: var(--rose-deep); }
+.brand-en { font-family: var(--serif-en); font-style: italic; font-size: 13px; color: var(--muted); }
+.topbar nav { display: flex; gap: 14px; font-size: 15px; }
+.topbar nav a { text-decoration: none; color: var(--muted); padding: 4px 0; border-bottom: 2px solid transparent; }
+.topbar nav a.active { color: var(--rose-deep); border-color: var(--rose); }
+.nav-soon { color: var(--muted); opacity: 0.45; cursor: default; padding: 4px 0; }
+.lang-btn {
+  font: inherit; font-size: 14px; cursor: pointer;
+  border: 1px solid var(--rose); color: var(--rose-deep); background: transparent;
+  border-radius: 999px; padding: 4px 12px;
+}
+.lang-btn:hover { background: var(--rose); color: #fff; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.signature { text-align: right; font-family: var(--hand); font-size: 26px; color: var(--rose-deep); }
+
+
+.floating-hearts { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.floating-hearts i { position: absolute; bottom: -40px; color: var(--blush); font-style: normal; animation: float 14s linear infinite; opacity: 0; }
+.floating-hearts i:nth-child(1) { left: 5%; font-size: 14px; animation-delay: 0s; }
+.floating-hearts i:nth-child(2) { left: 14%; font-size: 22px; animation-delay: 3s; }
+.floating-hearts i:nth-child(3) { left: 23%; font-size: 12px; animation-delay: 6s; }
+.floating-hearts i:nth-child(4) { left: 32%; font-size: 18px; animation-delay: 9s; }
+.floating-hearts i:nth-child(5) { left: 41%; font-size: 26px; animation-delay: 1.5s; }
+.floating-hearts i:nth-child(6) { left: 50%; font-size: 14px; animation-delay: 4.5s; }
+.floating-hearts i:nth-child(7) { left: 59%; font-size: 20px; animation-delay: 7.5s; }
+.floating-hearts i:nth-child(8) { left: 68%; font-size: 12px; animation-delay: 10.5s; }
+.floating-hearts i:nth-child(9) { left: 77%; font-size: 24px; animation-delay: 2s; }
+.floating-hearts i:nth-child(10) { left: 86%; font-size: 16px; animation-delay: 5s; }
+.floating-hearts i:nth-child(11) { left: 93%; font-size: 20px; animation-delay: 8s; }
+.floating-hearts i:nth-child(12) { left: 97%; font-size: 12px; animation-delay: 11s; }
+
+@keyframes float { from { transform: translateY(0) rotate(0); opacity: 0; } 10% { opacity: 0.7; } to { transform: translateY(-110dvh) rotate(25deg); opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes beat { 0%, 100% { transform: scale(1); } 20% { transform: scale(1.25); } 40% { transform: scale(1); } }
+
+@media (max-width: 520px) {
+  .topbar { gap: 8px; }
+  .topbar nav { gap: 10px; font-size: 14px; }
+  .brand-zh { font-size: 21px; }
+  .brand-en { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

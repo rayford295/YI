@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { memories, sortedMemories } from './memories';
-import { config } from './config';
+import { config } from '../../core/config';
 
 describe('memories data', () => {
   it('has unique ids', () => {

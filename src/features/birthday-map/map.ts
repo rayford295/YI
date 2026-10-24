@@ -1,11 +1,12 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { t, pick, getLang } from '../i18n';
-import { sortedMemories, PLACES, type Memory } from '../data/memories';
-import { config } from '../data/config';
-import { letter } from '../data/letter';
-import { greatCircle, pacificLng, pointAlong, type LatLng } from '../lib/arc';
-import { formatDate } from '../lib/dates';
+import './map.css';
+import { t, pick, getLang } from '../../core/i18n';
+import { sortedMemories, PLACES, type Memory } from '../moments/memories';
+import { config } from '../../core/config';
+import { letter } from './letter';
+import { greatCircle, pacificLng, pointAlong, type LatLng } from '../../core/geo';
+import { formatDate } from '../../core/dates';
 
 const at = (lat: number, lng: number): LatLng => [lat, pacificLng(lng)];
 

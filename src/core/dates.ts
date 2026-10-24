@@ -1,4 +1,4 @@
-import type { Lang } from '../i18n';
+import type { Lang } from './i18n';
 
 const DAY_MS = 86_400_000;
 

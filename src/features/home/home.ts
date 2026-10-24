@@ -1,7 +1,8 @@
-import { t, pick, getLang } from '../i18n';
-import { config } from '../data/config';
-import { letter } from '../data/letter';
-import { dayNumberSince, clockIn, hoursApart, countdownTo } from '../lib/dates';
+import './home.css';
+import { t, pick, getLang } from '../../core/i18n';
+import { config } from '../../core/config';
+import { letter } from '../birthday-map/letter';
+import { dayNumberSince, clockIn, hoursApart, countdownTo } from '../../core/dates';
 
 function clockCard(id: string, label: string): string {
   return `<div class="clock card" id="clock-${id}">

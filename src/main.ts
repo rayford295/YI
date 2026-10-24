@@ -1,7 +1,7 @@
-import './styles.css';
-import { t, getLang, setLang, onLangChange } from './i18n';
-import { renderHome } from './pages/home';
-import { renderMap } from './pages/map';
+import './styles/base.css';
+import { t, getLang, setLang, onLangChange } from './core/i18n';
+import { renderHome } from './features/home/home';
+import { renderMap } from './features/birthday-map/map';
 
 export type Page = (root: HTMLElement) => () => void;
 

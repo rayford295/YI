@@ -1,9 +1,6 @@
 {
   "name": "yi-at-first-sight",
-  "version": "1.0.0",
-  "directories": {
-    "doc": "docs"
-  },
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -14,10 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/rayford295/Yi-at-First-Sight.git"
   },
-  "bugs": {
-    "url": "https://github.com/rayford295/Yi-at-First-Sight/issues"
-  },
-  "homepage": "https://github.com/rayford295/Yi-at-First-Sight#readme",
   "dependencies": {
     "leaflet": "^1.9.4"
   },
@@ -29,5 +22,6 @@
     "vitest": "^5.0.5"
   },
   "private": true,
-  "type": "module"
+  "type": "module",
+  "description": "Yi at First Sight: a private bilingual love map and games for Yifan and Jingyi"
 }

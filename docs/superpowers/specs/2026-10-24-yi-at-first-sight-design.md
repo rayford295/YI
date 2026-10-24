@@ -1,6 +1,7 @@
 # Yi at First Sight — Design Spec (v1, Birthday Release)
 
 - **Date:** 2026-10-24
+- **Note:** Folder layout was revised on 2026-10-24 to one folder per feature (`src/features/<name>/`); see README.
 - **Owner:** Yifan Yang (rayford295)
 - **Status:** Draft — awaiting owner review
 - **Hard deadline:** 2026-10-31 (Jingyi's birthday)
@@ -15,8 +16,8 @@ The first release is a **birthday gift**: a love map of the places and moments t
 shared, plus two games they already play together (Gomoku and Pictionary), playable live
 between Shenzhen and Texas.
 
-The name puns on 一见钟情 ("love at first sight"): both names contain the syllable *Yi*
-(Yi-fan, Jing-yi). Chinese title: **仪见钟情**.
+The name puns on the Chinese idiom *yi jian zhong qing* ("love at first sight"): both names
+contain the syllable *Yi* (Yi-fan, Jing-yi). The Chinese title swaps in the *yi* from Jingyi's name.
 
 ### What the owner said vs. what is assumed
 
@@ -27,7 +28,7 @@ The name puns on 一见钟情 ("love at first sight"): both names contain the sy
 | Met on 09-20; Yifan's birthday 09-25; Jingyi's birthday 10-31 | The year they met is 2026 |
 | Likely to meet at AAG in Feb 2027 | Countdown target is configurable; exact AAG 2027 dates verified before filling in |
 | Map of places, photos, videos as a birthday blessing | She mostly opens it on a phone |
-| Games: Gomoku, Pictionary (你画我猜), "not afraid of a rush" | Both games play **live online** (real-time) in v1 |
+| Games: Gomoku, Pictionary, "not afraid of a rush" | Both games play **live online** (real-time) in v1 |
 | Don't worry about access from China | No China-specific hosting/CDN work in v1 |
 
 ## 2. Success criteria
@@ -51,9 +52,9 @@ The name puns on 一见钟情 ("love at first sight"): both names contain the sy
 - **Love map:** markers for shared places; each opens a memory card (date, place,
   bilingual caption, photos, videos). An arc connects Shenzhen and College Station.
   A "play our story" mode tours the memories in date order and ends on the birthday letter.
-- **Gomoku (五子棋):** 15×15, live online between two players; restart; undo-by-request;
+- **Gomoku:** 15×15, live online between two players; restart; undo-by-request;
   local same-device mode as a fallback.
-- **Pictionary (你画我猜):** drawer gets a word (bilingual word bank, can include inside
+- **Pictionary:** drawer gets a word (bilingual word bank, can include inside
   jokes), canvas strokes stream live, guesser types guesses, round timer, score, roles swap.
 - **Language toggle** and responsive layout (phone first).
 

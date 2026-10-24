@@ -1,4 +1,4 @@
-import type { L10n } from '../i18n';
+import type { L10n } from '../../core/i18n';
 
 export interface Place { name: L10n; lat: number; lng: number }
 export interface Media { type: 'image' | 'video'; src: string; alt: L10n }
@@ -20,7 +20,7 @@ export const memories: Memory[] = [
       zh: '你在深圳比心，我在拍立得里比心。两张照片，拼成一颗完整的心。',
       en: 'You made a heart in Shenzhen, I made one in a Polaroid. Two photos, one whole heart.',
     },
-    media: [{ type: 'image', src: 'media/hearts.jpg', alt: { zh: '两张比心的照片', en: 'Two photos of us making hearts' } }],
+    media: [{ type: 'image', src: 'media/moments/hearts.jpg', alt: { zh: '两张比心的照片', en: 'Two photos of us making hearts' } }],
   },
   {
     id: 'first-flowers',
@@ -32,8 +32,8 @@ export const memories: Memory[] = [
       en: 'On the morning of October 12 the flowers reached your home in Shenzhen. You sent me a row of happy sobs: “this is way too beautiful.” From across the Pacific, the flowers got to you before I could.',
     },
     media: [
-      { type: 'image', src: 'media/first-flowers.jpg', alt: { zh: '静仪和一大捧彩色的花', en: 'Jingyi beside a big bouquet of colourful flowers' } },
-      { type: 'image', src: 'media/first-flowers-chat.jpg', alt: { zh: '收到花时的聊天记录', en: 'Our chat when the flowers arrived' } },
+      { type: 'image', src: 'media/moments/first-flowers.jpg', alt: { zh: '静仪和一大捧彩色的花', en: 'Jingyi beside a big bouquet of colourful flowers' } },
+      { type: 'image', src: 'media/moments/first-flowers-chat.jpg', alt: { zh: '收到花时的聊天记录', en: 'Our chat when the flowers arrived' } },
     ],
   },
   {
@@ -46,8 +46,8 @@ export const memories: Memory[] = [
       en: 'On our first video call I drew you a plane ticket: flight CYF925, Shenzhen Bao’an to New York JFK, February 5, 2027, gate LOVE910, seat 99A. Below it, one heart for every day from 9.20 to 10.17 — all the way to forever.',
     },
     media: [
-      { type: 'image', src: 'media/first-zoom.jpg', alt: { zh: '第一次 Zoom 和手绘机票', en: 'Our first Zoom call next to the hand-drawn ticket' } },
-      { type: 'image', src: 'media/flight-ticket.jpg', alt: { zh: '手绘机票 CYF925 深圳到纽约', en: 'Hand-drawn ticket CYF925, Shenzhen to New York' } },
+      { type: 'image', src: 'media/moments/first-zoom.jpg', alt: { zh: '第一次 Zoom 和手绘机票', en: 'Our first Zoom call next to the hand-drawn ticket' } },
+      { type: 'image', src: 'media/moments/flight-ticket.jpg', alt: { zh: '手绘机票 CYF925 深圳到纽约', en: 'Hand-drawn ticket CYF925, Shenzhen to New York' } },
     ],
   },
   {
@@ -59,7 +59,7 @@ export const memories: Memory[] = [
       zh: '你陪我把答辩一遍一遍讲完，听我讲灾害、遥感和我的研究。屏幕那头有你，我就不紧张了。',
       en: 'You stayed with me through every run of my defense talk — disasters, remote sensing, all of it. With you on the other side of the screen, I wasn’t nervous anymore.',
     },
-    media: [{ type: 'image', src: 'media/zoom-proposal.jpg', alt: { zh: 'Zoom 通话里的我们', en: 'The two of us on a Zoom call' } }],
+    media: [{ type: 'image', src: 'media/moments/zoom-proposal.jpg', alt: { zh: 'Zoom 通话里的我们', en: 'The two of us on a Zoom call' } }],
   },
   {
     id: 'piano',
@@ -71,8 +71,8 @@ export const memories: Memory[] = [
       en: 'On Wednesday the digital piano arrived at your place. “You bought me a piano!!! Wow!!!” I hope it keeps you company for me, through many, many songs.',
     },
     media: [
-      { type: 'image', src: 'media/piano.jpg', alt: { zh: '送到家的电钢琴', en: 'The digital piano at home' } },
-      { type: 'image', src: 'media/piano-chat.jpg', alt: { zh: '收到电钢琴时的聊天记录', en: 'Our chat when the piano arrived' } },
+      { type: 'image', src: 'media/moments/piano.jpg', alt: { zh: '送到家的电钢琴', en: 'The digital piano at home' } },
+      { type: 'image', src: 'media/moments/piano-chat.jpg', alt: { zh: '收到电钢琴时的聊天记录', en: 'Our chat when the piano arrived' } },
     ],
   },
   {
@@ -85,9 +85,9 @@ export const memories: Memory[] = [
       en: 'On the same day we played our first game of Gomoku on a Zoom whiteboard — purple for you, green for me — and then Pictionary, where your little cat drawing stumped me. Late night in Shenzhen, daytime in Texas, and our laughter on the same channel.',
     },
     media: [
-      { type: 'image', src: 'media/first-games-zoom.jpg', alt: { zh: 'Zoom 上一起玩游戏', en: 'Playing games together on Zoom' } },
-      { type: 'image', src: 'media/first-gomoku.jpg', alt: { zh: '白板上的第一盘五子棋', en: 'Our first Gomoku game on a whiteboard' } },
-      { type: 'image', src: 'media/first-pictionary.jpg', alt: { zh: '你画我猜的画', en: 'A Pictionary drawing' } },
+      { type: 'image', src: 'media/moments/first-games-zoom.jpg', alt: { zh: 'Zoom 上一起玩游戏', en: 'Playing games together on Zoom' } },
+      { type: 'image', src: 'media/moments/first-gomoku.jpg', alt: { zh: '白板上的第一盘五子棋', en: 'Our first Gomoku game on a whiteboard' } },
+      { type: 'image', src: 'media/moments/first-pictionary.jpg', alt: { zh: '你画我猜的画', en: 'A Pictionary drawing' } },
     ],
   },
   {
@@ -99,7 +99,7 @@ export const memories: Memory[] = [
       zh: '第一次因为年龄差让你不开心了。你是 98 年的，我是 99 年的，你的在意我都认真听了。说开、和好之后，我只想告诉你：我想和你一起过的，是以后的每一年。和好以后，更爱你了。',
       en: 'The first time our age gap made you sad. You were born in ’98, me in ’99, and I listened to every worry you had. After we talked it through and made up, all I want to tell you is this: what I want with you is every year still to come. I love you even more now.',
     },
-    media: [{ type: 'image', src: 'media/first-makeup.jpg', alt: { zh: '静仪拿着抹茶的自拍', en: 'Jingyi’s selfie with a matcha drink' } }],
+    media: [{ type: 'image', src: 'media/moments/first-makeup.jpg', alt: { zh: '静仪拿着抹茶的自拍', en: 'Jingyi’s selfie with a matcha drink' } }],
   },
 ];
 

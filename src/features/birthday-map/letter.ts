@@ -1,4 +1,4 @@
-import type { L10n } from '../i18n';
+import type { L10n } from '../../core/i18n';
 
 // Draft — Yifan rewrites this in his own words.
 export const letter: { paragraphs: { zh: string[]; en: string[] }; signature: L10n } = {

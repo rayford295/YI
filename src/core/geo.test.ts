@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { greatCircle, pacificLng, pointAlong } from './arc';
+import { greatCircle, pacificLng, pointAlong } from './geo';
 
 const SZ: [number, number] = [22.5431, 114.0579];
 const CS: [number, number] = [30.628, pacificLng(-96.3344)];

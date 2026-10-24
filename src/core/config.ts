@@ -1,4 +1,4 @@
-import type { L10n } from '../i18n';
+import type { L10n } from './i18n';
 
 export interface Person { name: L10n; zone: string; birthday: string }
 
