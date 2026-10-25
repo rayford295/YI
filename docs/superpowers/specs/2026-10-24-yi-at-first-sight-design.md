@@ -2,6 +2,7 @@
 
 - **Date:** 2026-10-24
 - **Note:** Folder layout was revised on 2026-10-24 to one folder per feature (`src/features/<name>/`); see README.
+- **Note:** On 2026-10-24 the owner ruled that both games are single-device (hot-seat) and run locally; no Supabase, no real-time sync. Sections below that describe live play are superseded.
 - **Owner:** Yifan Yang (rayford295)
 - **Status:** Draft — awaiting owner review
 - **Hard deadline:** 2026-10-31 (Jingyi's birthday)

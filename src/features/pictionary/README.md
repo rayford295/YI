@@ -1,10 +1,9 @@
 # Pictionary (planned)
 
-Live draw-and-guess between Shenzhen and Texas, after our first round of Pictionary.
+Draw-and-guess on one device, after our first round of Pictionary.
 
-Design (spec §4–§6): the drawer gets a word from a bilingual word bank (inside jokes
-welcome); strokes stream through Supabase Realtime in batches about every 40 ms; the guesser
-types guesses, which are checked on the drawer's side; a round timer, scores, and roles swap
-each round.
-
-Needs: the same Supabase project as Gomoku.
+Design: the drawer reveals a word from a bilingual word bank (inside jokes welcome) and
+draws it on a canvas; the guesser types guesses into the same page, which ignore case,
+spaces and full-width vs half-width characters; a round timer, scores, and roles swap each
+round. No network and no backend: it runs entirely in the browser, including under
+`npm run dev`.

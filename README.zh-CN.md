@@ -17,8 +17,8 @@
 | 首页：生日祝福、“我们认识的第 N 天”、深圳/德州双时钟、CYF925 起飞倒计时、生日信 | ✅ 第一版 | [`src/features/home/`](src/features/home/) |
 | 生日祝福地图：心形标记、跨太平洋的弧线、CYF925 飞纽约航线、回忆卡片、“播放我们的故事” | ✅ 第一版 | [`src/features/birthday-map/`](src/features/birthday-map/) |
 | 恋爱时刻：记录我们每一个重要时刻（数据和照片） | ✅ 第一版（数据） | [`src/features/moments/`](src/features/moments/) |
-| 五子棋：深圳和德州实时联机对弈 | 🚧 计划中 | [`src/features/gomoku/`](src/features/gomoku/) |
-| 你画我猜：实时画画和猜词 | 🚧 计划中 | [`src/features/pictionary/`](src/features/pictionary/) |
+| 五子棋：两个人在同一台设备上轮流下 | 🚧 计划中 | [`src/features/gomoku/`](src/features/gomoku/) |
+| 你画我猜：在同一台设备上画画和猜词 | 🚧 计划中 | [`src/features/pictionary/`](src/features/pictionary/) |
 | 礼物、每日留言、更多小游戏 | 💭 以后 | — |
 
 所有界面文字都有中英两个版本。点右上角的语言按钮，整个网站会立即切换，不需要刷新页面，下次打开时也会记住你的选择。
@@ -60,7 +60,7 @@ npm run build     # 类型检查并构建到 dist/
 npm run preview   # 在本地预览 dist/
 ```
 
-技术栈：Vite、TypeScript（strict 模式）、Vitest，地图用 Leaflet 加 OpenStreetMap 底图。目前还没有后端，小游戏会用 Supabase Realtime（详见设计文档）。
+技术栈：Vite、TypeScript（strict 模式）、Vitest，地图用 Leaflet 加 OpenStreetMap 底图。没有后端：整个网站（包括小游戏）都在浏览器本地运行。
 
 ## 重要日期
 

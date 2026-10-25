@@ -18,8 +18,8 @@ of their names contain the syllable *Yi*: Yi-fan and Jing-yi.
 | Home: birthday greeting, "day N since we met", twin clocks, countdown to flight CYF925, birthday letter | ✅ v1 | [`src/features/home/`](src/features/home/) |
 | Birthday map: heart markers, Pacific arc, CYF925 route to New York, memory cards, "play our story" | ✅ v1 | [`src/features/birthday-map/`](src/features/birthday-map/) |
 | Moments: the timeline of our love moments (data + photos) | ✅ v1 (data) | [`src/features/moments/`](src/features/moments/) |
-| Gomoku: live online between Shenzhen and Texas | 🚧 planned | [`src/features/gomoku/`](src/features/gomoku/) |
-| Pictionary: live drawing and guessing | 🚧 planned | [`src/features/pictionary/`](src/features/pictionary/) |
+| Gomoku: two players on one device | 🚧 planned | [`src/features/gomoku/`](src/features/gomoku/) |
+| Pictionary: draw and guess on one device | 🚧 planned | [`src/features/pictionary/`](src/features/pictionary/) |
 | Gifts, daily notes, more games | 💭 later | — |
 
 Every user-facing string exists in both languages. The language toggle in the top bar
@@ -66,8 +66,8 @@ npm run build     # type-check + production build into dist/
 npm run preview   # serve dist/ locally
 ```
 
-Stack: Vite, TypeScript (strict), Vitest, Leaflet with OpenStreetMap tiles. No backend yet;
-the games will use Supabase Realtime (see the spec).
+Stack: Vite, TypeScript (strict), Vitest, Leaflet with OpenStreetMap tiles. No backend: the
+whole site, games included, runs locally in the browser.
 
 ## Key dates
 
