@@ -101,6 +101,21 @@ export const memories: Memory[] = [
     },
     media: [{ type: 'image', src: 'media/moments/first-makeup.jpg', alt: { zh: '静仪拿着抹茶的自拍', en: 'Jingyi’s selfie with a matcha drink' } }],
   },
+  {
+    id: 'heart-and-camera',
+    date: '2026-10-24',
+    place: PLACES.collegeStation,
+    title: { zh: '棋盘上画了一颗心，和补回来的那台相机', en: 'A heart on the Gomoku board, and the camera we got back' },
+    text: {
+      zh: '这一盘五子棋没有分胜负：蓝色和紫色的棋子在棋盘上拼成了一颗心。同一天，我给你订了生日礼物，富士 X100VI。10 月 5 日你在旅途中弄丢了相机，我说：要么去找到，要么好好挣钱再买一台；一个人旅行注定在风中行走，得到和失去一样多。丢的那台，我帮你补上。以后风里的路，让它替我陪你一起记下来。',
+      en: 'This game of Gomoku had no winner: the blue and purple stones came together into a heart on the board. The same day I ordered your birthday present, a Fujifilm X100VI. On October 5 you lost your camera on a trip, and I told you: either go find it, or earn the money and buy another; travelling alone means walking in the wind, where you lose as much as you gain. The one you lost, I am replacing. On every windy road ahead, let it keep you company and remember things for me.',
+    },
+    media: [
+      { type: 'image', src: 'media/moments/heart-gomoku.jpg', alt: { zh: '五子棋棋盘上用棋子拼出的爱心', en: 'A heart made of stones on the Gomoku board' } },
+      { type: 'image', src: 'media/moments/x100vi-gift.jpg', alt: { zh: '微信礼物页面：富士 X100VI 相机', en: 'WeChat gift page: Fujifilm X100VI camera' } },
+      { type: 'image', src: 'media/moments/lost-camera-chat.jpg', alt: { zh: '10 月 5 日关于丢相机和一个人旅行的聊天', en: 'Our chat on October 5 about the lost camera and travelling alone' } },
+    ],
+  },
 ];
 
 export function sortedMemories(): Memory[] {
