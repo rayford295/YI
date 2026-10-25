@@ -1,0 +1,113 @@
+.gomoku {
+  --purple: #8a56d1;
+  --purple-deep: #5f2fa3;
+  --green: #3f9a62;
+  --green-deep: #24693f;
+  --wood: #f1d9b0;
+  --wood-line: rgba(98, 62, 28, 0.55);
+  position: relative; z-index: 1;
+  max-width: 600px; margin: 0 auto; padding: 22px 16px 48px;
+  animation: rise 0.6s ease both;
+}
+
+.gomoku-head { text-align: center; }
+.gomoku-head h1 { font-family: var(--hand); font-weight: 400; font-size: 40px; color: var(--rose-deep); margin: 0; line-height: 1.2; }
+html[lang='en'] .gomoku-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.gomoku-head p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+.players { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 18px 0 6px; }
+.player {
+  display: flex; align-items: center; gap: 8px; flex: 1; max-width: 220px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--card); border: 1px solid var(--line);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.player-green { flex-direction: row-reverse; text-align: right; }
+.player.active { transform: translateY(-2px); }
+.player-purple.active { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(138, 86, 209, 0.18); }
+.player-green.active { border-color: var(--green); box-shadow: 0 0 0 3px rgba(63, 154, 98, 0.18); }
+.player-name { flex: 1; font-size: 16px; }
+.player-score { font-family: var(--serif-en); font-size: 24px; font-weight: 600; font-variant-numeric: lining-nums tabular-nums; }
+.draws { color: var(--muted); font-size: 13px; white-space: nowrap; }
+
+.stone-chip { width: 18px; height: 18px; border-radius: 50%; flex: none; }
+.stone-chip.purple, .cell.purple::after { background: radial-gradient(circle at 34% 30%, #c9a6f5 0%, var(--purple) 45%, var(--purple-deep) 100%); }
+.stone-chip.green, .cell.green::after { background: radial-gradient(circle at 34% 30%, #9be0b2 0%, var(--green) 45%, var(--green-deep) 100%); }
+
+.gomoku-status { text-align: center; min-height: 1.7em; margin: 10px 0; font-size: 17px; }
+.gomoku-status[data-state='won'], .gomoku-status[data-state='draw'] { color: var(--rose-deep); font-weight: 600; animation: beat 1.2s ease 2; }
+
+.board-wrap { position: relative; }
+.board {
+  position: relative;
+  display: grid; grid-template-columns: repeat(15, 1fr); grid-template-rows: repeat(15, 1fr);
+  width: min(100%, 560px); aspect-ratio: 1; margin: 0 auto;
+  background: linear-gradient(135deg, #f6e2bf, var(--wood) 55%, #e8c895);
+  border-radius: 14px;
+  box-shadow: var(--shadow), inset 0 0 0 1px rgba(98, 62, 28, 0.18);
+  touch-action: manipulation;
+}
+.board-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.board-lines line { stroke: var(--wood-line); stroke-width: 0.035; }
+.board-lines circle { fill: var(--wood-line); }
+
+.cell {
+  position: relative; z-index: 1;
+  appearance: none; border: 0; padding: 0; margin: 0; background: transparent;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.cell::after {
+  content: ''; position: absolute; inset: 8%; border-radius: 50%;
+  transform: scale(0); transition: transform 0.16s ease;
+}
+.cell.stone::after { transform: scale(1); box-shadow: 0 2px 3px rgba(40, 20, 10, 0.35); }
+.cell.stone { cursor: default; }
+.cell.last::before {
+  content: ''; position: absolute; z-index: 2; left: 50%; top: 50%;
+  width: 22%; height: 22%; transform: translate(-50%, -50%);
+  border-radius: 50%; background: rgba(255, 255, 255, 0.9);
+}
+.cell.win::after { animation: win-glow 1.1s ease-in-out infinite alternate; }
+@keyframes win-glow { to { box-shadow: 0 0 0 3px #fff, 0 0 14px 4px var(--rose); } }
+
+/* A faint preview of the stone about to be placed (pointer devices only). */
+@media (hover: hover) {
+  .board[data-turn='purple'] .cell:not(.stone):hover::after { transform: scale(1); opacity: 0.35; background: var(--purple); }
+  .board[data-turn='green'] .cell:not(.stone):hover::after { transform: scale(1); opacity: 0.35; background: var(--green); }
+}
+.board[data-turn=''] .cell { cursor: default; }
+.cell:focus-visible { outline: 2px solid var(--rose); outline-offset: -2px; border-radius: 4px; }
+
+.burst { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; z-index: 3; }
+.burst i {
+  position: absolute; font-style: normal; font-size: 26px; opacity: 0;
+  transform: translate(-50%, -50%);
+}
+.burst i.purple { color: var(--purple); }
+.burst i.green { color: var(--green); }
+.burst i.draw { color: var(--rose); }
+.burst.go i { animation: burst 1.8s cubic-bezier(0.2, 0.7, 0.3, 1) var(--d) both; }
+@keyframes burst {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--a)) translateY(0) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--a)) translateY(-190px) scale(1.1); }
+}
+
+.gomoku-actions { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+.g-btn {
+  font: inherit; font-size: 15px; cursor: pointer;
+  padding: 8px 22px; border-radius: 999px;
+  border: 1px solid var(--rose); background: transparent; color: var(--rose-deep);
+}
+.g-btn.primary { background: var(--rose); color: #fff; }
+.g-btn:hover:not(:disabled) { filter: brightness(1.05); transform: translateY(-1px); }
+.g-btn:disabled { opacity: 0.4; cursor: default; }
+
+@media (max-width: 520px) {
+  .gomoku { padding: 16px 12px 40px; }
+  .gomoku-head h1 { font-size: 34px; }
+  .player { padding: 6px 10px; gap: 6px; }
+  .player-name { font-size: 14px; }
+  .player-score { font-size: 20px; }
+  .board { border-radius: 10px; }
+}

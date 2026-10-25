@@ -17,7 +17,7 @@
 | 首页：生日祝福、“我们认识的第 N 天”、深圳/德州双时钟、CYF925 起飞倒计时、生日信 | ✅ 第一版 | [`src/features/home/`](src/features/home/) |
 | 生日祝福地图：心形标记、跨太平洋的弧线、CYF925 飞纽约航线、回忆卡片、“播放我们的故事” | ✅ 第一版 | [`src/features/birthday-map/`](src/features/birthday-map/) |
 | 恋爱时刻：记录我们每一个重要时刻（数据和照片） | ✅ 第一版（数据） | [`src/features/moments/`](src/features/moments/) |
-| 五子棋：两个人在同一台设备上轮流下 | 🚧 计划中 | [`src/features/gomoku/`](src/features/gomoku/) |
+| 五子棋：两个人在同一台设备上轮流下，记比分，可悔棋 | ✅ 第一版 | [`src/features/gomoku/`](src/features/gomoku/) |
 | 你画我猜：在同一台设备上画画和猜词 | 🚧 计划中 | [`src/features/pictionary/`](src/features/pictionary/) |
 | 礼物、每日留言、更多小游戏 | 💭 以后 | — |
 
@@ -30,7 +30,7 @@ Yi-at-First-Sight/
 ├── index.html                 # 页面外壳和字体
 ├── public/media/<功能名>/      # 照片和视频，每个功能一个文件夹
 ├── src/
-│   ├── main.ts                # 应用外壳、路由（#/ 和 #/map）、语言切换
+│   ├── main.ts                # 应用外壳、路由（#/、#/map、#/gomoku）、语言切换
 │   ├── styles/base.css        # 公共样式：配色变量、顶栏、卡片、动画
 │   ├── core/                  # 所有功能共用的代码
 │   │   ├── i18n.ts            #   中英文词典、t()、pick()、当前语言

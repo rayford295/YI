@@ -33,6 +33,20 @@ const zh = {
   'map.meeting': '下一次见面：{place}',
   'map.media.missing': '照片还在路上',
   'map.flight': '航班 {flight} · 深圳 → 纽约 · {date}',
+  'gomoku.title': '五子棋',
+  'gomoku.subtitle': '我们的第一盘棋是在 Zoom 白板上下的：紫色是静仪，绿色是一帆。',
+  'gomoku.turn': '轮到{name}落子',
+  'gomoku.opens': '这一局{name}先手',
+  'gomoku.won': '{name}赢啦！',
+  'gomoku.draw': '棋盘下满啦，平局',
+  'gomoku.next': '下一局{name}先手',
+  'gomoku.undo': '悔棋',
+  'gomoku.again': '再来一局',
+  'gomoku.confirm': '这一局还没下完，确定重新开始吗？',
+  'gomoku.draws': '平局 {n}',
+  'gomoku.cell': '第 {r} 行，第 {c} 列',
+  'gomoku.purple': '紫棋',
+  'gomoku.green': '绿棋',
 } as const;
 
 export type Key = keyof typeof zh;
@@ -69,6 +83,20 @@ const en: Record<Key, string> = {
   'map.meeting': 'Next time we meet: {place}',
   'map.media.missing': 'This photo is still on its way',
   'map.flight': 'Flight {flight} · Shenzhen → New York · {date}',
+  'gomoku.title': 'Gomoku',
+  'gomoku.subtitle': 'Our first game was on a Zoom whiteboard: purple for Jingyi, green for Yifan.',
+  'gomoku.turn': '{name}’s move',
+  'gomoku.opens': '{name} opens this game',
+  'gomoku.won': '{name} wins!',
+  'gomoku.draw': 'The board is full: a draw',
+  'gomoku.next': '{name} opens the next game',
+  'gomoku.undo': 'Undo',
+  'gomoku.again': 'New game',
+  'gomoku.confirm': 'This game isn’t finished. Start a new one?',
+  'gomoku.draws': 'Draws {n}',
+  'gomoku.cell': 'Row {r}, column {c}',
+  'gomoku.purple': 'purple',
+  'gomoku.green': 'green',
 };
 
 export const dict: Record<Lang, Record<Key, string>> = { zh, en };

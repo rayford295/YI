@@ -44,6 +44,7 @@ a { color: inherit; }
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
+.brand-zh, .topbar nav a, .lang-btn { white-space: nowrap; }
 .brand { display: flex; flex-direction: column; text-decoration: none; line-height: 1.1; margin-right: auto; }
 .brand-zh { font-family: var(--hand); font-size: 24px; color: var(--rose-deep); }
 .brand-en { font-family: var(--serif-en); font-style: italic; font-size: 13px; color: var(--muted); }
@@ -93,6 +94,13 @@ a { color: inherit; }
   .topbar nav { gap: 10px; font-size: 14px; }
   .brand-zh { font-size: 21px; }
   .brand-en { display: none; }
+}
+
+@media (max-width: 360px) {
+  .topbar { padding: 10px 12px; gap: 6px; }
+  .topbar nav { gap: 8px; font-size: 13px; }
+  .brand-zh { font-size: 19px; }
+  .lang-btn { padding: 3px 9px; font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
