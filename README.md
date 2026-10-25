@@ -19,7 +19,7 @@ of their names contain the syllable *Yi*: Yi-fan and Jing-yi.
 | Birthday map: heart markers, Pacific arc, CYF925 route to New York, memory cards, "play our story" | ✅ v1 | [`src/features/birthday-map/`](src/features/birthday-map/) |
 | Moments: the timeline of our love moments (data + photos) | ✅ v1 (data) | [`src/features/moments/`](src/features/moments/) |
 | Gomoku: two players on one device, win tally, undo | ✅ v1 | [`src/features/gomoku/`](src/features/gomoku/) |
-| Pictionary: draw and guess on one device | 🚧 planned | [`src/features/pictionary/`](src/features/pictionary/) |
+| Pictionary: draw and guess on one device, shared in-sync score | ✅ v1 | [`src/features/pictionary/`](src/features/pictionary/) |
 | Gifts, daily notes, more games | 💭 later | — |
 
 Every user-facing string exists in both languages. The language toggle in the top bar
@@ -32,7 +32,7 @@ Yi-at-First-Sight/
 ├── index.html                 # page shell, fonts
 ├── public/media/<feature>/    # photos and videos, one folder per feature
 ├── src/
-│   ├── main.ts                # app shell, hash router (#/, #/map, #/gomoku), language toggle
+│   ├── main.ts                # app shell, hash router (#/, #/map, #/gomoku, #/draw), language toggle
 │   ├── styles/base.css        # shared design tokens, top bar, cards, animations
 │   ├── core/                  # code shared by every feature
 │   │   ├── i18n.ts            #   zh/en dictionary, t(), pick(), language state
@@ -43,6 +43,7 @@ Yi-at-First-Sight/
 │       ├── home/
 │       ├── birthday-map/
 │       ├── moments/
+│       ├── games/                 #   shared game tabs
 │       ├── gomoku/
 │       └── pictionary/
 └── docs/superpowers/          # design spec and implementation plans

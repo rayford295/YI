@@ -3,11 +3,13 @@ import { t, getLang, setLang, onLangChange } from './core/i18n';
 import { renderHome } from './features/home/home';
 import { renderMap } from './features/birthday-map/map';
 import { renderGomoku } from './features/gomoku/gomoku';
+import { renderPictionary } from './features/pictionary/pictionary';
 
 export type Page = (root: HTMLElement) => () => void;
 
-const routes: Record<string, Page> = { '/': renderHome, '/map': renderMap, '/gomoku': renderGomoku };
-const viewClass: Record<string, string> = { '/': 'home', '/map': 'map', '/gomoku': 'gomoku' };
+const routes: Record<string, Page> = { '/': renderHome, '/map': renderMap, '/gomoku': renderGomoku, '/draw': renderPictionary };
+const viewClass: Record<string, string> = { '/': 'home', '/map': 'map', '/gomoku': 'gomoku', '/draw': 'draw' };
+const GAMES = ['/gomoku', '/draw'];
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 
@@ -19,8 +21,10 @@ function render(): void {
   const lang = getLang();
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = `${t('site.title')} · ${lang === 'zh' ? 'Yi at First Sight' : '仪见钟情'}`;
-  const link = (href: string, key: 'nav.home' | 'nav.map' | 'nav.games') =>
-    `<a href="#${href}" class="${path === href ? 'active' : ''}">${t(key)}</a>`;
+  const link = (href: string, key: 'nav.home' | 'nav.map' | 'nav.games') => {
+    const active = path === href || (href === '/gomoku' && GAMES.includes(path));
+    return `<a href="#${href}" class="${active ? 'active' : ''}">${t(key)}</a>`;
+  };
   app.innerHTML = `
     <header class="topbar">
       <a class="brand" href="#/"><span class="brand-zh">仪见钟情</span><span class="brand-en">Yi at First Sight</span></a>

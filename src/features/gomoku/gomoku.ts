@@ -2,6 +2,7 @@ import './gomoku.css';
 import { t, pick } from '../../core/i18n';
 import { config } from '../../core/config';
 import { SIZE, newGame, place, undo, turn, boardOf, status, type Game, type Stone } from './core';
+import { gameTabs } from '../games/tabs';
 import { loadRecord, saveRecord, recordResult, loadGame, saveGame, type GameRecord } from './record';
 
 // Kept at module level so a language switch (which re-renders the page) keeps the game.
@@ -44,6 +45,7 @@ export function renderGomoku(root: HTMLElement): () => void {
 
   root.innerHTML = `
     <section class="gomoku">
+      ${gameTabs('#/gomoku')}
       <header class="gomoku-head">
         <h1>${t('gomoku.title')}</h1>
         <p>${t('gomoku.subtitle')}</p>

@@ -1,0 +1,31 @@
+// The word bank. Add our own inside jokes at the end: `alt` lists other answers that also count.
+import type { Word } from './core';
+
+export const WORDS: Word[] = [
+  { id: 'rose', zh: '玫瑰花', en: 'rose', alt: ['玫瑰', '花', 'flower', 'flowers', 'roses'] },
+  { id: 'piano', zh: '电钢琴', en: 'piano', alt: ['钢琴', 'digital piano', 'keyboard'] },
+  { id: 'ticket', zh: '机票', en: 'plane ticket', alt: ['飞机票', 'ticket', 'boarding pass', '登机牌'] },
+  { id: 'finger-heart', zh: '比心', en: 'finger heart', alt: ['爱心手势', 'heart hands', 'heart hand'] },
+  { id: 'moon', zh: '月亮', en: 'moon', alt: ['the moon', '月'] },
+  { id: 'gomoku', zh: '五子棋', en: 'gomoku', alt: ['下棋', 'five in a row'] },
+  { id: 'airplane', zh: '飞机', en: 'airplane', alt: ['plane', 'aeroplane', 'jet'] },
+  { id: 'cake', zh: '生日蛋糕', en: 'birthday cake', alt: ['蛋糕', 'cake'] },
+  { id: 'ring', zh: '戒指', en: 'ring', alt: ['钻戒', 'diamond ring'] },
+  { id: 'liberty', zh: '自由女神像', en: 'statue of liberty', alt: ['自由女神', 'lady liberty'] },
+  { id: 'earth', zh: '地球', en: 'earth', alt: ['globe', 'world', '世界'] },
+  { id: 'clock', zh: '时钟', en: 'clock', alt: ['钟', '闹钟', 'alarm clock'] },
+  { id: 'letter', zh: '情书', en: 'love letter', alt: ['信', 'letter', '信封', 'envelope'] },
+  { id: 'panda', zh: '熊猫', en: 'panda', alt: ['大熊猫', 'giant panda'] },
+  { id: 'cat', zh: '猫', en: 'cat', alt: ['小猫', '猫咪', 'kitty', 'kitten'] },
+  { id: 'cowboy-hat', zh: '牛仔帽', en: 'cowboy hat', alt: ['cowboy'] },
+  { id: 'cactus', zh: '仙人掌', en: 'cactus' },
+  { id: 'lychee', zh: '荔枝', en: 'lychee', alt: ['litchi'] },
+  { id: 'laptop', zh: '笔记本电脑', en: 'laptop', alt: ['电脑', 'computer'] },
+  { id: 'bubble-tea', zh: '奶茶', en: 'bubble tea', alt: ['珍珠奶茶', 'milk tea', 'boba'] },
+  { id: 'sailboat', zh: '帆船', en: 'sailboat', alt: ['帆', '船', 'boat', 'sail'] },
+  { id: 'gift', zh: '礼物', en: 'gift', alt: ['礼物盒', 'present'] },
+  { id: 'star', zh: '星星', en: 'star', alt: ['stars', '星'] },
+  { id: 'umbrella', zh: '雨伞', en: 'umbrella', alt: ['伞'] },
+  { id: 'hug', zh: '拥抱', en: 'hug', alt: ['抱抱', 'hugging'] },
+  { id: 'rainbow', zh: '彩虹', en: 'rainbow' },
+];
