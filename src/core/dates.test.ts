@@ -51,3 +51,12 @@ describe('formatDate', () => {
     expect(formatDate('2026-10-18', 'en')).toBe('Oct 18, 2026');
   });
 });
+
+describe('dayOfYmd', () => {
+  it('counts the start date as day 1', async () => {
+    const { dayOfYmd } = await import('./dates');
+    expect(dayOfYmd('2026-09-20', '2026-09-20')).toBe(1);
+    expect(dayOfYmd('2026-09-20', '2026-10-31')).toBe(42);
+    expect(dayOfYmd('2026-09-20', '2027-02-05')).toBe(139);
+  });
+});

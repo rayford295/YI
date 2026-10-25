@@ -1,7 +1,7 @@
 import './home.css';
 import { t, pick, getLang } from '../../core/i18n';
 import { config } from '../../core/config';
-import { letter } from '../birthday-map/letter';
+import { letter, letterParagraphs } from '../birthday-map/letter';
 import { dayNumberSince, clockIn, hoursApart, countdownTo } from '../../core/dates';
 
 function clockCard(id: string, label: string): string {
@@ -34,12 +34,12 @@ export function renderHome(root: HTMLElement): () => void {
     </section>
     <p class="diff" id="diff"></p>
     <section class="countdown card">
-      <p class="countdown-title">${t('home.countdown.title', { flight: nm.flight, place: pick(nm.place) })}</p>
+      <p class="countdown-title" id="countdown-title">${t('home.countdown.title', { flight: nm.flight, place: pick(nm.place) })}</p>
       <div class="countdown-grid" id="countdown"></div>
     </section>
     <section class="letter card">
       <h2>${t('home.letter.title')}</h2>
-      ${letter.paragraphs[lang].map((p) => `<p>${p}</p>`).join('')}
+      ${letterParagraphs(lang, hoursApart(config.her.zone, config.him.zone, new Date())).map((p) => `<p>${p}</p>`).join('')}
       <p class="signature">— ${pick(letter.signature)}</p>
     </section>
     <a class="cta" href="#/map">${t('home.cta.map')} →</a>`;
@@ -62,6 +62,7 @@ export function renderHome(root: HTMLElement): () => void {
     paintClock('him', config.him.zone, now);
     q('#diff').textContent = t('home.diff', { h: hoursApart(config.her.zone, config.him.zone, now) });
     const cd = countdownTo(new Date(nm.at), now);
+    q('#countdown-title').hidden = cd.done;
     q('#countdown').innerHTML = cd.done
       ? `<p class="together">${t('home.countdown.together')}</p>`
       : (['days', 'hours', 'minutes'] as const)

@@ -1,12 +1,13 @@
 # Moments
 
 The record of our love moments: the single source of truth for every memory shown on the
-map, and later on a timeline page.
+map and on the timeline page. Route: `#/moments`.
 
 | File | Role |
 |---|---|
 | `memories.ts` | `PLACES`, the `Memory` type, `memories[]`, `sortedMemories()` |
 | `memories.test.ts` | validates every entry (date, coordinates, both languages, media files exist) |
+| `moments.ts` / `moments.css` | `renderMoments(root) => cleanup`; the timeline, one card per memory with its day number |
 
 Media: `public/media/moments/`.
 
@@ -17,5 +18,3 @@ Media: `public/media/moments/`.
 2. Append an entry to `memories` with `id`, `date` (`YYYY-MM-DD`), `place`, bilingual
    `title` / `text`, and `media[]` with bilingual `alt`.
 3. Run `npm test`.
-
-Planned: a `#/moments` timeline page in this folder.

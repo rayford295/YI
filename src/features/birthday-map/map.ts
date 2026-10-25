@@ -4,9 +4,10 @@ import './map.css';
 import { t, pick, getLang } from '../../core/i18n';
 import { sortedMemories, PLACES, type Memory } from '../moments/memories';
 import { config } from '../../core/config';
-import { letter } from './letter';
+import { letter, letterParagraphs } from './letter';
 import { greatCircle, pacificLng, pointAlong, type LatLng } from '../../core/geo';
-import { formatDate } from '../../core/dates';
+import { formatDate, hoursApart } from '../../core/dates';
+import { escapeAttr, reducedMotion } from '../../core/html';
 import { attachMediaFallback } from './media';
 
 const at = (lat: number, lng: number): LatLng => [lat, pacificLng(lng)];
@@ -18,8 +19,8 @@ function mediaHtml(m: Memory): string {
   return m.media
     .map((md) =>
       md.type === 'video'
-        ? `<video src="${md.src}" controls playsinline preload="metadata" aria-label="${pick(md.alt)}"></video>`
-        : `<img src="${md.src}" alt="${pick(md.alt)}" loading="lazy" />`,
+        ? `<video src="${md.src}" controls playsinline preload="metadata" aria-label="${escapeAttr(pick(md.alt))}"></video>`
+        : `<img src="${md.src}" alt="${escapeAttr(pick(md.alt))}" loading="lazy" />`,
     )
     .join('');
 }
@@ -42,7 +43,7 @@ export function renderMap(root: HTMLElement): () => void {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     maxZoom: 19,
   }).addTo(map);
-  L.control.zoom({ position: 'bottomright' }).addTo(map);
+  L.control.zoom({ position: 'bottomright', zoomInTitle: t('map.zoom.in'), zoomOutTitle: t('map.zoom.out') }).addTo(map);
 
   const sz = at(PLACES.shenzhen.lat, PLACES.shenzhen.lng);
   const nm = config.nextMeeting;
@@ -57,14 +58,15 @@ export function renderMap(root: HTMLElement): () => void {
     .addTo(map)
     .bindTooltip(t('map.flight', { flight: nm.flight, date: formatDate(nm.date, getLang()) }), { sticky: true });
 
+  const still = reducedMotion();
   const t0 = performance.now();
   let raf = 0;
   const fly = (now: number) => {
     traveler.setLatLng(pointAlong(arc, (now - t0) / 7000));
     raf = requestAnimationFrame(fly);
-
   };
-  raf = requestAnimationFrame(fly);
+  if (still) traveler.setLatLng(pointAlong(arc, 0.5));
+  else raf = requestAnimationFrame(fly);
 
   // Frame both of our cities, New York and the arc between them.
   const overview = L.latLngBounds([...arc, at(nm.lat, nm.lng)]).pad(0.15);
@@ -78,7 +80,7 @@ export function renderMap(root: HTMLElement): () => void {
   }
   for (const list of byPlace.values()) {
     const p = list[0].place;
-    L.marker(at(p.lat, p.lng), { icon: heartIcon(), title: pick(p.name) })
+    L.marker(at(p.lat, p.lng), { icon: heartIcon(), title: pick(p.name), alt: pick(p.name) })
       .addTo(map)
       .on('click', () => openCard(list, 0));
   }
@@ -86,8 +88,14 @@ export function renderMap(root: HTMLElement): () => void {
     .addTo(map)
     .bindTooltip(t('map.meeting', { place: pick(nm.place) }), { direction: 'top', offset: [0, -14] });
 
+  let storyTimer = 0;
+  let lastFocus: HTMLElement | null = null;
   const closeCard = () => {
+    clearTimeout(storyTimer); // closing a card mid-story stops the tour
+    if (!layer.innerHTML) return;
     layer.innerHTML = '';
+    lastFocus?.focus({ preventScroll: true });
+    lastFocus = null;
   };
 
   function showCard(inner: string): HTMLElement {
@@ -98,6 +106,8 @@ export function renderMap(root: HTMLElement): () => void {
       if (e.target === backdrop) closeCard();
     });
     layer.querySelector('.card-close')!.addEventListener('click', closeCard);
+    lastFocus ??= document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    layer.querySelector<HTMLElement>('.card-close')!.focus({ preventScroll: true });
     return backdrop;
   }
 
@@ -126,17 +136,16 @@ export function renderMap(root: HTMLElement): () => void {
   }
 
   function showFinale(): void {
-    map.flyToBounds(overview, { duration: 1.6 });
+    map.flyToBounds(overview, { duration: 1.6, animate: !still });
     showCard(`
       <div class="card-body finale">
         <p class="finale-hearts" aria-hidden="true">❤ ❤ ❤</p>
         <h3>${t('home.letter.title')}</h3>
-        ${letter.paragraphs[getLang()].map((p) => `<p>${p}</p>`).join('')}
+        ${letterParagraphs(getLang(), hoursApart(config.her.zone, config.him.zone, new Date())).map((p) => `<p>${p}</p>`).join('')}
         <p class="signature">— ${pick(letter.signature)}</p>
       </div>`);
   }
 
-  let storyTimer = 0;
   function playStory(idx: number): void {
     const list = sortedMemories();
     if (idx >= list.length) {
@@ -145,9 +154,9 @@ export function renderMap(root: HTMLElement): () => void {
     }
     closeCard();
     const m = list[idx];
-    map.flyTo(at(m.place.lat, m.place.lng), 6, { duration: 1.6 });
-    clearTimeout(storyTimer);
-    storyTimer = window.setTimeout(() => openCard([m], 0, () => playStory(idx + 1), idx === list.length - 1), 1700);
+    map.flyTo(at(m.place.lat, m.place.lng), 6, { duration: 1.6, animate: !still });
+    const open = () => openCard([m], 0, () => playStory(idx + 1), idx === list.length - 1);
+    storyTimer = window.setTimeout(open, still ? 300 : 1700);
   }
   root.querySelector('#story-btn')!.addEventListener('click', () => playStory(0));
 

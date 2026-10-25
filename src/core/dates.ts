@@ -16,6 +16,11 @@ export function dayNumberSince(startYmd: string, now: Date, timeZone: string): n
   return Math.round((ymdToUtc(ymdInZone(now, timeZone)) - ymdToUtc(startYmd)) / DAY_MS) + 1;
 }
 
+/** Day number of `ymd` counting `startYmd` as day 1 (pure calendar arithmetic). */
+export function dayOfYmd(startYmd: string, ymd: string): number {
+  return Math.round((ymdToUtc(ymd) - ymdToUtc(startYmd)) / DAY_MS) + 1;
+}
+
 export function countdownTo(target: Date, now: Date) {
   const ms = target.getTime() - now.getTime();
   if (ms <= 0) return { days: 0, hours: 0, minutes: 0, done: true };

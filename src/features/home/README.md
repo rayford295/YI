@@ -13,4 +13,5 @@ time), the hours between us, a countdown to flight CYF925, and the birthday lett
 
 - The day counter uses Shenzhen's calendar date (`Asia/Shanghai`), with the day we met counted as day 1.
 - The time difference is computed live, so it moves from 13 to 14 hours when US daylight time ends.
-- Key dates live in `src/core/config.ts`; the letter text lives in `../birthday-map/letter.ts`.
+- Key dates live in `src/core/config.ts`; the letter text lives in `../birthday-map/letter.ts` (`{h}` in the letter becomes the live hour difference).
+- Once the countdown reaches zero the heading is hidden and "Together at last" shows instead.

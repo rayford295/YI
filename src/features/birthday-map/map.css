@@ -1,6 +1,6 @@
 /* Birthday map: Leaflet map, heart markers, memory cards, story finale. */
-.view-map { position: relative; z-index: 1; }
-.map-page { display: flex; flex-direction: column; height: calc(100dvh - 63px); }
+.view-map { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.map-page { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 .map-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; }
 .map-head h2 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 26px; color: var(--rose-deep); }
 html[lang='en'] .map-head h2 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }

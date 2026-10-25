@@ -34,6 +34,7 @@ body {
 }
 html[lang='zh-CN'] body { font-family: var(--serif-zh); font-size: 16px; }
 a { color: inherit; }
+#app { display: flex; flex-direction: column; min-height: 100dvh; }
 
 .topbar {
   position: sticky; top: 0; z-index: 1000;
