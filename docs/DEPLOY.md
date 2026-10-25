@@ -1,12 +1,28 @@
-# Deploying Privately
+# Hosting
 
-Goal: Jingyi opens one link on her phone in Shenzhen, signs in with her email, and sees the
-site. Nobody else can. The repository stays private.
+## Now: GitHub Pages (public)
+
+The site is live at <https://rayford295.github.io/Yi-at-First-Sight/>. The repository is
+public, and `.github/workflows/ci.yml` deploys `dist/` to GitHub Pages on every push to
+`main` after the tests and the build pass. `index.html` carries `noindex, nofollow`, so
+search engines are asked not to list it, but anyone with the link can open it.
+
+To take the site offline: **Settings → Pages → Unpublish site**, or make the repository
+private again (Pages then stops on a free account).
+
+## Later: a Private Version
+
+If we ever want a login in front of it, the plan below keeps the same code and adds a
+login gate. It is optional.
+
+
+Goal: Jingyi opens one link on her phone, signs in with her email, and sees the site.
+Nobody else can.
 
 The site is static (`dist/` after `npm run build`), so any static host works. The plan below
 uses **Cloudflare Pages** for hosting and **Cloudflare Access** for the login gate; both are
-free at this scale, and Pages can build straight from a private GitHub repository. GitHub
-Pages is not an option here: on a free account it only publishes public repositories.
+free at this scale, and Pages can build straight from the GitHub repository (private or
+public). GitHub Pages cannot add a login, and on a free account it only serves public repositories.
 
 ## One-Time Setup (About 15 Minutes)
 
