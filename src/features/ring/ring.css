@@ -15,13 +15,15 @@ html[lang='en'] .ring-head h1 { font-family: var(--serif-en); font-style: italic
   position: absolute; inset: 0; display: grid; place-items: center; margin: 0;
   color: #d3a557; letter-spacing: 0.2em; font-size: 14px; text-transform: uppercase; pointer-events: none;
 }
-.ring-views { position: absolute; left: 50%; bottom: 44px; transform: translateX(-50%); display: flex; gap: 8px; }
-.ring-views button {
+.ring-views, .ring-which { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+.ring-views { bottom: 44px; }
+.ring-which { top: 16px; }
+.ring-views button, .ring-which button {
   border: 1px solid rgba(211, 165, 87, 0.55); background: rgba(16, 46, 73, 0.6); color: #f1e4c8;
   padding: 7px 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; backdrop-filter: blur(6px);
   transition: background 160ms ease, color 160ms ease;
 }
-.ring-views button.active, .ring-views button:hover { background: #d3a557; color: #102e49; }
+.ring-views button.active, .ring-views button:hover, .ring-which button.active, .ring-which button:hover { background: #d3a557; color: #102e49; }
 .ring-hint { position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; text-align: center; font-size: 12px; color: rgba(241, 228, 200, 0.6); letter-spacing: 0.08em; pointer-events: none; }
 
 .ring-facts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }

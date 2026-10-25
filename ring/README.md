@@ -1,44 +1,47 @@
-# Meridian — the ring
+# Meridian — a pair of rings
 
-A parametric engagement-ring design built entirely in Blender from one Python
-script, so every dimension can change later without redrawing anything.
+Two parametric rings built in Blender from one Python script, so every dimension can change
+later without redrawing anything.
 
 ## The idea
 
-- **One round stone, four prongs** set at north, east, south and west, like a
-  compass rose.
-- **A meridian groove** runs around the outside of the band and passes under
-  the stone, like a line of longitude on a globe.
-- **Two metals**: platinum body (the cool blue of the homepage), yellow-gold
-  prongs, seat and sapphire bezel (the gold accent).
-- **A hidden sapphire** sits inside the bottom of the band, visible only when
-  the ring is taken off. It doubles as the separator in the engraving.
-- **Inner engraving**: `2026 · 09 · 20` (the day we met) on one side of the
-  sapphire, `40.64°N 73.78°W` (JFK, where we meet in person) on the other.
+Both rings share one signature: a **yellow-gold meridian** inlaid around the outside of a
+platinum band, like a line of longitude on a globe; a **hidden sapphire** inside the bottom of
+the band, visible only when the ring is taken off; and an **engraving** on either side of that
+sapphire: the other person's name and the day we met on the left, the coordinates where we
+meet on the right.
+
+| | Hers | His |
+|---|---|---|
+| Band | slim round, polished platinum | wide flat comfort-fit, brushed platinum |
+| Stone | round brilliant on four gold prongs set N / E / S / W like a compass | none |
+| Engraving | `一帆 · 2026·09·20` ✦ `40.64°N 73.78°W` | `静仪 · 2026·09·20` ✦ `40.64°N 73.78°W` |
+| Size placeholder | US 6 (16.5 mm) | US 10 (19.8 mm) |
 
 ## Files
 
 | Path | What |
 |------|------|
-| `meridian.py` | The whole model, materials, lights, cameras, render settings. Parameters are in the `P` dict at the top. |
-| `meridian.blend` | Saved scene, regenerated on every run; open it in Blender to orbit around the ring. |
-| `renders/` | `hero`, `top`, `profile`, `inside` and `detail` views. |
+| `meridian.py` | Both models, materials, lights, cameras, render and GLB export. Per-ring parameters are in the `RINGS` dict at the top. |
+| `meridian_hers.blend`, `meridian_his.blend` | Saved scenes, regenerated on every run; open in Blender to orbit around. |
+| `renders/` | `hers_*` and `his_*`: hero, top, profile, inside, detail. |
+| `../public/media/ring/*.glb` | Web copies used by the `#/ring` page. |
 
 ## Run
 
 ```bash
-/Applications/Blender.app/Contents/MacOS/Blender -b -P ring/meridian.py -- --render          # all views
-/Applications/Blender.app/Contents/MacOS/Blender -b -P ring/meridian.py -- --render hero    # one view
-/Applications/Blender.app/Contents/MacOS/Blender ring/meridian.blend                        # open in the UI
+B=/Applications/Blender.app/Contents/MacOS/Blender
+$B -b -P ring/meridian.py -- --ring both --render --export    # everything
+$B -b -P ring/meridian.py -- --ring hers --render hero        # one view of one ring
+$B ring/meridian_hers.blend                                   # open in the UI
 ```
 
-Units are millimetres. `inner_diameter` is a placeholder (US size 6, 16.5 mm)
-until we know the real size. Engraving text, stone diameter, band thickness and
-prong size are all single numbers in `P`.
+Units are millimetres. The engraving uses Songti from macOS so the Chinese names render;
+on another machine edit `FONTS`.
 
 ## Still to decide
 
-- Real ring size.
+- Real ring sizes.
 - Final engraving text and font.
-- Stone: diamond vs moissanite vs lab-grown, and carat.
-- Whether the meridian groove stays a plain groove or gets a gold inlay.
+- Her stone: diamond vs moissanite vs lab-grown, and carat.
+- Whether his band gets a second, thinner meridian or stays with one.

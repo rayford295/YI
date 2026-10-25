@@ -7,13 +7,17 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { t } from '../../core/i18n';
 import { reducedMotion } from '../../core/html';
 
-const MODEL = `${import.meta.env.BASE_URL}media/ring/meridian.glb`;
-// Camera poses in model units (mm). Blender's Z-up becomes glTF Y-up, so the stone is at +Y
-// and the band's axis is Z.
+const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb' } as const;
+type Which = keyof typeof MODELS;
+const modelUrl = (w: Which) => `${import.meta.env.BASE_URL}media/ring/${MODELS[w]}`;
+// Camera poses in model units (mm), tuned for her ring (outer radius 9.95) and scaled to the
+// loaded model's size. Blender's Z-up becomes glTF Y-up: the stone is at +Y, the band's axis is Z.
+const BASE_R = 9.95;
 const VIEWS = {
   outside: { pos: new THREE.Vector3(26, 20, 40), target: new THREE.Vector3(0, 2, 0) },
   inside: { pos: new THREE.Vector3(-4, 4, 26), target: new THREE.Vector3(0, -7.5, 0) },
 } as const;
+type View = keyof typeof VIEWS;
 
 export function renderRing(root: HTMLElement): () => void {
   root.innerHTML = `
@@ -25,6 +29,10 @@ export function renderRing(root: HTMLElement): () => void {
       </header>
       <div class="ring-stage card" id="ring-stage">
         <canvas id="ring-canvas" aria-label="${t('ring.title')}"></canvas>
+        <div class="ring-which" role="group">
+          <button type="button" class="active" data-which="hers">${t('ring.hers')}</button>
+          <button type="button" data-which="his">${t('ring.his')}</button>
+        </div>
         <p class="ring-loading" id="ring-loading">${t('ring.loading')}</p>
         <div class="ring-views" role="group">
           <button type="button" class="active" data-view="outside">${t('ring.view.outside')}</button>
@@ -34,6 +42,7 @@ export function renderRing(root: HTMLElement): () => void {
       </div>
       <ul class="ring-facts">
         <li>${t('ring.fact.compass')}</li>
+        <li>${t('ring.fact.names')}</li>
         <li>${t('ring.fact.met')}</li>
         <li>${t('ring.fact.coords')}</li>
         <li>${t('ring.fact.sapphire')}</li>
@@ -72,16 +81,29 @@ export function renderRing(root: HTMLElement): () => void {
   scene.add(key, rim, new THREE.AmbientLight(0xffffff, 0.25));
 
   let disposed = false;
-  new GLTFLoader().load(MODEL, (gltf) => {
-    if (disposed) return;
-    gltf.scene.traverse((o) => {
-      const mesh = o as THREE.Mesh;
-      const m = mesh.material as THREE.MeshPhysicalMaterial | undefined;
-      if (m?.transmission) { m.thickness = 2.5; m.envMapIntensity = 1.6; }
-    });
-    scene.add(gltf.scene);
-    loading.remove();
-  }, undefined, () => { loading.textContent = '…'; });
+  let current: THREE.Group | null = null;
+  let scale = 1;                    // model outer radius / BASE_R
+  let view: View = 'outside';
+  const loader = new GLTFLoader();
+  const pose = (v: View) => ({ pos: VIEWS[v].pos.clone().multiplyScalar(scale), target: VIEWS[v].target.clone().multiplyScalar(scale) });
+
+  const load = (which: Which) => {
+    loading.style.display = '';
+    loader.load(modelUrl(which), (gltf) => {
+      if (disposed) return;
+      if (current) scene.remove(current);
+      gltf.scene.traverse((o) => {
+        const m = (o as THREE.Mesh).material as THREE.MeshPhysicalMaterial | undefined;
+        if (m?.transmission) { m.thickness = 2.5; m.envMapIntensity = 1.6; }
+      });
+      const box = new THREE.Box3().setFromObject(gltf.scene);
+      scale = (box.max.x - box.min.x) / 2 / BASE_R;
+      scene.add(gltf.scene);
+      current = gltf.scene;
+      loading.style.display = 'none';
+      flyTo(view);
+    }, undefined, () => { loading.textContent = '…'; });
+  };
 
   const fit = () => {
     const w = stage.clientWidth, h = stage.clientHeight;
@@ -93,15 +115,26 @@ export function renderRing(root: HTMLElement): () => void {
   ro.observe(stage);
   fit();
 
-  // Smoothly fly the camera between the two saved views.
+  // Smoothly fly the camera between the saved views.
   let flight: { from: THREE.Vector3; to: THREE.Vector3; tFrom: THREE.Vector3; tTo: THREE.Vector3; start: number } | null = null;
+  const flyTo = (v: View) => {
+    const p = pose(v);
+    flight = { from: camera.position.clone(), to: p.pos, tFrom: controls.target.clone(), tTo: p.target, start: performance.now() };
+  };
+  const setActive = (group: string, btn: Element) =>
+    root.querySelectorAll(`${group} button`).forEach((x) => x.classList.toggle('active', x === btn));
   root.querySelectorAll<HTMLButtonElement>('.ring-views button').forEach((b) => b.addEventListener('click', () => {
-    const v = VIEWS[b.dataset.view as keyof typeof VIEWS];
-    root.querySelectorAll('.ring-views button').forEach((x) => x.classList.toggle('active', x === b));
-    flight = { from: camera.position.clone(), to: v.pos.clone(), tFrom: controls.target.clone(), tTo: v.target.clone(), start: performance.now() };
+    view = b.dataset.view as View;
+    setActive('.ring-views', b);
+    flyTo(view);
     controls.autoRotate = false;
   }));
+  root.querySelectorAll<HTMLButtonElement>('.ring-which button').forEach((b) => b.addEventListener('click', () => {
+    setActive('.ring-which', b);
+    load(b.dataset.which as Which);
+  }));
   canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
+  load('hers');
 
   let raf = 0;
   const ease = (x: number) => 1 - Math.pow(1 - x, 3);
