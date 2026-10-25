@@ -28,6 +28,7 @@ Both names contain the syllable *Yi*: Yi-fan and Jing-yi; the title swaps in the
 | `#/moments` | **Moments** | Timeline of every memory, each badged with its day number since we met |
 | `#/gomoku` | **Gomoku** | Two players on one device, purple for Jingyi and green for Yifan; win tally, undo, saved game |
 | `#/draw` | **Pictionary** | Draw on a canvas, hold to peek at the word, typed or spoken guesses, 90-second rounds, a shared "in sync" score |
+| `#/ring` | **The Ring** (unlisted) | Interactive 3D view of the Meridian engagement ring designed in `ring/`; not in the navigation, reachable only by link |
 
 Every string exists in both languages. The toggle in the top bar switches the whole site
 without a reload and remembers the choice. The games run entirely in the browser: no
@@ -50,7 +51,7 @@ Yi-at-First-Sight/
 ├── index.html                  # page shell, fonts
 ├── public/media/<feature>/     # photos and videos, one folder per feature
 ├── src/
-│   ├── main.ts                 # app shell, hash router, language toggle
+│   ├── main.ts                 # app shell, hash router, language toggle (incl. unlisted #/ring)
 │   ├── styles/base.css         # design tokens, top bar, cards, animations
 │   ├── core/                   # shared by every feature
 │   │   ├── i18n.ts             #   zh/en dictionary, t(), pick(), language state

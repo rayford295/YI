@@ -1,0 +1,37 @@
+.ring { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 22px; }
+.ring-head { text-align: center; animation: rise 0.7s ease both; }
+.ring-head h1 { font-family: var(--hand); font-weight: 400; font-size: 48px; color: var(--rose-deep); margin: 0; line-height: 1.2; }
+html[lang='en'] .ring-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.ring-sub { margin: 6px auto 0; max-width: 36em; color: var(--muted); }
+
+.ring-stage {
+  position: relative; height: min(70vh, 620px); padding: 0; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 35%, #1f4f6d 0%, #102e49 55%, #0b2036 100%);
+  animation: rise 0.8s ease both; animation-delay: 120ms;
+}
+.ring-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.ring-stage canvas:active { cursor: grabbing; }
+.ring-loading {
+  position: absolute; inset: 0; display: grid; place-items: center; margin: 0;
+  color: #d3a557; letter-spacing: 0.2em; font-size: 14px; text-transform: uppercase; pointer-events: none;
+}
+.ring-views { position: absolute; left: 50%; bottom: 44px; transform: translateX(-50%); display: flex; gap: 8px; }
+.ring-views button {
+  border: 1px solid rgba(211, 165, 87, 0.55); background: rgba(16, 46, 73, 0.6); color: #f1e4c8;
+  padding: 7px 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; backdrop-filter: blur(6px);
+  transition: background 160ms ease, color 160ms ease;
+}
+.ring-views button.active, .ring-views button:hover { background: #d3a557; color: #102e49; }
+.ring-hint { position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; text-align: center; font-size: 12px; color: rgba(241, 228, 200, 0.6); letter-spacing: 0.08em; pointer-events: none; }
+
+.ring-facts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.ring-facts li {
+  padding: 12px 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--line);
+  font-size: 15px; color: var(--ink); text-align: center; animation: rise 0.7s ease both; animation-delay: 240ms;
+}
+.ring-facts li::before { content: '✦ '; color: var(--gold); }
+
+@media (max-width: 640px) {
+  .ring-head h1 { font-size: 38px; }
+  .ring-stage { height: 62vh; }
+}

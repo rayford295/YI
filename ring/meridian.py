@@ -301,6 +301,28 @@ def render(cams, which):
         print("wrote", sc.render.filepath)
 
 
+def export_glb(path):
+    """Web copy: glTF has no Glass BSDF, so stones become Principled transmission."""
+    studio = {"Floor", "Wall", "Key", "Fill", "Rim", "Top", "Front", "EngravePath"}
+    for name in ("Diamond", "Sapphire"):
+        m = bpy.data.materials[name]
+        bsdf = m.node_tree.nodes.new('ShaderNodeBsdfPrincipled')
+        glass = next(n for n in m.node_tree.nodes if n.type == 'BSDF_GLASS')
+        bsdf.inputs['Base Color'].default_value = glass.inputs['Color'].default_value
+        bsdf.inputs['Roughness'].default_value = glass.inputs['Roughness'].default_value
+        bsdf.inputs['IOR'].default_value = glass.inputs['IOR'].default_value
+        bsdf.inputs['Transmission Weight'].default_value = 1.0
+        out = next(n for n in m.node_tree.nodes if n.type == 'OUTPUT_MATERIAL')
+        m.node_tree.links.new(bsdf.outputs[0], out.inputs['Surface'])
+    bpy.ops.object.select_all(action='DESELECT')
+    for ob in bpy.context.scene.objects:
+        if ob.type == 'MESH' and ob.name not in studio and not ob.hide_render:
+            ob.select_set(True)
+    bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB', use_selection=True,
+                              export_apply=True, export_yup=True, export_image_format='NONE')
+    print("exported", path)
+
+
 if __name__ == "__main__":
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     cams = build()
@@ -308,3 +330,5 @@ if __name__ == "__main__":
     if "--render" in argv:
         which = [a for a in argv if a in cams] or list(cams)
         render(cams, which)
+    if "--export" in argv:
+        export_glb(HERE.parent / "public" / "media" / "ring" / "meridian.glb")
