@@ -2,11 +2,12 @@
 
 ## Status
 
-The repository is private and the site is not published. We rehearsed a public release on
-GitHub Pages on 2026-10-24 (it worked: <https://rayford295.github.io/Yi-at-First-Sight/>),
-then took it down to add more features first.
+The repository is public and the site is live at
+<https://rayford295.github.io/Yi-at-First-Sight/>. Every push to `main` redeploys it through
+the `deploy` job in `.github/workflows/ci.yml`. We keep it online so it can be opened at any
+time (decided 2026-10-25); `index.html` carries `noindex, nofollow`.
 
-## When Ready to Publish: GitHub Pages (Public, Free)
+## How It Was Published: GitHub Pages (Public, Free)
 
 1. Make the repository public: **Settings → General → Danger Zone → Change visibility**.
 2. **Settings → Pages → Source: GitHub Actions**.
