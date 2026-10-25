@@ -1,14 +1,43 @@
 # Hosting
 
-## Now: GitHub Pages (public)
+## Status
 
-The site is live at <https://rayford295.github.io/Yi-at-First-Sight/>. The repository is
-public, and `.github/workflows/ci.yml` deploys `dist/` to GitHub Pages on every push to
-`main` after the tests and the build pass. `index.html` carries `noindex, nofollow`, so
-search engines are asked not to list it, but anyone with the link can open it.
+The repository is private and the site is not published. We rehearsed a public release on
+GitHub Pages on 2026-10-24 (it worked: <https://rayford295.github.io/Yi-at-First-Sight/>),
+then took it down to add more features first.
 
-To take the site offline: **Settings → Pages → Unpublish site**, or make the repository
-private again (Pages then stops on a free account).
+## When Ready to Publish: GitHub Pages (Public, Free)
+
+1. Make the repository public: **Settings → General → Danger Zone → Change visibility**.
+2. **Settings → Pages → Source: GitHub Actions**.
+3. Add this job to `.github/workflows/ci.yml` (after `test-and-build`, which must upload
+   `dist` with `actions/upload-pages-artifact@v3` instead of `actions/upload-artifact`):
+
+   ```yaml
+     deploy:
+       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+       needs: test-and-build
+       runs-on: ubuntu-latest
+       permissions:
+         pages: write
+         id-token: write
+       concurrency:
+         group: pages
+         cancel-in-progress: false
+       environment:
+         name: github-pages
+         url: ${{ steps.deployment.outputs.page_url }}
+       steps:
+         - id: deployment
+           uses: actions/deploy-pages@v4
+   ```
+
+4. Push to `main`. The site appears at <https://rayford295.github.io/Yi-at-First-Sight/>
+   about a minute later and updates on every push. `index.html` carries `noindex, nofollow`,
+   so search engines are asked not to list it, but anyone with the link can open it.
+
+To take it offline again: **Settings → Pages → Unpublish site**, then make the repository
+private.
 
 ## Later: a Private Version
 

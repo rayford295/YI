@@ -9,9 +9,8 @@ Ocean apart. Built as a birthday gift for **October 31, 2026**, and meant to gro
 The name puns on the Chinese idiom for "love at first sight" (一见钟情, *yi jian zhong qing*).
 Both names contain the syllable *Yi*: Yi-fan and Jing-yi; the title swaps in the 仪 from Jingyi's name.
 
-**Live site:** <https://rayford295.github.io/Yi-at-First-Sight/>
-
-> Personal photos and messages live here. The repository is public so GitHub Pages can host the site; please be kind and do not redistribute them.
+> Private repository for now. Personal photos and messages live here; do not redistribute.
+> We plan to publish it once more features are in (see [docs/DEPLOY.md](docs/DEPLOY.md)).
 
 <p align="center">
   <img src="docs/screenshots/home.png" width="49%" alt="Home: greeting, day counter, twin clocks" />
@@ -41,7 +40,7 @@ backend, no accounts, nothing leaves the device.
 - [x] Checked in a real browser at desktop, 390 px and 320 px widths
 - [ ] Yifan rewrites the birthday letter in his own words (`src/features/birthday-map/letter.ts`)
 - [ ] Add inside-joke words to Pictionary (`src/features/pictionary/words.ts`)
-- [x] Live on GitHub Pages; every push to `main` redeploys (see [docs/DEPLOY.md](docs/DEPLOY.md))
+- [x] Publishing rehearsed on GitHub Pages (2026-10-24), then taken offline again until more features land
 - [ ] Later: gifts, daily notes, more games, an admin page for adding memories
 
 ## Repository Layout
@@ -67,10 +66,10 @@ Yi-at-First-Sight/
 │       ├── gomoku/
 │       └── pictionary/
 ├── docs/
-│   ├── DEPLOY.md               # hosting: GitHub Pages now, Cloudflare Access later
+│   ├── DEPLOY.md               # how to publish (GitHub Pages) or host privately (Cloudflare)
 │   ├── screenshots/
 │   └── superpowers/            # design spec and implementation plans
-└── .github/workflows/ci.yml    # tests + build on every push; deploys main to Pages
+└── .github/workflows/ci.yml    # tests + build on every push
 ```
 
 Each feature folder has its own README explaining its files and rules.
@@ -104,7 +103,7 @@ npm run preview   # serve dist/ locally
 ```
 
 Stack: Vite, TypeScript (strict), Vitest, Leaflet with OpenStreetMap tiles. Node 22.
-Every push runs the tests and the build; a push to `main` also deploys to GitHub Pages.
+Every push runs the tests and the build.
 
 ## Key Dates
 

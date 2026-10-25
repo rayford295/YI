@@ -8,9 +8,8 @@
 
 “仪见钟情”取自“一见钟情”：一**帆**和静**仪**的名字里都有一个 “Yi”，标题换成了静仪的“仪”。
 
-**网站地址：** <https://rayford295.github.io/Yi-at-First-Sight/>
-
-> 仓库里有私人照片和聊天记录。为了用 GitHub Pages 托管，仓库是公开的，请不要外传。
+> 目前是私有仓库，里面有私人照片和聊天记录，请勿外传。
+> 等功能做得更多以后再公开（见 [docs/DEPLOY.md](docs/DEPLOY.md)）。
 
 <p align="center">
   <img src="docs/screenshots/home.png" width="49%" alt="首页：祝福、天数、双时钟" />
@@ -38,7 +37,7 @@
 - [x] 在真实浏览器里按桌面、390 px、320 px 三种宽度检查过
 - [ ] 一帆用自己的话重写生日信（`src/features/birthday-map/letter.ts`）
 - [ ] 给你画我猜加只有我们俩懂的梗（`src/features/pictionary/words.ts`）
-- [x] 已上线 GitHub Pages，每次推送到 `main` 自动更新（见 [docs/DEPLOY.md](docs/DEPLOY.md)）
+- [x] 在 GitHub Pages 上试发布过一次（2026-10-24），之后先下线，等功能更多再公开
 - [ ] 以后：礼物、每日留言、更多小游戏、添加回忆的后台页面
 
 ## 仓库结构
@@ -64,10 +63,10 @@ Yi-at-First-Sight/
 │       ├── gomoku/
 │       └── pictionary/
 ├── docs/
-│   ├── DEPLOY.md               # 托管：现在是 GitHub Pages，以后可加 Cloudflare 登录
+│   ├── DEPLOY.md               # 怎么公开发布（GitHub Pages）或私密托管（Cloudflare）
 │   ├── screenshots/
 │   └── superpowers/            # 设计文档和实施计划
-└── .github/workflows/ci.yml    # 每次推送跑测试和构建；main 自动部署到 Pages
+└── .github/workflows/ci.yml    # 每次推送自动跑测试和构建
 ```
 
 每个功能文件夹都有自己的 README，说明里面的文件和规则。
@@ -94,7 +93,7 @@ npm run build     # 类型检查并构建到 dist/
 npm run preview   # 本地预览 dist/
 ```
 
-技术栈：Vite、TypeScript（strict）、Vitest，地图用 Leaflet 加 OpenStreetMap 底图。Node 22。每次推送都会跑测试和构建；推送到 `main` 还会自动部署到 GitHub Pages。
+技术栈：Vite、TypeScript（strict）、Vitest，地图用 Leaflet 加 OpenStreetMap 底图。Node 22。每次推送都会自动跑测试和构建。
 
 ## 重要日期
 
