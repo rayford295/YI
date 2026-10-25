@@ -9,7 +9,7 @@ Ocean apart. Built as a birthday gift for **October 31, 2026**, and meant to gro
 The name puns on the Chinese idiom for "love at first sight" (一见钟情, *yi jian zhong qing*).
 Both names contain the syllable *Yi*: Yi-fan and Jing-yi; the title swaps in the 仪 from Jingyi's name.
 
-> Private repository for now. Personal photos and messages live here; do not redistribute.
+> Live at <https://rayford295.github.io/Yi-at-First-Sight/> (not indexed by search engines). Personal photos and messages live here; do not redistribute.
 > We plan to publish it once more features are in (see [docs/DEPLOY.md](docs/DEPLOY.md)).
 
 <p align="center">
