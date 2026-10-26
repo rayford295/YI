@@ -79,7 +79,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
 - [x] Town: cats walk to their new posts when a door opens; iris transition in and out of houses (2026-10-26)
 - [x] Town: footsteps, thud, talk-box and door sounds (synthesised, with a switch), drifting pond and fountain glint (2026-10-26)
-- [x] Domain chosen: chenjingyi.love (2026-10-26); `public/CNAME` and the DNS recipe in `docs/DEPLOY.md` are ready; the site stays offline until we publish
+- [x] Domain chosen: jingyifan.love (2026-10-26); `public/CNAME` and the DNS recipe in `docs/DEPLOY.md` are ready; the site stays offline until we publish
 - [ ] Later: a long road from Shenzhen to College Station as a second map, gifts, daily notes, two players online at once
 ## Key Dates
 
