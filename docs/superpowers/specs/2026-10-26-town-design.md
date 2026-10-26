@@ -51,6 +51,10 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
     opened, nothing left to guard) it starts where it was and walks the shortest free path to the
     new post, waiting if a tile is taken. Going into a house closes an iris on the player; coming
     back opens one. Reduced motion skips the iris. (Added 2026-10-26.)
+11. Time of day follows the player's own city: dawn 6–7 and dusk 17–19 get a warm wash, night a
+    navy one (alpha 0.42), and house windows glow whenever it is not day. Resting cats fidget:
+    every six seconds, with 40% chance, a cat at its home hops to a free neighbouring tile and
+    returns a few seconds later; guards never leave their door. (Added 2026-10-26.)
 7. Tap a tile on the canvas to walk there (shortest path over free tiles); tapping something you
    cannot stand on walks to the nearest free tile beside it, turns to face it and acts as a bump
    would. A house's name floats over its roof while the player is within two tiles of its door.

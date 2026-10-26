@@ -9,6 +9,10 @@ import { BUILDINGS, CAT_HOMES, PARTNER, SPAWN, buildingAt, guardSpot, walkable, 
 import { WorldEngine, type Npc } from './engine';
 import { JINGYI, YIFAN, buildCat, buildSheet, type CatId, type Dir } from './sprites';
 import { WATER_PHASES, renderWater } from './tiles';
+import { phaseAt, tintFor } from './daylight';
+import { clockIn } from '../../core/dates';
+import { config } from '../../core/config';
+import { getLang } from '../../core/i18n';
 import { bumpSound, doorSound, setSoundOn, soundOn, stepSound, talkSound } from './sound';
 
 const catPhoto = (id: CatId): string => `${import.meta.env.BASE_URL}media/cats/${id}.jpg`;
@@ -204,6 +208,8 @@ export function renderWorld(root: HTMLElement): () => void {
     } else openDialog(playerName(other), t('world.partner.line', { done: theirs }), [{ label: t('world.close'), run: closeDialog }]);
   }
 
+  const zone = p === 'jingyi' ? config.her.zone : config.him.zone;
+  let tintAt = 0, tint: ReturnType<typeof tintFor>;
   const engine = new WorldEngine({
     canvas, sheet: buildSheet(p === 'jingyi' ? JINGYI : YIFAN), start, dir, npcs,
     walkable: (x, y) => walkable(x, y, (id) => isUnlocked(id, p)),
@@ -211,12 +217,38 @@ export function renderWorld(root: HTMLElement): () => void {
     onDoor, onBump, onMove: (q) => savePos(p, q),
     onStep: stepSound, onBlocked: bumpSound,
     water: prefersReducedMotion() ? undefined : Array.from({ length: WATER_PHASES }, (_, i) => renderWater(i)),
+    tint: () => {
+      // The sky over the player's own city, re-read once a minute.
+      const now = Date.now();
+      if (now - tintAt > 60_000) { tintAt = now; tint = tintFor(phaseAt(clockIn(zone, new Date(now), getLang()).hour)); }
+      return tint;
+    },
     label: (b) => `${levelNumber(b.level)} · ${t(LEVELS[levelIndex(b.level)].title)}`,
   });
 
   // Coming back from a level the iris opens; cats whose posts changed get up and walk.
   if (returning && !prefersReducedMotion()) void engine.iris('open', 480);
   window.setTimeout(() => { for (const w of walks) engine.walkNpc(w.id, w.to); }, returning ? 500 : 200);
+
+  // A resting cat now and then wanders one tile from its home and comes back.
+  const timers = new Set<number>();
+  const fidget = window.setInterval(() => {
+    if (!dialog.hidden) return;
+    for (const n of cats) {
+      const id = catOf.get(n.id)!;
+      if (!n.id.startsWith('cat:') || Math.random() < 0.6) continue;
+      const home = CAT_HOMES[id];
+      if (n.x !== home.x || n.y !== home.y) continue;
+      const me = engine.position;
+      const spots = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dx, dy]) => ({ x: home.x + dx, y: home.y + dy }))
+        .filter((q) => walkable(q.x, q.y) && !(q.x === me.x && q.y === me.y) && !npcs.some((m) => m.x === q.x && m.y === q.y));
+      const to = spots[Math.floor(Math.random() * spots.length)];
+      if (!to) continue;
+      engine.walkNpc(n.id, to, 320);
+      const back = window.setTimeout(() => { timers.delete(back); engine.walkNpc(n.id, home, 320); }, 2600 + Math.random() * 2000);
+      timers.add(back);
+    }
+  }, 6000);
 
   // Keyboard: arrows / WASD walk, Enter / Space / Z act, Escape closes the talk box.
   const KEYS: Record<string, Dir> = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right', W: 'up', S: 'down', A: 'left', D: 'right' };
@@ -272,6 +304,7 @@ export function renderWorld(root: HTMLElement): () => void {
   const offQuest = onQuestChange(() => { if (getPlayer()) { teardown(); renderWorld(root); } });
 
   const teardown = () => {
+    clearInterval(fidget); timers.forEach((id) => clearTimeout(id));
     saveCatSpots();
     window.removeEventListener('pagehide', saveCatSpots);
     engine.destroy();

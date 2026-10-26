@@ -219,6 +219,20 @@ export function fountainGlint(ctx: CanvasRenderingContext2D, phase: number): voi
   }
 }
 
+/** Warm light in every house window, for dusk and night; drawn over the evening wash. */
+export function litWindows(ctx: CanvasRenderingContext2D): void {
+  const roofH = TILE * 2 - 4;
+  for (const b of BUILDINGS) {
+    const x = (b.door.x - 1) * TILE, y = (b.door.y - 2) * TILE, w = TILE * 3;
+    for (const wx of [x + 3, x + w - 10]) {
+      ctx.fillStyle = '#ffd98a';
+      ctx.fillRect(wx + 1, y + roofH + 6, 5, 5);
+      ctx.fillStyle = C.windowFrame;
+      ctx.fillRect(wx + 3, y + roofH + 6, 1, 5);
+    }
+  }
+}
+
 /** A small gold flag on a roof: drawn per frame, since it depends on progress. */
 export function flag(ctx: CanvasRenderingContext2D, b: Building, wave: number): void {
   const x = (b.door.x + 1) * TILE + 9, y = (b.door.y - 2) * TILE - 4;

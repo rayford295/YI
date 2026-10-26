@@ -19,9 +19,10 @@ points to the epilogue.
 | `tiles.ts` | Paints the ground and the houses once onto an offscreen canvas (`renderTown`), the pond in three phases (`renderWater`), the fountain glint and the roof `flag` |
 | `sprites.ts` | Pixel art in code: `JINGYI`, `YIFAN` (12×16, four facings, two walk frames), the cats `COFFEE` and `DUODUO` (two frames, a tail flick); `buildSheet` / `buildCat` pre-render them |
 | `engine.ts` | `step`, `faced` and `findPath` (pure rules), `WorldEngine` (grid movement, bump-to-talk, NPC walks, the iris, camera, the rAF loop, integer pixel scale, the pond frames and the fountain glint) |
+| `daylight.ts` | `phaseAt(hour)` and `tintFor(phase)`: dawn, day, dusk, night as a wash over the map plus lit windows |
 | `sound.ts` | Footstep, thud, talk-box blip and door, synthesised with the Web Audio API on the first key or tap; `soundOn` / `setSoundOn` (`yi.sound`) |
 | `world.ts`, `world.css` | The page: canvas, d-pad + A button (hidden on wide pointer devices), the talk box with typewriter text, HUD and footer |
-| `town.test.ts`, `engine.test.ts` | Map shape, one building per level, every door reachable from the spawn, cat homes on free ground, step/turn/face rules, shortest paths |
+| `town.test.ts`, `engine.test.ts`, `daylight.test.ts` | Map shape, one building per level, every door reachable from the spawn, cat homes on free ground, step/turn/face rules, shortest paths |
 
 Controls: arrows or WASD walk; Enter, Space or Z go in or talk; Escape closes the talk box. A key
 tap moves one tile; a held key keeps walking. Tapping a tile on the canvas walks there by the
@@ -33,6 +34,11 @@ Sounds: a soft footfall per step, a thud when walking into something solid, a bl
 box opens, two notes when a door opens. All are synthesised; there are no audio files. **Sound: on /
 off** in the footer switches them and is remembered on the device. The pond's highlights drift and
 the fountain glints; under reduced motion the water stands still.
+
+The town keeps the time of the player's own city (Shenzhen for Jingyi, College Station for Yifan,
+from `config`): at dawn and dusk a warm wash, at night a navy one, and the house windows light up
+after five in the afternoon. A resting cat now and then hops to a tile next to its home and comes
+back.
 
 Going into a house, the picture closes to a circle on the player (an iris, 380 ms); coming back it
 opens again. Reduced motion skips both.

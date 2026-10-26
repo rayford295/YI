@@ -1,7 +1,7 @@
 // The walking engine: grid steps, facing, bumping, a camera that follows, one rAF loop.
 // The rules (`step`, `faced`) are pure so they can be tested; the class wires them to a canvas.
 import { HEIGHT, WIDTH, BUILDINGS, buildingAt, type Building, type Point } from './town';
-import { TILE, flag, fountainGlint, renderTown } from './tiles';
+import { TILE, flag, fountainGlint, litWindows, renderTown } from './tiles';
 import { SPRITE_H, SPRITE_W, type Dir, type SpriteSheet } from './sprites';
 
 export interface Mover { x: number; y: number; dir: Dir }
@@ -37,6 +37,7 @@ export interface EngineOptions {
   onBlocked?(): void;                           // walked into something solid, at most every 350 ms
   label?(b: Building): string;                 // house name shown when the player is near its door
   water?: HTMLCanvasElement[];                  // pond frames cycled over the town; omit for a still pond
+  tint?(): { color: string; alpha: number; lights: boolean } | undefined;  // evening wash, asked every frame
 }
 
 const STEP_MS = 190;
@@ -331,6 +332,14 @@ export class WorldEngine {
       },
     });
     ents.sort((a, b) => a.y - b.y).forEach((e) => e.draw());
+    // Time of day: a wash over the whole map, then warm windows on top of it.
+    const tn = this.o.tint?.();
+    if (tn) {
+      ctx.globalAlpha = tn.alpha; ctx.fillStyle = tn.color;
+      ctx.fillRect(0, 0, WIDTH * TILE, HEIGHT * TILE);
+      ctx.globalAlpha = 1;
+      if (tn.lights) litWindows(ctx);
+    }
     ctx.restore();
 
     // The name of a house whose door is within two tiles, as a plate over its roof (screen space).
