@@ -1,4 +1,4 @@
-// The journey map: one node per level along a gold meridian. The new home page.
+// The journey list: one node per level along a gold meridian. The fallback view of the town (#/journey).
 import './journey.css';
 import { t } from '../../core/i18n';
 import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange, clearedByAll } from '../../core/quest';
@@ -51,6 +51,8 @@ export function renderJourney(root: HTMLElement): () => void {
       </div>
       ${isCleared('ring', p) ? `<a class="cta journey-epilogue${clearedByAll('ring') ? '' : ' sealed'}" href="#/letter">${t('journey.epilogue')}</a>` : ''}
       <p class="journey-foot">
+        <a href="#/">${t('world.town')}</a>
+        <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="journey-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="journey-reset">${t('journey.reset')}</button>

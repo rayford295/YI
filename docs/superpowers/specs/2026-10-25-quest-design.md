@@ -16,7 +16,8 @@ later must be cheap.
 | Level registry + progress | `src/core/quest.ts` | `LEVELS` array (id, route, title/story keys); per-player progress in `localStorage` (`yi.quest.<player>`); `getPlayer`, `setPlayer`, `isUnlocked`, `isCleared`, `clear`, `next`, `reset`; `quest:change` events |
 | Cleared overlay | `src/core/quest-ui.ts` | `showCleared(levelId)`: full-screen card with the player's avatar, "level N cleared", a one-line story, and a button to the next level |
 | Player select | `src/features/start/` | route `/start`; two avatar cards; choosing one sets the player and goes to the journey map |
-| Journey map | `src/features/journey/` | route `/` (new home); a gold meridian path with one node per level: cleared (gold, ✓), current (pulsing), locked (lock) |
+| Town (2026-10-26) | `src/features/world/` | route `/` (home): a walkable pixel town, one house per level; see `2026-10-26-town-design.md` |
+| Journey list | `src/features/journey/` | route `/journey`; a gold meridian path with one node per level: cleared (gold, ✓), current (pulsing), locked (lock) |
 | Level 1 "Met" | `src/features/home/` (route moves to `/met`) | the old home page plus a quiz card (`src/core/quiz.ts`); a correct answer clears |
 | Level 2 "Map" | `src/features/birthday-map/` | three hidden hearts on the map; find all three |
 | Level 3 "Moments" | `src/features/moments/` | put five shuffled memories in date order (tap two to swap) |

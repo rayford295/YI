@@ -25,7 +25,8 @@ the answer is remembered on the device. Then:
 | Route | Page | What it does |
 |---|---|---|
 | `#/start` | **Start** | Pick a player, Jingyi or Yifan; progress is per player, per device |
-| `#/` | **Journey** | The level map: a gold meridian with one node per level; a locked level cannot be opened until the one before it is cleared |
+| `#/` | **Town** | A walkable pixel town (keyboard or on-screen pad): one house per level, a cat guards each locked door, a gold flag flies on each cleared roof; walk into a door to enter the level |
+| `#/journey` | **Journey (list view)** | The level map as a gold meridian with one node per level; the fallback view of the town |
 | `#/met` | **The Day We Met** (level 1: answer one question from `src/core/quiz.ts`) | Birthday greeting, "day N since we met" (Shenzhen calendar), twin clocks that turn to night colours after 18:00, live hour difference, countdown to flight CYF925 |
 | `#/map` | **Love Map** (level 2: find the three hidden hearts) | Pacific-centred map; one heart per place opens its memory cards; rose arc between our two cities with a heart flying along it; gold CYF925 route to New York; **Play our story** tours every memory |
 | `#/moments` | **Moments** (level 3: put five memories in order) | Timeline of every memory, each badged with its day number since we met |
@@ -77,6 +78,7 @@ YI/
 │   │   └── config.ts           #   names, time zones, key dates, next meeting
 │   └── features/               # one folder per feature: code, styles, data, tests, README
 │       ├── gate/ start/ journey/
+│       ├── world/              #   the town: town.ts (map), tiles.ts, sprites.ts (pixel art in code), engine.ts
 │       ├── home/ birthday-map/ moments/ puzzle/
 │       ├── gomoku/ pictionary/ games/
 │       ├── stars/              #   catalog.ts (stars), sky.ts (projection), stars.ts (page)

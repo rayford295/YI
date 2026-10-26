@@ -31,3 +31,4 @@ a.node.cleared:hover circle { fill: #e7bc6e; }
 .journey-foot .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
 .journey-epilogue { animation: rise 0.8s ease both; animation-delay: 200ms; }
 .journey-epilogue.sealed { background: var(--card); color: var(--muted); border: 1px solid var(--line); box-shadow: none; }
+.journey-foot a { color: var(--muted); }

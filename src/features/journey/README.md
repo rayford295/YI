@@ -1,6 +1,6 @@
 # Journey
 
-Route: `#/` (the home page since the site became a game).
+Route: `#/journey`, the list view. The home page is the walkable town (`src/features/world/`); this page is its fallback and shows the same progress.
 
 A gold meridian with one node per level from `src/core/quest.ts`: cleared nodes are gold with a
 tick, the current one pulses, locked ones show a lock and cannot be opened. The header shows the

@@ -3,6 +3,7 @@ import { registerSW } from 'virtual:pwa-register';
 import { t, getLang, setLang, onLangChange } from './core/i18n';
 import { renderStart } from './features/start/start';
 import { renderJourney } from './features/journey/journey';
+import { renderWorld } from './features/world/world';
 import { LEVELS, getPlayer, isUnlocked, levelByRoute, clearedByAll } from './core/quest';
 import { avatarHtml, toast } from './core/quest-ui';
 import { gatePassed } from './core/gate';
@@ -10,10 +11,11 @@ import { renderGate } from './features/gate/gate';
 
 export type Page = (root: HTMLElement) => () => void;
 
-// Start and the journey map ship in the main bundle; every level loads on first visit, so the
+// Start, the town and the list view ship in the main bundle; every level loads on first visit, so the
 // first paint does not carry Leaflet, three.js or MediaPipe.
 const routes: Record<string, () => Promise<Page>> = {
-  '/': async () => renderJourney,
+  '/': async () => renderWorld,
+  '/journey': async () => renderJourney,
   '/start': async () => renderStart,
   '/met': () => import('./features/home/home').then((m) => m.renderHome),
   '/map': () => import('./features/birthday-map/map').then((m) => m.renderMap),
@@ -25,7 +27,7 @@ const routes: Record<string, () => Promise<Page>> = {
   '/draw': () => import('./features/pictionary/pictionary').then((m) => m.renderPictionary),
   '/ring': () => import('./features/ring/ring').then((m) => m.renderRing),
 };
-const viewClass: Record<string, string> = { '/': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter' };
+const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter' };
 const GAMES = ['/gomoku', '/draw'];
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
