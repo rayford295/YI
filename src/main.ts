@@ -27,8 +27,9 @@ const routes: Record<string, () => Promise<Page>> = {
   '/draw': () => import('./features/pictionary/pictionary').then((m) => m.renderPictionary),
   '/ring': () => import('./features/ring/ring').then((m) => m.renderRing),
   '/sync': () => import('./features/sync/sync').then((m) => m.renderSync),
+  '/cs': () => import('./features/cstation/cstation').then((m) => m.renderCStation),
 };
-const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync' };
+const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'cs' };
 const GAMES = ['/gomoku', '/draw'];
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;

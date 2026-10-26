@@ -5,7 +5,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/for-two%20players-d3a557?style=flat-square&labelColor=0b2036" alt="for two players" />
   <img src="https://img.shields.io/badge/levels-8%20%2B%20an%20epilogue-d3a557?style=flat-square&labelColor=0b2036" alt="8 levels and an epilogue" />
-  <img src="https://img.shields.io/badge/tests-106%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="97 tests passing" />
+  <img src="https://img.shields.io/badge/tests-110%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="97 tests passing" />
   <img src="https://img.shields.io/badge/TypeScript-strict-d3a557?style=flat-square&labelColor=0b2036" alt="TypeScript strict" />
   <img src="https://img.shields.io/badge/backend-none-d3a557?style=flat-square&labelColor=0b2036" alt="no backend" />
   <img src="https://img.shields.io/badge/art-drawn%20in%20code-d3a557?style=flat-square&labelColor=0b2036" alt="all art drawn in code" />
@@ -48,6 +48,8 @@
   each tells you, in its own way, which level to clear first. When a door opens they get up and
   walk to the next one, and with nothing left to guard they go and sunbathe by the pond or sit in
   the middle of the square.
+- **The signpost** at the edge of the square leads to a second map: a day of Yifan's in College
+  Station, seven stops with their hours, and his sprite standing wherever the clock there puts him.
 - **The ring** is the eighth house. When both of us have reached it, the partner points to the
   last letter. Progress lives on each phone, so a short code (or a link) carries it across.
 
@@ -76,7 +78,7 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 ```bash
 npm install
 npm run dev       # http://localhost:5173
-npm test          # 106 unit tests (Vitest)
+npm test          # 110 unit tests (Vitest)
 npm run build     # strict type-check + production build
 npm run banner    # redraw docs/banner.svg from the sprite data
 ```

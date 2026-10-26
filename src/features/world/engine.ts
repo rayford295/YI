@@ -1,6 +1,6 @@
 // The walking engine: grid steps, facing, bumping, a camera that follows, one rAF loop.
 // The rules (`step`, `faced`) are pure so they can be tested; the class wires them to a canvas.
-import { HEIGHT, WIDTH, BUILDINGS, buildingAt, type Building, type Point } from './town';
+import { YI_TOWN, buildingAt, type Building, type Point, type TownMap } from './town';
 import { TILE, flag, fountainGlint, litWindows, renderTown } from './tiles';
 import { SPRITE_H, SPRITE_W, type Dir, type SpriteSheet } from './sprites';
 
@@ -24,6 +24,7 @@ export interface Npc { id: string; x: number; y: number; frames: HTMLCanvasEleme
 
 export interface EngineOptions {
   canvas: HTMLCanvasElement;
+  map?: TownMap;                                // Yi Town unless told otherwise
   sheet: SpriteSheet;
   start: Point;
   dir?: Dir;
@@ -71,7 +72,8 @@ const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
 
 export class WorldEngine {
   private ctx: CanvasRenderingContext2D;
-  private town = renderTown();
+  private map: TownMap;
+  private town: HTMLCanvasElement;
   private mover: Mover;
   private from: Point;
   private t = 1;                       // progress of the current step, 1 = standing
@@ -91,6 +93,8 @@ export class WorldEngine {
   paused = false;
 
   constructor(private o: EngineOptions) {
+    this.map = o.map ?? YI_TOWN;
+    this.town = renderTown(this.map);
     this.ctx = o.canvas.getContext('2d')!;
     this.mover = { x: o.start.x, y: o.start.y, dir: o.dir ?? 'down' };
     this.from = { ...o.start };
@@ -119,12 +123,12 @@ export class WorldEngine {
   /** The A button: talk to the NPC in front, or go through the door you stand on / face. */
   interact(): void {
     if (this.paused || this.t < 1) return;
-    const here = buildingAt(this.mover.x, this.mover.y);
+    const here = buildingAt(this.mover.x, this.mover.y, this.map);
     if (here) { this.o.onDoor(here); return; }
     const f = faced(this.mover);
     const npc = this.npcAt(f.x, f.y);
     if (npc) { this.o.onBump(npc); return; }
-    const b = buildingAt(f.x, f.y);
+    const b = buildingAt(f.x, f.y, this.map);
     if (b && this.o.walkable(f.x, f.y)) this.o.onDoor(b);
   }
 
@@ -223,7 +227,7 @@ export class WorldEngine {
     this.mover = { ...this.mover, dir: dx === 1 ? 'right' : dx === -1 ? 'left' : dy === 1 ? 'down' : 'up' };
     const npc = this.npcAt(target.x, target.y);
     if (npc) { this.bumpAt = now; this.o.onBump(npc); return; }
-    const b = buildingAt(target.x, target.y);
+    const b = buildingAt(target.x, target.y, this.map);
     if (b && !this.o.walkable(target.x, target.y)) { const g = this.o.npcs.find((n) => n.id === `guard:${b.level}`); if (g) this.o.onBump(g); }
   }
 
@@ -238,7 +242,7 @@ export class WorldEngine {
         this.t = Math.min(1, this.t + dt / STEP_MS);
         if (this.t === 1) {
           this.o.onMove?.(this.position);
-          const b = buildingAt(this.mover.x, this.mover.y);
+          const b = buildingAt(this.mover.x, this.mover.y, this.map);
           if (b) { this.releaseAll(); this.o.onDoor(b); }
           else this.tryStep(now);
         }
@@ -284,7 +288,7 @@ export class WorldEngine {
     const px = (this.from.x + (this.mover.x - this.from.x) * k) * TILE;
     const py = (this.from.y + (this.mover.y - this.from.y) * k) * TILE;
     // Camera: centre on the player, clamp to the map, snap to device pixels.
-    const mapW = WIDTH * TILE * scale, mapH = HEIGHT * TILE * scale;
+    const mapW = this.map.width * TILE * scale, mapH = this.map.height * TILE * scale;
     let camX = px * scale + TILE * scale / 2 - viewW / 2;
     let camY = py * scale + TILE * scale / 2 - viewH / 2;
     camX = Math.max(0, Math.min(mapW - viewW, camX));
@@ -304,9 +308,9 @@ export class WorldEngine {
     const wave = Math.floor(this.frameClock / 400) % 2;
     if (this.o.water?.length) {
       ctx.drawImage(this.o.water[Math.floor(this.frameClock / 450) % this.o.water.length], 0, 0);
-      fountainGlint(ctx, Math.floor(this.frameClock / 500) % 2);
+      fountainGlint(ctx, Math.floor(this.frameClock / 500) % 2, this.map);
     }
-    for (const b of BUILDINGS) if (this.o.cleared(b.level)) flag(ctx, b, wave);
+    for (const b of this.map.buildings) if (this.o.cleared(b.level)) flag(ctx, b, wave);
 
     // Entities, painted back to front so a sprite lower on the map overlaps one above it.
     const walkFrame = this.t < 1 ? Math.floor(this.frameClock / 120) % 2 : 0;
@@ -336,14 +340,14 @@ export class WorldEngine {
     const tn = this.o.tint?.();
     if (tn) {
       ctx.globalAlpha = tn.alpha; ctx.fillStyle = tn.color;
-      ctx.fillRect(0, 0, WIDTH * TILE, HEIGHT * TILE);
+      ctx.fillRect(0, 0, this.map.width * TILE, this.map.height * TILE);
       ctx.globalAlpha = 1;
-      if (tn.lights) litWindows(ctx);
+      if (tn.lights) litWindows(ctx, this.map);
     }
     ctx.restore();
 
     // The name of a house whose door is within two tiles, as a plate over its roof (screen space).
-    if (this.o.label) for (const b of BUILDINGS) {
+    if (this.o.label) for (const b of this.map.buildings) {
       if (Math.abs(b.door.x - this.mover.x) + Math.abs(b.door.y - this.mover.y) > 2) continue;
       const text = this.o.label(b);
       const x = (b.door.x + 0.5) * TILE * scale - camX, y = (b.door.y - 2) * TILE * scale - camY - 8;

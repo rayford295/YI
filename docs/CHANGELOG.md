@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.2.0 (2026-10-26)
+
+- A Day in College Station (`#/cs`): a second map of Yifan's day, seven stops with hours and
+  stories, a strip that lights the current stop, and Yifan's sprite standing wherever the clock
+  there puts him. The engine now takes any map; road and basketball-court tiles; controls shared.
+- A signpost in the town square leads there.
+
 ## 1.1.0 (2026-10-26)
 
 - Progress codes (`#/sync`): carry progress between our two phones as a short code or link, so

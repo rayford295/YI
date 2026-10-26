@@ -5,9 +5,10 @@ import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, on
 import { avatarHtml, playerName } from '../../core/quest-ui';
 import { prefersReducedMotion } from '../../core/motion';
 import { escapeAttr } from '../../core/html';
-import { BUILDINGS, CAT_HOMES, PARTNER, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
+import { BUILDINGS, CAT_HOMES, PARTNER, SIGNPOST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
-import { JINGYI, YIFAN, buildCat, buildSheet, type CatId, type Dir } from './sprites';
+import { bindControls, padHtml } from './controls';
+import { JINGYI, YIFAN, buildCat, buildSheet, buildSign, type CatId, type Dir } from './sprites';
 import { WATER_PHASES, renderWater } from './tiles';
 import { phaseAt, tintFor } from './daylight';
 import { clockIn } from '../../core/dates';
@@ -72,22 +73,15 @@ export function renderWorld(root: HTMLElement): () => void {
           </div>
         </div>
       </div>
-      <div class="world-pad">
-        <div class="world-dpad" aria-label="d-pad">
-          <button type="button" class="u" data-dir="up" aria-label="up">▲</button>
-          <button type="button" class="l" data-dir="left" aria-label="left">◀</button>
-          <span class="c" aria-hidden="true"></span>
-          <button type="button" class="r" data-dir="right" aria-label="right">▶</button>
-          <button type="button" class="d" data-dir="down" aria-label="down">▼</button>
-        </div>
-        <button type="button" class="world-a" id="world-a" aria-label="A">A</button>
-      </div>
+      ${padHtml()}
       <p class="world-hint keys">${t('world.hint.keys')}</p>
       <p class="world-hint touch">${t('world.hint.touch')}</p>
       <p class="world-foot">
         <a href="#/journey">${t('world.list')}</a>
         <span aria-hidden="true"> · </span>
         <a href="#/sync">${t('world.sync')}</a>
+        <span aria-hidden="true"> · </span>
+        <a href="#/cs">${t('world.cs')}</a>
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="world-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>
@@ -131,6 +125,7 @@ export function renderWorld(root: HTMLElement): () => void {
   window.addEventListener('pagehide', saveCatSpots);
   const npcs: Npc[] = [
     { id: `partner:${other}`, x: PARTNER.x, y: PARTNER.y, frames: [], sheet: buildSheet(other === 'jingyi' ? JINGYI : YIFAN), dir: 'left' },
+    { id: 'sign:cs', x: SIGNPOST.x, y: SIGNPOST.y, frames: buildSign() },   // the road to College Station
     ...cats,
   ];
 
@@ -192,6 +187,10 @@ export function renderWorld(root: HTMLElement): () => void {
     ]);
   }
   function onBump(n: Npc): void {
+    if (n.id === 'sign:cs') {
+      openDialog(t('world.sign.name'), t('world.sign.line'), [{ label: t('world.sign.go'), run: () => go('#/cs') }, { label: t('world.later'), run: closeDialog }]);
+      return;
+    }
     const cat = catOf.get(n.id);
     if (cat) {
       const close = [{ label: t('world.close'), run: closeDialog }];
@@ -266,48 +265,7 @@ export function renderWorld(root: HTMLElement): () => void {
     }
   }, 6000);
 
-  // Keyboard: arrows / WASD walk, Enter / Space / Z act, Escape closes the talk box.
-  const KEYS: Record<string, Dir> = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right', W: 'up', S: 'down', A: 'left', D: 'right' };
-  const onKeyDown = (e: KeyboardEvent) => {
-    const tgt = e.target as HTMLElement | null;
-    if (tgt && /^(INPUT|TEXTAREA|SELECT)$/.test(tgt.tagName)) return;
-    if (!dialog.hidden) {
-      if (e.key === 'Escape') { e.preventDefault(); closeDialog(); }
-      else if ((e.key === 'Enter' || e.key === ' ' || e.key === 'z' || e.key === 'Z') && !(tgt instanceof HTMLButtonElement)) { e.preventDefault(); primary?.run(); }
-      return;
-    }
-    const d = KEYS[e.key];
-    if (d) { e.preventDefault(); if (!e.repeat) engine.press(d); return; }
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'z' || e.key === 'Z') { e.preventDefault(); engine.interact(); }
-  };
-  const onKeyUp = (e: KeyboardEvent) => { const d = KEYS[e.key]; if (d) engine.release(d); };
-  const onBlur = () => engine.releaseAll();
-  window.addEventListener('keydown', onKeyDown);
-  window.addEventListener('keyup', onKeyUp);
-  window.addEventListener('blur', onBlur);
-  // Tap (not drag) on the map to walk there.
-  let tap: { x: number; y: number } | undefined;
-  canvas.addEventListener('pointerdown', (e) => { canvas.focus({ preventScroll: true }); tap = { x: e.clientX, y: e.clientY }; });
-  canvas.addEventListener('pointerup', (e) => {
-    if (!tap || Math.hypot(e.clientX - tap.x, e.clientY - tap.y) > 10) { tap = undefined; return; }
-    tap = undefined;
-    if (!dialog.hidden) return;
-    const r = canvas.getBoundingClientRect();
-    engine.tapAt(e.clientX - r.left, e.clientY - r.top);
-  });
-
-  // The d-pad: hold to keep walking.
-  root.querySelectorAll<HTMLButtonElement>('.world-dpad button').forEach((b) => {
-    const d = b.dataset.dir as Dir;
-    const down = (e: PointerEvent) => { e.preventDefault(); b.setPointerCapture(e.pointerId); b.classList.add('down'); engine.press(d); };
-    const up = () => { b.classList.remove('down'); engine.release(d); };
-    b.addEventListener('pointerdown', down);
-    b.addEventListener('pointerup', up);
-    b.addEventListener('pointercancel', up);
-    b.addEventListener('lostpointercapture', up);
-    b.addEventListener('contextmenu', (e) => e.preventDefault());
-  });
-  root.querySelector('#world-a')!.addEventListener('click', () => { if (dialog.hidden) engine.interact(); else primary?.run(); });
+  const unbind = bindControls({ engine, canvas, root, dialog, primary: () => primary?.run(), close: closeDialog });
 
   const soundBtn = root.querySelector<HTMLButtonElement>('#world-sound')!;
   soundBtn.addEventListener('click', () => {
@@ -325,9 +283,7 @@ export function renderWorld(root: HTMLElement): () => void {
     window.removeEventListener('pagehide', saveCatSpots);
     engine.destroy();
     clearInterval(typing);
-    window.removeEventListener('keydown', onKeyDown);
-    window.removeEventListener('keyup', onKeyUp);
-    window.removeEventListener('blur', onBlur);
+    unbind();
     offQuest();
   };
   return teardown;

@@ -205,6 +205,33 @@ export const DUODUO: Cat = {
 };
 export const CATS: Record<CatId, Cat> = { coffee: COFFEE, duoduo: DUODUO };
 
+// A wooden signpost with an arrow pointing east, where the road out of town would be.
+export const SIGN_PALETTE: Palette = { w: '#8a5a32', d: '#5a3a1e', c: '#f4e9d6', n: '#102e49' };
+export const SIGN: string[] = [
+  '............',
+  '............',
+  '............',
+  '.wwwwwwwwww.',
+  '.wccccccccwd',
+  '.wcnnncncnwd',
+  '.wccccccccwd',
+  '.wwwwwwwwwwd',
+  '..dddddddddd',
+  '.....ww.....',
+  '.....wwd....',
+  '.....wwd....',
+  '.....wwd....',
+  '.....wwd....',
+  '....dwwdd...',
+  '............',
+];
+export function buildSign(): HTMLCanvasElement[] {
+  const c = document.createElement('canvas');
+  c.width = SPRITE_W; c.height = SPRITE_H;
+  paint(c.getContext('2d')!, SIGN, SIGN_PALETTE, 0, 0);
+  return [c];
+}
+
 export const SPRITE_W = 12;
 export const SPRITE_H = 16;
 
