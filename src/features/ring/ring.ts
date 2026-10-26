@@ -36,6 +36,7 @@ export function renderRing(root: HTMLElement): () => void {
         <p class="eyebrow">${t('ring.eyebrow')}</p>
         <h1>${t('ring.title')}</h1>
         <p class="ring-sub">${t('ring.subtitle')}</p>
+        <p class="ring-foot"><button type="button" class="link" id="ring-replay">▶ ${t('ring.intro.replay')}</button></p>
       </header>
       <div class="ring-stage card" id="ring-stage">
         <canvas id="ring-canvas" aria-label="${t('ring.title')}"></canvas>
@@ -84,7 +85,6 @@ export function renderRing(root: HTMLElement): () => void {
         <li>${t('ring.fact.coords')}</li>
         <li>${t('ring.fact.sapphire')}</li>
       </ul>
-      <p class="ring-foot"><button type="button" class="link" id="ring-replay">${t('ring.intro.replay')}</button></p>
     </section>`;
 
   const stage = root.querySelector<HTMLElement>('#ring-stage')!;
