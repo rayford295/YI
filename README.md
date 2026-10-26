@@ -10,12 +10,6 @@ something that happened to us. The last house holds a ring.
   <img src="docs/screenshots/demo.gif" width="640" alt="Walking through Yi Town: talking to the partner by the fountain, bumping into Coffee the cat at a locked door, and opening the Pictionary house" />
 </p>
 
-<p align="center">
-  <img src="docs/screenshots/start.png" width="32%" alt="Who are you? Pick Jingyi or Yifan" />
-  <img src="docs/screenshots/stars.png" width="32%" alt="That Night's Sky: the sky over Shenzhen on the night we met" />
-  <img src="docs/screenshots/ring.png" width="32%" alt="The Ring: her Meridian ring in 3D, engraved inside" />
-</p>
-
 Yifan and Jingyi live thirteen hours and one Pacific Ocean apart, in College Station, Texas and
 Shenzhen, China. The site was built as a birthday gift for **October 31, 2026** and is meant to
 keep growing. The name puns on 一见钟情 (*love at first sight*): both names carry the syllable

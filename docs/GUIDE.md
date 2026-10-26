@@ -96,7 +96,6 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
   <img src="screenshots/gomoku.png" width="32%" alt="Level 5: Gomoku" />
   <img src="screenshots/draw.png" width="32%" alt="Level 6: Pictionary" />
   <img src="screenshots/stars.png" width="32%" alt="Level 7: That Night's Sky" />
-  <img src="screenshots/ring.png" width="32%" alt="Level 8: The Ring" />
   <img src="screenshots/town.png" width="32%" alt="Yi Town" />
   <img src="screenshots/town-phone.png" width="32%" alt="The town on a phone" />
 </p>
