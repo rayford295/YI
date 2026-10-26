@@ -149,7 +149,7 @@ body { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35); }
 /* Words that stand on the grass with no panel of their own sit on a talk-box-coloured strip, so
    they read at night as well as by day. One list here rather than a rule per page. */
 .diff, .moment-more, .puzzle-caption, .puzzle-foot, .gomoku-status, .draws, .draw-roles, .draw-score > span, .seconds,
-.stars-at, .stars-foot, .journey-foot {
+.stars-at, .stars-foot, .journey-foot, .sync-foot {
   width: fit-content; max-width: 100%; margin-inline: auto; justify-self: center; padding: 6px 14px; border-radius: 10px;
   background: rgba(11, 32, 54, 0.88); color: #f1e4c8; border: 2px solid #d3a557; text-shadow: none; font-style: normal;
 }
@@ -161,3 +161,4 @@ body { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35); }
 .puzzle-foot .link, .stars-foot .link, .stars-foot span, .journey-foot .link, .journey-foot a, .journey-foot span, .draws { color: #f1e4c8; }
 .map-head.sign { margin-bottom: 10px; }
 .g-btn:not(.primary), .d-btn:not(.primary) { background: #f4e9d6; }
+.sync-foot a { color: #f1e4c8; }
