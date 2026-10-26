@@ -2,9 +2,8 @@
   "name": "yi-at-first-sight",
   "version": "0.1.0",
   "scripts": {
-    "faces": "node -e \"const fs=require('fs');const f='src/features/ring/faces.json';if(!fs.existsSync(f))fs.writeFileSync(f,process.env.FACES_JSON||fs.readFileSync('src/features/ring/faces.example.json'))\"",
-    "dev": "npm run -s faces && vite",
-    "build": "npm run -s faces && tsc --noEmit && vite build",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run"
   },
@@ -15,7 +14,6 @@
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.1.1",
     "@types/three": "^0.186.0",
-    "@vladmandic/face-api": "^1.7.15",
     "leaflet": "^1.9.4",
     "three": "^0.186.1"
   },

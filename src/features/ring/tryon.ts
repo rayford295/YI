@@ -18,8 +18,6 @@ export interface TryOnHandles {
   update(now: number): boolean;
   /** Put the ring model in the scene (removing any previous one). */
   setModel(model: THREE.Object3D | null, outerRadius: number): void;
-  /** Hide the ring without stopping tracking (used while the face gate is closed). */
-  setEnabled(on: boolean): void;
   switchCamera(): Promise<void>;
   stop(): void;
 }
@@ -66,7 +64,6 @@ export async function startTryOn(mount: HTMLElement, environment: THREE.Texture)
   rig.visible = false;
   scene.add(rig);
 
-  let enabled = false;
   let tracked = false;
   let model: THREE.Object3D | null = null;
   let outerR = 10;
@@ -113,7 +110,7 @@ export async function startTryOn(mount: HTMLElement, environment: THREE.Texture)
     const scale = spacing / MCP_SPACING_MM;
 
     if (!tracked) { sPos.copy(pos); sQuat.copy(q); sScale = scale; tracked = true; }
-    rig.visible = enabled;
+    rig.visible = true;
     sPos.lerp(pos, 0.45);
     sQuat.slerp(q, 0.45);
     sScale += (scale - sScale) * 0.45;
@@ -132,7 +129,6 @@ export async function startTryOn(mount: HTMLElement, environment: THREE.Texture)
 
   return {
     video, scene, camera, update, setModel, stop,
-    setEnabled: (on: boolean) => { enabled = on; rig.visible = on && tracked; },
     switchCamera: async () => { facing = facing === 'user' ? 'environment' : 'user'; await openCamera(); },
   };
 }

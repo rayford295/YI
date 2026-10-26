@@ -7,7 +7,6 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { t } from '../../core/i18n';
 import { reducedMotion } from '../../core/html';
 import { startTryOn, type TryOnHandles } from './tryon';
-import { identify, hasEnrolled, loadFaceModels, ringFor, type Person } from './face';
 
 const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb' } as const;
 type Which = keyof typeof MODELS;
@@ -100,11 +99,6 @@ export function renderRing(root: HTMLElement): () => void {
   let tryon: TryOnHandles | null = null;
   let tryBusy = false;
   let which: Which = 'hers';
-  // Face gate: who is in front of the camera decides which ring may be worn.
-  let who: Person | null = null;
-  let faceTimer = 0;
-  let faceNote = '';
-  let flash = { text: '', until: 0 };   // a short-lived note that beats faceNote
   const whichBtn = (w: Which) => root.querySelector<HTMLButtonElement>(`.ring-which button[data-which="${w}"]`)!;
   const loader = new GLTFLoader();
   const pose = (v: View) => ({ pos: VIEWS[v].pos.clone().multiplyScalar(scale), target: VIEWS[v].target.clone().multiplyScalar(scale) });
@@ -153,41 +147,15 @@ export function renderRing(root: HTMLElement): () => void {
   }));
   const choose = (w: Which) => { which = w; setActive('.ring-which', whichBtn(w)); load(w); };
   root.querySelectorAll<HTMLButtonElement>('.ring-which button').forEach((b) => b.addEventListener('click', () => {
-    const w = b.dataset.which as Which;
-    if (tryon && who && ringFor(who) !== w) { flash = { text: t(w === 'hers' ? 'ring.face.locked.hers' : 'ring.face.locked.his'), until: performance.now() + 2200 }; return; }
-    choose(w);
+    choose(b.dataset.which as Which);
   }));
   canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
   load('hers');
 
   // Try-on: swap the orbit scene for the webcam scene and back.
   const say = (msg: string) => { status.textContent = msg; status.hidden = !msg; };
-  const applyFace = (p: Person | null, note: string) => {
-    who = p;
-    faceNote = note;
-    tryon?.setEnabled(p !== null);
-    (['hers', 'his'] as Which[]).forEach((w) => whichBtn(w).classList.toggle('locked', !!p && ringFor(p) !== w));
-    if (p && ringFor(p) !== which) choose(ringFor(p));
-  };
-  let lastSeen = 0;
-  const faceLoop = async () => {
-    if (!tryon) return;
-    try {
-      const r = await identify(tryon.video);
-      const now = performance.now();
-      if (r.face && r.person) {
-        lastSeen = now;
-        if (who !== r.person) { applyFace(r.person, t(`ring.face.hello.${r.person}`)); status.style.setProperty('--avatar', `url(${avatar(r.person)})`); }
-      } else if (r.face) { if (now - lastSeen > 2500) applyFace(null, t('ring.face.stranger')); }
-      else if (now - lastSeen > 4000) applyFace(null, t('ring.face.nobody'));
-      status.classList.toggle('greet', who !== null);
-    } catch (e) { console.warn('face check failed', e); }
-    if (tryon) faceTimer = window.setTimeout(faceLoop, 900);
-  };
   const stopTryOn = () => {
     if (!tryon) return;
-    clearTimeout(faceTimer);
-    applyFace(null, '');
     tryon.setModel(null, 0);
     tryon.stop();
     tryon = null;
@@ -208,14 +176,12 @@ export function renderRing(root: HTMLElement): () => void {
       const h = await startTryOn(stage, scene.environment as THREE.Texture);
       if (disposed) { h.stop(); return; }
       tryon = h;
-      h.setEnabled(false);
       stage.classList.add('tryon', 'mirror');
       flipBtn.hidden = false;
       tryBtn.textContent = t('ring.tryon.exit');
       hint.textContent = t('ring.tryon.privacy');
       if (current) { scene.remove(current); h.setModel(current, scale * BASE_R); }
-      if (!hasEnrolled()) { faceNote = t('ring.face.none'); }
-      else { faceNote = t('ring.face.checking'); lastSeen = performance.now(); await loadFaceModels(); faceLoop(); }
+      say(t('ring.tryon.hint'));
     } catch (e) {
       console.warn('try-on failed', e);
       say(t('ring.tryon.denied'));
@@ -242,7 +208,7 @@ export function renderRing(root: HTMLElement): () => void {
       const v = tryon.video;
       if (v.videoWidth && (canvas.width !== v.videoWidth || canvas.height !== v.videoHeight)) renderer.setSize(v.videoWidth, v.videoHeight, false);
       const seen = tryon.update(now);
-      say(now < flash.until ? flash.text : who ? (seen ? faceNote : t('ring.tryon.hint')) : faceNote);
+      say(seen ? '' : t('ring.tryon.hint'));
       renderer.render(tryon.scene, tryon.camera);
     } else {
       controls.update();
@@ -255,7 +221,6 @@ export function renderRing(root: HTMLElement): () => void {
   return () => {
     disposed = true;
     cancelAnimationFrame(raf);
-    clearTimeout(faceTimer);
     tryon?.stop();
     ro.disconnect();
     controls.dispose();
