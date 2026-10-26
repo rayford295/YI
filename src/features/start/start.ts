@@ -3,8 +3,10 @@ import './start.css';
 import { t } from '../../core/i18n';
 import { setPlayer, type PlayerId } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
+import { applyMeadow } from '../world/meadow';
 
 export function renderStart(root: HTMLElement): () => void {
+  const meadow = applyMeadow();   // the picker stands on the same meadow as the town
   const card = (p: PlayerId) => `
     <button type="button" class="start-card" data-player="${p}">
       ${avatarHtml(p, 'big')}
@@ -25,5 +27,5 @@ export function renderStart(root: HTMLElement): () => void {
     if (location.hash === '#/') window.dispatchEvent(new HashChangeEvent('hashchange'));
     else location.hash = '#/';
   }));
-  return () => undefined;
+  return () => meadow.remove();
 }

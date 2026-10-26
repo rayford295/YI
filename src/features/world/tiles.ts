@@ -200,6 +200,18 @@ export function renderTown(): HTMLCanvasElement {
   return c;
 }
 
+/** A patch of meadow (grass with a few flowers) as a data URL, for the page behind the town. */
+export function meadowUrl(tiles = 8): string {
+  const c = document.createElement('canvas');
+  c.width = c.height = tiles * TILE;
+  const ctx = c.getContext('2d')!;
+  for (let ty = 0; ty < tiles; ty++) for (let tx = 0; tx < tiles; tx++) {
+    if ((tx === 2 && ty === 5) || (tx === 6 && ty === 1)) flowers(ctx, tx * TILE, ty * TILE);
+    else grass(ctx, tx * TILE, ty * TILE);
+  }
+  return c.toDataURL();
+}
+
 export const WATER_PHASES = 3;
 /** The pond alone, in one phase, on a transparent town-sized canvas; blit over the town per frame. */
 export function renderWater(phase: number): HTMLCanvasElement {

@@ -58,6 +58,9 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
 12. First visit on a device: a welcome line with the controls (keyboard or touch wording),
     dismissed once and remembered (`yi.world.intro`). Not shown when returning from a level.
     (Added 2026-10-26.)
+13. The page behind the town and the player picker is meadow tiled from the game's grass pixels
+    and takes the same evening wash; the heading is a cream sign. Level pages keep the paper
+    look. (Added 2026-10-26.)
 7. Tap a tile on the canvas to walk there (shortest path over free tiles); tapping something you
    cannot stand on walks to the nearest free tile beside it, turns to face it and acts as a bump
    would. A house's name floats over its roof while the player is within two tiles of its door.

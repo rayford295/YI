@@ -127,3 +127,13 @@ html[lang='en'] .letter h2 { font-family: var(--serif-en); font-style: italic; f
 
 .topbar-avatar { display: inline-flex; margin-left: 10px; text-decoration: none; }
 .topbar-avatar .avatar { width: 32px; height: 32px; border: 1.5px solid var(--gold); }
+
+/* The page behind the town is meadow, tiled from the same pixels as the game, and it takes the
+   same evening wash (--world-wash is set by the page from the time of day). */
+body.world-sky {
+  background: linear-gradient(var(--world-wash, transparent), var(--world-wash, transparent)), var(--meadow) center top / 96px 96px repeat;
+  image-rendering: pixelated;
+  transition: background 1s ease;
+}
+body.world-sky .floating-hearts { display: none; }
+body.world-sky .topbar { background: rgba(251, 244, 238, 0.92); }

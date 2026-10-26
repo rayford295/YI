@@ -19,6 +19,7 @@ points to the epilogue.
 | `tiles.ts` | Paints the ground and the houses once onto an offscreen canvas (`renderTown`), the pond in three phases (`renderWater`), the fountain glint and the roof `flag` |
 | `sprites.ts` | Pixel art in code: `JINGYI`, `YIFAN` (12×16, four facings, two walk frames), the cats `COFFEE` and `DUODUO` (two frames, a tail flick); `buildSheet` / `buildCat` pre-render them |
 | `engine.ts` | `step`, `faced` and `findPath` (pure rules), `WorldEngine` (grid movement, bump-to-talk, NPC walks, the iris, camera, the rAF loop, integer pixel scale, the pond frames and the fountain glint) |
+| `meadow.ts` | `applyMeadow()`: the grass page background (`body.world-sky`, tiled from `meadowUrl`) with the evening wash; shared with the player picker |
 | `daylight.ts` | `phaseAt(hour)` and `tintFor(phase)`: dawn, day, dusk, night as a wash over the map plus lit windows |
 | `sound.ts` | Footstep, thud, talk-box blip and door, synthesised with the Web Audio API on the first key or tap; `soundOn` / `setSoundOn` (`yi.sound`) |
 | `world.ts`, `world.css` | The page: canvas, d-pad + A button (hidden on wide pointer devices), the talk box with typewriter text, HUD and footer |
@@ -38,7 +39,9 @@ box opens, two notes when a door opens. All are synthesised; there are no audio 
 off** in the footer switches them and is remembered on the device. The pond's highlights drift and
 the fountain glints; under reduced motion the water stands still.
 
-The town keeps the time of the player's own city (Shenzhen for Jingyi, College Station for Yifan,
+The page behind the town (and the player picker) is meadow tiled from the same grass pixels, and
+the heading sits on a cream sign with a navy-and-gold border; level pages keep the paper look, as
+if you had stepped indoors. The town keeps the time of the player's own city (Shenzhen for Jingyi, College Station for Yifan,
 from `config`): at dawn and dusk a warm wash, at night a navy one, and the house windows light up
 after five in the afternoon. A resting cat now and then hops to a tile next to its home and comes
 back.

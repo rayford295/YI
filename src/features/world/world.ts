@@ -9,6 +9,7 @@ import { BUILDINGS, CAT_HOMES, PARTNER, SPAWN, buildingAt, guardSpot, walkable, 
 import { WorldEngine, type Npc } from './engine';
 import { JINGYI, YIFAN, buildCat, buildSheet, type CatId, type Dir } from './sprites';
 import { WATER_PHASES, renderWater } from './tiles';
+import { applyMeadow } from './meadow';
 import { phaseAt, tintFor } from './daylight';
 import { clockIn } from '../../core/dates';
 import { config } from '../../core/config';
@@ -210,6 +211,9 @@ export function renderWorld(root: HTMLElement): () => void {
 
   const zone = p === 'jingyi' ? config.her.zone : config.him.zone;
   let tintAt = 0, tint: ReturnType<typeof tintFor>;
+  // The page itself is meadow, drawn with the same tiles as the town, and darkens with the town.
+  const meadow = applyMeadow();
+  const washPage = () => meadow.wash(tint);
   const engine = new WorldEngine({
     canvas, sheet: buildSheet(p === 'jingyi' ? JINGYI : YIFAN), start, dir, npcs,
     walkable: (x, y) => walkable(x, y, (id) => isUnlocked(id, p)),
@@ -220,7 +224,7 @@ export function renderWorld(root: HTMLElement): () => void {
     tint: () => {
       // The sky over the player's own city, re-read once a minute.
       const now = Date.now();
-      if (now - tintAt > 60_000) { tintAt = now; tint = tintFor(phaseAt(clockIn(zone, new Date(now), getLang()).hour)); }
+      if (now - tintAt > 60_000) { tintAt = now; tint = tintFor(phaseAt(clockIn(zone, new Date(now), getLang()).hour)); washPage(); }
       return tint;
     },
     label: (b) => `${levelNumber(b.level)} · ${t(LEVELS[levelIndex(b.level)].title)}`,
@@ -315,6 +319,7 @@ export function renderWorld(root: HTMLElement): () => void {
   const offQuest = onQuestChange(() => { if (getPlayer()) { teardown(); renderWorld(root); } });
 
   const teardown = () => {
+    meadow.remove();
     clearInterval(fidget); timers.forEach((id) => clearTimeout(id));
     saveCatSpots();
     window.removeEventListener('pagehide', saveCatSpots);

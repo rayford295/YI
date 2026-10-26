@@ -1,5 +1,10 @@
 .world { max-width: 860px; margin: 0 auto; padding: 20px 16px 72px; display: grid; gap: 14px; }
-.world-head { text-align: center; display: grid; justify-items: center; gap: 4px; animation: rise 0.7s ease both; }
+/* The heading sits on a cream sign with a navy-and-gold pixel border, like the talk box. */
+.world-head {
+  text-align: center; display: grid; justify-items: center; gap: 4px; animation: rise 0.7s ease both;
+  justify-self: center; padding: 14px 28px 16px; border-radius: 14px;
+  background: #f4e9d6; border: 3px solid #102e49; box-shadow: 0 0 0 3px #d3a557, 0 8px 0 rgba(11, 32, 54, 0.25);
+}
 .world-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 42px; color: var(--rose-deep); line-height: 1.2; }
 html[lang='en'] .world-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
 .world-sub { margin: 0; color: var(--muted); font-size: 14px; }
@@ -46,9 +51,11 @@ html[lang='en'] .world-head h1 { font-family: var(--serif-en); font-style: itali
 .world-a { width: 72px; height: 72px; border-radius: 50%; font-weight: 700; font-size: 24px; border: 3px solid rgba(211, 165, 87, 0.5); }
 @media (hover: hover) and (pointer: fine) and (min-width: 700px) { .world-pad { display: none; } }
 
-.world-hint { margin: 0; text-align: center; font-size: 13px; color: var(--muted); }
-.world-foot { text-align: center; font-size: 13px; color: var(--muted); margin: 0; }
-.world-foot .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
-.world-foot a { color: var(--muted); }
+.world-hint, .world-foot {
+  margin: 0; justify-self: center; text-align: center; font-size: 13px; color: #f1e4c8;
+  padding: 6px 14px; border-radius: 10px; background: rgba(11, 32, 54, 0.88); border: 2px solid #d3a557;
+}
+.world-foot .link { background: none; border: 0; padding: 0; color: #f1e4c8; font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+.world-foot a { color: #f1e4c8; }
 @media (hover: hover) and (pointer: fine) { .world-hint.touch { display: none; } }
 @media not ((hover: hover) and (pointer: fine)) { .world-hint.keys { display: none; } }
