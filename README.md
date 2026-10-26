@@ -23,12 +23,14 @@ Both names contain the syllable *Yi*: Yi-fan and Jing-yi; the title swaps in the
 
 | Route | Page | What it does |
 |---|---|---|
-| `#/` | **Home** | Birthday greeting, "day N since we met" (Shenzhen calendar), twin clocks that turn to night colours after 18:00, live hour difference, countdown to flight CYF925, the birthday letter |
-| `#/map` | **Love Map** | Pacific-centred map; one heart per place opens its memory cards; rose arc between our two cities with a heart flying along it; gold CYF925 route to New York; **Play our story** tours every memory and ends on the letter |
-| `#/moments` | **Moments** | Timeline of every memory, each badged with its day number since we met |
-| `#/gomoku` | **Gomoku** | Two players on one device, purple for Jingyi and green for Yifan; win tally, undo, saved game |
-| `#/draw` | **Pictionary** | Draw on a canvas, hold to peek at the word, typed or spoken guesses, 90-second rounds, a shared "in sync" score |
-| `#/ring` | **The Ring** | Interactive 3D view of the pair of Meridian rings designed in `ring/` (hers with the stone, his a wide band), each engraved with the other’s name; **Try it on** puts the ring on your finger through the webcam (MediaPipe hand tracking, on-device), with a shutter for a captioned photo, and **Together, apart** joins one photo from each of us into a single card |
+| `#/start` | **Start** | Pick a player, Jingyi or Yifan; progress is per player, per device |
+| `#/` | **Journey** | The level map: a gold meridian with six nodes; a locked level cannot be opened until the one before it is cleared |
+| `#/met` | **The Day We Met** (level 1: answer one question from `src/core/quiz.ts`) | Birthday greeting, "day N since we met" (Shenzhen calendar), twin clocks that turn to night colours after 18:00, live hour difference, countdown to flight CYF925, the birthday letter |
+| `#/map` | **Love Map** (level 2: find the three hidden hearts) | Pacific-centred map; one heart per place opens its memory cards; rose arc between our two cities with a heart flying along it; gold CYF925 route to New York; **Play our story** tours every memory and ends on the letter |
+| `#/moments` | **Moments** (level 3: put five memories in order) | Timeline of every memory, each badged with its day number since we met |
+| `#/gomoku` | **Gomoku** (level 4: fill the heart outline on the board) | Two players on one device, purple for Jingyi and green for Yifan; win tally, undo, saved game |
+| `#/draw` | **Pictionary** (level 5: three correct guesses) | Draw on a canvas, hold to peek at the word, typed or spoken guesses, 90-second rounds, a shared "in sync" score |
+| `#/ring` | **The Ring** (level 6, the reward) | Interactive 3D view of the pair of Meridian rings designed in `ring/` (hers with the stone, his a wide band), each engraved with the other’s name; **Try it on** puts the ring on your finger through the webcam (MediaPipe hand tracking, on-device), with a shutter for a captioned photo, and **Together, apart** joins one photo from each of us into a single card |
 
 Every string exists in both languages. The toggle in the top bar switches the whole site
 without a reload and remembers the choice. The games run entirely in the browser: no

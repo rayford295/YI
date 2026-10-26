@@ -10,6 +10,8 @@ import { startTryOn, type TryOnHandles } from './tryon';
 import { captureTryOn, composeTogether, download, loadImage } from './photo';
 import { config } from '../../core/config';
 import { getLang } from '../../core/i18n';
+import { getPlayer } from '../../core/quest';
+import { levelCleared } from '../../core/quest-ui';
 
 const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb' } as const;
 type Which = keyof typeof MODELS;
@@ -128,7 +130,7 @@ export function renderRing(root: HTMLElement): () => void {
   let view: View = 'outside';
   let tryon: TryOnHandles | null = null;
   let tryBusy = false;
-  let which: Which = 'hers';
+  let which: Which = getPlayer() === 'yifan' ? 'his' : 'hers';   // your own ring first
   const whichBtn = (w: Which) => root.querySelector<HTMLButtonElement>(`.ring-which button[data-which="${w}"]`)!;
   const loader = new GLTFLoader();
   const pose = (v: View) => ({ pos: VIEWS[v].pos.clone().multiplyScalar(scale), target: VIEWS[v].target.clone().multiplyScalar(scale) });
@@ -180,7 +182,9 @@ export function renderRing(root: HTMLElement): () => void {
     choose(b.dataset.which as Which);
   }));
   canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
-  load('hers');
+  setActive('.ring-which', whichBtn(which));
+  load(which);
+  levelCleared('ring');
 
   // Try-on: swap the orbit scene for the webcam scene and back.
   const say = (msg: string) => { status.textContent = msg; status.hidden = !msg; };

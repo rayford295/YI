@@ -41,3 +41,11 @@ html[lang='en'] .letter h2 { font-family: var(--serif-en); font-style: italic; f
   .clocks { grid-template-columns: 1fr; }
   .clocks-link { justify-self: center; transform: rotate(90deg); }
 }
+
+.quiz { padding: 22px; display: grid; gap: 12px; text-align: center; }
+.quiz h2 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 28px; color: var(--rose-deep); }
+.quiz-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.quiz-opt { padding: 12px 14px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--card); font: inherit; color: var(--ink); cursor: pointer; transition: transform 120ms ease, border-color 120ms ease; }
+.quiz-opt:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--gold); }
+.quiz-opt.right { background: #d3a557; border-color: #d3a557; color: #102e49; }
+.quiz-opt.wrong { opacity: 0.45; text-decoration: line-through; }

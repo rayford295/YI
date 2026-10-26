@@ -9,6 +9,13 @@ import { greatCircle, pacificLng, pointAlong, type LatLng } from '../../core/geo
 import { formatDate, hoursApart } from '../../core/dates';
 import { escapeAttr, reducedMotion } from '../../core/html';
 import { attachMediaFallback } from './media';
+import { isCleared } from '../../core/quest';
+import { levelCleared } from '../../core/quest-ui';
+
+// Level 2: three hearts hidden along the way between us. Found state lasts for the visit;
+// once the level is cleared they are shown as found.
+const HIDDEN: LatLng[] = [[21.31, -157.86], [35.68, 139.69], [40.64, -73.78 - 6]];
+let found = new Set<number>();
 
 const at = (lat: number, lng: number): LatLng => [lat, pacificLng(lng)];
 
@@ -28,6 +35,7 @@ function mediaHtml(m: Memory): string {
 export function renderMap(root: HTMLElement): () => void {
   root.innerHTML = `
     <section class="map-page">
+      <p class="quest-task${isCleared('map') ? ' done' : ''}" id="map-task"></p>
       <div class="map-head">
         <h2>${t('map.title')}</h2>
         <button class="btn" id="story-btn" type="button">${t('map.story')} ▶</button>
@@ -87,6 +95,26 @@ export function renderMap(root: HTMLElement): () => void {
   L.marker(at(nm.lat, nm.lng), { icon: heartIcon('future') })
     .addTo(map)
     .bindTooltip(t('map.meeting', { place: pick(nm.place) }), { direction: 'top', offset: [0, -14] });
+
+  // Hidden hearts
+  if (isCleared('map')) found = new Set(HIDDEN.map((_, i) => i));
+  const task = root.querySelector<HTMLElement>('#map-task')!;
+  const paintTask = () => {
+    task.textContent = isCleared('map') ? t('quest.cleared.eyebrow', { n: 2 })
+      : `${t('quest.task.map', { total: HIDDEN.length })} · ${t('quest.task.map.found', { found: found.size, total: HIDDEN.length })}`;
+    task.classList.toggle('done', isCleared('map'));
+  };
+  paintTask();
+  HIDDEN.forEach((ll, i) => {
+    const mk = L.marker(at(ll[0], ll[1]), { icon: heartIcon(found.has(i) ? 'hidden found' : 'hidden'), keyboard: true, title: '?' }).addTo(map);
+    mk.on('click', () => {
+      if (found.has(i)) return;
+      found.add(i);
+      mk.setIcon(heartIcon('hidden found'));
+      paintTask();
+      if (found.size === HIDDEN.length) { levelCleared('map'); paintTask(); }
+    });
+  });
 
   let storyTimer = 0;
   let lastFocus: HTMLElement | null = null;

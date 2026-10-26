@@ -1,0 +1,12 @@
+# Journey
+
+Route: `#/` (the home page since the site became a game).
+
+A gold meridian with one node per level from `src/core/quest.ts`: cleared nodes are gold with a
+tick, the current one pulses, locked ones show a lock and cannot be opened. The header shows the
+player's avatar and "cleared n / total · next: …"; the footer lets you switch player or wipe
+this player's progress.
+
+The level system itself (registry, per-player progress, lock rules, the "level cleared" card and
+the locked toast) lives in `src/core/quest.ts` and `src/core/quest-ui.ts`; the design note is
+`docs/superpowers/specs/2026-10-25-quest-design.md`, including how to add a level.

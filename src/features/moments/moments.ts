@@ -5,6 +5,11 @@ import { dayOfYmd, formatDate } from '../../core/dates';
 import { sortedMemories, type Memory } from './memories';
 import { attachMediaFallback } from '../birthday-map/media';
 import { escapeAttr } from '../../core/html';
+import { isCleared } from '../../core/quest';
+import { levelCleared, toast } from '../../core/quest-ui';
+
+const PUZZLE_SIZE = 5;
+const shuffle = <T,>(a: T[]): T[] => a.map((v) => [Math.random(), v] as const).sort((x, y) => x[0] - y[0]).map(([, v]) => v);
 
 function mediaHtml(m: Memory): string {
   return m.media
@@ -26,6 +31,12 @@ export function renderMoments(root: HTMLElement): () => void {
         <p>${t('moments.subtitle')}</p>
         <p class="moments-count">${t('moments.count', { n: list.length })}</p>
       </header>
+      ${isCleared('moments') ? `<p class="quest-task done">${t('quest.cleared.eyebrow', { n: 3 })}</p>` : `
+      <section class="order card" id="order">
+        <p class="quest-task">${t('quest.task.moments')}</p>
+        <ol class="order-list" id="order-list"></ol>
+        <button type="button" class="btn" id="order-check">${t('quest.task.moments.check')}</button>
+      </section>`}
       <ol class="timeline">
         ${list.map((m, i) => `
         <li class="moment${i % 2 ? ' flip' : ''}" style="--i:${i}">
@@ -50,5 +61,31 @@ export function renderMoments(root: HTMLElement): () => void {
       <a class="cta" href="#/map">${t('moments.map')} →</a>
     </section>`;
   attachMediaFallback(root, t('map.media.missing'));
+
+  if (!isCleared('moments')) {
+    const pool = shuffle(list).slice(0, PUZZLE_SIZE);
+    let order = shuffle(pool);
+    if (order.every((m, i) => m === [...pool].sort((a, b) => a.date.localeCompare(b.date))[i])) order = [...order.slice(1), order[0]];
+    let picked = -1;
+    const ol = root.querySelector<HTMLElement>('#order-list')!;
+    const paint = () => {
+      ol.innerHTML = order.map((m, i) => `<li><button type="button" class="order-item${i === picked ? ' picked' : ''}" data-i="${i}"><span>${i + 1}</span>${pick(m.title)}</button></li>`).join('');
+    };
+    paint();
+    ol.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('.order-item');
+      if (!b) return;
+      const i = Number(b.dataset.i);
+      if (picked < 0) picked = i;
+      else { [order[picked], order[i]] = [order[i], order[picked]]; picked = -1; }
+      paint();
+    });
+    root.querySelector('#order-check')!.addEventListener('click', () => {
+      const ok = order.every((m, i) => i === 0 || order[i - 1].date <= m.date);
+      if (!ok) { toast(t('quest.task.moments.wrong')); return; }
+      root.querySelector('#order .quest-task')!.classList.add('done');
+      levelCleared('moments');
+    });
+  }
   return () => undefined;
 }

@@ -1,6 +1,6 @@
 # Home
 
-Route: `#/`
+Route: `#/met` (level 1 of the journey; the old home page)
 
 The first page Jingyi sees: the birthday greeting, a "day N since we met" counter, twin
 clocks for Shenzhen and College Station (each turns to night colours after 18:00 local

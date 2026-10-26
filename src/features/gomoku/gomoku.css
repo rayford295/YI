@@ -111,3 +111,5 @@ html[lang='en'] .gomoku-head h1 { font-family: var(--serif-en); font-style: ital
   .player-score { font-size: 20px; }
   .board { border-radius: 10px; }
 }
+
+.board-lines .heart-pt { fill: rgba(211, 165, 87, 0.22); stroke: #d3a557; stroke-width: 0.06; stroke-dasharray: 0.12 0.1; }

@@ -3,6 +3,11 @@ import { t, pick, getLang } from '../../core/i18n';
 import { config } from '../../core/config';
 import { letter, letterParagraphs } from '../birthday-map/letter';
 import { dayNumberSince, clockIn, hoursApart, countdownTo } from '../../core/dates';
+import { QUESTIONS } from '../../core/quiz';
+import { isCleared } from '../../core/quest';
+import { levelCleared, toast } from '../../core/quest-ui';
+
+const shuffle = <T,>(a: T[]): T[] => a.map((v) => [Math.random(), v] as const).sort((x, y) => x[0] - y[0]).map(([, v]) => v);
 
 function clockCard(id: string, label: string): string {
   return `<div class="clock card" id="clock-${id}">
@@ -42,7 +47,24 @@ export function renderHome(root: HTMLElement): () => void {
       ${letterParagraphs(lang, hoursApart(config.her.zone, config.him.zone, new Date())).map((p) => `<p>${p}</p>`).join('')}
       <p class="signature">— ${pick(letter.signature)}</p>
     </section>
+    <section class="quiz card" id="quiz">
+      <p class="quest-task${isCleared('met') ? ' done' : ''}">${isCleared('met') ? t('quest.cleared.eyebrow', { n: 1 }) : t('quest.task.met')}</p>
+      ${isCleared('met') ? '' : (() => {
+        const q = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
+        const opts = shuffle(q.options.map((o, i) => ({ o, i })));
+        return `<h2>${pick(q.q)}</h2><div class="quiz-options">${opts.map(({ o, i }) =>
+          `<button type="button" class="quiz-opt" data-ok="${i === q.answer ? 1 : 0}">${pick(o)}</button>`).join('')}</div>`;
+      })()}
+    </section>
     <a class="cta" href="#/map">${t('home.cta.map')} →</a>`;
+
+  root.querySelectorAll<HTMLButtonElement>('.quiz-opt').forEach((b) => b.addEventListener('click', () => {
+    if (b.dataset.ok === '1') {
+      root.querySelectorAll<HTMLButtonElement>('.quiz-opt').forEach((x) => { x.disabled = true; x.classList.toggle('right', x === b); });
+      root.querySelector('#quiz .quest-task')!.classList.add('done');
+      levelCleared('met');
+    } else { b.classList.add('wrong'); b.disabled = true; toast(t('quest.task.met.wrong')); }
+  }));
 
   const q = <T extends HTMLElement = HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
 

@@ -41,3 +41,9 @@ html[lang='en'] .moment-more { font-family: var(--serif-en); font-style: italic;
   .moment-media img, .moment-media video { height: 220px; }
   .moment.more { text-align: left; }
 }
+
+.order { padding: 18px; display: grid; gap: 12px; justify-items: center; margin-bottom: 8px; }
+.order-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; width: 100%; max-width: 520px; }
+.order-item { width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--card); font: inherit; color: var(--ink); cursor: pointer; text-align: left; }
+.order-item span { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: #102e49; color: #f1e4c8; font-size: 13px; flex: none; }
+.order-item.picked { border-color: var(--gold); background: #fff3dc; transform: translateX(6px); }

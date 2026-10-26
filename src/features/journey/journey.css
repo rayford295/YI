@@ -1,0 +1,31 @@
+.journey { max-width: 760px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 20px; }
+.journey-head { text-align: center; display: grid; justify-items: center; gap: 6px; animation: rise 0.7s ease both; }
+.journey-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 46px; color: var(--rose-deep); line-height: 1.2; }
+html[lang='en'] .journey-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.journey-sub { margin: 0; color: var(--muted); }
+
+.journey-map {
+  padding: 10px; overflow: hidden; animation: rise 0.8s ease both; animation-delay: 120ms;
+  background: radial-gradient(ellipse at 50% 20%, #1f4f6d 0%, #102e49 55%, #0b2036 100%);
+}
+.journey-map svg { display: block; width: 100%; height: auto; }
+.meridian { fill: none; stroke: rgba(211, 165, 87, 0.28); stroke-width: 3; stroke-dasharray: 4 8; stroke-linecap: round; }
+.meridian.lit { stroke: #d3a557; stroke-dasharray: none; stroke-width: 3.5; filter: drop-shadow(0 0 6px rgba(211, 165, 87, 0.6)); }
+.node circle { fill: #102e49; stroke: rgba(211, 165, 87, 0.5); stroke-width: 2.5; }
+.node .glyph { fill: rgba(241, 228, 200, 0.6); font-size: 22px; text-anchor: middle; font-family: var(--serif-en); }
+.node .label { fill: #f1e4c8; font-size: 15px; text-anchor: middle; font-family: var(--serif-zh); }
+html[lang='en'] .node .label { font-family: var(--serif-en); font-style: italic; }
+.node.cleared circle { fill: #d3a557; stroke: #fff6dc; }
+.node.cleared .glyph { fill: #102e49; font-weight: 700; }
+.node.current circle { stroke: #d3a557; stroke-width: 3; animation: pulse 1.8s ease-in-out infinite; }
+.node.current .glyph { fill: #fff6dc; }
+.node.locked { opacity: 0.55; }
+.node.locked .glyph { font-size: 18px; }
+a.node { cursor: pointer; }
+a.node:hover circle, a.node:focus-visible circle { fill: #1f4f6d; }
+a.node.cleared:hover circle { fill: #e7bc6e; }
+@keyframes pulse { 0%, 100% { stroke-width: 3; filter: none; } 50% { stroke-width: 6; filter: drop-shadow(0 0 10px rgba(211, 165, 87, 0.9)); } }
+@media (prefers-reduced-motion: reduce) { .node.current circle { animation: none; } }
+
+.journey-foot { text-align: center; font-size: 13px; color: var(--muted); margin: 0; }
+.journey-foot .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }

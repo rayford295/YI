@@ -4,6 +4,13 @@ import { config } from '../../core/config';
 import { SIZE, newGame, place, undo, turn, boardOf, status, type Game, type Stone } from './core';
 import { gameTabs } from '../games/tabs';
 import { loadRecord, saveRecord, recordResult, loadGame, saveGame, type GameRecord } from './record';
+import { isCleared } from '../../core/quest';
+import { levelCleared } from '../../core/quest-ui';
+
+// Level 4: the outline of a heart, 14 points, no five in any line.
+export const HEART: [number, number][] = [
+  [4, 5], [4, 6], [4, 8], [4, 9], [5, 4], [5, 7], [5, 10], [6, 4], [6, 10], [7, 5], [7, 9], [8, 6], [8, 8], [9, 7],
+];
 
 // Kept at module level so a language switch (which re-renders the page) keeps the game.
 let game: Game | undefined;
@@ -26,7 +33,8 @@ function gridSvg(): string {
     return `<line x1="0.5" y1="${p}" x2="${SIZE - 0.5}" y2="${p}"/><line x1="${p}" y1="0.5" x2="${p}" y2="${SIZE - 0.5}"/>`;
   }).join('');
   const stars = STARS.map(([r, c]) => `<circle cx="${c + 0.5}" cy="${r + 0.5}" r="0.12"/>`).join('');
-  return `<svg class="board-lines" viewBox="0 0 ${SIZE} ${SIZE}" aria-hidden="true">${lines}${stars}</svg>`;
+  const heart = isCleared('gomoku') ? '' : HEART.map(([r, c]) => `<circle class="heart-pt" cx="${c + 0.5}" cy="${r + 0.5}" r="0.3"/>`).join('');
+  return `<svg class="board-lines" viewBox="0 0 ${SIZE} ${SIZE}" aria-hidden="true">${lines}${stars}${heart}</svg>`;
 }
 
 export function renderGomoku(root: HTMLElement): () => void {
@@ -51,6 +59,7 @@ export function renderGomoku(root: HTMLElement): () => void {
         <p>${t('gomoku.subtitle')}</p>
       </header>
       <div class="players">${player('purple')}<span class="draws" id="draws"></span>${player('green')}</div>
+      <p class="quest-task${isCleared('gomoku') ? ' done' : ''}" id="g-task"></p>
       <p class="gomoku-status" id="g-status" aria-live="polite"></p>
       <div class="board-wrap">
         <div class="board" id="board">${gridSvg()}${cells}</div>
@@ -97,6 +106,9 @@ export function renderGomoku(root: HTMLElement): () => void {
       $(`#pl-${stone}`).classList.toggle('active', st.kind === 'playing' && turn(g) === stone);
     }
     $('#draws').textContent = t('gomoku.draws', { n: r.draws });
+    const filled = HEART.filter(([hr, hc]) => grid[hr][hc]).length;
+    $('#g-task').textContent = isCleared('gomoku') ? t('quest.cleared.eyebrow', { n: 4 }) : t('quest.task.gomoku', { done: filled, total: HEART.length });
+    if (filled === HEART.length) { $('#g-task').classList.add('done'); levelCleared('gomoku'); }
     $<HTMLButtonElement>('#g-undo').disabled = g.moves.length === 0 || st.kind !== 'playing';
   }
 
