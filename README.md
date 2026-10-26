@@ -5,7 +5,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/for-two%20players-d3a557?style=flat-square&labelColor=0b2036" alt="for two players" />
   <img src="https://img.shields.io/badge/levels-8%20%2B%20an%20epilogue-d3a557?style=flat-square&labelColor=0b2036" alt="8 levels and an epilogue" />
-  <img src="https://img.shields.io/badge/tests-102%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="97 tests passing" />
+  <img src="https://img.shields.io/badge/tests-106%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="97 tests passing" />
   <img src="https://img.shields.io/badge/TypeScript-strict-d3a557?style=flat-square&labelColor=0b2036" alt="TypeScript strict" />
   <img src="https://img.shields.io/badge/backend-none-d3a557?style=flat-square&labelColor=0b2036" alt="no backend" />
   <img src="https://img.shields.io/badge/art-drawn%20in%20code-d3a557?style=flat-square&labelColor=0b2036" alt="all art drawn in code" />
@@ -49,7 +49,7 @@
   walk to the next one, and with nothing left to guard they go and sunbathe by the pond or sit in
   the middle of the square.
 - **The ring** is the eighth house. When both of us have reached it, the partner points to the
-  last letter.
+  last letter. Progress lives on each phone, so a short code (or a link) carries it across.
 
 The whole site stands on the town's meadow, and every heading is a sign in the same cream and navy.
 Everything runs in the browser and nothing leaves the device. The whole site exists in both
@@ -76,7 +76,7 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 ```bash
 npm install
 npm run dev       # http://localhost:5173
-npm test          # 102 unit tests (Vitest)
+npm test          # 106 unit tests (Vitest)
 npm run build     # strict type-check + production build
 npm run banner    # redraw docs/banner.svg from the sprite data
 ```
@@ -87,6 +87,7 @@ astronomy-engine · Node 22. CI runs the tests and the build on every push.
 
 ## ⚑ More
 
+- [docs/CHANGELOG.md](docs/CHANGELOG.md): what changed, by version
 - [docs/GUIDE.md](docs/GUIDE.md): repository layout, everyday edits (add a memory, a word, a level), status, key dates, screenshots of every level
 - [docs/DEPLOY.md](docs/DEPLOY.md): publishing and private hosting
 - Design notes: [the site](docs/superpowers/specs/2026-10-24-yi-at-first-sight-design.md) · [the game of levels](docs/superpowers/specs/2026-10-25-quest-design.md) · [the town](docs/superpowers/specs/2026-10-26-town-design.md)

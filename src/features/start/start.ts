@@ -22,10 +22,10 @@ export function renderStart(root: HTMLElement): () => void {
     </section>`;
   root.querySelectorAll<HTMLButtonElement>('.start-card').forEach((b) => b.addEventListener('click', () => {
     setPlayer(b.dataset.player as PlayerId);
-    // When the address is already #/ (the start page is shown in its place), setting the hash
-    // again changes nothing and fires no event, so ask the router to render explicitly.
-    if (location.hash === '#/') window.dispatchEvent(new HashChangeEvent('hashchange'));
-    else location.hash = '#/';
+    // The picker stands in for whatever page was asked for (#/, or a link such as #/sync?c=J7A),
+    // so keep that address and ask the router to render it; only #/start itself goes to the town.
+    if (location.hash === '#/start' || location.hash === '') location.hash = '#/';
+    else window.dispatchEvent(new HashChangeEvent('hashchange'));
   }));
   return () => undefined;
 }

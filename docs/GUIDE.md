@@ -15,13 +15,14 @@ YI/
 │   ├── core/                   # shared by every feature
 │   │   ├── i18n.ts             #   zh/en dictionary, t(), pick(), language state
 │   │   ├── quest.ts            #   level registry, per-player progress, locks
+│   │   ├── sync.ts             #   progress codes (encode, decode, merge)
 │   │   ├── quest-ui.ts         #   avatars, cleared card, toast
 │   │   ├── gate.ts             #   entry question (SHA-256 of accepted answers)
 │   │   ├── celebrate.ts        #   confetti, chime, voice-line URL
 │   │   ├── dates.ts geo.ts     #   time-zone aware day counter and clocks; great-circle arcs
 │   │   └── config.ts           #   names, time zones, key dates, next meeting
 │   └── features/               # one folder per feature: code, styles, data, tests, README
-│       ├── gate/ start/        #   the front door, the player picker
+│       ├── gate/ start/ sync/  #   the front door, the player picker, progress codes
 │       ├── world/              #   the town: town.ts (map), tiles.ts, sprites.ts, engine.ts, world.ts
 │       ├── journey/            #   the list view
 │       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ pictionary/ games/
@@ -71,12 +72,13 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [x] Home, Love Map, Moments, Gomoku, Pictionary (v1, 2026-10-24)
 - [x] Game of levels with real locks, Puzzle, That Night's Sky, the ring, the epilogue letter, the entry gate, PWA (2026-10-25 and 10-26)
 - [x] The town as the home page, with tap-to-walk and house name plates (2026-10-26)
-- [x] 102 unit tests; the build type-checks with `strict` TypeScript; CI runs both on every push
+- [x] 106 unit tests; the build type-checks with `strict` TypeScript; CI runs both on every push
 - [x] Checked in a real browser at desktop, 390 px and 320 px widths
 - [ ] Yifan rewrites the last letter in his own words (`src/features/birthday-map/letter.ts`)
 - [ ] Record voice lines for the cleared cards (`public/media/voice/README.md`)
 - [ ] Add inside-joke words to Pictionary (`src/features/pictionary/words.ts`)
 - [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
+- [x] Progress codes: `#/sync` carries progress between phones as a code or link (v1.1.0, 2026-10-26)
 - [x] The whole site stands on the town's pixel meadow with the time-of-day wash; headings on signs, panels in cream and navy (2026-10-26)
 - [x] Town: a one-time welcome line with the controls; phone checklist in DEPLOY.md (2026-10-26)
 - [x] Town: day and night follow the player's own city, with lit windows; resting cats fidget (2026-10-26)

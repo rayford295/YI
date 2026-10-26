@@ -87,6 +87,8 @@ export function renderWorld(root: HTMLElement): () => void {
       <p class="world-foot">
         <a href="#/journey">${t('world.list')}</a>
         <span aria-hidden="true"> · </span>
+        <a href="#/sync">${t('world.sync')}</a>
+        <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="world-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="world-reset">${t('journey.reset')}</button>
@@ -205,7 +207,10 @@ export function renderWorld(root: HTMLElement): () => void {
         { label: t('world.partner.epilogue.go'), run: () => go('#/letter') },
         { label: t('world.close'), run: closeDialog },
       ]);
-    } else openDialog(playerName(other), t('world.partner.line', { done: theirs }), [{ label: t('world.close'), run: closeDialog }]);
+    } else openDialog(playerName(other), t('world.partner.line', { done: theirs }), [
+      { label: t('world.close'), run: closeDialog },
+      { label: t('world.partner.sync'), run: () => go('#/sync') },
+    ]);
   }
 
   const zone = p === 'jingyi' ? config.her.zone : config.him.zone;

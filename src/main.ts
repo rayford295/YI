@@ -26,14 +26,17 @@ const routes: Record<string, () => Promise<Page>> = {
   '/gomoku': () => import('./features/gomoku/gomoku').then((m) => m.renderGomoku),
   '/draw': () => import('./features/pictionary/pictionary').then((m) => m.renderPictionary),
   '/ring': () => import('./features/ring/ring').then((m) => m.renderRing),
+  '/sync': () => import('./features/sync/sync').then((m) => m.renderSync),
 };
-const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter' };
+const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync' };
 const GAMES = ['/gomoku', '/draw'];
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 let renderSeq = 0;   // a navigation that starts while a page is still loading wins
 
-const currentPath = () => (location.hash.slice(1) in routes ? location.hash.slice(1) : '/');
+// A hash may carry a query (#/sync?c=J7K); the route is the part before it.
+const hashPath = () => location.hash.slice(1).split('?')[0];
+const currentPath = () => (hashPath() in routes ? hashPath() : '/');
 
 import { refreshMeadow, startMeadow } from './features/world/meadow';
 
@@ -61,7 +64,7 @@ async function render(): Promise<void> {
     // The epilogue is not a level: it opens once both players have reached the ring on this device.
     if (path === '/letter' && !isUnlocked('ring')) { path = '/'; toast(t('quest.locked')); }
   }
-  if (`#${path}` !== location.hash && path !== '/start') history.replaceState(null, '', `#${path}`);
+  if (path !== hashPath() && path !== '/start') history.replaceState(null, '', `#${path}`);
   const lang = getLang();
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = `${t('site.title')} · ${lang === 'zh' ? 'Yi at First Sight' : '仪见钟情'}`;

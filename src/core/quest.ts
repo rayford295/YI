@@ -93,6 +93,13 @@ export function clear(id: string, p: PlayerId | null = getPlayer()): boolean {
   emit();
   return true;
 }
+/** Add levels cleared elsewhere (a code from the other phone); never removes anything. */
+export function mergeProgress(p: PlayerId, cleared: string[]): void {
+  const have = new Set(getProgress(p).cleared);
+  for (const id of cleared) if (levelIndex(id) >= 0) have.add(id);
+  save(p, { cleared: LEVELS.filter((l) => have.has(l.id)).map((l) => l.id) });
+  emit();
+}
 export function reset(p: PlayerId | null = getPlayer()): void {
   if (p) store.removeItem(progressKey(p));
   emit();
