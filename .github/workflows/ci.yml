@@ -24,7 +24,7 @@ jobs:
           path: dist
 
   deploy:
-    # Pages needs a public repository. Set the repository variable PUBLISH=true (Settings →
+    # Set the repository variable PUBLISH=true (Settings →
     # Secrets and variables → Actions → Variables) when going public; until then this job is skipped
     # and CI stays green.
     if: github.ref == 'refs/heads/main' && github.event_name == 'push' && vars.PUBLISH == 'true'
