@@ -2,14 +2,16 @@
 
 ## Status
 
-The repository is private and the site is offline (publishing was rehearsed on 2026-10-24 and
-taken down to add more features). The domain for the site is **jingyifan.love** (bought at
-Cloudflare Registrar on 2026-10-26); `public/CNAME` already carries it, so the next publish lands on that address.
-Every push to `main` redeploys through the `deploy` job in `.github/workflows/ci.yml`, which
-only runs while the repository variable `PUBLISH` is `true` (Settings → Secrets and variables →
-Actions → Variables); with the variable unset the job is skipped and CI stays green.
+Going live on 2026-10-26: the repository is public again, GitHub Pages has `jingyifan.love` as
+its custom domain (set through the API; the certificate is issued by GitHub within about an hour,
+after which **Enforce HTTPS** goes on), and the DNS at Cloudflare is in place. Every push to
+`main` redeploys through the `deploy` job in `.github/workflows/ci.yml`, which only runs while
+the repository variable `PUBLISH` is `true` (Settings → Secrets and variables → Actions →
+Variables); unset it and the job is skipped, CI stays green and the site stays as it was.
 `index.html` carries `noindex, nofollow`, and the site opens with a question only the two of us
 can answer (`src/core/gate.ts`), so a public URL shows strangers nothing but that question.
+Note that in a public repository the photos under `public/media/` are visible to anyone who
+reads the repository itself; the gate protects the site, not the source.
 
 ## The Domain: jingyifan.love
 
