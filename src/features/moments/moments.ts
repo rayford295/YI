@@ -27,7 +27,7 @@ export function renderMoments(root: HTMLElement): () => void {
   const list = sortedMemories();
   root.innerHTML = `
     <section class="moments">
-      <header class="moments-head">
+      <header class="moments-head sign">
         <h1>${t('moments.title')}</h1>
         <p>${t('moments.subtitle')}</p>
         <p class="moments-count">${t('moments.count', { n: list.length })}</p>

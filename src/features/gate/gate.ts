@@ -6,8 +6,10 @@ import { tryGate } from '../../core/gate';
 export function renderGate(root: HTMLElement, onPass: () => void): () => void {
   root.innerHTML = `
     <section class="gate">
-      <p class="eyebrow">${t('gate.eyebrow')}</p>
-      <h1>${t('gate.title')}</h1>
+      <header class="sign gate-head">
+        <p class="eyebrow">${t('gate.eyebrow')}</p>
+        <h1>${t('gate.title')}</h1>
+      </header>
       <form class="gate-form card" id="gate-form" autocomplete="off">
         <label for="gate-answer">${t('gate.question')}</label>
         <input id="gate-answer" name="answer" type="text" inputmode="numeric" placeholder="${t('gate.placeholder')}" required autofocus>

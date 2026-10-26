@@ -60,7 +60,7 @@ export function renderStars(root: HTMLElement): () => void {
   const skies = PLACES.map((p) => computeSky(new Date(`${MET_EVENING}${p.offset}`), p.lat, p.lng));
   root.innerHTML = `
     <section class="stars">
-      <header class="stars-head">
+      <header class="stars-head sign">
         <h1>${t('stars.title')}</h1>
         <p>${t('stars.subtitle')}</p>
       </header>

@@ -1,24 +1,31 @@
-// The meadow behind the pages that belong to the town (the town itself and the player picker):
-// grass tiled from the same pixels as the game, with the evening wash the town uses. Level pages
-// keep the paper look, as if you had stepped indoors.
+// The whole site stands on the town's meadow: grass tiled from the same pixels as the game, with
+// the evening wash the town uses, following the clock in the player's own city (the device's clock
+// before a player is picked). Started once from main.ts; nothing removes it.
 import { meadowUrl } from './tiles';
-import type { Tint } from './daylight';
+import { phaseAt, tintFor } from './daylight';
+import { clockIn } from '../../core/dates';
+import { config } from '../../core/config';
+import { getPlayer } from '../../core/quest';
+import { getLang } from '../../core/i18n';
 
-let url: string | undefined;
+let started = false;
 
-/** Put the meadow on the page; returns the undo. `wash` repaints it for a new time of day. */
-export function applyMeadow(): { wash(t: Tint | undefined): void; remove(): void } {
-  const body = document.body;
-  url ??= `url(${meadowUrl()})`;
-  body.classList.add('world-sky');
-  body.style.setProperty('--meadow', url);
-  return {
-    wash(t) {
-      body.style.setProperty('--world-wash', t ? `${t.color}${Math.round(t.alpha * 255).toString(16).padStart(2, '0')}` : 'transparent');
-    },
-    remove() {
-      body.classList.remove('world-sky');
-      body.style.removeProperty('--meadow'); body.style.removeProperty('--world-wash');
-    },
-  };
+function wash(): void {
+  const p = getPlayer();
+  const zone = p === 'jingyi' ? config.her.zone : p === 'yifan' ? config.him.zone : Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const t = tintFor(phaseAt(clockIn(zone, new Date(), getLang()).hour));
+  document.body.style.setProperty('--world-wash', t ? `${t.color}${Math.round(t.alpha * 255).toString(16).padStart(2, '0')}` : 'transparent');
 }
+
+/** Put the meadow under the site and keep its wash current; safe to call more than once. */
+export function startMeadow(): void {
+  if (started) return;
+  started = true;
+  const body = document.body;
+  body.classList.add('world-sky');
+  body.style.setProperty('--meadow', `url(${meadowUrl()})`);
+  wash();
+  window.setInterval(wash, 60_000);
+}
+/** The wash for whoever is playing now (called when the player changes). */
+export const refreshMeadow = wash;

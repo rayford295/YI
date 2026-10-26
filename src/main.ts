@@ -35,7 +35,10 @@ let renderSeq = 0;   // a navigation that starts while a page is still loading w
 
 const currentPath = () => (location.hash.slice(1) in routes ? location.hash.slice(1) : '/');
 
+import { refreshMeadow, startMeadow } from './features/world/meadow';
+
 async function render(): Promise<void> {
+  startMeadow(); refreshMeadow();
   const seq = ++renderSeq;
   cleanup?.();
   cleanup = undefined;

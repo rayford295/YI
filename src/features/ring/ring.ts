@@ -33,7 +33,7 @@ type View = keyof typeof VIEWS;
 export function renderRing(root: HTMLElement): () => void {
   root.innerHTML = `
     <section class="ring">
-      <header class="ring-head">
+      <header class="ring-head sign">
         <p class="eyebrow">${t('ring.eyebrow')}</p>
         <h1>${t('ring.title')}</h1>
         <p class="ring-sub">${t('ring.subtitle')}</p>

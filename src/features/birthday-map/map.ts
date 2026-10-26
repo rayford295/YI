@@ -36,7 +36,7 @@ export function renderMap(root: HTMLElement): () => void {
   root.innerHTML = `
     <section class="map-page">
       <p class="quest-task${isCleared('map') ? ' done' : ''}" id="map-task"></p>
-      <div class="map-head">
+      <div class="map-head sign">
         <h2>${t('map.title')}</h2>
         <button class="btn" id="story-btn" type="button">${t('map.story')} ▶</button>
       </div>

@@ -23,7 +23,7 @@ export function renderPuzzle(root: HTMLElement): () => void {
   const done = isCleared('puzzle');
   root.innerHTML = `
     <section class="puzzle">
-      <header class="puzzle-head">
+      <header class="puzzle-head sign">
         <h1>${t('puzzle.title')}</h1>
         <p>${t('puzzle.subtitle')}</p>
       </header>

@@ -12,7 +12,7 @@ export function renderLetter(root: HTMLElement): () => void {
   const here = PLAYERS.filter((p) => isCleared('ring', p));
   root.innerHTML = `
     <section class="letter-page">
-      <header class="letter-head">
+      <header class="letter-head sign">
         <p class="eyebrow">${t('letter.eyebrow')}</p>
         <h1>${t('letter.title')}</h1>
         <div class="letter-seals">${PLAYERS.map((p) => `<span class="seal${isCleared('ring', p) ? ' lit' : ''}">${avatarHtml(p)}</span>`).join('')}</div>

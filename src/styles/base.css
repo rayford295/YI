@@ -1,7 +1,7 @@
 :root {
   --paper: #fbf4ee;
   --paper-2: #f6e6e0;
-  --card: rgba(255, 251, 248, 0.86);
+  --card: #f6ecd9;
   --ink: #3b2430;
   --muted: #8b6a76;
   --rose: #d4506d;
@@ -9,12 +9,12 @@
   --blush: #f3c4cd;
   --gold: #c39a5c;
   --night: #2c2340;
-  --line: rgba(168, 50, 79, 0.16);
-  --shadow: 0 18px 40px -22px rgba(120, 30, 60, 0.45);
+  --line: rgba(16, 46, 73, 0.45);
+  --shadow: 0 0 0 3px #d3a557, 0 8px 0 rgba(11, 32, 54, 0.25);
   --serif-zh: 'Noto Serif SC', 'Songti SC', serif;
   --serif-en: 'Cormorant Garamond', Georgia, serif;
   --hand: 'Ma Shan Zheng', 'Kaiti SC', cursive;
-  --radius: 22px;
+  --radius: 14px;
 }
 
 * { box-sizing: border-box; }
@@ -64,7 +64,7 @@ a { color: inherit; }
 
 .card {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 3px solid #102e49;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 22px;
@@ -136,9 +136,28 @@ body.world-sky {
   transition: background 1s ease;
 }
 body.world-sky .floating-hearts { display: none; }
-body.world-sky .topbar { background: rgba(251, 244, 238, 0.92); }
-/* A cream sign with a navy-and-gold pixel border, for headings that stand on the meadow. */
+body.world-sky .topbar { background: rgba(244, 233, 214, 0.94); border-bottom: 3px solid #102e49; }
+/* A cream sign with a navy-and-gold pixel border: every page heading stands on one. */
 .sign {
-  padding: 14px 28px 16px; border-radius: 14px;
+  padding: 14px 28px 16px; border-radius: 14px; margin-bottom: 8px;
   background: #f4e9d6; border: 3px solid #102e49; box-shadow: 0 0 0 3px #d3a557, 0 8px 0 rgba(11, 32, 54, 0.25);
 }
+/* Text that stands directly on the grass gets a hair of light under it. */
+body { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35); }
+.world-dialog, .world-hint, .world-foot, .topbar { text-shadow: none; }
+
+/* Words that stand on the grass with no panel of their own sit on a talk-box-coloured strip, so
+   they read at night as well as by day. One list here rather than a rule per page. */
+.diff, .moment-more, .puzzle-caption, .puzzle-foot, .gomoku-status, .draws, .draw-roles, .draw-score > span, .seconds,
+.stars-at, .stars-foot, .journey-foot {
+  width: fit-content; max-width: 100%; margin-inline: auto; justify-self: center; padding: 6px 14px; border-radius: 10px;
+  background: rgba(11, 32, 54, 0.88); color: #f1e4c8; border: 2px solid #d3a557; text-shadow: none; font-style: normal;
+}
+.draw-score { align-items: center; }
+.draw-score > span { margin-inline: 0; justify-self: auto; }
+.diff { margin-top: 0; }
+.moment-more, .puzzle-caption { color: #f8e6b8; }
+.gomoku-status[data-state='won'], .gomoku-status[data-state='draw'], .draw-score .sync { color: #ffd98a; }
+.puzzle-foot .link, .stars-foot .link, .stars-foot span, .journey-foot .link, .journey-foot a, .journey-foot span, .draws { color: #f1e4c8; }
+.map-head.sign { margin-bottom: 10px; }
+.g-btn:not(.primary), .d-btn:not(.primary) { background: #f4e9d6; }

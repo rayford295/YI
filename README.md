@@ -51,6 +51,7 @@
 - **The ring** is the eighth house. When both of us have reached it, the partner points to the
   last letter.
 
+The whole site stands on the town's meadow, and every heading is a sign in the same cream and navy.
 Everything runs in the browser and nothing leaves the device. The whole site exists in both
 languages, and it installs as an app that works offline.
 

@@ -46,7 +46,7 @@ export function renderGomoku(root: HTMLElement): () => void {
   root.innerHTML = `
     <section class="gomoku">
       ${gameTabs('#/gomoku')}
-      <header class="gomoku-head">
+      <header class="gomoku-head sign">
         <h1>${t('gomoku.title')}</h1>
         <p>${t('gomoku.subtitle')}</p>
       </header>

@@ -36,7 +36,7 @@ export function renderJourney(root: HTMLElement): () => void {
 
   root.innerHTML = `
     <section class="journey">
-      <header class="journey-head">
+      <header class="journey-head sign">
         ${avatarHtml(p, 'big')}
         <p class="eyebrow">${t('journey.eyebrow', { name: playerName(p) })}</p>
         <h1>${t('journey.title')}</h1>
