@@ -31,7 +31,7 @@ RINGS = {
         style="round", inner_diameter=16.5, band_t=1.8,        # US 6 placeholder
         stone_d=7.0, prong_r=0.38, seat_r=2.9, seat_t=0.26,     # ~1.3 ct centre stone
         collet_r_bottom=1.3, collet_r_top=2.8, collet_h=2.0,
-        halo_n=20, melee_d=1.15,                                 # halo of small brilliants
+        halo_n=18, melee_d=0.9,                                 # halo of small brilliants
         shoulder_n=5, shoulder_d=(1.35, 0.95),                   # graduated stones along the meridian
         groove_r=0.2, sapphire_r=0.55, brushed=False,
         engraving=(HIM, f"{MET} · {PLACE}"), engraving_size=0.70,
@@ -261,7 +261,7 @@ def build(which):
 
         # halo: a flared platinum cup under the girdle carrying a ring of small brilliants
         m_r = P["melee_d"] / 2
-        halo_r = P["stone_d"] / 2 + m_r + 0.45
+        halo_r = P["stone_d"] / 2 + m_r + 0.22
         z_cup = girdle_z - 0.35
         r_out = halo_r + m_r * 0.9
         wall = 0.38                                           # open gallery: a thin flared wall lets light reach the pavilion
@@ -275,7 +275,7 @@ def build(which):
             mel = brilliant(f"Halo{i}", P["melee_d"], z_cup + m_r * 0.55, facets=12)
             mel.location = (halo_r * math.cos(a), halo_r * math.sin(a), mel.location.z)
             mel.data.materials.append(diamond)
-            bead = sphere(f"HaloBead{i}", 0.17, (halo_r * math.cos(a + math.pi / P["halo_n"]),
+            bead = sphere(f"HaloBead{i}", 0.14, (halo_r * math.cos(a + math.pi / P["halo_n"]),
                                                  halo_r * math.sin(a + math.pi / P["halo_n"]), z_cup + m_r * 0.7))
             bead.data.materials.append(gold)
 

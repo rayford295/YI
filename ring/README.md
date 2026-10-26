@@ -14,7 +14,7 @@ coordinates where we meet on the right.
 | | Hers | His |
 |---|---|---|
 | Band | slim round, polished platinum | wide flat comfort-fit, brushed platinum |
-| Stone | 7 mm round brilliant (about 1.3 ct) on four gold prongs set N / E / S / W like a compass, a halo of 20 small brilliants with gold beads on an open platinum gallery, five graduated stones on each shoulder set along the meridian | none |
+| Stone | 7 mm round brilliant (about 1.3 ct) on four gold prongs set N / E / S / W like a compass, a halo of 18 small brilliants with gold beads on an open platinum gallery, five graduated stones on each shoulder set along the meridian | none |
 | Engraving | `Dr. Yifan Yang, 25th Sept.` ✦ `2026·09·20 · 40.64°N 73.78°W` | `Jingyi, 31st Oct.` ✦ `2026·09·20 · 40.64°N 73.78°W` |
 | Size placeholder | US 6 (16.5 mm) | US 10 (19.8 mm) |
 
