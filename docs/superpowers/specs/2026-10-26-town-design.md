@@ -41,7 +41,12 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
    level number, so the town can be read without opening a door (added 2026-10-26).
 5. The partner stands by the fountain. Bumping into them shows one line and their progress on
    this device. When both have reached the ring, the line points to the epilogue.
-6. Reduced motion: the typewriter prints at once; walking still animates (it is the game).
+6. Reduced motion: the typewriter prints at once and the pond stands still; walking still
+   animates (it is the game). Otherwise the pond's highlights drift (three phases, 450 ms) and the
+   fountain glints.
+9. Sounds, all synthesised: a footfall per step, a thud when blocked (at most every 350 ms), a
+   blip when the talk box opens, two notes when a door opens. A footer switch (`yi.sound`) turns
+   them off. (Added 2026-10-26.)
 7. Tap a tile on the canvas to walk there (shortest path over free tiles); tapping something you
    cannot stand on walks to the nearest free tile beside it, turns to face it and acts as a bump
    would. A house's name floats over its roof while the player is within two tiles of its door.

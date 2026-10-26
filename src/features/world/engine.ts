@@ -1,7 +1,7 @@
 // The walking engine: grid steps, facing, bumping, a camera that follows, one rAF loop.
 // The rules (`step`, `faced`) are pure so they can be tested; the class wires them to a canvas.
 import { HEIGHT, WIDTH, BUILDINGS, buildingAt, type Building, type Point } from './town';
-import { TILE, flag, renderTown } from './tiles';
+import { TILE, flag, fountainGlint, renderTown } from './tiles';
 import { SPRITE_H, SPRITE_W, type Dir, type SpriteSheet } from './sprites';
 
 export interface Mover { x: number; y: number; dir: Dir }
@@ -33,7 +33,10 @@ export interface EngineOptions {
   onDoor(b: Building): void;                    // the player stepped onto an open door
   onBump(npc: Npc): void;                       // walked into, or talked to, an NPC
   onMove?(p: Point): void;
+  onStep?(): void;                              // a step begins (footsteps)
+  onBlocked?(): void;                           // walked into something solid, at most every 350 ms
   label?(b: Building): string;                 // house name shown when the player is near its door
+  water?: HTMLCanvasElement[];                  // pond frames cycled over the town; omit for a still pond
 }
 
 const STEP_MS = 190;
@@ -51,6 +54,7 @@ export class WorldEngine {
   private scale = 3;
   private frameClock = 0;
   private bumpAt = 0;
+  private blockedAt = 0;
   private resize: ResizeObserver | undefined;
   private queue: Dir[] = [];            // steps still to take after a tap on the map
   private goal: Point | undefined;      // the tapped tile, to face and act on when the walk ends
@@ -168,10 +172,12 @@ export class WorldEngine {
     if (r.moved) {
       this.from = { x: this.mover.x - DELTA[d].x, y: this.mover.y - DELTA[d].y };
       this.t = 0;
+      this.o.onStep?.();
     } else {
       const f = faced(this.mover);
       const npc = this.npcAt(f.x, f.y);
-      if (npc && now - this.bumpAt > 700) { this.bumpAt = now; this.o.onBump(npc); }
+      if (npc) { if (now - this.bumpAt > 700) { this.bumpAt = now; this.o.onBump(npc); } }
+      else if (now - this.blockedAt > 350) { this.blockedAt = now; this.o.onBlocked?.(); }
     }
   }
 
@@ -232,6 +238,10 @@ export class WorldEngine {
     ctx.scale(scale, scale);
     ctx.drawImage(this.town, 0, 0);
     const wave = Math.floor(this.frameClock / 400) % 2;
+    if (this.o.water?.length) {
+      ctx.drawImage(this.o.water[Math.floor(this.frameClock / 450) % this.o.water.length], 0, 0);
+      fountainGlint(ctx, Math.floor(this.frameClock / 500) % 2);
+    }
     for (const b of BUILDINGS) if (this.o.cleared(b.level)) flag(ctx, b, wave);
 
     // Entities, painted back to front so a sprite lower on the map overlaps one above it.

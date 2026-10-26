@@ -87,13 +87,14 @@ function path(ctx: CanvasRenderingContext2D, x: number, y: number, tx: number, t
   if (g(1, 0)) ctx.fillRect(x + TILE - 1, y, 1, TILE);
 }
 
-function water(ctx: CanvasRenderingContext2D, x: number, y: number, tx: number, ty: number): void {
+function water(ctx: CanvasRenderingContext2D, x: number, y: number, tx: number, ty: number, phase = 0): void {
   ctx.fillStyle = C.water;
   ctx.fillRect(x, y, TILE, TILE);
+  // Two highlights that drift with the phase, so the pond moves when drawn frame by frame.
   ctx.fillStyle = C.waterLight;
-  const k = h(tx, ty, 7);
-  ctx.fillRect(x + 2 + k, y + 4, 5, 1);
-  ctx.fillRect(x + 8 - k, y + 11, 4, 1);
+  const k = (h(tx, ty, 7) + phase * 3) % 9;
+  ctx.fillRect(x + 2 + k, y + 4 + (phase === 1 ? 1 : 0), 5, 1);
+  ctx.fillRect(x + 8 - k, y + 11 - (phase === 2 ? 1 : 0), 4, 1);
   // Grassy bank on the sides that touch land.
   const land = (dx: number, dy: number) => (TOWN[ty + dy]?.[tx + dx] ?? '~') !== '~';
   ctx.fillStyle = C.waterDark;
@@ -197,6 +198,25 @@ export function renderTown(): HTMLCanvasElement {
   }
   for (const b of BUILDINGS) house(ctx, b);
   return c;
+}
+
+export const WATER_PHASES = 3;
+/** The pond alone, in one phase, on a transparent town-sized canvas; blit over the town per frame. */
+export function renderWater(phase: number): HTMLCanvasElement {
+  const c = document.createElement('canvas');
+  c.width = WIDTH * TILE; c.height = HEIGHT * TILE;
+  const ctx = c.getContext('2d')!;
+  for (let ty = 0; ty < HEIGHT; ty++) for (let tx = 0; tx < WIDTH; tx++) if (TOWN[ty][tx] === '~') water(ctx, tx * TILE, ty * TILE, tx, ty, phase);
+  return c;
+}
+
+/** A glint on the fountain's water, alternating between two spots. */
+export function fountainGlint(ctx: CanvasRenderingContext2D, phase: number): void {
+  ctx.fillStyle = '#ffffff';
+  for (let ty = 0; ty < HEIGHT; ty++) for (let tx = 0; tx < WIDTH; tx++) if (TOWN[ty][tx] === 'O') {
+    const x = tx * TILE, y = ty * TILE;
+    if (phase === 0) ctx.fillRect(x + 6, y + 5, 2, 1); else ctx.fillRect(x + 9, y + 7, 1, 2);
+  }
 }
 
 /** A small gold flag on a roof: drawn per frame, since it depends on progress. */

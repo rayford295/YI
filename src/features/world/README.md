@@ -14,9 +14,10 @@ points to the epilogue.
 | File | What |
 |---|---|
 | `town.ts` | The map as a character grid (`TOWN`), `BUILDINGS` (level id, door tile, roof colour), `SPAWN`, `PARTNER`, `CAT_HOMES`, pure helpers `walkable`, `buildingAt`, `guardSpot`, `reachable` |
-| `tiles.ts` | Paints the ground and the houses once onto an offscreen canvas (`renderTown`), plus the roof `flag` |
+| `tiles.ts` | Paints the ground and the houses once onto an offscreen canvas (`renderTown`), the pond in three phases (`renderWater`), the fountain glint and the roof `flag` |
 | `sprites.ts` | Pixel art in code: `JINGYI`, `YIFAN` (12×16, four facings, two walk frames), the cats `COFFEE` and `DUODUO` (two frames, a tail flick); `buildSheet` / `buildCat` pre-render them |
-| `engine.ts` | `step` and `faced` (pure rules), `WorldEngine` (grid movement, bump-to-talk, camera, the rAF loop, integer pixel scale) |
+| `engine.ts` | `step` and `faced` (pure rules), `WorldEngine` (grid movement, bump-to-talk, camera, the rAF loop, integer pixel scale, the pond frames and the fountain glint) |
+| `sound.ts` | Footstep, thud, talk-box blip and door, synthesised with the Web Audio API on the first key or tap; `soundOn` / `setSoundOn` (`yi.sound`) |
 | `world.ts`, `world.css` | The page: canvas, d-pad + A button (hidden on wide pointer devices), the talk box with typewriter text, HUD and footer |
 | `town.test.ts`, `engine.test.ts` | Map shape, one building per level, every door reachable from the spawn, cat homes on free ground, step/turn/face rules |
 
@@ -25,6 +26,11 @@ tap moves one tile; a held key keeps walking. Tapping a tile on the canvas walks
 shortest path (`WorldEngine.walkTo`); tapping a cat, the partner or a locked door walks up to it
 and acts like a bump. On touch, the pad below the canvas does the same as the keys. A house's number and name
 float over its roof while the player is within two tiles of its door.
+
+Sounds: a soft footfall per step, a thud when walking into something solid, a blip when the talk
+box opens, two notes when a door opens. All are synthesised; there are no audio files. **Sound: on /
+off** in the footer switches them and is remembered on the device. The pond's highlights drift and
+the fountain glints; under reduced motion the water stands still.
 
 Where the player stood is kept in `localStorage` (`yi.world.<player>`); coming back from a level
 puts them in front of that house's door, facing it. "Start over" in the footer clears it with

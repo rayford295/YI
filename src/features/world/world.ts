@@ -8,6 +8,8 @@ import { escapeAttr } from '../../core/html';
 import { BUILDINGS, CAT_HOMES, PARTNER, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
 import { JINGYI, YIFAN, buildCat, buildSheet, type CatId, type Dir } from './sprites';
+import { WATER_PHASES, renderWater } from './tiles';
+import { bumpSound, doorSound, setSoundOn, soundOn, stepSound, talkSound } from './sound';
 
 const catPhoto = (id: CatId): string => `${import.meta.env.BASE_URL}media/cats/${id}.jpg`;
 
@@ -68,6 +70,8 @@ export function renderWorld(root: HTMLElement): () => void {
         <button type="button" class="link" id="world-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="world-reset">${t('journey.reset')}</button>
+        <span aria-hidden="true"> · </span>
+        <button type="button" class="link" id="world-sound" aria-pressed="${soundOn()}">${t(soundOn() ? 'world.sound.on' : 'world.sound.off')}</button>
       </p>
     </section>`;
 
@@ -116,6 +120,7 @@ export function renderWorld(root: HTMLElement): () => void {
       actionsEl.appendChild(b);
     });
     dialog.hidden = false;
+    talkSound();
     // Typewriter text, printed at once under reduced motion.
     clearInterval(typing);
     if (prefersReducedMotion()) { textEl.innerHTML = html; return; }
@@ -132,7 +137,7 @@ export function renderWorld(root: HTMLElement): () => void {
     void tag;
   }
 
-  const go = (hash: string) => { closeDialog(); location.hash = hash; };
+  const go = (hash: string) => { doorSound(); closeDialog(); location.hash = hash; };
   function onDoor(b: Building): void {
     savePos(p, b.door);
     const level = LEVELS[levelIndex(b.level)];
@@ -166,6 +171,8 @@ export function renderWorld(root: HTMLElement): () => void {
     walkable: (x, y) => walkable(x, y, (id) => isUnlocked(id, p)),
     cleared: (id) => isCleared(id, p),
     onDoor, onBump, onMove: (q) => savePos(p, q),
+    onStep: stepSound, onBlocked: bumpSound,
+    water: prefersReducedMotion() ? undefined : Array.from({ length: WATER_PHASES }, (_, i) => renderWater(i)),
     label: (b) => `${levelNumber(b.level)} · ${t(LEVELS[levelIndex(b.level)].title)}`,
   });
 
@@ -212,6 +219,12 @@ export function renderWorld(root: HTMLElement): () => void {
   });
   root.querySelector('#world-a')!.addEventListener('click', () => { if (dialog.hidden) engine.interact(); else primary?.run(); });
 
+  const soundBtn = root.querySelector<HTMLButtonElement>('#world-sound')!;
+  soundBtn.addEventListener('click', () => {
+    const on = !soundOn(); setSoundOn(on);
+    soundBtn.textContent = t(on ? 'world.sound.on' : 'world.sound.off'); soundBtn.setAttribute('aria-pressed', String(on));
+    if (on) talkSound();
+  });
   root.querySelector('#world-switch')!.addEventListener('click', () => { setPlayer(null); location.hash = '#/start'; });
   root.querySelector('#world-reset')!.addEventListener('click', () => { if (window.confirm(t('journey.reset.confirm'))) { reset(p); try { localStorage.removeItem(posKey(p)); } catch { /* ignore */ } } });
   const offQuest = onQuestChange(() => { if (getPlayer()) { teardown(); renderWorld(root); } });

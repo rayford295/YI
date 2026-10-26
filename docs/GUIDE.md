@@ -77,7 +77,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [ ] Record voice lines for the cleared cards (`public/media/voice/README.md`)
 - [ ] Add inside-joke words to Pictionary (`src/features/pictionary/words.ts`)
 - [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
-- [ ] Town: footsteps and door sounds, animated water
+- [x] Town: footsteps, thud, talk-box and door sounds (synthesised, with a switch), drifting pond and fountain glint (2026-10-26)
 - [ ] Later: a long road from Shenzhen to College Station as a second map, gifts, daily notes, two players online at once
 ## Key Dates
 
