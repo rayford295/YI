@@ -17,30 +17,35 @@ import math
 import sys
 from pathlib import Path
 
+import os
 import bpy
 import bmesh
 from mathutils import Vector, Matrix
 
 HERE = Path(__file__).resolve().parent
 MET, PLACE = "2026·09·20", "40.64°N 73.78°W"
+HIM, HER = "Dr. Yifan Yang, 25th Sept.", "Jingyi, 31st Oct."   # each ring carries the other's name
 
 RINGS = {
     "hers": dict(
-        style="round", inner_diameter=16.5, band_t=1.7,        # US 6 placeholder
-        stone_d=6.0, prong_r=0.36, seat_r=2.45, seat_t=0.26,
-        collet_r_bottom=1.2, collet_r_top=2.3, collet_h=1.9,
+        style="round", inner_diameter=16.5, band_t=1.8,        # US 6 placeholder
+        stone_d=7.0, prong_r=0.38, seat_r=2.9, seat_t=0.26,     # ~1.3 ct centre stone
+        collet_r_bottom=1.3, collet_r_top=2.8, collet_h=2.0,
+        halo_n=20, melee_d=1.15,                                 # halo of small brilliants
+        shoulder_n=5, shoulder_d=(1.35, 0.95),                   # graduated stones along the meridian
         groove_r=0.2, sapphire_r=0.55, brushed=False,
-        engraving=(f"一帆 · {MET}", PLACE), engraving_size=0.72,
+        engraving=(HIM, f"{MET} · {PLACE}"), engraving_size=0.70,
     ),
     "his": dict(
         style="flat", inner_diameter=19.8, band_w=5.2, band_t=1.9,   # US 10 placeholder
         groove_r=0.26, sapphire_r=0.6, brushed=True,
-        engraving=(f"静仪 · {MET}", PLACE), engraving_size=0.95,
+        engraving=(HER, f"{MET} · {PLACE}"), engraving_size=0.92,
     ),
 }
-RENDER = dict(samples=192, res=1200)
-FONTS = ["/System/Library/Fonts/Supplemental/Songti.ttc",
-         "/System/Library/Fonts/Supplemental/Arial Unicode.ttf"]
+RENDER = dict(samples=int(os.environ.get("RING_SAMPLES", 192)), res=int(os.environ.get("RING_RES", 1200)))
+FONTS = ["/System/Library/Fonts/Supplemental/Didot.ttc",          # engraving: a high-contrast serif
+         "/System/Library/Fonts/Supplemental/Baskerville.ttc",
+         "/System/Library/Fonts/Supplemental/Songti.ttc"]
 ROT_AXIS_Y = (math.radians(90), 0, 0)
 
 
@@ -230,6 +235,8 @@ def build(which):
         z0 = outer_r - 0.35
         collet = cylinder("Collet", P["collet_r_bottom"], z0, z0 + P["collet_h"], r_top=P["collet_r_top"])
         collet.data.materials.append(polished)
+        bore = cylinder("ColletBore", P["collet_r_bottom"] - 0.45, z0 + 0.5, z0 + P["collet_h"] + 1, r_top=P["collet_r_top"] - 0.45)
+        boolean(collet, bore)
         z_seat = z0 + P["collet_h"]
         seat = torus("Seat", P["seat_r"], P["seat_t"], loc=(0, 0, z_seat), seg=(96, 24))
         seat.data.materials.append(gold)
@@ -251,6 +258,38 @@ def build(which):
             pr.data.materials.append(gold)
             tip = sphere(f"ProngTip{i}", P["prong_r"] * 0.58, base + d * L)
             tip.data.materials.append(gold)
+
+        # halo: a flared platinum cup under the girdle carrying a ring of small brilliants
+        m_r = P["melee_d"] / 2
+        halo_r = P["stone_d"] / 2 + m_r + 0.45
+        z_cup = girdle_z - 0.35
+        r_out = halo_r + m_r * 0.9
+        wall = 0.38                                           # open gallery: a thin flared wall lets light reach the pavilion
+        cup = lathe("HaloCup", [(P["collet_r_top"], z_seat - 0.05), (r_out, z_cup), (r_out - wall, z_cup),
+                                (P["collet_r_top"] - wall, z_seat - 0.05), (P["collet_r_top"], z_seat - 0.05)], 96)
+        cup.data.materials.append(polished)
+        collar = torus("HaloCollar", halo_r, m_r * 0.95, loc=(0, 0, z_cup), seg=(160, 24))
+        collar.data.materials.append(polished)
+        for i in range(P["halo_n"]):
+            a = 2 * math.pi * (i + 0.5) / P["halo_n"]
+            mel = brilliant(f"Halo{i}", P["melee_d"], z_cup + m_r * 0.55, facets=12)
+            mel.location = (halo_r * math.cos(a), halo_r * math.sin(a), mel.location.z)
+            mel.data.materials.append(diamond)
+            bead = sphere(f"HaloBead{i}", 0.17, (halo_r * math.cos(a + math.pi / P["halo_n"]),
+                                                 halo_r * math.sin(a + math.pi / P["halo_n"]), z_cup + m_r * 0.7))
+            bead.data.materials.append(gold)
+
+        # shoulders: the gold meridian turns into a run of graduated stones as it climbs to the head
+        d0, d1 = P["shoulder_d"]
+        for sgn in (-1, 1):
+            for k in range(P["shoulder_n"]):
+                t = k / max(P["shoulder_n"] - 1, 1)
+                md = d0 + (d1 - d0) * t
+                th = math.radians(24 + 10.5 * k)
+                st = brilliant(f"Shoulder{'L' if sgn < 0 else 'R'}{k}", md, 0, facets=12)
+                st.location = (sgn * (outer_r - 0.22) * math.sin(th), 0, (outer_r - 0.22) * math.cos(th))
+                st.rotation_euler = (0, sgn * th, 0)
+                st.data.materials.append(diamond)
 
     # --- engraving on the inner surface
     curve = bpy.data.curves.new("EngravePath", 'CURVE')
@@ -316,8 +355,8 @@ def build(which):
     bpy.context.scene.world = world
     world.use_nodes = True
     bg = world.node_tree.nodes["Background"]
-    bg.inputs[0].default_value = (0.55, 0.60, 0.68, 1)
-    bg.inputs[1].default_value = 1.2
+    bg.inputs[0].default_value = (0.80, 0.84, 0.90, 1)
+    bg.inputs[1].default_value = 2.0
 
     s = outer_r / 9.95            # camera distances scale with the ring
     cams = {}
@@ -341,6 +380,7 @@ def render(cams, which, tag):
     sc = bpy.context.scene
     sc.render.engine = 'CYCLES'
     sc.cycles.samples, sc.cycles.use_denoising = RENDER["samples"], True
+    sc.cycles.max_bounces, sc.cycles.transmission_bounces, sc.cycles.glossy_bounces = 24, 24, 12
     try:
         prefs = bpy.context.preferences.addons['cycles'].preferences
         prefs.compute_device_type = 'METAL'

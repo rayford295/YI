@@ -4,7 +4,7 @@ Route: `#/ring` (unlisted: not in the top bar, only reachable by link)
 
 An interactive 3D view of the pair of Meridian rings designed in `ring/meridian.py`. **Hers / His**
 switches the model; drag to turn it, scroll to zoom, and press **Look inside** to fly the camera
-to the hidden sapphire and the engraving (the other's name and `2026·09·20` on one side,
+to the hidden sapphire and the engraving (the other's name and birthday on one side, `2026·09·20` and
 `40.64°N 73.78°W` on the other).
 
 | File | Role |

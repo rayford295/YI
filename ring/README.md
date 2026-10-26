@@ -8,14 +8,14 @@ later without redrawing anything.
 Both rings share one signature: a **yellow-gold meridian** inlaid around the outside of a
 platinum band, like a line of longitude on a globe; a **hidden sapphire** inside the bottom of
 the band, visible only when the ring is taken off; and an **engraving** on either side of that
-sapphire: the other person's name and the day we met on the left, the coordinates where we
-meet on the right.
+sapphire: the other person's name and birthday on the left, the day we met and the
+coordinates where we meet on the right.
 
 | | Hers | His |
 |---|---|---|
 | Band | slim round, polished platinum | wide flat comfort-fit, brushed platinum |
-| Stone | round brilliant on four gold prongs set N / E / S / W like a compass | none |
-| Engraving | `一帆 · 2026·09·20` ✦ `40.64°N 73.78°W` | `静仪 · 2026·09·20` ✦ `40.64°N 73.78°W` |
+| Stone | 7 mm round brilliant (about 1.3 ct) on four gold prongs set N / E / S / W like a compass, a halo of 20 small brilliants with gold beads on an open platinum gallery, five graduated stones on each shoulder set along the meridian | none |
+| Engraving | `Dr. Yifan Yang, 25th Sept.` ✦ `2026·09·20 · 40.64°N 73.78°W` | `Jingyi, 31st Oct.` ✦ `2026·09·20 · 40.64°N 73.78°W` |
 | Size placeholder | US 6 (16.5 mm) | US 10 (19.8 mm) |
 
 ## Files
@@ -36,7 +36,7 @@ $B -b -P ring/meridian.py -- --ring hers --render hero        # one view of one 
 $B ring/meridian_hers.blend                                   # open in the UI
 ```
 
-Units are millimetres. The engraving uses Songti from macOS so the Chinese names render;
+Units are millimetres. The engraving uses Didot from macOS (Baskerville, then Songti, as fallbacks);
 on another machine edit `FONTS`.
 
 ## Still to decide
