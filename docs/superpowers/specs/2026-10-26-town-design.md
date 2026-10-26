@@ -37,7 +37,8 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
    own line naming the previous level, with the cat's photo. A cat with nothing to guard rests
    at its home spot (`CAT_HOMES`) and has an idle line. (Amended 2026-10-26: was one generic cat
    per locked door.)
-4. A cleared building flies a small gold flag on its roof.
+4. A cleared building flies a small gold flag on its roof. Every roof carries a sign with the
+   level number, so the town can be read without opening a door (added 2026-10-26).
 5. The partner stands by the fountain. Bumping into them shows one line and their progress on
    this device. When both have reached the ring, the line points to the epilogue.
 6. Reduced motion: the typewriter prints at once; walking still animates (it is the game).

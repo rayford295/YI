@@ -54,7 +54,7 @@ languages, and it installs as an app that works offline.
 
 ## ⌂ The Houses
 
-Each roof in the town has its own colour. Walk into the door to play the level.
+Each roof in the town has its own colour and carries its number. Walk into the door to play the level.
 
 | Roof | # | Level | The task | Behind the door |
 |:---:|:---:|---|---|---|

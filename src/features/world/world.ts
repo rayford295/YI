@@ -1,7 +1,7 @@
 // The town page: the new home. A canvas with the walking engine, a d-pad for phones, the talk box.
 import './world.css';
 import { t, type Key } from '../../core/i18n';
-import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange, clearedByAll, levelIndex, type PlayerId } from '../../core/quest';
+import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange, clearedByAll, levelIndex, levelNumber, type PlayerId } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
 import { prefersReducedMotion } from '../../core/motion';
 import { escapeAttr } from '../../core/html';
@@ -166,7 +166,7 @@ export function renderWorld(root: HTMLElement): () => void {
     walkable: (x, y) => walkable(x, y, (id) => isUnlocked(id, p)),
     cleared: (id) => isCleared(id, p),
     onDoor, onBump, onMove: (q) => savePos(p, q),
-    label: (b) => t(LEVELS[levelIndex(b.level)].title),
+    label: (b) => `${levelNumber(b.level)} · ${t(LEVELS[levelIndex(b.level)].title)}`,
   });
 
   // Keyboard: arrows / WASD walk, Enter / Space / Z act, Escape closes the talk box.

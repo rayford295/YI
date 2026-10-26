@@ -2,6 +2,7 @@
 // Everything is fillRect and small pixel grids: no image files.
 import { BUILDINGS, HEIGHT, TOWN, WIDTH, type Building } from './town';
 import { paint, type Palette } from './sprites';
+import { levelNumber } from '../../core/quest';
 
 export const TILE = 16;
 
@@ -11,7 +12,7 @@ const C = {
   water: '#4f9ad6', waterDark: '#3f84bd', waterLight: '#8ec6ee',
   trunk: '#6b4a2e', leaf: '#3f8a3d', leafDark: '#2f6c2e', leafLight: '#5aa84f',
   wall: '#f4e9d6', wallShade: '#e2d2b8', window: '#9fd3f0', windowFrame: '#6b5540',
-  stone: '#b9b4a6', stoneDark: '#8f8a7c', gold: '#e9c46a', pole: '#5a4634',
+  stone: '#b9b4a6', stoneDark: '#8f8a7c', gold: '#e9c46a', pole: '#5a4634', navy: '#102e49',
 };
 
 const FLOWER_PALETTE: Palette = { r: '#f26b8a', y: '#f9d65c', w: '#fff6dc', g: '#3f8a3d' };
@@ -108,6 +109,30 @@ function shade(hex: string, f: number): string {
   return `#${ch(n >> 16)}${ch((n >> 8) & 255)}${ch(n & 255)}`;
 }
 
+// A 3×5 pixel digit for the number sign on each roof.
+const DIGITS: Record<string, string[]> = {
+  '0': ['###', '#.#', '#.#', '#.#', '###'],
+  '1': ['.#.', '##.', '.#.', '.#.', '###'],
+  '2': ['###', '..#', '###', '#..', '###'],
+  '3': ['###', '..#', '###', '..#', '###'],
+  '4': ['#.#', '#.#', '###', '..#', '..#'],
+  '5': ['###', '#..', '###', '..#', '###'],
+  '6': ['###', '#..', '###', '#.#', '###'],
+  '7': ['###', '..#', '..#', '..#', '..#'],
+  '8': ['###', '#.#', '###', '#.#', '###'],
+  '9': ['###', '#.#', '###', '..#', '###'],
+};
+
+/** The level number on a cream sign in the middle of the roof, so a house reads as "3" from afar. */
+function numberSign(ctx: CanvasRenderingContext2D, x: number, y: number, n: number): void {
+  const text = String(n), w = text.length * 4 + 3;
+  ctx.fillStyle = C.navy;
+  ctx.fillRect(x - 1, y - 1, w + 2, 9);
+  ctx.fillStyle = C.wall;
+  ctx.fillRect(x, y, w, 7);
+  [...text].forEach((ch, k) => paint(ctx, DIGITS[ch] ?? DIGITS['0'], { '#': C.navy }, x + 2 + k * 4, y + 1));
+}
+
 /** A 3×3-tile house: two rows of roof, one of wall with the door in the middle. */
 function house(ctx: CanvasRenderingContext2D, b: Building): void {
   const x = (b.door.x - 1) * TILE, y = (b.door.y - 2) * TILE;
@@ -121,6 +146,9 @@ function house(ctx: CanvasRenderingContext2D, b: Building): void {
   for (let r = y + 7; r < y + roofH; r += 5) ctx.fillRect(x, r, w, 1);
   ctx.fillStyle = shade(b.roof, 1.18);
   ctx.fillRect(x + 2, y + 3, w - 4, 2);
+  // The level number, centred low on the roof.
+  const n = levelNumber(b.level), sw = String(n).length * 4 + 3;
+  numberSign(ctx, x + Math.floor((w - sw) / 2), y + roofH - 10, n);
   // Wall.
   ctx.fillStyle = C.wall;
   ctx.fillRect(x, y + roofH + 2, w, TILE + 2);
