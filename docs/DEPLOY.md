@@ -2,9 +2,9 @@
 
 ## Status
 
-Going live on 2026-10-26: the repository is public again, GitHub Pages has `jingyifan.love` as
-its custom domain (set through the API; the certificate is issued by GitHub within about an hour,
-after which **Enforce HTTPS** goes on), and the DNS at Cloudflare is in place. Every push to
+Live at <https://jingyifan.love/> since 2026-10-26: the repository is public, GitHub Pages has
+`jingyifan.love` as its custom domain with **Enforce HTTPS** on, `www.` and the old
+`rayford295.github.io/YI/` address redirect there, and the DNS at Cloudflare is in place. Every push to
 `main` redeploys through the `deploy` job in `.github/workflows/ci.yml`, which only runs while
 the repository variable `PUBLISH` is `true` (Settings → Secrets and variables → Actions →
 Variables); unset it and the job is skipped, CI stays green and the site stays as it was.
