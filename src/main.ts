@@ -10,7 +10,7 @@ import { renderEnroll } from './features/ring/enroll';
 
 export type Page = (root: HTMLElement) => () => void;
 
-const routes: Record<string, Page> = { '/': renderHome, '/map': renderMap, '/moments': renderMoments, '/gomoku': renderGomoku, '/draw': renderPictionary, '/ring': renderRing };  // '/ring' is unlisted on purpose
+const routes: Record<string, Page> = { '/': renderHome, '/map': renderMap, '/moments': renderMoments, '/gomoku': renderGomoku, '/draw': renderPictionary, '/ring': renderRing };
 const viewClass: Record<string, string> = { '/': 'home', '/map': 'map', '/moments': 'moments', '/gomoku': 'gomoku', '/draw': 'draw', '/ring': 'ring', '/enroll': 'ring' };
 if (import.meta.env.DEV) routes['/enroll'] = renderEnroll;   // face enrolment tool, dev server only
 const GAMES = ['/gomoku', '/draw'];
@@ -25,14 +25,14 @@ function render(): void {
   const lang = getLang();
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = `${t('site.title')} · ${lang === 'zh' ? 'Yi at First Sight' : '仪见钟情'}`;
-  const link = (href: string, key: 'nav.home' | 'nav.map' | 'nav.moments' | 'nav.games') => {
+  const link = (href: string, key: 'nav.home' | 'nav.map' | 'nav.moments' | 'nav.games' | 'nav.ring') => {
     const active = path === href || (href === '/gomoku' && GAMES.includes(path));
     return `<a href="#${href}" class="${active ? 'active' : ''}">${t(key)}</a>`;
   };
   app.innerHTML = `
     <header class="topbar">
       <a class="brand" href="#/"><span class="brand-zh">仪见钟情</span><span class="brand-en">Yi at First Sight</span></a>
-      <nav>${link('/', 'nav.home')}${link('/map', 'nav.map')}${link('/moments', 'nav.moments')}${link('/gomoku', 'nav.games')}</nav>
+      <nav>${link('/', 'nav.home')}${link('/map', 'nav.map')}${link('/moments', 'nav.moments')}${link('/gomoku', 'nav.games')}${link('/ring', 'nav.ring')}</nav>
       <button class="lang-btn" id="lang-btn" type="button">${t('lang.toggle')}</button>
     </header>
     <main id="view" class="view view-${viewClass[path]}"></main>

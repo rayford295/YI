@@ -1,6 +1,6 @@
 # The Ring
 
-Route: `#/ring` (unlisted: not in the top bar, only reachable by link)
+Route: `#/ring` (top-bar entry: 戒指 / The Ring)
 
 An interactive 3D view of the pair of Meridian rings designed in `ring/meridian.py`. **Hers / His**
 switches the model; drag to turn it, scroll to zoom, and press **Look inside** to fly the camera
@@ -46,7 +46,15 @@ Enrolment happens on the dev server only: `npm run dev`, open `#/enroll`, add 3 
 per person, download `faces.json` and save it as `src/features/ring/faces.json`. That file is
 git-ignored: descriptors are biometric data, so they never enter the repository. For the hosted
 build, paste the file's contents into the repository secret `FACES_JSON`; CI writes it in place
-before `npm run build` (`faces.example.json` is the empty fallback, used when the secret is unset). The "Check a photo" box on that page
+before `npm run build` (`faces.example.json` is the empty fallback, used when the secret is unset).
+
+Be clear about what that protects: the match runs in the browser, so whatever is in `faces.json`
+at build time ships inside the published JavaScript bundle. Keeping it out of git keeps it out of
+the repository's history and forks, not out of the live site. Anyone who can open the site can
+fetch the two descriptors (they cannot rebuild a face from them, but they could recognise the two
+of you in other photos). That is acceptable while the site is private or behind Cloudflare Access;
+for a fully public site, leave the secret unset (the gate then stays closed) or move the match
+behind a server. The "Check a photo" box on that page
 reports the match distance (same person below 0.5, strangers above 0.6).
 
 Cartoon avatars at `public/media/avatars/jingyi.png` and `yifan.png` appear on the Hers / His
