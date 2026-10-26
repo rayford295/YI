@@ -26,8 +26,17 @@ HERE = Path(__file__).resolve().parent
 MET, PLACE = "2026·09·20", "40.64°N 73.78°W"
 HIM, HER = "Dr. Yifan Yang, 25th Sept.", "Jingyi Chen, 31st Oct."   # each ring carries the other's name
 
+# Her ring has two versions and the site shows both: "hers" is the current design (v2, 2026-10-26),
+# "hers_v1" the first (2026-10-25). Both share his band's language; v2 sinks the stone into the band.
 RINGS = {
     "hers": dict(
+        style="flat", inner_diameter=16.5, band_w=5.0, band_t=2.6,     # US 6 placeholder; thicker so the pavilion stays inside
+        groove_r=0.22, sapphire_r=0.55, brushed=True,
+        flush_stone=4.2, flush_rim=0.14,                               # centre stone sunk into the band, gold rim at the surface
+        flush_melee=(1.5, 2, 17.0),                                    # (diameter, count per side, degrees apart) along the meridian
+        engraving=(HIM, f"{MET} · {PLACE}"), engraving_size=0.80,
+    ),
+    "hers_v1": dict(
         style="round", inner_diameter=16.5, band_t=1.8,        # US 6 placeholder
         stone_d=7.0, prong_r=0.38, seat_r=2.9, seat_t=0.26,     # ~1.3 ct centre stone
         collet_r_bottom=1.3, collet_r_top=2.8, collet_h=2.0,
@@ -119,11 +128,23 @@ def sphere(name, r, loc):
     return smooth(o)
 
 
-def boolean(target, cutter, op='DIFFERENCE'):
+def boolean(target, cutter, op='DIFFERENCE', apply=False):
     md = target.modifiers.new(op.lower(), 'BOOLEAN')
     md.operation, md.object, md.solver = op, cutter, 'EXACT'
     cutter.hide_render = cutter.hide_viewport = True
+    if apply:
+        apply_modifiers(target)
     return md
+
+
+def apply_modifiers(obj):
+    """Bake the modifier stack in order; stacked EXACT booleans whose cutters overlap can otherwise
+    resolve to a union instead of a difference."""
+    bpy.ops.object.select_all(action='DESELECT')
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+    for m in list(obj.modifiers):
+        bpy.ops.object.modifier_apply(modifier=m.name)
 
 
 def lathe(name, profile, steps, axis=(0, 0, 1), flat=False):
@@ -220,6 +241,43 @@ def build(which):
     boolean(band, groove)
     inlay = torus("MeridianInlay", outer_r - 0.03, P["groove_r"] * 0.92, rot=ROT_AXIS_Y, seg=(256, 24))
     inlay.data.materials.append(gold)
+
+    # --- flush-set stones (hers v2): sunk into the flat band along the meridian, a gold rim at the lip
+    if P.get("flush_stone"):
+        def flush(tag, d, th, rim):
+            th = th or 1e-3                                           # never exactly on the lathe seam: EXACT booleans fail on coincident geometry
+            dirv = Vector((math.sin(th), 0, math.cos(th)))
+            rot = (0, th, 0.05)
+            crown_h, pav_h = 0.15 * d, 0.43 * d
+            girdle_z = outer_r - crown_h * 0.6                        # crown just proud of the surface so the facets catch light
+            def place(o, z):
+                o.location = dirv * z
+                o.rotation_euler = rot
+                return o
+            # one manifold cutter for the whole seat: a cone under the pavilion, a bore up through the surface
+            # (two overlapping cylinders made the EXACT solver union instead of subtract)
+            rc = d / 2 + 0.06
+            seat = lathe(f"{tag}Seat", [(0, outer_r + 1.5), (rc, outer_r + 1.5), (rc, girdle_z - 0.02),
+                                        (0, girdle_z - pav_h - 0.05), (0, outer_r + 1.5)], 64, flat=True)   # same winding as brilliant()
+            seat.rotation_euler = rot
+            boolean(band, seat, apply=True)
+            boolean(inlay, seat, apply=True)
+            # a polished gold liner inside the seat: light bounces back into the stone, as in a real bezel
+            liner = lathe(f"{tag}Liner", [(rc - 0.01, outer_r - 0.03), (rc - 0.01, girdle_z - 0.02), (0.02, girdle_z - pav_h - 0.04),
+                                          (0.02, girdle_z - pav_h - 0.02), (rc - 0.03, girdle_z - 0.01), (rc - 0.03, outer_r - 0.03),
+                                          (rc - 0.01, outer_r - 0.03)], 64)
+            liner.rotation_euler = rot
+            liner.data.materials.append(gold)
+            st = brilliant(f"{tag}Stone", d, 0, facets=24)
+            place(st, girdle_z)
+            st.data.materials.append(diamond)
+            r_rim = place(torus(f"{tag}Rim", d / 2 + rim * 0.9, rim, seg=(96, 16)), outer_r - 0.04)
+            r_rim.data.materials.append(gold)
+        flush("Centre", P["flush_stone"], 0.0, P["flush_rim"])
+        md, n, step = P["flush_melee"]
+        for sgn in (-1, 1):
+            for k in range(1, n + 1):
+                flush(f"Melee{'L' if sgn < 0 else 'R'}{k}", md, sgn * math.radians(step * k), P["flush_rim"] * 0.6)
 
     # --- hidden sapphire, bottom inside
     z_in = -inner_r
@@ -346,6 +404,23 @@ def build(which):
         bpy.context.collection.objects.link(lo)
         lo.location = loc
         lo.rotation_euler = (Vector((0, 0, 0)) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
+    # Emissive softboxes: area lights are not seen through refraction, so without these the stones
+    # render as grey glass. The panels are hidden from the camera but show in reflections and facets.
+    glow = mat("Softbox", (1, 1, 1), metallic=0, rough=1)
+    em = glow.node_tree.nodes.new('ShaderNodeEmission')
+    em.inputs['Strength'].default_value = 5.0
+    glow.node_tree.links.new(em.outputs[0], next(n for n in glow.node_tree.nodes if n.type == 'OUTPUT_MATERIAL').inputs['Surface'])
+    # thin strips rather than big panels: facets then show streaks of light instead of one white disc
+    for name, loc, size, strip in (("SoftKey", (70, -60, 110), 90, 0.12), ("SoftFill", (-110, -30, 60), 110, 0.10),
+                                   ("SoftRim", (-20, 90, 90), 80, 0.12), ("SoftTop", (0, 10, 170), 160, 0.08)):
+        bpy.ops.mesh.primitive_plane_add(size=size, location=loc)
+        pl = bpy.context.object
+        pl.name = name
+        pl.rotation_euler = (Vector((0, 0, 0)) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
+        pl.scale = (strip, 1, 1)
+        pl.data.materials.append(glow)
+        pl.visible_camera = False
+        pl.visible_shadow = False
     light("Key", (60, -70, 90), 16000, 60)
     light("Fill", (-90, -40, 40), 3500, 90, (0.9, 0.95, 1.0))
     light("Rim", (-30, 80, 70), 5000, 40, (1.0, 0.93, 0.8))
@@ -404,7 +479,7 @@ def render(cams, which, tag):
 
 def export_glb(path):
     """Web copy: glTF has no Glass BSDF, so stones become Principled transmission."""
-    studio = {"Floor", "Wall", "Key", "Fill", "Rim", "Top", "Front", "EngravePath"}
+    studio = {"Floor", "Wall", "Key", "Fill", "Rim", "Top", "Front", "EngravePath", "SoftKey", "SoftFill", "SoftRim", "SoftTop"}
     for m in bpy.data.materials:
         glass = next((n for n in m.node_tree.nodes if n.type == 'BSDF_GLASS'), None)
         if not glass:
@@ -429,7 +504,7 @@ def export_glb(path):
 if __name__ == "__main__":
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     ring = argv[argv.index("--ring") + 1] if "--ring" in argv else "hers"
-    for which in (("hers", "his") if ring == "both" else (ring,)):
+    for which in (("hers", "hers_v1", "his") if ring == "both" else (ring,)):
         cams = build(which)
         bpy.ops.wm.save_as_mainfile(filepath=str(HERE / f"meridian_{which}.blend"))
         if "--render" in argv:

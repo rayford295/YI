@@ -15,7 +15,8 @@ import { getPlayer, isCleared } from '../../core/quest';
 import { playIntro } from './intro';
 import { levelCleared } from '../../core/quest-ui';
 
-const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb' } as const;
+const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb', hers_v1: 'meridian_hers_v1.glb' } as const;
+const renderUrl = (name: string) => `${import.meta.env.BASE_URL}media/ring/renders/${name}.jpg`;
 type Which = keyof typeof MODELS;
 const modelUrl = (w: Which) => `${import.meta.env.BASE_URL}media/ring/${MODELS[w]}`;
 // Cartoon avatars live in public/media/avatars/{yifan,jingyi}.png; buttons simply drop the image if absent.
@@ -77,6 +78,22 @@ export function renderRing(root: HTMLElement): () => void {
           <button type="button" id="ring-together-save" disabled>${t('ring.together.save')}</button>
           <span class="ring-together-note">${t('ring.together.note')}</span>
         </div>
+      </section>
+      <section class="ring-history card">
+        <h2>${t('ring.history.title')}</h2>
+        <p>${t('ring.history.text')}</p>
+        <ol class="ring-versions">
+          ${(['v1', 'v2'] as const).map((v) => `
+          <li class="ring-version" data-model="${v === 'v1' ? 'hers_v1' : 'hers'}">
+            <img src="${renderUrl(v === 'v1' ? 'hers_v1_hero' : 'hers_hero')}" alt="" loading="lazy">
+            <div>
+              <h3>${t(`ring.${v}.name`)}</h3>
+              <p class="ring-version-date">${t(`ring.${v}.date`)}</p>
+              <p>${t(`ring.${v}.note`)}</p>
+              <button type="button" class="ring-version-view">${t('ring.history.view')}</button>
+            </div>
+          </li>`).join('')}
+        </ol>
       </section>
       <ul class="ring-facts">
         <li>${t('ring.fact.compass')}</li>
@@ -181,7 +198,16 @@ export function renderRing(root: HTMLElement): () => void {
     flyTo(view);
     controls.autoRotate = false;
   }));
-  const choose = (w: Which) => { which = w; setActive('.ring-which', whichBtn(w)); load(w); };
+  const choose = (w: Which) => {
+    which = w;
+    setActive('.ring-which', whichBtn(w === 'hers_v1' ? 'hers' : w));
+    root.querySelectorAll<HTMLElement>('.ring-version').forEach((li) => li.classList.toggle('viewing', li.dataset.model === w));
+    load(w);
+  };
+  root.querySelectorAll<HTMLButtonElement>('.ring-version-view').forEach((b) => b.addEventListener('click', () => {
+    choose(b.closest<HTMLElement>('.ring-version')!.dataset.model as Which);
+    stage.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }));
   root.querySelectorAll<HTMLButtonElement>('.ring-which button').forEach((b) => b.addEventListener('click', () => {
     choose(b.dataset.which as Which);
   }));

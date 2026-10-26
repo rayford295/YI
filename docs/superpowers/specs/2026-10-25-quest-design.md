@@ -24,7 +24,7 @@ later must be cheap.
 | Level 5 "Draw" | `src/features/pictionary/` | reach three correct guesses in the match |
 | Level 4 "Puzzle" (added 2026-10-26) | `src/features/puzzle/` | a photo from the moments cut 3×3; tap two tiles to swap until whole |
 | Level 7 "That Night's Sky" (added 2026-10-26) | `src/features/stars/` | sky over Shenzhen and College Station at 21:00 on 2026-09-20 (astronomy-engine + 130-star catalogue); tap Vega and Altair |
-| Level 8 "Ring" | `src/features/ring/` | the reward: opening it clears it; the player's own ring is shown first |
+| Level 8 "Ring" | `src/features/ring/` | the reward: a reveal (black → rose → the ring) then the page; the player's own ring is shown first; design history lists every version of hers (`MODELS` in ring.ts: hers, his, hers_v1) |
 | Epilogue "The Last Letter" (2026-10-26) | `src/features/letter/` | route `/letter`; not a level; opens when `clearedByAll('ring')` (both players, this device) |
 | Entry gate (2026-10-26) | `src/core/gate.ts`, `src/features/gate/` | one question before anything renders; accepted answers stored as SHA-256; pass remembered in `yi.gate` |
 | Celebration (2026-10-26) | `src/core/celebrate.ts` | confetti canvas + synthesised chime on the cleared card; optional voice line `public/media/voice/<id>.m4a` |

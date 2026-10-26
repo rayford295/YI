@@ -6,8 +6,9 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "ring:pack": "npx -y @gltf-transform/cli@4 optimize public/media/ring/meridian_hers.glb public/media/ring/meridian_hers.glb --compress meshopt --texture-compress false && npx -y @gltf-transform/cli@4 optimize public/media/ring/meridian_his.glb public/media/ring/meridian_his.glb --compress meshopt --texture-compress false",
-    "gate": "node scripts/gate-hash.mjs"
+    "ring:pack": "for r in hers hers_v1 his; do npx -y @gltf-transform/cli@4 optimize public/media/ring/meridian_$r.glb public/media/ring/meridian_$r.glb --compress meshopt --texture-compress false; done",
+    "gate": "node scripts/gate-hash.mjs",
+    "ring:thumbs": "python3 scripts/ring-thumbs.py"
   },
   "repository": {
     "type": "git",
