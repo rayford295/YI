@@ -19,6 +19,8 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+        env:
+          FACES_JSON: ${{ secrets.FACES_JSON }}   # enrolled face descriptors; never committed
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

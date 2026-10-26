@@ -43,8 +43,10 @@ anyone else sees the rings stay off. The check repeats about once a second, so b
 the hand must stay in the frame.
 
 Enrolment happens on the dev server only: `npm run dev`, open `#/enroll`, add 3 to 8 clear photos
-per person, download `faces.json` and save it as `src/features/ring/faces.json`. Only descriptors
-are committed; a descriptor cannot be turned back into a face. The "Check a photo" box on that page
+per person, download `faces.json` and save it as `src/features/ring/faces.json`. That file is
+git-ignored: descriptors are biometric data, so they never enter the repository. For the hosted
+build, paste the file's contents into the repository secret `FACES_JSON`; CI writes it in place
+before `npm run build` (`faces.example.json` is the empty fallback, used when the secret is unset). The "Check a photo" box on that page
 reports the match distance (same person below 0.5, strangers above 0.6).
 
 Cartoon avatars at `public/media/avatars/jingyi.png` and `yifan.png` appear on the Hers / His

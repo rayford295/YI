@@ -5,3 +5,6 @@ dist/
 !.env.example
 .DS_Store
 .superpowers/
+
+# Enrolled face descriptors (biometric data): local only, injected in CI from the FACES_JSON secret
+src/features/ring/faces.json

@@ -2,8 +2,9 @@
   "name": "yi-at-first-sight",
   "version": "0.1.0",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "faces": "node -e \"const fs=require('fs');const f='src/features/ring/faces.json';if(!fs.existsSync(f))fs.writeFileSync(f,process.env.FACES_JSON||fs.readFileSync('src/features/ring/faces.example.json'))\"",
+    "dev": "npm run -s faces && vite",
+    "build": "npm run -s faces && tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run"
   },
