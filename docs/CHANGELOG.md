@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.5.0 (2026-10-26)
+
+- A jukebox in the corner of every page for Chinese songs (`public/media/music/`, listed in
+  `tracks.ts`; hidden until there is one), remembered per device.
+- A red mailbox by the fountain: the other one's voice notes (`public/media/voice/notes/`,
+  listed in `notes.ts`), newest first, with play buttons.
+
 ## 1.4.0 (2026-10-26)
 
 - A day of Jingyi's (`/sz`): Shenzhen on its own clock, Tencent's tower, the metro, lunch,

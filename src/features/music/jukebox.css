@@ -1,0 +1,13 @@
+/* The jukebox: a navy strip with a gold ring in the bottom-right corner, like the talk box. */
+.jukebox {
+  position: fixed; right: 12px; bottom: 12px; z-index: 30; display: flex; align-items: center; gap: 6px;
+  padding: 4px 6px; border-radius: 999px; background: rgba(11, 32, 54, 0.92); color: #f1e4c8;
+  border: 2px solid #d3a557; box-shadow: 0 4px 0 rgba(11, 32, 54, 0.25); font-size: 13px; max-width: min(70vw, 320px);
+}
+.jukebox button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 2px 6px; }
+.jb-toggle { width: 26px; height: 26px; border-radius: 50%; background: #d3a557 !important; color: #102e49 !important; font-weight: 700; display: grid; place-items: center; }
+.jukebox.playing .jb-toggle { animation: jb-spin 3s linear infinite; }
+.jb-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0.85; }
+.jukebox.playing .jb-title { opacity: 1; }
+@keyframes jb-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .jukebox.playing .jb-toggle { animation: none; } }

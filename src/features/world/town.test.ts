@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BUILDINGS, CAT_HOMES, HEIGHT, PARTNER, SIGNPOST, SIGNPOST_WEST, SPAWN, TOWN, WIDTH, guardSpot, levelIds, reachable, tileAt, walkable } from './town';
+import { BUILDINGS, CAT_HOMES, HEIGHT, MAILBOX, PARTNER, SIGNPOST, SIGNPOST_WEST, SPAWN, TOWN, WIDTH, guardSpot, levelIds, reachable, tileAt, walkable } from './town';
 
 describe('town', () => {
   it('is a rectangle of known tiles', () => {
@@ -28,9 +28,10 @@ describe('town', () => {
   });
 
   it('gives each cat a resting spot on the ground that is nobody else\'s', () => {
-    const taken = new Set([SPAWN, PARTNER, SIGNPOST, SIGNPOST_WEST].map((q) => `${q.x},${q.y}`));
+    const taken = new Set([SPAWN, PARTNER, SIGNPOST, SIGNPOST_WEST, MAILBOX].map((q) => `${q.x},${q.y}`));
     expect(walkable(SIGNPOST.x, SIGNPOST.y)).toBe(true);
     expect(walkable(SIGNPOST_WEST.x, SIGNPOST_WEST.y)).toBe(true);
+    expect(walkable(MAILBOX.x, MAILBOX.y)).toBe(true);
     for (const home of Object.values(CAT_HOMES)) {
       expect(walkable(home.x, home.y)).toBe(true);
       expect(taken.has(`${home.x},${home.y}`)).toBe(false);

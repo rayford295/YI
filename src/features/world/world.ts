@@ -7,10 +7,11 @@ import { prefersReducedMotion } from '../../core/motion';
 import { escapeAttr } from '../../core/html';
 import { go as navigate } from '../../core/router';
 import { openDoor } from '../../core/door';
-import { BUILDINGS, CAT_HOMES, PARTNER, SIGNPOST, SIGNPOST_WEST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
+import { notesFor } from '../voice/notes';
+import { BUILDINGS, CAT_HOMES, MAILBOX, PARTNER, SIGNPOST, SIGNPOST_WEST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
 import { bindControls, padHtml } from './controls';
-import { JINGYI, YIFAN, buildCat, buildSheet, buildSign, type CatId, type Dir } from './sprites';
+import { JINGYI, YIFAN, buildCat, buildMailbox, buildSheet, buildSign, type CatId, type Dir } from './sprites';
 import { WATER_PHASES, renderWater } from './tiles';
 import { phaseAt, tintFor } from './daylight';
 import { clockIn } from '../../core/dates';
@@ -131,6 +132,7 @@ export function renderWorld(root: HTMLElement): () => void {
     { id: `partner:${other}`, x: PARTNER.x, y: PARTNER.y, frames: [], sheet: buildSheet(other === 'jingyi' ? JINGYI : YIFAN), dir: 'left' },
     { id: 'sign:cs', x: SIGNPOST.x, y: SIGNPOST.y, frames: buildSign() },   // the road to College Station
     { id: 'sign:sz', x: SIGNPOST_WEST.x, y: SIGNPOST_WEST.y, frames: buildSign() },   // the road to Shenzhen
+    { id: 'mailbox', x: MAILBOX.x, y: MAILBOX.y, frames: buildMailbox() },   // the voice notes
     ...cats,
   ];
 
@@ -192,6 +194,18 @@ export function renderWorld(root: HTMLElement): () => void {
     ]);
   }
   function onBump(n: Npc): void {
+    if (n.id === 'mailbox') {
+      const notes = notesFor(p);
+      const close = { label: t('world.close'), run: closeDialog };
+      if (!notes.length) { openDialog(t('world.mailbox.name'), t('world.mailbox.empty'), [close]); return; }
+      const player = new Audio();
+      const fmt = (d: string) => getLang() === 'zh' ? `${Number(d.slice(5, 7))} 月 ${Number(d.slice(8, 10))} 日` : new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      openDialog(t('world.mailbox.name'), t('world.mailbox.line', { n: notes.length, name: playerName(other) }), [
+        ...notes.map((note) => ({ label: `▶ ${fmt(note.date)} · ${note.seconds}″`, cls: 'quiet', run: () => { player.src = `${import.meta.env.BASE_URL}${note.src}`; void player.play(); } })),
+        close,
+      ]);
+      return;
+    }
     if (n.id.startsWith('sign:')) {
       const to = n.id.slice(5);
       openDialog(t('world.sign.name'), t(`world.sign.${to}` as Key), [{ label: t('world.sign.go'), run: () => go(`/${to}`) }, { label: t('world.later'), run: closeDialog }]);

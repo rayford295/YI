@@ -60,6 +60,8 @@ export const SPAWN: Point = { x: 11, y: 10 };
 /** Where the other player waits, by the fountain. */
 export const PARTNER: Point = { x: 12, y: 9 };
 /** The signpost to College Station, at the east edge of the square. */
+/** The mailbox by the fountain, where the voice notes wait. */
+export const MAILBOX: Point = { x: 8, y: 9 };
 export const SIGNPOST: Point = { x: 22, y: 9 };
 /** The signpost at the west edge: the road to Shenzhen. */
 export const SIGNPOST_WEST: Point = { x: 1, y: 9 };

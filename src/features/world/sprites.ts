@@ -225,6 +225,33 @@ export const SIGN: string[] = [
   '....dwwdd...',
   '............',
 ];
+// A red mailbox on a post, where the voice notes wait.
+export const MAILBOX_PALETTE: Palette = { r: '#c74b5f', d: '#7a2a3a', c: '#f4e9d6', p: '#5a3a1e', n: '#102e49' };
+export const MAILBOX: string[] = [
+  '............',
+  '............',
+  '............',
+  '...ddddddd..',
+  '..drrrrrrrd.',
+  '..drcccccrd.',
+  '..drrnnnrrd.',
+  '..drrrrrrrd.',
+  '..ddddddddd.',
+  '.....pp.....',
+  '.....pp.....',
+  '.....pp.....',
+  '.....pp.....',
+  '.....pp.....',
+  '....pppp....',
+  '............',
+];
+export function buildMailbox(): HTMLCanvasElement[] {
+  const c = document.createElement('canvas');
+  c.width = SPRITE_W; c.height = SPRITE_H;
+  paint(c.getContext('2d')!, MAILBOX, MAILBOX_PALETTE, 0, 0);
+  return [c];
+}
+
 export function buildSign(): HTMLCanvasElement[] {
   const c = document.createElement('canvas');
   c.width = SPRITE_W; c.height = SPRITE_H;

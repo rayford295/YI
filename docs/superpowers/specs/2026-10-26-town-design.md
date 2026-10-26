@@ -78,6 +78,11 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
     tab and the router sends anything else back to the town (owner, 2026-10-26: "每一关结束，必须
     出房子，再走到下一个房子才行"). (Added 2026-10-26.)
 
+16. A red mailbox by the fountain (`MAILBOX`) holds the voice notes the other one sent
+    (`src/features/voice/notes.ts`); bumping it lists them newest first with play buttons. A
+    jukebox outside the router plays the owner's songs on every page (`src/features/music/`).
+    (Added 2026-10-26.)
+
 ## Testing
 
 `town.test.ts`: the grid parses to the declared size; every level in `LEVELS` has exactly one

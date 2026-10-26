@@ -10,6 +10,7 @@ import { gatePassed } from './core/gate';
 import { renderGate } from './features/gate/gate';
 import { interceptLinks, onNavigate, resolve } from './core/router';
 import { closeDoors, enteredThrough } from './core/door';
+import { mountJukebox } from './features/music/jukebox';
 
 export type Page = (root: HTMLElement) => () => void;
 
@@ -107,5 +108,6 @@ registerSW({ immediate: true });
 
 onLangChange(() => { void render(); });
 interceptLinks();
+mountJukebox();
 onNavigate(() => { void render(); });
 void render();

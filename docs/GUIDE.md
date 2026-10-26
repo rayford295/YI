@@ -24,6 +24,8 @@ YI/
 │   └── features/               # one folder per feature: code, styles, data, tests, README
 │       ├── gate/ start/ sync/  #   the front door, the player picker, progress codes
 │       ├── world/              #   the town: town.ts (maps), tiles.ts, sprites.ts, engine.ts, controls.ts, world.ts
+│       ├── music/              #   the jukebox (tracks.ts is the playlist)
+│       ├── voice/              #   the mailbox of voice notes (notes.ts is the list)
 │       ├── days/               #   a day in College Station (cs.ts) and in Shenzhen (sz.ts); render.ts draws both
 │       ├── journey/            #   the list view
 │       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ pictionary/
@@ -76,6 +78,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [x] Home, Love Map, Moments, Gomoku, Pictionary (v1, 2026-10-24)
 - [x] Game of levels with real locks, Puzzle, That Night's Sky, the ring, the epilogue letter, the entry gate, PWA (2026-10-25 and 10-26)
 - [x] The town as the home page, with tap-to-walk and house name plates (2026-10-26)
+- [x] Jukebox in the corner of every page and a mailbox of voice notes in the town (v1.5.0, 2026-10-26)
 - [x] A day of Jingyi's in Shenzhen (`/sz`): Tencent, the metro, the bay, the cats at the door; west signpost (v1.4.0, 2026-10-26)
 - [x] Puzzle uses portraits of the other one (`src/features/puzzle/portraits.ts`, v1.3.1, 2026-10-26)
 - [x] Levels open only through their doors; no shortcuts from the top bar, list or cleared card (v1.3.0, 2026-10-26)
@@ -87,6 +90,8 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
 - [x] A Day in College Station (`/cs`): second map with seven stops, Yifan standing where the clock puts him; engine takes any map (v1.2.0, 2026-10-26)
 - [ ] Yifan checks the hours and stories of his day (`src/features/days/cs.ts`, `cs.story.*` in `i18n.ts`)
+- [ ] Songs for the jukebox: files into `public/media/music/`, lines in `src/features/music/tracks.ts`
+- [ ] Her voice notes: export from WeChat into `public/media/voice/notes/`, list in `src/features/voice/notes.ts`
 - [ ] Jingyi's day is a guess (`src/features/days/sz.ts`, `sz.story.*`): Tencent hours, where she eats, what she does after work
 - [x] Progress codes: `/sync` carries progress between phones as a code or link (v1.1.0, 2026-10-26)
 - [x] The whole site stands on the town's pixel meadow with the time-of-day wash; headings on signs, panels in cream and navy (2026-10-26)
