@@ -38,7 +38,8 @@
    in it except the canvas is hidden; the veil's black shows through the section's transparent bg. */
 .ring-intro-on .ring { z-index: 1950; }
 .ring-intro-on .ring > :not(.ring-stage), .ring-intro-on .ring-stage > :not(canvas) { opacity: 0 !important; pointer-events: none; }
-.ring-intro-on .ring-stage:not(.intro-lift) { opacity: 0; }
+/* animation: none, or the stage's own rise animation (fill both) keeps it at opacity 1 above the veil */
+.ring-intro-on .ring-stage:not(.intro-lift) { opacity: 0; animation: none; }
 .ring-stage.intro-lift { opacity: 0; animation: surface 3200ms ease forwards; box-shadow: 0 0 120px rgba(211, 165, 87, 0.18); }
 @keyframes surface { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
 

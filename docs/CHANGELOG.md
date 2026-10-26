@@ -4,6 +4,9 @@ Versions are tags of feeling more than of code; the site deploys on every push.
 
 ## 1.5.0 (2026-10-26)
 
+- Fixed: the ring's reveal showed the 3D card instead of the rose (the card's own entrance
+  animation kept it visible above the veil).
+
 - Both days corrected by the owner: Yifan drives (Southside gym, Dr. Zou's office, golf, the Rec
   gym, the pool, grocery); Jingyi drives her Tesla, and the Shenzhen Bay stop carries the
   "buy it and I'll marry you" line.
