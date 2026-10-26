@@ -11,7 +11,8 @@ import type { TryOnHandles } from './tryon';
 import { captureTryOn, composeTogether, download, loadImage } from './photo';
 import { config } from '../../core/config';
 import { getLang } from '../../core/i18n';
-import { getPlayer } from '../../core/quest';
+import { getPlayer, isCleared } from '../../core/quest';
+import { playIntro } from './intro';
 import { levelCleared } from '../../core/quest-ui';
 
 const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb' } as const;
@@ -83,6 +84,7 @@ export function renderRing(root: HTMLElement): () => void {
         <li>${t('ring.fact.coords')}</li>
         <li>${t('ring.fact.sapphire')}</li>
       </ul>
+      <p class="ring-foot"><button type="button" class="link" id="ring-replay">${t('ring.intro.replay')}</button></p>
     </section>`;
 
   const stage = root.querySelector<HTMLElement>('#ring-stage')!;
@@ -186,7 +188,11 @@ export function renderRing(root: HTMLElement): () => void {
   canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
   setActive('.ring-which', whichBtn(which));
   load(which);
-  levelCleared('ring');
+  // First arrival: the reveal (black, rose, the ring surfacing), then the cleared card.
+  const firstTime = !isCleared('ring');
+  const intro = firstTime ? playIntro(stage) : Promise.resolve();
+  void intro.then(() => { if (!disposed) levelCleared('ring'); });
+  root.querySelector('#ring-replay')!.addEventListener('click', () => { void playIntro(stage); });
 
   // Try-on: swap the orbit scene for the webcam scene and back.
   const say = (msg: string) => { status.textContent = msg; status.hidden = !msg; };

@@ -1,0 +1,46 @@
+.ring-intro {
+  position: fixed; inset: 0; z-index: 1900; background: #000; display: grid; place-items: center;
+  opacity: 0; transition: opacity 900ms ease;
+}
+.ring-intro.in { opacity: 1; }
+.ring-intro.out { opacity: 0; transition-duration: 1200ms; }
+.ring-intro-on { overflow: hidden; }
+
+.intro-rose { width: min(58vw, 300px); height: auto; opacity: 0; transition: opacity 900ms ease; filter: drop-shadow(0 0 18px rgba(212, 80, 109, 0.25)); }
+.ring-intro.rose .intro-rose { opacity: 1; }
+.ring-intro.rose-out .intro-rose { opacity: 0; transition-duration: 900ms; }
+.intro-rose path {
+  fill: none; stroke: #e7bc6e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; transition: fill 1600ms ease, stroke 1600ms ease;
+}
+.ring-intro.rose .intro-rose path { animation: draw 1800ms ease forwards; animation-delay: calc(var(--i) * 280ms); }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.ring-intro.bloom .intro-rose { filter: drop-shadow(0 0 28px rgba(212, 80, 109, 0.55)); }
+.ring-intro.bloom .intro-rose .petal { fill: rgba(212, 80, 109, 0.5); stroke: #f3c4cd; }
+.ring-intro.bloom .intro-rose .heart { fill: #c43c5e; stroke: #ffd9e0; }
+.ring-intro.bloom .intro-rose .leaf { fill: rgba(120, 140, 93, 0.85); stroke: #b9d19f; }
+.ring-intro.bloom .intro-rose .stem { stroke: #a7bf8e; }
+
+.intro-line {
+  position: absolute; top: 14%; left: 16px; right: 16px; margin: 0; text-align: center; letter-spacing: 0.3em; text-transform: uppercase;
+  font-size: 13px; color: #d3a557; opacity: 0; transition: opacity 1400ms ease 600ms;
+}
+.ring-intro.step-ring .intro-line { opacity: 1; }
+.ring-intro.out .intro-line { opacity: 0; transition-delay: 0ms; }
+.intro-skip {
+  position: absolute; right: 18px; bottom: 22px; background: none; border: 1px solid rgba(241, 228, 200, 0.35); color: rgba(241, 228, 200, 0.7);
+  font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 999px; cursor: pointer; opacity: 0; transition: opacity 600ms ease 1500ms;
+}
+.ring-intro.in .intro-skip { opacity: 1; }
+
+/* The 3D card rises above the veil and fades in, so the real ring surfaces out of the dark.
+   The .ring section is its own stacking context, so the whole section is lifted while everything
+   in it except the canvas is hidden; the veil's black shows through the section's transparent bg. */
+.ring-intro-on .ring { z-index: 1950; }
+.ring-intro-on .ring > :not(.ring-stage), .ring-intro-on .ring-stage > :not(canvas) { opacity: 0 !important; pointer-events: none; }
+.ring-intro-on .ring-stage:not(.intro-lift) { opacity: 0; }
+.ring-stage.intro-lift { opacity: 0; animation: surface 3200ms ease forwards; box-shadow: 0 0 120px rgba(211, 165, 87, 0.18); }
+@keyframes surface { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+
+.ring-foot { text-align: center; margin: 0; font-size: 13px; }
+.ring-foot .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }

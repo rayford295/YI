@@ -47,3 +47,7 @@ a canvas in the browser (`photo.ts`); nothing is uploaded.
 
 Cartoon avatars at `public/media/avatars/jingyi.png` and `yifan.png` appear on the Hers / His
 buttons; the buttons simply drop the picture if the files are missing.
+
+## Intro (`intro.ts`, `intro.css`)
+
+Plays once when the level is first reached (and on "watch the opening again"): a black veil, an SVG line-art rose drawn with `stroke-dashoffset` (`pathLength="1"`) that then takes colour, then the page's own `.ring` section is lifted above the veil with everything but the 3D canvas hidden, so the real model surfaces out of the dark while it auto-rotates; the veil then fades and `levelCleared('ring')` fires. Step classes on the veil are `in`, `rose`, `bloom`, `rose-out`, `step-ring`, `out` (not `ring`: that would match the page's `.ring` rules). Skipped entirely under `prefers-reduced-motion`.

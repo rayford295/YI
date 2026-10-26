@@ -187,6 +187,8 @@ const zh = {
   'gate.placeholder': '比如 0920',
   'gate.enter': '进入',
   'gate.wrong': '不对。再想想那一天。',
+  'ring.intro.skip': '跳过',
+  'ring.intro.replay': '再看一次开场',
 } as const;
 
 export type Key = keyof typeof zh;
@@ -377,6 +379,8 @@ const en: Record<Key, string> = {
   'gate.placeholder': 'e.g. 0920',
   'gate.enter': 'Enter',
   'gate.wrong': 'No. Think back to that day.',
+  'ring.intro.skip': 'Skip',
+  'ring.intro.replay': 'Watch the opening again',
 };
 
 export const dict: Record<Lang, Record<Key, string>> = { zh, en };
