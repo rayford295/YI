@@ -33,3 +33,19 @@ so the far side of the band is hidden behind the finger. No frame leaves the dev
 the try-on scene and back. **Switch camera** toggles front and rear cameras on phones (the front
 camera is mirrored, the rear is not). If the stone ever sits on the palm side, flip
 `LABEL_IS_MIRRORED` in `tryon.ts`.
+
+## Who may wear which ring
+
+Try-on is gated by face recognition, also on-device: face-api (TensorFlow.js, models in
+`public/face/`, about 6 MB) turns the face in the webcam frame into a 128-number descriptor and
+compares it with the enrolled descriptors in `faces.json`. Jingyi unlocks hers, Yifan unlocks his,
+anyone else sees the rings stay off. The check repeats about once a second, so both the face and
+the hand must stay in the frame.
+
+Enrolment happens on the dev server only: `npm run dev`, open `#/enroll`, add 3 to 8 clear photos
+per person, download `faces.json` and save it as `src/features/ring/faces.json`. Only descriptors
+are committed; a descriptor cannot be turned back into a face. The "Check a photo" box on that page
+reports the match distance (same person below 0.5, strangers above 0.6).
+
+Cartoon avatars at `public/media/avatars/jingyi.png` and `yifan.png` appear on the Hers / His
+buttons and in the greeting; the buttons simply drop the picture if the files are missing.

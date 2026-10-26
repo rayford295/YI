@@ -31,6 +31,12 @@ html[lang='en'] .ring-head h1 { font-family: var(--serif-en); font-style: italic
 .ring-stage.tryon canvas { position: relative; object-fit: cover; cursor: default; }
 .ring-stage.mirror .ring-video, .ring-stage.mirror canvas { transform: scaleX(-1); }
 .ring-stage.tryon .ring-views { display: none; }
+.ring-which button.locked { opacity: 0.45; cursor: not-allowed; }
+.ring-which button { display: inline-flex; align-items: center; gap: 8px; padding-left: 8px; }
+.ring-which button img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; object-position: 50% 30%; background: #1b1b1b; }
+.ring-which button:not(:has(img)) { padding-left: 16px; }
+.ring-status.greet { padding-left: 8px; display: flex; align-items: center; gap: 8px; }
+.ring-status.greet::before { content: ''; width: 24px; height: 24px; border-radius: 50%; background: var(--avatar) center 30% / cover #1b1b1b; }
 .ring-views { bottom: 44px; }
 .ring-which { top: 16px; }
 .ring-views button, .ring-which button {

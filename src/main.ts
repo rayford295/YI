@@ -6,11 +6,13 @@ import { renderGomoku } from './features/gomoku/gomoku';
 import { renderPictionary } from './features/pictionary/pictionary';
 import { renderMoments } from './features/moments/moments';
 import { renderRing } from './features/ring/ring';
+import { renderEnroll } from './features/ring/enroll';
 
 export type Page = (root: HTMLElement) => () => void;
 
 const routes: Record<string, Page> = { '/': renderHome, '/map': renderMap, '/moments': renderMoments, '/gomoku': renderGomoku, '/draw': renderPictionary, '/ring': renderRing };  // '/ring' is unlisted on purpose
-const viewClass: Record<string, string> = { '/': 'home', '/map': 'map', '/moments': 'moments', '/gomoku': 'gomoku', '/draw': 'draw', '/ring': 'ring' };
+const viewClass: Record<string, string> = { '/': 'home', '/map': 'map', '/moments': 'moments', '/gomoku': 'gomoku', '/draw': 'draw', '/ring': 'ring', '/enroll': 'ring' };
+if (import.meta.env.DEV) routes['/enroll'] = renderEnroll;   // face enrolment tool, dev server only
 const GAMES = ['/gomoku', '/draw'];
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;

@@ -24,7 +24,7 @@ from mathutils import Vector, Matrix
 
 HERE = Path(__file__).resolve().parent
 MET, PLACE = "2026·09·20", "40.64°N 73.78°W"
-HIM, HER = "Dr. Yifan Yang, 25th Sept.", "Jingyi, 31st Oct."   # each ring carries the other's name
+HIM, HER = "Dr. Yifan Yang, 25th Sept.", "Jingyi Chen, 31st Oct."   # each ring carries the other's name
 
 RINGS = {
     "hers": dict(

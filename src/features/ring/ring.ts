@@ -7,10 +7,13 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { t } from '../../core/i18n';
 import { reducedMotion } from '../../core/html';
 import { startTryOn, type TryOnHandles } from './tryon';
+import { identify, hasEnrolled, loadFaceModels, ringFor, type Person } from './face';
 
 const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb' } as const;
 type Which = keyof typeof MODELS;
 const modelUrl = (w: Which) => `${import.meta.env.BASE_URL}media/ring/${MODELS[w]}`;
+// Cartoon avatars live in public/media/avatars/{yifan,jingyi}.png; buttons simply drop the image if absent.
+export const avatar = (p: 'yifan' | 'jingyi') => `${import.meta.env.BASE_URL}media/avatars/${p}.png`;
 // Camera poses in model units (mm), tuned for her ring (outer radius 9.95) and scaled to the
 // loaded model's size. Blender's Z-up becomes glTF Y-up: the stone is at +Y, the band's axis is Z.
 const BASE_R = 9.95;
@@ -31,8 +34,8 @@ export function renderRing(root: HTMLElement): () => void {
       <div class="ring-stage card" id="ring-stage">
         <canvas id="ring-canvas" aria-label="${t('ring.title')}"></canvas>
         <div class="ring-which" role="group">
-          <button type="button" class="active" data-which="hers">${t('ring.hers')}</button>
-          <button type="button" data-which="his">${t('ring.his')}</button>
+          <button type="button" class="active" data-which="hers"><img src="${avatar('jingyi')}" alt="" onerror="this.remove()">${t('ring.hers')}</button>
+          <button type="button" data-which="his"><img src="${avatar('yifan')}" alt="" onerror="this.remove()">${t('ring.his')}</button>
         </div>
         <div class="ring-tryon-bar">
           <button type="button" id="ring-tryon">${t('ring.tryon')}</button>
@@ -96,6 +99,13 @@ export function renderRing(root: HTMLElement): () => void {
   let view: View = 'outside';
   let tryon: TryOnHandles | null = null;
   let tryBusy = false;
+  let which: Which = 'hers';
+  // Face gate: who is in front of the camera decides which ring may be worn.
+  let who: Person | null = null;
+  let faceTimer = 0;
+  let faceNote = '';
+  let flash = { text: '', until: 0 };   // a short-lived note that beats faceNote
+  const whichBtn = (w: Which) => root.querySelector<HTMLButtonElement>(`.ring-which button[data-which="${w}"]`)!;
   const loader = new GLTFLoader();
   const pose = (v: View) => ({ pos: VIEWS[v].pos.clone().multiplyScalar(scale), target: VIEWS[v].target.clone().multiplyScalar(scale) });
 
@@ -141,17 +151,43 @@ export function renderRing(root: HTMLElement): () => void {
     flyTo(view);
     controls.autoRotate = false;
   }));
+  const choose = (w: Which) => { which = w; setActive('.ring-which', whichBtn(w)); load(w); };
   root.querySelectorAll<HTMLButtonElement>('.ring-which button').forEach((b) => b.addEventListener('click', () => {
-    setActive('.ring-which', b);
-    load(b.dataset.which as Which);
+    const w = b.dataset.which as Which;
+    if (tryon && who && ringFor(who) !== w) { flash = { text: t(w === 'hers' ? 'ring.face.locked.hers' : 'ring.face.locked.his'), until: performance.now() + 2200 }; return; }
+    choose(w);
   }));
   canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
   load('hers');
 
   // Try-on: swap the orbit scene for the webcam scene and back.
   const say = (msg: string) => { status.textContent = msg; status.hidden = !msg; };
+  const applyFace = (p: Person | null, note: string) => {
+    who = p;
+    faceNote = note;
+    tryon?.setEnabled(p !== null);
+    (['hers', 'his'] as Which[]).forEach((w) => whichBtn(w).classList.toggle('locked', !!p && ringFor(p) !== w));
+    if (p && ringFor(p) !== which) choose(ringFor(p));
+  };
+  let lastSeen = 0;
+  const faceLoop = async () => {
+    if (!tryon) return;
+    try {
+      const r = await identify(tryon.video);
+      const now = performance.now();
+      if (r.face && r.person) {
+        lastSeen = now;
+        if (who !== r.person) { applyFace(r.person, t(`ring.face.hello.${r.person}`)); status.style.setProperty('--avatar', `url(${avatar(r.person)})`); }
+      } else if (r.face) { if (now - lastSeen > 2500) applyFace(null, t('ring.face.stranger')); }
+      else if (now - lastSeen > 4000) applyFace(null, t('ring.face.nobody'));
+      status.classList.toggle('greet', who !== null);
+    } catch (e) { console.warn('face check failed', e); }
+    if (tryon) faceTimer = window.setTimeout(faceLoop, 900);
+  };
   const stopTryOn = () => {
     if (!tryon) return;
+    clearTimeout(faceTimer);
+    applyFace(null, '');
     tryon.setModel(null, 0);
     tryon.stop();
     tryon = null;
@@ -172,12 +208,14 @@ export function renderRing(root: HTMLElement): () => void {
       const h = await startTryOn(stage, scene.environment as THREE.Texture);
       if (disposed) { h.stop(); return; }
       tryon = h;
+      h.setEnabled(false);
       stage.classList.add('tryon', 'mirror');
       flipBtn.hidden = false;
       tryBtn.textContent = t('ring.tryon.exit');
       hint.textContent = t('ring.tryon.privacy');
       if (current) { scene.remove(current); h.setModel(current, scale * BASE_R); }
-      say(t('ring.tryon.hint'));
+      if (!hasEnrolled()) { faceNote = t('ring.face.none'); }
+      else { faceNote = t('ring.face.checking'); lastSeen = performance.now(); await loadFaceModels(); faceLoop(); }
     } catch (e) {
       console.warn('try-on failed', e);
       say(t('ring.tryon.denied'));
@@ -204,7 +242,7 @@ export function renderRing(root: HTMLElement): () => void {
       const v = tryon.video;
       if (v.videoWidth && (canvas.width !== v.videoWidth || canvas.height !== v.videoHeight)) renderer.setSize(v.videoWidth, v.videoHeight, false);
       const seen = tryon.update(now);
-      say(seen ? '' : t('ring.tryon.hint'));
+      say(now < flash.until ? flash.text : who ? (seen ? faceNote : t('ring.tryon.hint')) : faceNote);
       renderer.render(tryon.scene, tryon.camera);
     } else {
       controls.update();
@@ -217,6 +255,7 @@ export function renderRing(root: HTMLElement): () => void {
   return () => {
     disposed = true;
     cancelAnimationFrame(raf);
+    clearTimeout(faceTimer);
     tryon?.stop();
     ro.disconnect();
     controls.dispose();

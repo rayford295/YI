@@ -28,7 +28,7 @@ Both names contain the syllable *Yi*: Yi-fan and Jing-yi; the title swaps in the
 | `#/moments` | **Moments** | Timeline of every memory, each badged with its day number since we met |
 | `#/gomoku` | **Gomoku** | Two players on one device, purple for Jingyi and green for Yifan; win tally, undo, saved game |
 | `#/draw` | **Pictionary** | Draw on a canvas, hold to peek at the word, typed or spoken guesses, 90-second rounds, a shared "in sync" score |
-| `#/ring` | **The Ring** (unlisted) | Interactive 3D view of the pair of Meridian rings designed in `ring/` (hers with the stone, his a wide band), each engraved with the other’s name; **Try it on** puts the ring on your finger through the webcam (MediaPipe hand tracking, on-device); not in the navigation, reachable only by link |
+| `#/ring` | **The Ring** (unlisted) | Interactive 3D view of the pair of Meridian rings designed in `ring/` (hers with the stone, his a wide band), each engraved with the other’s name; **Try it on** puts the ring on your finger through the webcam (MediaPipe hand tracking, on-device), and face recognition (face-api, on-device, enrolled via the dev-only `#/enroll`) lets only Jingyi wear hers and only Yifan wear his; not in the navigation, reachable only by link |
 
 Every string exists in both languages. The toggle in the top bar switches the whole site
 without a reload and remembers the choice. The games run entirely in the browser: no

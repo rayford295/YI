@@ -6,9 +6,9 @@ import { FilesetResolver, HandLandmarker, type NormalizedLandmark } from '@media
 const MP = `${import.meta.env.BASE_URL}mediapipe`;
 // Average spacing between the middle, ring and little MCP joints, used as the pixels-per-mm ruler.
 const MCP_SPACING_MM = 19.5;
-// MediaPipe reports handedness for a mirrored (selfie) image; our raw webcam frame is not
-// mirrored, so its "Left" is a real right hand. Flip this if the stone ends up on the palm side.
-const LABEL_IS_MIRRORED = true;
+// MediaPipe's handedness label matched the real hand on a raw webcam frame in testing
+// (2026-10-25: with `true` the stone landed on the palm side). Flip if it ever ends up there again.
+const LABEL_IS_MIRRORED = false;
 
 export interface TryOnHandles {
   video: HTMLVideoElement;
@@ -18,6 +18,8 @@ export interface TryOnHandles {
   update(now: number): boolean;
   /** Put the ring model in the scene (removing any previous one). */
   setModel(model: THREE.Object3D | null, outerRadius: number): void;
+  /** Hide the ring without stopping tracking (used while the face gate is closed). */
+  setEnabled(on: boolean): void;
   switchCamera(): Promise<void>;
   stop(): void;
 }
@@ -64,6 +66,8 @@ export async function startTryOn(mount: HTMLElement, environment: THREE.Texture)
   rig.visible = false;
   scene.add(rig);
 
+  let enabled = false;
+  let tracked = false;
   let model: THREE.Object3D | null = null;
   let outerR = 10;
   const setModel = (m: THREE.Object3D | null, outerRadius: number) => {
@@ -87,11 +91,11 @@ export async function startTryOn(mount: HTMLElement, environment: THREE.Texture)
   const toPx = (l: NormalizedLandmark) => new THREE.Vector3(l.x * video.videoWidth, -l.y * video.videoHeight, -l.z * video.videoWidth);
 
   const update = (now: number) => {
-    if (video.readyState < 2 || video.currentTime === lastTime) return rig.visible;
+    if (video.readyState < 2 || video.currentTime === lastTime) return tracked;
     lastTime = video.currentTime;
     const res = landmarker.detectForVideo(video, now);
     const lm = res.landmarks[0];
-    if (!lm) { if (--seen <= 0) rig.visible = false; return rig.visible; }
+    if (!lm) { if (--seen <= 0) { tracked = false; rig.visible = false; } return tracked; }
     seen = 8;
     const L = (i: number) => toPx(lm[i]);
     const wrist = L(0), idx = L(5), mid = L(9), ring0 = L(13), ring1 = L(14), pinky = L(17);
@@ -108,7 +112,8 @@ export async function startTryOn(mount: HTMLElement, environment: THREE.Texture)
     const spacing = (mid.distanceTo(ring0) + ring0.distanceTo(pinky)) / 2;
     const scale = spacing / MCP_SPACING_MM;
 
-    if (!rig.visible) { sPos.copy(pos); sQuat.copy(q); sScale = scale; rig.visible = true; }
+    if (!tracked) { sPos.copy(pos); sQuat.copy(q); sScale = scale; tracked = true; }
+    rig.visible = enabled;
     sPos.lerp(pos, 0.45);
     sQuat.slerp(q, 0.45);
     sScale += (scale - sScale) * 0.45;
@@ -127,6 +132,7 @@ export async function startTryOn(mount: HTMLElement, environment: THREE.Texture)
 
   return {
     video, scene, camera, update, setModel, stop,
+    setEnabled: (on: boolean) => { enabled = on; rig.visible = on && tracked; },
     switchCamera: async () => { facing = facing === 'user' ? 'environment' : 'user'; await openCamera(); },
   };
 }
