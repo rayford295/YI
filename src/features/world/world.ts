@@ -228,6 +228,17 @@ export function renderWorld(root: HTMLElement): () => void {
 
   // Coming back from a level the iris opens; cats whose posts changed get up and walk.
   if (returning && !prefersReducedMotion()) void engine.iris('open', 480);
+  // The first time on this device: one welcome line with the controls, never shown again.
+  const INTRO_KEY = 'yi.world.intro';
+  let introSeen = false;
+  try { introSeen = localStorage.getItem(INTRO_KEY) === '1'; } catch { introSeen = true; }
+  if (!introSeen && !returning) {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    window.setTimeout(() => {
+      if (!dialog.hidden) return;
+      openDialog(t('world.intro.name'), t(fine ? 'world.intro.keys' : 'world.intro.touch'), [{ label: t('world.intro.go'), run: () => { closeDialog(); try { localStorage.setItem(INTRO_KEY, '1'); } catch { /* ignore */ } } }]);
+    }, 600);
+  }
   window.setTimeout(() => { for (const w of walks) engine.walkNpc(w.id, w.to); }, returning ? 500 : 200);
 
   // A resting cat now and then wanders one tile from its home and comes back.

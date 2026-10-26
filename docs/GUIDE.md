@@ -77,6 +77,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [ ] Record voice lines for the cleared cards (`public/media/voice/README.md`)
 - [ ] Add inside-joke words to Pictionary (`src/features/pictionary/words.ts`)
 - [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
+- [x] Town: a one-time welcome line with the controls; phone checklist in DEPLOY.md (2026-10-26)
 - [x] Town: day and night follow the player's own city, with lit windows; resting cats fidget (2026-10-26)
 - [x] Town: cats walk to their new posts when a door opens; iris transition in and out of houses (2026-10-26)
 - [x] Town: footsteps, thud, talk-box and door sounds (synthesised, with a switch), drifting pond and fountain glint (2026-10-26)

@@ -30,6 +30,9 @@ shortest path (`WorldEngine.walkTo`); tapping a cat, the partner or a locked doo
 and acts like a bump. On touch, the pad below the canvas does the same as the keys. A house's number and name
 float over its roof while the player is within two tiles of its door.
 
+The first visit on a device opens one welcome line with the controls (`yi.world.intro`), never
+shown again.
+
 Sounds: a soft footfall per step, a thud when walking into something solid, a blip when the talk
 box opens, two notes when a door opens. All are synthesised; there are no audio files. **Sound: on /
 off** in the footer switches them and is remembered on the device. The pond's highlights drift and

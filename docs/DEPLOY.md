@@ -148,12 +148,25 @@ Pages project settings.
 **Custom domains** in the Pages project adds `jingyifan.love` (see *The Domain* above); then
 add that domain to the Access application too.
 
-## Before Her Birthday
+## Before Sending the Link
 
-- Rewrite the letter (`src/features/birthday-map/letter.ts`) and push.
-- Open the production URL on a phone, sign in with your own email, and click through every
-  page once. The first sign-in from a new device sends the code to the email on the policy.
-- Send her the link, and tell her to use the email you listed in the policy.
+Checked on a real phone (Safari on iOS and Chrome on Android if possible), not only on a laptop:
+
+- [ ] <https://jingyifan.love/> opens with the padlock; `http://` and `www.` end up there too.
+- [ ] The gate accepts the answer in every spelling we listed (`9.20`, `0920`, `20260920`).
+- [ ] Pick a player; the town loads, the welcome line appears once, the d-pad shows on the phone.
+- [ ] Walk, tap a tile to walk, bump the partner and a cat, open a door, go in, come back to the door.
+- [ ] Sound: the first step makes a footfall (iOS plays only after a tap, which the step is);
+      the footer switch mutes and remembers.
+- [ ] Clear one level end to end on the phone; the card, confetti and chime appear.
+- [ ] Add to Home Screen; the icon opens full screen and the town works offline on the second
+      launch (airplane mode).
+- [ ] The webcam try-on on the ring page asks for the camera and shows the ring on a hand.
+- [ ] Rewrite the letter (`src/features/birthday-map/letter.ts`) and push; the deploy takes a
+      minute.
+- [ ] If the Cloudflare Access variant is in use: sign in with your own email first; the first
+      sign-in from a new device sends the code to the email on the policy, and she must use the
+      email listed there.
 
 ## Notes
 
