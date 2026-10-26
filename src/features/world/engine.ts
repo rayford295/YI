@@ -40,6 +40,32 @@ export interface EngineOptions {
 }
 
 const STEP_MS = 190;
+
+const dirOf = (from: Point, to: Point): Dir => (to.x > from.x ? 'right' : to.x < from.x ? 'left' : to.y > from.y ? 'down' : 'up');
+
+/** Shortest path by breadth-first search over `free` tiles; the tiles after `start`, or undefined. */
+export function findPath(start: Point, goals: Point[], free: (x: number, y: number) => boolean): Point[] | undefined {
+  const key = (q: Point) => `${q.x},${q.y}`;
+  const goalKeys = new Set(goals.map(key));
+  if (!goalKeys.size) return undefined;
+  const prev = new Map<string, Point>();
+  const seen = new Set([key(start)]);
+  const queue: Point[] = [start];
+  let found: Point | undefined;
+  while (queue.length && !found) {
+    const q = queue.shift()!;
+    if (goalKeys.has(key(q))) { found = q; break; }
+    for (const d of Object.values(DELTA)) {
+      const n = { x: q.x + d.x, y: q.y + d.y };
+      if (seen.has(key(n)) || !free(n.x, n.y)) continue;
+      seen.add(key(n)); prev.set(key(n), q); queue.push(n);
+    }
+  }
+  if (!found) return undefined;
+  const path: Point[] = [];
+  for (let q = found; key(q) !== key(start); q = prev.get(key(q))!) path.unshift(q);
+  return path;
+}
 const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
 
 export class WorldEngine {
@@ -59,6 +85,8 @@ export class WorldEngine {
   private queue: Dir[] = [];            // steps still to take after a tap on the map
   private goal: Point | undefined;      // the tapped tile, to face and act on when the walk ends
   private cam = { x: 0, y: 0 };
+  private npcWalks = new Map<string, { from: Point; t: number; path: Point[]; stepMs: number }>();
+  private irisAnim: { mode: 'close' | 'open'; ms: number; t: number; done: () => void } | undefined;
   paused = false;
 
   constructor(private o: EngineOptions) {
@@ -118,27 +146,34 @@ export class WorldEngine {
     const goals = standable
       ? [target]
       : (Object.values(DELTA) as Point[]).map((d) => ({ x: target.x + d.x, y: target.y + d.y })).filter((q) => this.free(q.x, q.y));
-    const key = (q: Point) => `${q.x},${q.y}`;
-    const goalKeys = new Set(goals.map(key));
-    const prev = new Map<string, { from: string; dir: Dir }>();
-    const seen = new Set([key(start)]);
-    const queue: Point[] = [start];
-    let found: Point | undefined;
-    while (queue.length && !found) {
-      const q = queue.shift()!;
-      if (goalKeys.has(key(q))) { found = q; break; }
-      for (const dir of ['up', 'down', 'left', 'right'] as Dir[]) {
-        const n = { x: q.x + DELTA[dir].x, y: q.y + DELTA[dir].y };
-        if (seen.has(key(n)) || !this.free(n.x, n.y)) continue;
-        seen.add(key(n)); prev.set(key(n), { from: key(q), dir }); queue.push(n);
-      }
-    }
-    if (!found) return;
+    const path = findPath(start, goals, this.free);
+    if (!path) return;
     const dirs: Dir[] = [];
-    for (let k = key(found); k !== key(start);) { const p = prev.get(k)!; dirs.unshift(p.dir); k = p.from; }
+    let at = start;
+    for (const q of path) { dirs.push(dirOf(at, q)); at = q; }
     this.queue = dirs;
     this.goal = standable ? undefined : target;
     if (this.t >= 1) this.tryStep(performance.now());
+  }
+
+  /**
+   * Send an NPC walking to `to` by the shortest free path (other NPCs and the player are solid).
+   * It takes one tile per `stepMs` and waits if its next tile is taken. Returns false when there
+   * is no way there, in which case the NPC is placed at `to` at once.
+   */
+  walkNpc(id: string, to: Point, stepMs = 260): boolean {
+    const n = this.o.npcs.find((x) => x.id === id);
+    if (!n) return false;
+    const freeFor = (x: number, y: number) => this.o.walkable(x, y) && !(x === this.mover.x && y === this.mover.y) && !this.o.npcs.some((m) => m !== n && m.x === x && m.y === y);
+    const path = findPath({ x: n.x, y: n.y }, [to], freeFor);
+    if (!path) { n.x = to.x; n.y = to.y; return false; }
+    this.npcWalks.set(id, { from: { x: n.x, y: n.y }, t: 1, path, stepMs });
+    return true;
+  }
+
+  /** Close (a circle shrinking onto the player) or open the iris over `ms`; resolves when done. */
+  iris(mode: 'close' | 'open', ms: number): Promise<void> {
+    return new Promise((resolve) => { this.irisAnim = { mode, ms, t: 0, done: resolve }; });
   }
 
   destroy(): void {
@@ -207,9 +242,29 @@ export class WorldEngine {
           else this.tryStep(now);
         }
       } else this.tryStep(now);
+      this.moveNpcs(dt);
+    }
+    if (this.irisAnim) {
+      this.irisAnim.t = Math.min(1, this.irisAnim.t + dt / this.irisAnim.ms);
+      if (this.irisAnim.t === 1) { const a = this.irisAnim; if (a.mode === 'open') this.irisAnim = undefined; a.done(); }
     }
     this.draw();
   };
+
+  private moveNpcs(dt: number): void {
+    for (const [id, w] of this.npcWalks) {
+      const n = this.o.npcs.find((x) => x.id === id);
+      if (!n) { this.npcWalks.delete(id); continue; }
+      if (w.t < 1) { w.t = Math.min(1, w.t + dt / w.stepMs); continue; }
+      const next = w.path[0];
+      if (!next) { this.npcWalks.delete(id); continue; }
+      const taken = (next.x === this.mover.x && next.y === this.mover.y) || this.o.npcs.some((m) => m !== n && m.x === next.x && m.y === next.y);
+      if (taken) continue;                       // wait for the tile to clear
+      w.path.shift();
+      w.from = { x: n.x, y: n.y };
+      n.x = next.x; n.y = next.y; w.t = 0;
+    }
+  }
 
   private draw(): void {
     const { ctx, scale } = this;
@@ -247,13 +302,19 @@ export class WorldEngine {
     // Entities, painted back to front so a sprite lower on the map overlaps one above it.
     const walkFrame = this.t < 1 ? Math.floor(this.frameClock / 120) % 2 : 0;
     const bob = this.t < 1 && walkFrame ? -1 : 0;
-    const ents: { y: number; draw: () => void }[] = this.o.npcs.map((n) => ({
-      y: n.y,
-      draw: () => {
-        const img = n.sheet ? n.sheet[n.dir ?? 'down'][0] : n.frames[Math.floor(this.frameClock / 600) % n.frames.length];
-        ctx.drawImage(img, n.x * TILE + (TILE - SPRITE_W) / 2, n.y * TILE - (SPRITE_H - TILE) + 1);
-      },
-    }));
+    const ents: { y: number; draw: () => void }[] = this.o.npcs.map((n) => {
+      const w = this.npcWalks.get(n.id);
+      const kk = w && w.t < 1 ? easeOut(w.t) : 1;
+      const nx = w ? w.from.x + (n.x - w.from.x) * kk : n.x, ny = w ? w.from.y + (n.y - w.from.y) * kk : n.y;
+      const walking = !!w && w.t < 1;
+      return {
+        y: ny,
+        draw: () => {
+          const img = n.sheet ? n.sheet[n.dir ?? 'down'][0] : n.frames[Math.floor(this.frameClock / (walking ? 150 : 600)) % n.frames.length];
+          ctx.drawImage(img, Math.round(nx * TILE + (TILE - SPRITE_W) / 2), Math.round(ny * TILE - (SPRITE_H - TILE) + 1 + (walking && Math.floor(this.frameClock / 150) % 2 ? -1 : 0)));
+        },
+      };
+    });
     ents.push({
       y: py / TILE,
       draw: () => {
@@ -276,6 +337,19 @@ export class WorldEngine {
       ctx.fillStyle = '#d3a557';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(text, x, y - 10);
+    }
+
+    // The iris: everything outside a circle on the player goes navy; the circle shrinks or grows.
+    if (this.irisAnim) {
+      const a = this.irisAnim;
+      const cx = px * scale + TILE * scale / 2 - camX, cy = py * scale + TILE * scale / 2 - camY;
+      const maxR = Math.hypot(Math.max(cx, viewW - cx), Math.max(cy, viewH - cy));
+      const open = a.mode === 'open' ? easeOut(a.t) : 1 - a.t * a.t;
+      ctx.fillStyle = '#0b2036';
+      ctx.beginPath();
+      ctx.rect(0, 0, viewW, viewH);
+      ctx.arc(cx, cy, Math.max(0, open * maxR), 0, Math.PI * 2, true);
+      ctx.fill('evenodd');
     }
   }
 }

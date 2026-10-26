@@ -47,6 +47,10 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
 9. Sounds, all synthesised: a footfall per step, a thud when blocked (at most every 350 ms), a
    blip when the talk box opens, two notes when a door opens. A footer switch (`yi.sound`) turns
    them off. (Added 2026-10-26.)
+10. Cats walk: each cat's last post is remembered per player; when its post changes (a door
+    opened, nothing left to guard) it starts where it was and walks the shortest free path to the
+    new post, waiting if a tile is taken. Going into a house closes an iris on the player; coming
+    back opens one. Reduced motion skips the iris. (Added 2026-10-26.)
 7. Tap a tile on the canvas to walk there (shortest path over free tiles); tapping something you
    cannot stand on walks to the nearest free tile beside it, turns to face it and acts as a bump
    would. A house's name floats over its roof while the player is within two tiles of its door.

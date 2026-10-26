@@ -12,6 +12,22 @@ import { WATER_PHASES, renderWater } from './tiles';
 import { bumpSound, doorSound, setSoundOn, soundOn, stepSound, talkSound } from './sound';
 
 const catPhoto = (id: CatId): string => `${import.meta.env.BASE_URL}media/cats/${id}.jpg`;
+// Where each cat was last seen on this device, so a cat whose post has changed walks there.
+const catsKey = (p: PlayerId) => `yi.world.cats.${p}`;
+function loadCats(p: PlayerId): Partial<Record<CatId, Point>> {
+  try {
+    const raw = JSON.parse(localStorage.getItem(catsKey(p)) ?? '{}') as Record<string, unknown>;
+    const out: Partial<Record<CatId, Point>> = {};
+    for (const id of ['coffee', 'duoduo'] as const) {
+      const v = raw[id];
+      if (typeof v === 'string') { const [x, y] = v.split(',').map(Number); if (Number.isFinite(x) && Number.isFinite(y) && walkable(x, y)) out[id] = { x, y }; }
+    }
+    return out;
+  } catch { return {}; }
+}
+function saveCats(p: PlayerId, posts: Record<CatId, Point>): void {
+  try { localStorage.setItem(catsKey(p), JSON.stringify({ coffee: `${posts.coffee.x},${posts.coffee.y}`, duoduo: `${posts.duoduo.x},${posts.duoduo.y}` })); } catch { /* ignore */ }
+}
 
 const posKey = (p: PlayerId) => `yi.world.${p}`;
 function loadPos(p: PlayerId): Point {
@@ -87,12 +103,21 @@ export function renderWorld(root: HTMLElement): () => void {
   // Duoduo in front of the one after. A cat with nothing left to guard rests at its home spot.
   const locked = [...BUILDINGS].sort((a, b) => levelIndex(a.level) - levelIndex(b.level)).filter((b) => !isUnlocked(b.level, p));
   const catOf = new Map<string, CatId>();
+  const posts = { coffee: CAT_HOMES.coffee, duoduo: CAT_HOMES.duoduo };
+  const lastSeen = loadCats(p);
+  const walks: { id: string; to: Point }[] = [];
   const cats: Npc[] = (['coffee', 'duoduo'] as const).map((id, i) => {
     const b = locked[i];
-    const npc: Npc = b ? { id: `guard:${b.level}`, ...guardSpot(b), frames: buildCat(id) } : { id: `cat:${id}`, ...CAT_HOMES[id], frames: buildCat(id) };
+    const post = b ? guardSpot(b) : CAT_HOMES[id];
+    posts[id] = post;
+    const npc: Npc = { id: b ? `guard:${b.level}` : `cat:${id}`, ...post, frames: buildCat(id) };
+    // A cat seen somewhere else last time starts there and walks to its post.
+    const was = lastSeen[id];
+    if (was && (was.x !== post.x || was.y !== post.y)) { npc.x = was.x; npc.y = was.y; walks.push({ id: npc.id, to: post }); }
     catOf.set(npc.id, id);
     return npc;
   });
+  saveCats(p, posts);
   const npcs: Npc[] = [
     { id: `partner:${other}`, x: PARTNER.x, y: PARTNER.y, frames: [], sheet: buildSheet(other === 'jingyi' ? JINGYI : YIFAN), dir: 'left' },
     ...cats,
@@ -100,7 +125,8 @@ export function renderWorld(root: HTMLElement): () => void {
 
   // Coming back from a level puts you in front of its door, facing it.
   let start = loadPos(p), dir: Dir = 'down';
-  if (buildingAt(start.x, start.y)) { start = { x: start.x, y: start.y + 1 }; dir = 'up'; }
+  const returning = !!buildingAt(start.x, start.y);
+  if (returning) { start = { x: start.x, y: start.y + 1 }; dir = 'up'; }
 
   let typing = 0;
   let primary: Action | undefined;
@@ -137,7 +163,14 @@ export function renderWorld(root: HTMLElement): () => void {
     void tag;
   }
 
-  const go = (hash: string) => { doorSound(); closeDialog(); location.hash = hash; };
+  // Going in: the iris closes on the player, then the level opens.
+  let leaving = false;
+  const go = (hash: string) => {
+    if (leaving) return;
+    leaving = true; doorSound(); closeDialog();
+    const after = () => { location.hash = hash; };
+    if (prefersReducedMotion()) after(); else void engine.iris('close', 380).then(after);
+  };
   function onDoor(b: Building): void {
     savePos(p, b.door);
     const level = LEVELS[levelIndex(b.level)];
@@ -175,6 +208,10 @@ export function renderWorld(root: HTMLElement): () => void {
     water: prefersReducedMotion() ? undefined : Array.from({ length: WATER_PHASES }, (_, i) => renderWater(i)),
     label: (b) => `${levelNumber(b.level)} · ${t(LEVELS[levelIndex(b.level)].title)}`,
   });
+
+  // Coming back from a level the iris opens; cats whose posts changed get up and walk.
+  if (returning && !prefersReducedMotion()) void engine.iris('open', 480);
+  window.setTimeout(() => { for (const w of walks) engine.walkNpc(w.id, w.to); }, returning ? 500 : 200);
 
   // Keyboard: arrows / WASD walk, Enter / Space / Z act, Escape closes the talk box.
   const KEYS: Record<string, Dir> = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right', W: 'up', S: 'down', A: 'left', D: 'right' };
