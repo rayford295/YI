@@ -11,8 +11,10 @@ export const LEVELS: Level[] = [
   { id: 'met', route: '/met', title: 'quest.level.met', story: 'quest.story.met' },
   { id: 'map', route: '/map', title: 'quest.level.map', story: 'quest.story.map' },
   { id: 'moments', route: '/moments', title: 'quest.level.moments', story: 'quest.story.moments' },
+  { id: 'puzzle', route: '/puzzle', title: 'quest.level.puzzle', story: 'quest.story.puzzle' },
   { id: 'gomoku', route: '/gomoku', title: 'quest.level.gomoku', story: 'quest.story.gomoku' },
   { id: 'draw', route: '/draw', title: 'quest.level.draw', story: 'quest.story.draw' },
+  { id: 'stars', route: '/stars', title: 'quest.level.stars', story: 'quest.story.stars' },
   { id: 'ring', route: '/ring', title: 'quest.level.ring', story: 'quest.story.ring' },
 ];
 
@@ -58,6 +60,11 @@ export function getProgress(p: PlayerId | null = getPlayer()): Progress {
 const save = (p: PlayerId, pr: Progress) => store.setItem(progressKey(p), JSON.stringify(pr));
 
 export const levelIndex = (id: string): number => LEVELS.findIndex((l) => l.id === id);
+/** 1-based level number for "Level N" strings; derived, so inserting a level renumbers everything. */
+export const levelNumber = (id: string): number => levelIndex(id) + 1;
+export const PLAYERS: PlayerId[] = ['jingyi', 'yifan'];
+/** True when every player has cleared `id` on this device (the epilogue opens for both at once). */
+export const clearedByAll = (id: string): boolean => PLAYERS.every((p) => isCleared(id, p));
 export const levelByRoute = (route: string): Level | undefined => LEVELS.find((l) => l.route === route);
 
 export function isCleared(id: string, p: PlayerId | null = getPlayer()): boolean {

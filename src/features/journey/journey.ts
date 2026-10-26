@@ -1,7 +1,7 @@
 // The journey map: one node per level along a gold meridian. The new home page.
 import './journey.css';
 import { t } from '../../core/i18n';
-import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange } from '../../core/quest';
+import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange, clearedByAll } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
 import { escapeAttr } from '../../core/html';
 
@@ -49,6 +49,7 @@ export function renderJourney(root: HTMLElement): () => void {
           ${nodes}
         </svg>
       </div>
+      ${isCleared('ring', p) ? `<a class="cta journey-epilogue${clearedByAll('ring') ? '' : ' sealed'}" href="#/letter">${t('journey.epilogue')}</a>` : ''}
       <p class="journey-foot">
         <button type="button" class="link" id="journey-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>

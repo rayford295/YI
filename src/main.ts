@@ -2,7 +2,7 @@ import './styles/base.css';
 import { t, getLang, setLang, onLangChange } from './core/i18n';
 import { renderStart } from './features/start/start';
 import { renderJourney } from './features/journey/journey';
-import { LEVELS, getPlayer, isUnlocked, levelByRoute } from './core/quest';
+import { LEVELS, getPlayer, isUnlocked, levelByRoute, clearedByAll } from './core/quest';
 import { avatarHtml, toast } from './core/quest-ui';
 
 export type Page = (root: HTMLElement) => () => void;
@@ -15,11 +15,14 @@ const routes: Record<string, () => Promise<Page>> = {
   '/met': () => import('./features/home/home').then((m) => m.renderHome),
   '/map': () => import('./features/birthday-map/map').then((m) => m.renderMap),
   '/moments': () => import('./features/moments/moments').then((m) => m.renderMoments),
+  '/puzzle': () => import('./features/puzzle/puzzle').then((m) => m.renderPuzzle),
+  '/stars': () => import('./features/stars/stars').then((m) => m.renderStars),
+  '/letter': () => import('./features/letter/letter').then((m) => m.renderLetter),
   '/gomoku': () => import('./features/gomoku/gomoku').then((m) => m.renderGomoku),
   '/draw': () => import('./features/pictionary/pictionary').then((m) => m.renderPictionary),
   '/ring': () => import('./features/ring/ring').then((m) => m.renderRing),
 };
-const viewClass: Record<string, string> = { '/': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/gomoku': 'gomoku', '/draw': 'draw', '/ring': 'ring' };
+const viewClass: Record<string, string> = { '/': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter' };
 const GAMES = ['/gomoku', '/draw'];
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
@@ -38,6 +41,8 @@ async function render(): Promise<void> {
   else {
     const level = levelByRoute(path);
     if (level && !isUnlocked(level.id)) { path = '/'; toast(t('quest.locked')); }
+    // The epilogue is not a level: it opens once both players have reached the ring on this device.
+    if (path === '/letter' && !isUnlocked('ring')) { path = '/'; toast(t('quest.locked')); }
   }
   if (`#${path}` !== location.hash && path !== '/start') history.replaceState(null, '', `#${path}`);
   const lang = getLang();
@@ -50,7 +55,8 @@ async function render(): Promise<void> {
   const player = getPlayer();
   // Only unlocked levels appear in the top bar; games share one entry.
   const navLinks = player
-    ? [link('/', t('nav.journey')), ...LEVELS.filter((l) => l.route !== '/draw' && isUnlocked(l.id, player)).map((l) => link(l.route, t(l.title)))].join('')
+    ? [link('/', t('nav.journey')), ...LEVELS.filter((l) => l.route !== '/draw' && isUnlocked(l.id, player)).map((l) => link(l.route, t(l.title))),
+       ...(clearedByAll('ring') ? [link('/letter', t('letter.title'))] : [])].join('')
     : '';
   app.innerHTML = `
     <header class="topbar">

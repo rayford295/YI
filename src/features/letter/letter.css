@@ -1,0 +1,12 @@
+.letter-page { max-width: 640px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 18px; }
+.letter-head { text-align: center; display: grid; justify-items: center; gap: 6px; animation: rise 0.7s ease both; }
+.letter-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 46px; color: var(--rose-deep); line-height: 1.2; }
+html[lang='en'] .letter-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.letter-seals { display: flex; gap: 10px; margin-top: 6px; }
+.seal { display: inline-grid; border-radius: 50%; padding: 3px; border: 2px solid var(--line); opacity: 0.45; filter: grayscale(1); transition: all 400ms ease; }
+.seal.lit { opacity: 1; filter: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(195, 154, 92, 0.18); }
+.letter-page .letter { padding: 30px 28px; background: linear-gradient(180deg, #fffaf3, #fdf1e8); border-left: 4px solid var(--blush); animation: rise 0.9s 0.2s ease both; }
+.letter-page .letter p { margin: 0 0 14px; line-height: 2; }
+.letter-page .signature { text-align: right; font-family: var(--hand); font-size: 26px; color: var(--rose-deep); margin-top: 20px; }
+html[lang='en'] .letter-page .signature { font-family: var(--serif-en); font-style: italic; }
+.letter-locked { margin: 0; padding: 26px 24px; text-align: center; color: var(--muted); animation: rise 0.9s 0.2s ease both; }

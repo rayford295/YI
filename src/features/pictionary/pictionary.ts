@@ -11,7 +11,7 @@ import {
 import { WORDS } from './words';
 import { paint, toUnit, type Stroke } from './strokes';
 import { loadTally, saveTally } from './record';
-import { isCleared } from '../../core/quest';
+import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared } from '../../core/quest-ui';
 
 const DRAW_GOAL = 3;
@@ -190,7 +190,7 @@ export function renderPictionary(root: HTMLElement): () => void {
   function update(): void {
     const m = match!;
     $('#pc-score').textContent = String(m.score);
-    $('#pc-task').textContent = isCleared('draw') ? t('quest.cleared.eyebrow', { n: 5 }) : t('quest.task.draw', { done: Math.min(m.score, DRAW_GOAL), total: DRAW_GOAL });
+    $('#pc-task').textContent = isCleared('draw') ? t('quest.cleared.eyebrow', { n: levelNumber('draw') }) : t('quest.task.draw', { n: levelNumber('draw'), done: Math.min(m.score, DRAW_GOAL), total: DRAW_GOAL });
     if (m.score >= DRAW_GOAL) { $('#pc-task').classList.add('done'); levelCleared('draw'); }
     $('#pc-streak').textContent = t('pictionary.streak', { n: m.streak });
     $('#pc-best').textContent = t('pictionary.best', { n: m.best });

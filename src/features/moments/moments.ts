@@ -5,7 +5,7 @@ import { dayOfYmd, formatDate } from '../../core/dates';
 import { sortedMemories, type Memory } from './memories';
 import { attachMediaFallback } from '../birthday-map/media';
 import { escapeAttr } from '../../core/html';
-import { isCleared } from '../../core/quest';
+import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 
 import { shuffle } from '../../core/random';
@@ -32,9 +32,9 @@ export function renderMoments(root: HTMLElement): () => void {
         <p>${t('moments.subtitle')}</p>
         <p class="moments-count">${t('moments.count', { n: list.length })}</p>
       </header>
-      ${isCleared('moments') ? `<p class="quest-task done">${t('quest.cleared.eyebrow', { n: 3 })}</p>` : `
+      ${isCleared('moments') ? `<p class="quest-task done">${t('quest.cleared.eyebrow', { n: levelNumber('moments') })}</p>` : `
       <section class="order card" id="order">
-        <p class="quest-task">${t('quest.task.moments')}</p>
+        <p class="quest-task">${t('quest.task.moments', { n: levelNumber('moments') })}</p>
         <ol class="order-list" id="order-list"></ol>
         <button type="button" class="btn" id="order-check">${t('quest.task.moments.check')}</button>
       </section>`}

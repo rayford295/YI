@@ -46,10 +46,12 @@ a { color: inherit; }
   border-bottom: 1px solid var(--line);
 }
 .brand-zh, .topbar nav a, .lang-btn { white-space: nowrap; }
-.brand { display: flex; flex-direction: column; text-decoration: none; line-height: 1.1; margin-right: auto; }
+.brand { display: flex; flex-direction: column; text-decoration: none; line-height: 1.1; margin-right: auto; flex: none; }
+.topbar-avatar, .lang-btn { flex: none; }
 .brand-zh { font-family: var(--hand); font-size: 24px; color: var(--rose-deep); }
 .brand-en { font-family: var(--serif-en); font-style: italic; font-size: 13px; color: var(--muted); }
-.topbar nav { display: flex; gap: 14px; font-size: 15px; }
+.topbar nav { display: flex; gap: 14px; font-size: 15px; overflow-x: auto; min-width: 0; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.topbar nav::-webkit-scrollbar { display: none; }
 .topbar nav a { text-decoration: none; color: var(--muted); padding: 4px 0; border-bottom: 2px solid transparent; }
 .topbar nav a.active { color: var(--rose-deep); border-color: var(--rose); }
 .nav-soon { color: var(--muted); opacity: 0.45; cursor: default; padding: 4px 0; }
@@ -87,6 +89,21 @@ a { color: inherit; }
 .floating-hearts i:nth-child(12) { left: 97%; font-size: 12px; animation-delay: 11s; }
 
 @keyframes float { from { transform: translateY(0) rotate(0); opacity: 0; } 10% { opacity: 0.7; } to { transform: translateY(-110dvh) rotate(25deg); opacity: 0; } }
+
+/* Shared page pieces (every lazy-loaded page relies on these). */
+.eyebrow { margin: 0; letter-spacing: 0.18em; font-size: 13px; color: var(--gold); text-transform: uppercase; }
+.letter { padding: 30px 28px; background: linear-gradient(180deg, #fffaf3, #fdf1e8); border-left: 4px solid var(--blush); animation: rise 0.9s 0.6s ease both; }
+.letter h2 { margin: 0 0 12px; font-family: var(--hand); font-weight: 400; font-size: 28px; color: var(--rose-deep); }
+html[lang='en'] .letter h2 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.letter p { margin: 0 0 14px; line-height: 2; }
+.cta {
+  justify-self: center; text-decoration: none;
+  background: var(--rose); color: #fff; padding: 12px 26px; border-radius: 999px;
+  box-shadow: 0 12px 26px -12px var(--rose-deep);
+  transition: transform 0.2s;
+}
+.cta:hover { transform: translateY(-2px); }
+
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @keyframes beat { 0%, 100% { transform: scale(1); } 20% { transform: scale(1.25); } 40% { transform: scale(1); } }
 

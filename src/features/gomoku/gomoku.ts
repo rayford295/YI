@@ -5,7 +5,7 @@ import { nameOf } from '../../core/players';
 import { SIZE, newGame, place, undo, turn, boardOf, status, type Game, type Stone } from './core';
 import { gameTabs } from '../games/tabs';
 import { loadRecord, saveRecord, recordResult, loadGame, saveGame, type GameRecord } from './record';
-import { isCleared } from '../../core/quest';
+import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared } from '../../core/quest-ui';
 
 // Level 4: the outline of a heart, 14 points, no five in any line.
@@ -99,7 +99,7 @@ export function renderGomoku(root: HTMLElement): () => void {
     }
     $('#draws').textContent = t('gomoku.draws', { n: r.draws });
     const filled = HEART.filter(([hr, hc]) => grid[hr][hc]).length;
-    $('#g-task').textContent = isCleared('gomoku') ? t('quest.cleared.eyebrow', { n: 4 }) : t('quest.task.gomoku', { done: filled, total: HEART.length });
+    $('#g-task').textContent = isCleared('gomoku') ? t('quest.cleared.eyebrow', { n: levelNumber('gomoku') }) : t('quest.task.gomoku', { n: levelNumber('gomoku'), done: filled, total: HEART.length });
     if (filled === HEART.length) { $('#g-task').classList.add('done'); levelCleared('gomoku'); }
     $<HTMLButtonElement>('#g-undo').disabled = g.moves.length === 0 || st.kind !== 'playing';
   }

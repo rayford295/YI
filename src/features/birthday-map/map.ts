@@ -9,7 +9,7 @@ import { greatCircle, pacificLng, pointAlong, type LatLng } from '../../core/geo
 import { formatDate, hoursApart } from '../../core/dates';
 import { escapeAttr, reducedMotion } from '../../core/html';
 import { attachMediaFallback } from './media';
-import { isCleared } from '../../core/quest';
+import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared } from '../../core/quest-ui';
 
 // Level 2: three hearts hidden along the way between us. Found state lasts for the visit;
@@ -100,8 +100,8 @@ export function renderMap(root: HTMLElement): () => void {
   if (isCleared('map')) found = new Set(HIDDEN.map((_, i) => i));
   const task = root.querySelector<HTMLElement>('#map-task')!;
   const paintTask = () => {
-    task.textContent = isCleared('map') ? t('quest.cleared.eyebrow', { n: 2 })
-      : `${t('quest.task.map', { total: HIDDEN.length })} · ${t('quest.task.map.found', { found: found.size, total: HIDDEN.length })}`;
+    task.textContent = isCleared('map') ? t('quest.cleared.eyebrow', { n: levelNumber('map') })
+      : `${t('quest.task.map', { n: levelNumber('map'), total: HIDDEN.length })} · ${t('quest.task.map.found', { found: found.size, total: HIDDEN.length })}`;
     task.classList.toggle('done', isCleared('map'));
   };
   paintTask();

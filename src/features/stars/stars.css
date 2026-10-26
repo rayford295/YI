@@ -1,0 +1,27 @@
+.stars { max-width: 680px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 14px; }
+.stars-head { text-align: center; animation: rise 0.7s ease both; }
+.stars-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 46px; color: var(--rose-deep); line-height: 1.2; }
+html[lang='en'] .stars-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.stars-head p { margin: 4px auto 0; color: var(--muted); max-width: 34em; }
+.stars-which { display: flex; justify-content: center; gap: 8px; }
+.stars-which button { font: inherit; font-size: 14px; padding: 6px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; }
+.stars-which button.active { background: #102e49; color: #f1e4c8; border-color: #102e49; }
+.stars-dome { padding: 10px; background: #06111f; animation: rise 0.8s ease both; animation-delay: 100ms; }
+.stars-dome svg { display: block; width: 100%; height: auto; }
+.stars-dome .rim { fill: none; stroke: rgba(211, 165, 87, 0.55); stroke-width: 2; }
+.stars-dome .dir { fill: rgba(241, 228, 200, 0.7); font-size: 22px; text-anchor: middle; font-family: var(--serif-en); font-style: italic; }
+.stars-dome .lines line { stroke: rgba(211, 165, 87, 0.35); stroke-width: 1.5; }
+.sk .hit { fill: transparent; cursor: pointer; }
+.sk .dot { fill: #fff6dc; }
+.sk.planet .dot { fill: #f3d58a; }
+.sk.moon .dot { fill: #fff8e7; filter: drop-shadow(0 0 10px rgba(255, 248, 231, 0.8)); }
+.sk.found .dot { fill: #d3a557; filter: drop-shadow(0 0 8px rgba(211, 165, 87, 0.9)); }
+.sk.found .hit { stroke: rgba(211, 165, 87, 0.7); stroke-width: 1.5; r: 18; }
+.sk text { fill: rgba(241, 228, 200, 0.85); font-size: 20px; text-anchor: middle; font-family: var(--serif-zh); pointer-events: none; }
+html[lang='en'] .sk text { font-family: var(--serif-en); font-style: italic; }
+.sk.found text { fill: #f3d58a; }
+.stars-at { margin: 0; text-align: center; font-size: 13px; color: var(--muted); }
+.stars-foot { text-align: center; margin: 0; font-size: 13px; display: grid; gap: 6px; color: var(--muted); }
+.stars-foot .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+@media (prefers-reduced-motion: no-preference) { .sk.target:not(.found) .dot { animation: twinkle 2.6s ease-in-out infinite; } }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }

@@ -1,10 +1,9 @@
 import './home.css';
 import { t, pick, getLang } from '../../core/i18n';
 import { config } from '../../core/config';
-import { letter, letterParagraphs } from '../birthday-map/letter';
 import { dayNumberSince, clockIn, hoursApart, countdownTo } from '../../core/dates';
 import { QUESTIONS } from '../../core/quiz';
-import { isCleared } from '../../core/quest';
+import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { shuffle } from '../../core/random';
 
@@ -41,13 +40,8 @@ export function renderHome(root: HTMLElement): () => void {
       <p class="countdown-title" id="countdown-title">${t('home.countdown.title', { flight: nm.flight, place: pick(nm.place) })}</p>
       <div class="countdown-grid" id="countdown"></div>
     </section>
-    <section class="letter card">
-      <h2>${t('home.letter.title')}</h2>
-      ${letterParagraphs(lang, hoursApart(config.her.zone, config.him.zone, new Date())).map((p) => `<p>${p}</p>`).join('')}
-      <p class="signature">— ${pick(letter.signature)}</p>
-    </section>
     <section class="quiz card" id="quiz">
-      <p class="quest-task${isCleared('met') ? ' done' : ''}">${isCleared('met') ? t('quest.cleared.eyebrow', { n: 1 }) : t('quest.task.met')}</p>
+      <p class="quest-task${isCleared('met') ? ' done' : ''}">${isCleared('met') ? t('quest.cleared.eyebrow', { n: levelNumber('met') }) : t('quest.task.met', { n: levelNumber('met') })}</p>
       ${isCleared('met') ? '' : (() => {
         const q = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
         const opts = shuffle(q.options.map((o, i) => ({ o, i })));
