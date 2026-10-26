@@ -51,6 +51,9 @@ answers that also count. A test fails if two words share an answer.
 
 **Change a key date.** Everything is in `src/core/config.ts`.
 
+**Redraw the README banner.** `npm run banner` regenerates `docs/banner.svg` from the sprite strings in
+`src/features/world/sprites.ts`, so a new outfit or a new cat shows up there too.
+
 **Change the entry question.** Edit `gate.question` and `gate.placeholder` in
 `src/core/i18n.ts`, then run `npm run gate -- "answer" "another spelling"` and paste the hashes
 into `ANSWERS` in `src/core/gate.ts`. Answers are compared digits-only.

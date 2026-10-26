@@ -8,7 +8,8 @@
     "test": "vitest run",
     "ring:pack": "for r in hers hers_v1 his; do npx -y @gltf-transform/cli@4 optimize public/media/ring/meridian_$r.glb public/media/ring/meridian_$r.glb --compress meshopt --texture-compress false; done",
     "gate": "node scripts/gate-hash.mjs",
-    "ring:thumbs": "python3 scripts/ring-thumbs.py"
+    "ring:thumbs": "python3 scripts/ring-thumbs.py",
+    "banner": "node scripts/banner.ts"
   },
   "repository": {
     "type": "git",
