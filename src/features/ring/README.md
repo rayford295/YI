@@ -34,6 +34,15 @@ the try-on scene and back. **Switch camera** toggles front and rear cameras on p
 camera is mirrored, the rear is not). If the stone ever sits on the palm side, flip
 `LABEL_IS_MIRRORED` in `tryon.ts`.
 
+## Photos
+
+**Take a photo** (visible while trying on) counts down 3-2-1, freezes the webcam frame with the
+ring layer on top, adds a small caption (title, the day we met, the coordinates) and offers the
+PNG to save. **Together, apart** below the stage takes two such photos, one from each of us, and
+draws them side by side on one 1800 × 1200 card joined by a single gold meridian with the hidden
+sapphire where it meets the caption band; names sit under their own halves. All drawing happens on
+a canvas in the browser (`photo.ts`); nothing is uploaded.
+
 ## Avatars
 
 Cartoon avatars at `public/media/avatars/jingyi.png` and `yifan.png` appear on the Hers / His

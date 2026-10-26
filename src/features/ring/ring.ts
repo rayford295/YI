@@ -7,6 +7,9 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { t } from '../../core/i18n';
 import { reducedMotion } from '../../core/html';
 import { startTryOn, type TryOnHandles } from './tryon';
+import { captureTryOn, composeTogether, download, loadImage } from './photo';
+import { config } from '../../core/config';
+import { getLang } from '../../core/i18n';
 
 const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb' } as const;
 type Which = keyof typeof MODELS;
@@ -39,6 +42,15 @@ export function renderRing(root: HTMLElement): () => void {
         <div class="ring-tryon-bar">
           <button type="button" id="ring-tryon">${t('ring.tryon')}</button>
           <button type="button" id="ring-flip" hidden>${t('ring.tryon.flip')}</button>
+          <button type="button" id="ring-shot" hidden>${t('ring.shot')}</button>
+        </div>
+        <div class="ring-countdown" id="ring-countdown" hidden></div>
+        <div class="ring-photo" id="ring-photo" hidden>
+          <img alt="">
+          <div class="ring-photo-actions">
+            <button type="button" id="ring-photo-save">${t('ring.shot.save')}</button>
+            <button type="button" id="ring-photo-close">${t('ring.shot.close')}</button>
+          </div>
         </div>
         <p class="ring-status" id="ring-status" hidden></p>
         <p class="ring-loading" id="ring-loading">${t('ring.loading')}</p>
@@ -48,6 +60,19 @@ export function renderRing(root: HTMLElement): () => void {
         </div>
         <p class="ring-hint">${t('ring.hint')}</p>
       </div>
+      <section class="ring-together card">
+        <h2>${t('ring.together.title')}</h2>
+        <p>${t('ring.together.text')}</p>
+        <div class="ring-together-slots">
+          <label class="ring-slot" id="slot-hers"><img src="${avatar('jingyi')}" alt="" onerror="this.remove()"><span>${t('ring.together.hers')}</span><input type="file" accept="image/*" data-side="hers"></label>
+          <label class="ring-slot" id="slot-his"><img src="${avatar('yifan')}" alt="" onerror="this.remove()"><span>${t('ring.together.his')}</span><input type="file" accept="image/*" data-side="his"></label>
+        </div>
+        <canvas id="ring-together-canvas" hidden></canvas>
+        <div class="ring-together-actions">
+          <button type="button" id="ring-together-save" disabled>${t('ring.together.save')}</button>
+          <span class="ring-together-note">${t('ring.together.note')}</span>
+        </div>
+      </section>
       <ul class="ring-facts">
         <li>${t('ring.fact.compass')}</li>
         <li>${t('ring.fact.names')}</li>
@@ -64,6 +89,11 @@ export function renderRing(root: HTMLElement): () => void {
   const hint = root.querySelector<HTMLElement>('.ring-hint')!;
   const tryBtn = root.querySelector<HTMLButtonElement>('#ring-tryon')!;
   const flipBtn = root.querySelector<HTMLButtonElement>('#ring-flip')!;
+  const shotBtn = root.querySelector<HTMLButtonElement>('#ring-shot')!;
+  const countdown = root.querySelector<HTMLElement>('#ring-countdown')!;
+  const photo = root.querySelector<HTMLElement>('#ring-photo')!;
+  const photoImg = photo.querySelector('img')!;
+  const captionLine = () => `${config.metOn.replace(/-/g, '·')} · ${config.nextMeeting.lat.toFixed(2)}°N ${Math.abs(config.nextMeeting.lng).toFixed(2)}°W`;
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -161,6 +191,7 @@ export function renderRing(root: HTMLElement): () => void {
     tryon = null;
     stage.classList.remove('tryon', 'mirror');
     flipBtn.hidden = true;
+    shotBtn.hidden = true;
     tryBtn.textContent = t('ring.tryon');
     hint.textContent = t('ring.hint');
     say('');
@@ -178,6 +209,7 @@ export function renderRing(root: HTMLElement): () => void {
       tryon = h;
       stage.classList.add('tryon', 'mirror');
       flipBtn.hidden = false;
+      shotBtn.hidden = false;
       tryBtn.textContent = t('ring.tryon.exit');
       hint.textContent = t('ring.tryon.privacy');
       if (current) { scene.remove(current); h.setModel(current, scale * BASE_R); }
@@ -189,6 +221,54 @@ export function renderRing(root: HTMLElement): () => void {
     } finally { tryBusy = false; }
   };
   tryBtn.addEventListener('click', () => (tryon ? stopTryOn() : beginTryOn()));
+  // Shutter: 3-2-1, then freeze the frame and offer it to save.
+  let shot: HTMLCanvasElement | null = null;
+  shotBtn.addEventListener('click', async () => {
+    if (!tryon || !countdown.hidden) return;
+    countdown.hidden = false;
+    for (const n of [3, 2, 1]) { countdown.textContent = String(n); await new Promise((r) => setTimeout(r, 800)); }
+    countdown.hidden = true;
+    if (!tryon) return;
+    renderer.render(tryon.scene, tryon.camera);
+    shot = captureTryOn(tryon.video, canvas, stage.classList.contains('mirror'), { title: t('ring.title'), line: captionLine() });
+    photoImg.src = shot.toDataURL('image/jpeg', 0.92);
+    photo.hidden = false;
+  });
+  root.querySelector('#ring-photo-save')!.addEventListener('click', () => { if (shot) download(shot, `meridian-${which}-${Date.now()}.png`); });
+  root.querySelector('#ring-photo-close')!.addEventListener('click', () => { photo.hidden = true; });
+
+  // Together: two photos taken apart, one card.
+  const slots: { hers?: HTMLImageElement; his?: HTMLImageElement } = {};
+  const together = root.querySelector<HTMLCanvasElement>('#ring-together-canvas')!;
+  const togetherSave = root.querySelector<HTMLButtonElement>('#ring-together-save')!;
+  const renderTogether = () => {
+    if (!slots.hers || !slots.his) return;
+    const zh = getLang() === 'zh';
+    const card = composeTogether(slots.hers, slots.his, {
+      title: t('ring.title'), left: zh ? config.her.name.zh : config.her.name.en, right: zh ? config.him.name.zh : config.him.name.en, line: captionLine(),
+    });
+    together.width = card.width; together.height = card.height;
+    together.getContext('2d')!.drawImage(card, 0, 0);
+    together.hidden = false;
+    togetherSave.disabled = false;
+  };
+  root.querySelectorAll<HTMLInputElement>('.ring-slot input').forEach((input) => input.addEventListener('change', async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    const img = await loadImage(file);
+    const side = input.dataset.side as 'hers' | 'his';
+    slots[side] = img;
+    const slot = input.closest<HTMLElement>('.ring-slot')!;
+    const thumb = document.createElement('canvas');
+    thumb.width = 320; thumb.height = 320;
+    const k = Math.max(320 / img.naturalWidth, 320 / img.naturalHeight);
+    thumb.getContext('2d')!.drawImage(img, (img.naturalWidth - 320 / k) / 2, (img.naturalHeight - 320 / k) * 0.4, 320 / k, 320 / k, 0, 0, 320, 320);
+    slot.style.backgroundImage = `url(${thumb.toDataURL('image/jpeg', 0.8)})`;
+    slot.classList.add('filled');
+    renderTogether();
+  }));
+  togetherSave.addEventListener('click', () => download(together, `meridian-together-${Date.now()}.png`));
+
   flipBtn.addEventListener('click', async () => {
     if (!tryon) return;
     await tryon.switchCamera();
