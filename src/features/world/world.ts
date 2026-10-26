@@ -147,6 +147,7 @@ export function renderWorld(root: HTMLElement): () => void {
     walkable: (x, y) => walkable(x, y, (id) => isUnlocked(id, p)),
     cleared: (id) => isCleared(id, p),
     onDoor, onBump, onMove: (q) => savePos(p, q),
+    label: (b) => t(LEVELS[levelIndex(b.level)].title),
   });
 
   // Keyboard: arrows / WASD walk, Enter / Space / Z act, Escape closes the talk box.
@@ -168,7 +169,16 @@ export function renderWorld(root: HTMLElement): () => void {
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('blur', onBlur);
-  canvas.addEventListener('pointerdown', () => canvas.focus({ preventScroll: true }));
+  // Tap (not drag) on the map to walk there.
+  let tap: { x: number; y: number } | undefined;
+  canvas.addEventListener('pointerdown', (e) => { canvas.focus({ preventScroll: true }); tap = { x: e.clientX, y: e.clientY }; });
+  canvas.addEventListener('pointerup', (e) => {
+    if (!tap || Math.hypot(e.clientX - tap.x, e.clientY - tap.y) > 10) { tap = undefined; return; }
+    tap = undefined;
+    if (!dialog.hidden) return;
+    const r = canvas.getBoundingClientRect();
+    engine.tapAt(e.clientX - r.left, e.clientY - r.top);
+  });
 
   // The d-pad: hold to keep walking.
   root.querySelectorAll<HTMLButtonElement>('.world-dpad button').forEach((b) => {

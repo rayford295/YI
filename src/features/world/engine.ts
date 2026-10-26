@@ -33,6 +33,7 @@ export interface EngineOptions {
   onDoor(b: Building): void;                    // the player stepped onto an open door
   onBump(npc: Npc): void;                       // walked into, or talked to, an NPC
   onMove?(p: Point): void;
+  label?(b: Building): string;                 // house name shown when the player is near its door
 }
 
 const STEP_MS = 190;
@@ -51,6 +52,9 @@ export class WorldEngine {
   private frameClock = 0;
   private bumpAt = 0;
   private resize: ResizeObserver | undefined;
+  private queue: Dir[] = [];            // steps still to take after a tap on the map
+  private goal: Point | undefined;      // the tapped tile, to face and act on when the walk ends
+  private cam = { x: 0, y: 0 };
   paused = false;
 
   constructor(private o: EngineOptions) {
@@ -71,6 +75,7 @@ export class WorldEngine {
 
   /** Hold or release a direction (keyboard or d-pad). The latest held direction wins. */
   press(d: Dir): void {
+    this.queue = []; this.goal = undefined;
     this.held = [d, ...this.held.filter((x) => x !== d)];
     // A tap shorter than a frame still counts as one step.
     if (!this.paused && this.t >= 1) this.tryStep(performance.now());
@@ -88,6 +93,48 @@ export class WorldEngine {
     if (npc) { this.o.onBump(npc); return; }
     const b = buildingAt(f.x, f.y);
     if (b && this.o.walkable(f.x, f.y)) this.o.onDoor(b);
+  }
+
+  /** A tap on the canvas, in CSS pixels relative to it: walk there, or up to whatever stands there. */
+  tapAt(cssX: number, cssY: number): void {
+    if (this.paused) return;
+    const s = TILE * this.scale;
+    this.walkTo({ x: Math.floor((cssX + this.cam.x) / s), y: Math.floor((cssY + this.cam.y) / s) });
+  }
+
+  /**
+   * Plan the shortest walk to `target` (breadth-first over free tiles). A target you cannot stand on
+   * (an NPC, a locked door, water) becomes a walk to the nearest free tile next to it, then a turn
+   * towards it and the same action a bump would cause.
+   */
+  walkTo(target: Point): void {
+    this.held = [];
+    const start = this.position;
+    const standable = this.free(target.x, target.y);
+    const goals = standable
+      ? [target]
+      : (Object.values(DELTA) as Point[]).map((d) => ({ x: target.x + d.x, y: target.y + d.y })).filter((q) => this.free(q.x, q.y));
+    const key = (q: Point) => `${q.x},${q.y}`;
+    const goalKeys = new Set(goals.map(key));
+    const prev = new Map<string, { from: string; dir: Dir }>();
+    const seen = new Set([key(start)]);
+    const queue: Point[] = [start];
+    let found: Point | undefined;
+    while (queue.length && !found) {
+      const q = queue.shift()!;
+      if (goalKeys.has(key(q))) { found = q; break; }
+      for (const dir of ['up', 'down', 'left', 'right'] as Dir[]) {
+        const n = { x: q.x + DELTA[dir].x, y: q.y + DELTA[dir].y };
+        if (seen.has(key(n)) || !this.free(n.x, n.y)) continue;
+        seen.add(key(n)); prev.set(key(n), { from: key(q), dir }); queue.push(n);
+      }
+    }
+    if (!found) return;
+    const dirs: Dir[] = [];
+    for (let k = key(found); k !== key(start);) { const p = prev.get(k)!; dirs.unshift(p.dir); k = p.from; }
+    this.queue = dirs;
+    this.goal = standable ? undefined : target;
+    if (this.t >= 1) this.tryStep(performance.now());
   }
 
   destroy(): void {
@@ -111,8 +158,11 @@ export class WorldEngine {
   }
 
   private tryStep(now: number): void {
-    const d = this.held[0];
-    if (!d) return;
+    const d = this.held[0] ?? this.queue.shift();
+    if (!d) {
+      if (this.goal) { this.faceAndAct(this.goal, now); this.goal = undefined; }
+      return;
+    }
     const r = step(this.mover, d, this.free);
     this.mover = r.mover;
     if (r.moved) {
@@ -123,6 +173,16 @@ export class WorldEngine {
       const npc = this.npcAt(f.x, f.y);
       if (npc && now - this.bumpAt > 700) { this.bumpAt = now; this.o.onBump(npc); }
     }
+  }
+
+  private faceAndAct(target: Point, now: number): void {
+    const dx = target.x - this.mover.x, dy = target.y - this.mover.y;
+    if (Math.abs(dx) + Math.abs(dy) !== 1) return;
+    this.mover = { ...this.mover, dir: dx === 1 ? 'right' : dx === -1 ? 'left' : dy === 1 ? 'down' : 'up' };
+    const npc = this.npcAt(target.x, target.y);
+    if (npc) { this.bumpAt = now; this.o.onBump(npc); return; }
+    const b = buildingAt(target.x, target.y);
+    if (b && !this.o.walkable(target.x, target.y)) { const g = this.o.npcs.find((n) => n.id === `guard:${b.level}`); if (g) this.o.onBump(g); }
   }
 
   private loop = (now: number): void => {
@@ -162,6 +222,7 @@ export class WorldEngine {
     if (mapW < viewW) camX = (mapW - viewW) / 2;
     if (mapH < viewH) camY = (mapH - viewH) / 2;
     camX = Math.round(camX * dpr) / dpr; camY = Math.round(camY * dpr) / dpr;
+    this.cam = { x: camX, y: camY };
 
     ctx.imageSmoothingEnabled = false;
     ctx.fillStyle = '#0b2036';
@@ -192,5 +253,19 @@ export class WorldEngine {
     });
     ents.sort((a, b) => a.y - b.y).forEach((e) => e.draw());
     ctx.restore();
+
+    // The name of a house whose door is within two tiles, as a plate over its roof (screen space).
+    if (this.o.label) for (const b of BUILDINGS) {
+      if (Math.abs(b.door.x - this.mover.x) + Math.abs(b.door.y - this.mover.y) > 2) continue;
+      const text = this.o.label(b);
+      const x = (b.door.x + 0.5) * TILE * scale - camX, y = (b.door.y - 2) * TILE * scale - camY - 8;
+      ctx.font = '600 12px system-ui, sans-serif';
+      const w = ctx.measureText(text).width + 16;
+      ctx.fillStyle = 'rgba(11, 32, 54, 0.92)';
+      ctx.beginPath(); ctx.roundRect(x - w / 2, y - 20, w, 20, 6); ctx.fill();
+      ctx.fillStyle = '#d3a557';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(text, x, y - 10);
+    }
   }
 }

@@ -38,7 +38,10 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
 5. The partner stands by the fountain. Bumping into them shows one line and their progress on
    this device. When both have reached the ring, the line points to the epilogue.
 6. Reduced motion: the typewriter prints at once; walking still animates (it is the game).
-7. Keyboard: arrows/WASD move, Enter/Space/Z interact, Escape closes the dialogue. The canvas
+7. Tap a tile on the canvas to walk there (shortest path over free tiles); tapping something you
+   cannot stand on walks to the nearest free tile beside it, turns to face it and acts as a bump
+   would. A house's name floats over its roof while the player is within two tiles of its door.
+8. Keyboard: arrows/WASD move, Enter/Space/Z interact, Escape closes the dialogue. The canvas
    takes focus on click so page scrolling is not hijacked before the player chooses to play.
 
 ## Testing

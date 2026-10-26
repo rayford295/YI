@@ -16,8 +16,11 @@ have reached the ring, the partner points to the epilogue.
 | `world.ts`, `world.css` | The page: canvas, d-pad + A button (hidden on wide pointer devices), the talk box with typewriter text, HUD and footer |
 | `town.test.ts`, `engine.test.ts` | Map shape, one building per level, every door reachable from the spawn, step/turn/face rules |
 
-Controls: arrows or WASD walk; Enter, Space or Z go in or talk; Escape closes the talk box. On
-touch, the pad below the canvas does the same. A key tap moves one tile; a held key keeps walking.
+Controls: arrows or WASD walk; Enter, Space or Z go in or talk; Escape closes the talk box. A key
+tap moves one tile; a held key keeps walking. Tapping a tile on the canvas walks there by the
+shortest path (`WorldEngine.walkTo`); tapping the cat, the partner or a locked door walks up to it
+and acts like a bump. On touch, the pad below the canvas does the same as the keys. A house's name
+floats over its roof while the player is within two tiles of its door.
 
 Where the player stood is kept in `localStorage` (`yi.world.<player>`); coming back from a level
 puts them in front of that house's door, facing it. "Start over" in the footer clears it with
