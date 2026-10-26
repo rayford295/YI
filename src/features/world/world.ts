@@ -117,7 +117,12 @@ export function renderWorld(root: HTMLElement): () => void {
     catOf.set(npc.id, id);
     return npc;
   });
-  saveCats(p, posts);
+  // Remember where the cats actually are (mid-walk included) whenever this page goes away, so a
+  // re-render, a level or a closed tab never makes a cat jump.
+  const catSpot = (id: CatId): Point => { const n = cats.find((c) => catOf.get(c.id) === id)!; return { x: n.x, y: n.y }; };
+  const saveCatSpots = () => saveCats(p, { coffee: catSpot('coffee'), duoduo: catSpot('duoduo') });
+  if (!walks.length) saveCatSpots();
+  window.addEventListener('pagehide', saveCatSpots);
   const npcs: Npc[] = [
     { id: `partner:${other}`, x: PARTNER.x, y: PARTNER.y, frames: [], sheet: buildSheet(other === 'jingyi' ? JINGYI : YIFAN), dir: 'left' },
     ...cats,
@@ -267,6 +272,8 @@ export function renderWorld(root: HTMLElement): () => void {
   const offQuest = onQuestChange(() => { if (getPlayer()) { teardown(); renderWorld(root); } });
 
   const teardown = () => {
+    saveCatSpots();
+    window.removeEventListener('pagehide', saveCatSpots);
     engine.destroy();
     clearInterval(typing);
     window.removeEventListener('keydown', onKeyDown);

@@ -258,8 +258,16 @@ export class WorldEngine {
       if (w.t < 1) { w.t = Math.min(1, w.t + dt / w.stepMs); continue; }
       const next = w.path[0];
       if (!next) { this.npcWalks.delete(id); continue; }
-      const taken = (next.x === this.mover.x && next.y === this.mover.y) || this.o.npcs.some((m) => m !== n && m.x === next.x && m.y === next.y);
-      if (taken) continue;                       // wait for the tile to clear
+      if (next.x === this.mover.x && next.y === this.mover.y) continue;   // the player will move on
+      if (this.o.npcs.some((m) => m !== n && m.x === next.x && m.y === next.y)) {
+        // Another NPC sits there (maybe for good): find a way round, or wait if there is none.
+        const goal = w.path[w.path.length - 1];
+        const freeFor = (x: number, y: number) => this.o.walkable(x, y) && !(x === this.mover.x && y === this.mover.y) && !this.o.npcs.some((m) => m !== n && m.x === x && m.y === y);
+        const alt = findPath({ x: n.x, y: n.y }, [goal], freeFor);
+        if (!alt) continue;
+        w.path = alt; if (!w.path.length) { this.npcWalks.delete(id); continue; }
+        this.moveNpcs(0); continue;
+      }
       w.path.shift();
       w.from = { x: n.x, y: n.y };
       n.x = next.x; n.y = next.y; w.t = 0;
