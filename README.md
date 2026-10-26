@@ -91,7 +91,7 @@ astronomy-engine · Node 22. CI runs the tests and the build on every push.
 - Each folder under `src/features/` has its own README.
 
 <p align="center">
-  <sub>Live at <a href="https://rayford295.github.io/YI/">rayford295.github.io/YI</a>, unlisted, and switched off while more features land. Personal photos and messages live here; please do not redistribute.</sub>
+  <sub>Home: <a href="https://chenjingyi.love/">chenjingyi.love</a>, unlisted, and switched off while more features land. Personal photos and messages live here; please do not redistribute.</sub>
 </p>
 
 <p align="center">
