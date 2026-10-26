@@ -21,6 +21,9 @@
 html[lang='en'] .cleared-card h2 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
 .cleared-story { margin: 0; color: rgba(241, 228, 200, 0.85); max-width: 32em; }
 .cleared-next { margin-top: 10px; background: #d3a557; color: #102e49; border: 0; padding: 10px 22px; border-radius: 999px; font: inherit; text-decoration: none; }
+.confetti { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.cleared-card { position: relative; z-index: 1; }
+.cleared-voice { background: none; border: 1px solid rgba(211, 165, 87, 0.6); color: #f3d58a; font: inherit; font-size: 14px; padding: 6px 16px; border-radius: 999px; cursor: pointer; }
 .cleared-stay { background: none; border: 0; color: rgba(241, 228, 200, 0.6); font: inherit; font-size: 14px; cursor: pointer; text-decoration: underline; }
 
 .quest-toast {

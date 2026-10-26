@@ -7,7 +7,9 @@ The repository is public and the site is live at
 the `deploy` job in `.github/workflows/ci.yml`, which only runs while the repository variable
 `PUBLISH` is `true` (Settings → Secrets and variables → Actions → Variables); with the repository
 private the variable is unset, the job is skipped and CI stays green. We keep it online so it can be opened at any
-time (decided 2026-10-25); `index.html` carries `noindex, nofollow`.
+time (decided 2026-10-25); `index.html` carries `noindex, nofollow`, and since 2026-10-26 the
+site itself opens with a question only the two of us can answer (`src/core/gate.ts`), so a public
+URL shows strangers nothing but that question.
 
 ## How It Was Published: GitHub Pages (Public, Free)
 

@@ -1,0 +1,11 @@
+.gate { max-width: 460px; margin: 0 auto; padding: 72px 16px 80px; text-align: center; display: grid; gap: 12px; justify-items: center; }
+.gate h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 46px; color: var(--rose-deep); line-height: 1.2; animation: rise 0.7s ease both; }
+html[lang='en'] .gate h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.gate-form { width: 100%; display: grid; gap: 14px; padding: 26px 22px; justify-items: center; animation: rise 0.8s ease both; animation-delay: 100ms; }
+.gate-form label { color: var(--ink); font-size: 18px; }
+.gate-form input { width: 100%; max-width: 260px; font: inherit; font-size: 22px; text-align: center; letter-spacing: 0.2em; padding: 10px 14px; border-radius: 14px; border: 1.5px solid var(--line); background: #fff; color: var(--ink); }
+.gate-form input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(195, 154, 92, 0.18); }
+.gate-form .cta { border: 0; font: inherit; cursor: pointer; }
+.gate-wrong { margin: 0; color: var(--rose-deep); font-size: 14px; }
+.gate-form.shake { animation: shake 400ms ease; }
+@keyframes shake { 0%, 100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }

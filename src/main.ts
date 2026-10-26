@@ -1,9 +1,12 @@
 import './styles/base.css';
+import { registerSW } from 'virtual:pwa-register';
 import { t, getLang, setLang, onLangChange } from './core/i18n';
 import { renderStart } from './features/start/start';
 import { renderJourney } from './features/journey/journey';
 import { LEVELS, getPlayer, isUnlocked, levelByRoute, clearedByAll } from './core/quest';
 import { avatarHtml, toast } from './core/quest-ui';
+import { gatePassed } from './core/gate';
+import { renderGate } from './features/gate/gate';
 
 export type Page = (root: HTMLElement) => () => void;
 
@@ -35,6 +38,15 @@ async function render(): Promise<void> {
   cleanup?.();
   cleanup = undefined;
   let path = currentPath();
+  // The front door comes before everything: one question, answered once per device.
+  if (!gatePassed()) {
+    document.documentElement.lang = getLang() === 'zh' ? 'zh-CN' : 'en';
+    app.innerHTML = `<header class="topbar"><a class="brand" href="#/"><span class="brand-zh">仪见钟情</span><span class="brand-en">Yi at First Sight</span></a>
+      <button class="lang-btn" id="lang-btn" type="button">${t('lang.toggle')}</button></header><main id="view" class="view view-gate"></main>`;
+    app.querySelector('#lang-btn')!.addEventListener('click', () => setLang(getLang() === 'zh' ? 'en' : 'zh'));
+    cleanup = renderGate(app.querySelector<HTMLElement>('#view')!, () => { void render(); });
+    return;
+  }
   // The journey's rules: pick a player first; a locked level sends you back to the map.
   if (!getPlayer()) path = '/start';
   else if (path === '/start') path = '/';
@@ -73,6 +85,9 @@ async function render(): Promise<void> {
   if (seq !== renderSeq) return;
   cleanup = page(app.querySelector<HTMLElement>('#view')!);
 }
+
+// Offline shell + 'add to home screen'. Updates install quietly on the next visit.
+registerSW({ immediate: true });
 
 onLangChange(() => { void render(); });
 window.addEventListener('hashchange', () => { void render(); });
