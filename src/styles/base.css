@@ -137,3 +137,8 @@ body.world-sky {
 }
 body.world-sky .floating-hearts { display: none; }
 body.world-sky .topbar { background: rgba(251, 244, 238, 0.92); }
+/* A cream sign with a navy-and-gold pixel border, for headings that stand on the meadow. */
+.sign {
+  padding: 14px 28px 16px; border-radius: 14px;
+  background: #f4e9d6; border: 3px solid #102e49; box-shadow: 0 0 0 3px #d3a557, 0 8px 0 rgba(11, 32, 54, 0.25);
+}

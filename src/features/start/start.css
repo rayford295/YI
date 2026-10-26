@@ -1,4 +1,6 @@
-.start { max-width: 720px; margin: 0 auto; padding: 48px 16px 80px; text-align: center; display: grid; gap: 14px; justify-items: center; }
+.start { max-width: 720px; margin: 0 auto; padding: 24px 16px 80px; text-align: center; display: grid; gap: 18px; justify-items: center; }
+.start-head { display: grid; gap: 6px; justify-items: center; }
+.start-head h1, .start-head p { margin: 0; }
 .start h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 52px; color: var(--rose-deep); line-height: 1.2; animation: rise 0.7s ease both; }
 html[lang='en'] .start h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
 .start-sub { margin: 0; color: var(--muted); max-width: 32em; animation: rise 0.7s ease both; animation-delay: 80ms; }

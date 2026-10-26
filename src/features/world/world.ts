@@ -56,7 +56,7 @@ export function renderWorld(root: HTMLElement): () => void {
 
   root.innerHTML = `
     <section class="world">
-      <header class="world-head">
+      <header class="world-head sign">
         ${avatarHtml(p, 'big')}
         <p class="eyebrow">${t('journey.eyebrow', { name: playerName(p) })}</p>
         <h1>${t('world.title')}</h1>

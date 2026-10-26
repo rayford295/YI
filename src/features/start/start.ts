@@ -15,9 +15,11 @@ export function renderStart(root: HTMLElement): () => void {
     </button>`;
   root.innerHTML = `
     <section class="start">
-      <p class="eyebrow">${t('start.eyebrow')}</p>
-      <h1>${t('start.title')}</h1>
-      <p class="start-sub">${t('start.subtitle')}</p>
+      <header class="sign start-head">
+        <p class="eyebrow">${t('start.eyebrow')}</p>
+        <h1>${t('start.title')}</h1>
+        <p class="start-sub">${t('start.subtitle')}</p>
+      </header>
       <div class="start-cards">${card('jingyi')}${card('yifan')}</div>
     </section>`;
   root.querySelectorAll<HTMLButtonElement>('.start-card').forEach((b) => b.addEventListener('click', () => {

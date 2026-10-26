@@ -2,8 +2,7 @@
 /* The heading sits on a cream sign with a navy-and-gold pixel border, like the talk box. */
 .world-head {
   text-align: center; display: grid; justify-items: center; gap: 4px; animation: rise 0.7s ease both;
-  justify-self: center; padding: 14px 28px 16px; border-radius: 14px;
-  background: #f4e9d6; border: 3px solid #102e49; box-shadow: 0 0 0 3px #d3a557, 0 8px 0 rgba(11, 32, 54, 0.25);
+  justify-self: center;
 }
 .world-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 42px; color: var(--rose-deep); line-height: 1.2; }
 html[lang='en'] .world-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
