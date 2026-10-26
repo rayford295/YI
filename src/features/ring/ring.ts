@@ -6,6 +6,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { t } from '../../core/i18n';
 import { reducedMotion } from '../../core/html';
+import { startTryOn, type TryOnHandles } from './tryon';
 
 const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb' } as const;
 type Which = keyof typeof MODELS;
@@ -33,6 +34,11 @@ export function renderRing(root: HTMLElement): () => void {
           <button type="button" class="active" data-which="hers">${t('ring.hers')}</button>
           <button type="button" data-which="his">${t('ring.his')}</button>
         </div>
+        <div class="ring-tryon-bar">
+          <button type="button" id="ring-tryon">${t('ring.tryon')}</button>
+          <button type="button" id="ring-flip" hidden>${t('ring.tryon.flip')}</button>
+        </div>
+        <p class="ring-status" id="ring-status" hidden></p>
         <p class="ring-loading" id="ring-loading">${t('ring.loading')}</p>
         <div class="ring-views" role="group">
           <button type="button" class="active" data-view="outside">${t('ring.view.outside')}</button>
@@ -52,6 +58,10 @@ export function renderRing(root: HTMLElement): () => void {
   const stage = root.querySelector<HTMLElement>('#ring-stage')!;
   const canvas = root.querySelector<HTMLCanvasElement>('#ring-canvas')!;
   const loading = root.querySelector<HTMLElement>('#ring-loading')!;
+  const status = root.querySelector<HTMLElement>('#ring-status')!;
+  const hint = root.querySelector<HTMLElement>('.ring-hint')!;
+  const tryBtn = root.querySelector<HTMLButtonElement>('#ring-tryon')!;
+  const flipBtn = root.querySelector<HTMLButtonElement>('#ring-flip')!;
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -84,6 +94,8 @@ export function renderRing(root: HTMLElement): () => void {
   let current: THREE.Group | null = null;
   let scale = 1;                    // model outer radius / BASE_R
   let view: View = 'outside';
+  let tryon: TryOnHandles | null = null;
+  let tryBusy = false;
   const loader = new GLTFLoader();
   const pose = (v: View) => ({ pos: VIEWS[v].pos.clone().multiplyScalar(scale), target: VIEWS[v].target.clone().multiplyScalar(scale) });
 
@@ -98,10 +110,10 @@ export function renderRing(root: HTMLElement): () => void {
       });
       const box = new THREE.Box3().setFromObject(gltf.scene);
       scale = (box.max.x - box.min.x) / 2 / BASE_R;
-      scene.add(gltf.scene);
       current = gltf.scene;
+      if (tryon) tryon.setModel(current, scale * BASE_R);
+      else { scene.add(current); flyTo(view); }
       loading.style.display = 'none';
-      flyTo(view);
     }, undefined, () => { loading.textContent = '…'; });
   };
 
@@ -136,6 +148,49 @@ export function renderRing(root: HTMLElement): () => void {
   canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
   load('hers');
 
+  // Try-on: swap the orbit scene for the webcam scene and back.
+  const say = (msg: string) => { status.textContent = msg; status.hidden = !msg; };
+  const stopTryOn = () => {
+    if (!tryon) return;
+    tryon.setModel(null, 0);
+    tryon.stop();
+    tryon = null;
+    stage.classList.remove('tryon', 'mirror');
+    flipBtn.hidden = true;
+    tryBtn.textContent = t('ring.tryon');
+    hint.textContent = t('ring.hint');
+    say('');
+    if (current) { scene.add(current); current.position.set(0, 0, 0); current.quaternion.identity(); current.scale.setScalar(1); }
+    fit();
+    flyTo(view);
+  };
+  const beginTryOn = async () => {
+    if (tryBusy) return;
+    tryBusy = true;
+    say(t('ring.tryon.starting'));
+    try {
+      const h = await startTryOn(stage, scene.environment as THREE.Texture);
+      if (disposed) { h.stop(); return; }
+      tryon = h;
+      stage.classList.add('tryon', 'mirror');
+      flipBtn.hidden = false;
+      tryBtn.textContent = t('ring.tryon.exit');
+      hint.textContent = t('ring.tryon.privacy');
+      if (current) { scene.remove(current); h.setModel(current, scale * BASE_R); }
+      say(t('ring.tryon.hint'));
+    } catch (e) {
+      console.warn('try-on failed', e);
+      say(t('ring.tryon.denied'));
+      setTimeout(() => { if (!tryon) say(''); }, 4000);
+    } finally { tryBusy = false; }
+  };
+  tryBtn.addEventListener('click', () => (tryon ? stopTryOn() : beginTryOn()));
+  flipBtn.addEventListener('click', async () => {
+    if (!tryon) return;
+    await tryon.switchCamera();
+    stage.classList.toggle('mirror');
+  });
+
   let raf = 0;
   const ease = (x: number) => 1 - Math.pow(1 - x, 3);
   const tick = (now: number) => {
@@ -145,8 +200,16 @@ export function renderRing(root: HTMLElement): () => void {
       controls.target.lerpVectors(flight.tFrom, flight.tTo, k);
       if (k === 1) flight = null;
     }
-    controls.update();
-    renderer.render(scene, camera);
+    if (tryon) {
+      const v = tryon.video;
+      if (v.videoWidth && (canvas.width !== v.videoWidth || canvas.height !== v.videoHeight)) renderer.setSize(v.videoWidth, v.videoHeight, false);
+      const seen = tryon.update(now);
+      say(seen ? '' : t('ring.tryon.hint'));
+      renderer.render(tryon.scene, tryon.camera);
+    } else {
+      controls.update();
+      renderer.render(scene, camera);
+    }
     raf = requestAnimationFrame(tick);
   };
   raf = requestAnimationFrame(tick);
@@ -154,6 +217,7 @@ export function renderRing(root: HTMLElement): () => void {
   return () => {
     disposed = true;
     cancelAnimationFrame(raf);
+    tryon?.stop();
     ro.disconnect();
     controls.dispose();
     pmrem.dispose();
