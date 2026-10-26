@@ -32,8 +32,11 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
 2. A building's door is walkable when the level is unlocked. Stepping on it opens the dialogue:
    name plate = the level title, text = the level story, buttons = Enter / Not now. Enter
    navigates to the level route. Enter key, Space and the A button confirm.
-3. A locked building has a guard standing on the tile in front of the door (a small NPC sprite).
-   Walking into the guard opens the dialogue "Clear <previous level> first".
+3. The two real cats guard: Coffee sits on the tile in front of the next locked door, Duoduo in
+   front of the one after (further locked doors are simply shut). Walking into a cat opens its
+   own line naming the previous level, with the cat's photo. A cat with nothing to guard rests
+   at its home spot (`CAT_HOMES`) and has an idle line. (Amended 2026-10-26: was one generic cat
+   per locked door.)
 4. A cleared building flies a small gold flag on its roof.
 5. The partner stands by the fountain. Bumping into them shows one line and their progress on
    this device. When both have reached the ring, the line points to the epilogue.

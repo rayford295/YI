@@ -54,6 +54,8 @@ export const BUILDINGS: Building[] = [
 export const SPAWN: Point = { x: 11, y: 10 };
 /** Where the other player waits, by the fountain. */
 export const PARTNER: Point = { x: 12, y: 9 };
+/** Where a cat rests when it has no door to guard: Coffee by the pond, Duoduo in the middle of the square. */
+export const CAT_HOMES: Record<'coffee' | 'duoduo', Point> = { coffee: { x: 13, y: 6 }, duoduo: { x: 10, y: 10 } };
 
 export const WIDTH = TOWN[0].length;
 export const HEIGHT = TOWN.length;

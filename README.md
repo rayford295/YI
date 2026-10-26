@@ -31,8 +31,10 @@ Both names contain the syllable *Yi*: Yi-fan and Jing-yi; the title swaps in the
    or WASD, tap anywhere on the map to walk there, or use the on-screen d-pad on a phone. Your
    partner stands by the fountain and tells you how far they have got.
 4. **Doors.** Step onto an open door and a talk box names the level and tells its one-line story.
-   Go in, and the level opens. A house whose level is still locked has a cat sitting in front of
-   the door who tells you which level to clear first. A cleared house flies a gold flag.
+   Go in, and the level opens. Our two cats live in the town: **Coffee** sits in front of the
+   next locked door and **Duoduo** in front of the one after, and each tells you, in its own way,
+   which level to clear first; when there is nothing left to guard they go and sunbathe by the
+   pond or sit in the middle of the square. A cleared house flies a gold flag.
 5. **Clearing a level** shows a card with confetti and a chime, and unlocks the next door. Coming
    back from a level puts you in front of that house.
 6. **The ring** is the eighth house and the reward. Once both players have reached it on the
@@ -76,9 +78,10 @@ If a voice line exists at `public/media/voice/<level>.m4a`, the cleared card get
 
 Everything in `src/features/world/` is drawn with the canvas API at load time: there are no image
 files and no game engine. The map is a 24×20 character grid (`town.ts`), the ground tiles and
-houses are painted once onto an offscreen canvas (`tiles.ts`), and the two of us plus the cat are
-12×16 pixel sprites written as strings, four facings and two walk frames each (`sprites.ts`),
-drawn after our avatars. The engine (`engine.ts`) moves one tile per step with easing, follows
+houses are painted once onto an offscreen canvas (`tiles.ts`), and the two of us are 12×16 pixel
+sprites written as strings, four facings and two walk frames each (`sprites.ts`), drawn after our
+avatars; Coffee and Duoduo are drawn after their photos (`public/media/cats/`), which also appear
+in the talk box when you bump into them. The engine (`engine.ts`) moves one tile per step with easing, follows
 with a clamped camera, finds the shortest path for taps, and renders at an integer pixel scale so
 nothing blurs.
 
@@ -103,7 +106,8 @@ from the spawn, and locked doors stay shut. Design notes:
 - [ ] Yifan rewrites the last letter in his own words (`src/features/birthday-map/letter.ts`)
 - [ ] Record voice lines for the cleared cards (`public/media/voice/README.md`)
 - [ ] Add inside-joke words to Pictionary (`src/features/pictionary/words.ts`)
-- [ ] Town: footsteps and door sounds, animated water, a cat that moves with the story
+- [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
+- [ ] Town: footsteps and door sounds, animated water
 - [ ] Later: a long road from Shenzhen to College Station as a second map, gifts, daily notes, two players online at once
 
 ## Repository Layout

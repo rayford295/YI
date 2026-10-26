@@ -1,13 +1,15 @@
 // The town page: the new home. A canvas with the walking engine, a d-pad for phones, the talk box.
 import './world.css';
-import { t } from '../../core/i18n';
+import { t, type Key } from '../../core/i18n';
 import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange, clearedByAll, levelIndex, type PlayerId } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
 import { prefersReducedMotion } from '../../core/motion';
 import { escapeAttr } from '../../core/html';
-import { BUILDINGS, PARTNER, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
+import { BUILDINGS, CAT_HOMES, PARTNER, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
-import { JINGYI, YIFAN, buildCat, buildSheet, type Dir } from './sprites';
+import { JINGYI, YIFAN, buildCat, buildSheet, type CatId, type Dir } from './sprites';
+
+const catPhoto = (id: CatId): string => `${import.meta.env.BASE_URL}media/cats/${id}.jpg`;
 
 const posKey = (p: PlayerId) => `yi.world.${p}`;
 function loadPos(p: PlayerId): Point {
@@ -41,7 +43,8 @@ export function renderWorld(root: HTMLElement): () => void {
         <canvas id="world-canvas" tabindex="0" aria-label="${escapeAttr(t('world.title'))}"></canvas>
         <div class="world-dialog" id="world-dialog" hidden role="dialog" aria-live="polite">
           <p class="world-name" id="world-name"></p>
-          <div class="world-panel">
+          <div class="world-panel" id="world-panel">
+            <img class="world-face" id="world-face" alt="" hidden />
             <p class="world-text" id="world-text"></p>
             <div class="world-actions" id="world-actions"></div>
           </div>
@@ -73,12 +76,22 @@ export function renderWorld(root: HTMLElement): () => void {
   const nameEl = root.querySelector<HTMLElement>('#world-name')!;
   const textEl = root.querySelector<HTMLElement>('#world-text')!;
   const actionsEl = root.querySelector<HTMLElement>('#world-actions')!;
+  const panel = root.querySelector<HTMLElement>('#world-panel')!;
+  const face = root.querySelector<HTMLImageElement>('#world-face')!;
 
-  // Who stands where: the partner by the fountain, a cat in front of every locked door.
-  const cat = buildCat();
+  // Who stands where: the partner by the fountain; Coffee in front of the next locked door and
+  // Duoduo in front of the one after. A cat with nothing left to guard rests at its home spot.
+  const locked = [...BUILDINGS].sort((a, b) => levelIndex(a.level) - levelIndex(b.level)).filter((b) => !isUnlocked(b.level, p));
+  const catOf = new Map<string, CatId>();
+  const cats: Npc[] = (['coffee', 'duoduo'] as const).map((id, i) => {
+    const b = locked[i];
+    const npc: Npc = b ? { id: `guard:${b.level}`, ...guardSpot(b), frames: buildCat(id) } : { id: `cat:${id}`, ...CAT_HOMES[id], frames: buildCat(id) };
+    catOf.set(npc.id, id);
+    return npc;
+  });
   const npcs: Npc[] = [
     { id: `partner:${other}`, x: PARTNER.x, y: PARTNER.y, frames: [], sheet: buildSheet(other === 'jingyi' ? JINGYI : YIFAN), dir: 'left' },
-    ...BUILDINGS.filter((b) => !isUnlocked(b.level, p)).map((b) => ({ id: `guard:${b.level}`, ...guardSpot(b), frames: cat })),
+    ...cats,
   ];
 
   // Coming back from a level puts you in front of its door, facing it.
@@ -88,9 +101,12 @@ export function renderWorld(root: HTMLElement): () => void {
   let typing = 0;
   let primary: Action | undefined;
   const closeDialog = () => { dialog.hidden = true; engine.paused = false; primary = undefined; clearInterval(typing); };
-  function openDialog(name: string, html: string, actions: Action[]): void {
+  function openDialog(name: string, html: string, actions: Action[], photo?: string): void {
     engine.paused = true; engine.releaseAll();
     nameEl.textContent = name;
+    // A real photo beside the words when a cat talks.
+    face.hidden = !photo; panel.classList.toggle('has-face', !!photo);
+    if (photo) face.src = photo;
     actionsEl.innerHTML = '';
     primary = actions[0];
     actions.forEach((a, i) => {
@@ -127,10 +143,13 @@ export function renderWorld(root: HTMLElement): () => void {
     ]);
   }
   function onBump(n: Npc): void {
-    if (n.id.startsWith('guard:')) {
-      const id = n.id.slice(6);
-      const prev = LEVELS[levelIndex(id) - 1];
-      openDialog(t('world.guard.name'), t('world.guard.line', { prev: prev ? t(prev.title) : '' }), [{ label: t('world.close'), run: closeDialog }]);
+    const cat = catOf.get(n.id);
+    if (cat) {
+      const close = [{ label: t('world.close'), run: closeDialog }];
+      if (n.id.startsWith('guard:')) {
+        const prev = LEVELS[levelIndex(n.id.slice(6)) - 1];
+        openDialog(t(`world.cat.${cat}` as Key), t(`world.cat.${cat}.guard` as Key, { prev: prev ? t(prev.title) : '' }), close, catPhoto(cat));
+      } else openDialog(t(`world.cat.${cat}` as Key), t(`world.cat.${cat}.rest` as Key), close, catPhoto(cat));
       return;
     }
     const theirs = LEVELS.filter((l) => isCleared(l.id, other)).length;

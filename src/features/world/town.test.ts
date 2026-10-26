@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BUILDINGS, HEIGHT, PARTNER, SPAWN, TOWN, WIDTH, guardSpot, levelIds, reachable, tileAt, walkable } from './town';
+import { BUILDINGS, CAT_HOMES, HEIGHT, PARTNER, SPAWN, TOWN, WIDTH, guardSpot, levelIds, reachable, tileAt, walkable } from './town';
 
 describe('town', () => {
   it('is a rectangle of known tiles', () => {
@@ -25,6 +25,15 @@ describe('town', () => {
     }
     expect(walkable(SPAWN.x, SPAWN.y)).toBe(true);
     expect(walkable(PARTNER.x, PARTNER.y)).toBe(true);
+  });
+
+  it('gives each cat a resting spot on the ground that is nobody else\'s', () => {
+    const taken = new Set([SPAWN, PARTNER].map((q) => `${q.x},${q.y}`));
+    for (const home of Object.values(CAT_HOMES)) {
+      expect(walkable(home.x, home.y)).toBe(true);
+      expect(taken.has(`${home.x},${home.y}`)).toBe(false);
+      taken.add(`${home.x},${home.y}`);
+    }
   });
 
   it('keeps a locked door shut', () => {

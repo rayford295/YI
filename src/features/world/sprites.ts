@@ -115,46 +115,95 @@ export const YIFAN: Figure = {
   legs: JINGYI.legs,
 };
 
-// The cat that sits in front of a locked door. One facing, two frames (tail flick).
-export const CAT_PALETTE: Palette = { o: '#e58a3c', d: '#b8642a', e: '#2b1b1b', w: '#fff6dc', n: '#f1a3a3' };
-export const CAT: string[][] = [
-  [
-    '............',
-    '............',
-    '............',
-    '..o......o..',
-    '..oo....oo..',
-    '..oooooooo..',
-    '..oeoooeoo..',
-    '..oooooooo..',
-    '...oownoo...',
-    '..oooooooo..',
-    '..oooooooooo',
-    '..oooooooo..',
-    '..oo.oo.oo..',
-    '............',
-    '............',
-    '............',
+// The two cats, drawn after the real ones: Coffee, a seal-point Ragdoll (cream fluff, a dark
+// mask around blue eyes, dark ears and tail), and Duoduo, a bicolour Ragdoll (white, a tan cap
+// over the ears, a tan saddle on the back, a white blaze and a pink nose). One facing, two frames
+// (a tail flick). Twelve wide so they sit on one tile like everyone else.
+export type CatId = 'coffee' | 'duoduo';
+export interface Cat { palette: Palette; frames: string[][] }
+export const COFFEE: Cat = {
+  palette: { c: '#f1e6d2', b: '#4b3528', m: '#8d6d55', e: '#5da4dc', n: '#2a1b16' },
+  frames: [
+    [
+      '............',
+      '............',
+      '............',
+      '..b......b..',
+      '..bb....bb..',
+      '.cbccccccbc.',
+      '.cccccccccc.',
+      '.ccmbccbmcc.',
+      '.cbebccbebc.',
+      '.cbbbnbbbbc.',
+      '.ccbbbbbbcc.',
+      '.cccccccccc.',
+      'cccccccccccb',
+      '.cccccccccb.',
+      '..cc.cc.cc..',
+      '............',
+    ],
+    [
+      '............',
+      '............',
+      '............',
+      '..b......b..',
+      '..bb....bb..',
+      '.cbccccccbc.',
+      '.cccccccccc.',
+      '.ccmbccbmcc.',
+      '.cbebccbebc.',
+      '.cbbbnbbbbc.',
+      '.ccbbbbbbcc.',
+      '.ccccccccccb',
+      'ccccccccccc.',
+      '.ccccccccc..',
+      '..cc.cc.cc..',
+      '............',
+    ],
   ],
-  [
-    '............',
-    '............',
-    '............',
-    '..o......o..',
-    '..oo....oo..',
-    '..oooooooo..',
-    '..oeoooeoo..',
-    '..oooooooo..',
-    '...oownoo...',
-    '..oooooooo.o',
-    '..oooooooooo',
-    '..oooooooo..',
-    '..oo.oo.oo..',
-    '............',
-    '............',
-    '............',
+};
+export const DUODUO: Cat = {
+  palette: { w: '#fbfaf7', t: '#a98464', e: '#5da4dc', n: '#e3929d' },
+  frames: [
+    [
+      '............',
+      '............',
+      '............',
+      '..t......t..',
+      '..tt....tt..',
+      '..ttwwwwtt..',
+      '..twwwwwwt..',
+      '..wwwwwwww..',
+      '..wewwwwew..',
+      '..wwwnwwww..',
+      '..wwwwwwww..',
+      '.wwwttttwww.',
+      '.wwtttttttww',
+      '.wwwwtttwwt.',
+      '..ww.ww.ww..',
+      '............',
+    ],
+    [
+      '............',
+      '............',
+      '............',
+      '..t......t..',
+      '..tt....tt..',
+      '..ttwwwwtt..',
+      '..twwwwwwt..',
+      '..wwwwwwww..',
+      '..wewwwwew..',
+      '..wwwnwwww..',
+      '..wwwwwwww..',
+      '.wwwttttwww.',
+      '.wwtttttttw.',
+      '.wwwwtttwwtt',
+      '..ww.ww.ww..',
+      '............',
+    ],
   ],
-];
+};
+export const CATS: Record<CatId, Cat> = { coffee: COFFEE, duoduo: DUODUO };
 
 export const SPRITE_W = 12;
 export const SPRITE_H = 16;
@@ -191,11 +240,12 @@ export function buildSheet(f: Figure): SpriteSheet {
   };
 }
 
-export function buildCat(): HTMLCanvasElement[] {
-  return CAT.map((rows) => {
+export function buildCat(id: CatId): HTMLCanvasElement[] {
+  const cat = CATS[id];
+  return cat.frames.map((rows) => {
     const c = document.createElement('canvas');
     c.width = SPRITE_W; c.height = SPRITE_H;
-    paint(c.getContext('2d')!, rows, CAT_PALETTE, 0, 0);
+    paint(c.getContext('2d')!, rows, cat.palette, 0, 0);
     return c;
   });
 }
