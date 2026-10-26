@@ -1,5 +1,5 @@
 {
-  "name": "yi-at-first-sight",
+  "name": "yi",
   "version": "0.1.0",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rayford295/Yi-at-First-Sight.git"
+    "url": "git+https://github.com/rayford295/YI.git"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.1.1",

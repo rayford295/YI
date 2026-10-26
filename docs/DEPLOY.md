@@ -3,7 +3,7 @@
 ## Status
 
 The repository is public and the site is live at
-<https://rayford295.github.io/Yi-at-First-Sight/>. Every push to `main` redeploys it through
+<https://rayford295.github.io/YI/>. Every push to `main` redeploys it through
 the `deploy` job in `.github/workflows/ci.yml`, which only runs while the repository variable
 `PUBLISH` is `true` (Settings → Secrets and variables → Actions → Variables); with the repository
 private the variable is unset, the job is skipped and CI stays green. We keep it online so it can be opened at any
@@ -35,7 +35,7 @@ time (decided 2026-10-25); `index.html` carries `noindex, nofollow`.
            uses: actions/deploy-pages@v4
    ```
 
-4. Push to `main`. The site appears at <https://rayford295.github.io/Yi-at-First-Sight/>
+4. Push to `main`. The site appears at <https://rayford295.github.io/YI/>
    about a minute later and updates on every push. `index.html` carries `noindex, nofollow`,
    so search engines are asked not to list it, but anyone with the link can open it.
 
@@ -62,7 +62,7 @@ public). GitHub Pages cannot add a login, and on a free account it only serves p
 
 1. Sign in at <https://dash.cloudflare.com> (create a free account if needed).
 2. **Workers & Pages → Create → Pages → Connect to Git**, authorise GitHub, pick
-   `rayford295/Yi-at-First-Sight`.
+   `rayford295/YI`.
 3. Build settings:
    - Production branch: `main`
    - Framework preset: **Vite**
@@ -70,14 +70,14 @@ public). GitHub Pages cannot add a login, and on a free account it only serves p
    - Build output directory: `dist`
    - Environment variable: `NODE_VERSION` = `22`
 4. **Save and Deploy**. The first build takes a minute or two and gives a URL like
-   `https://yi-at-first-sight.pages.dev`. Every later push to `main` redeploys automatically.
+   `https://yi.pages.dev`. Every later push to `main` redeploys automatically.
 
 ### 2. Lock it behind a login
 
 1. **Zero Trust** (left sidebar) → pick the free plan when asked.
 2. **Access → Applications → Add an application → Self-hosted**.
    - Application name: `Yi at First Sight`
-   - Application domain: `yi-at-first-sight.pages.dev` (the URL from step 1)
+   - Application domain: `yi.pages.dev` (the URL from step 1)
    - Session duration: `1 month` (so she is not asked to sign in every visit)
 3. **Add a policy**: name `us`, action **Allow**, include **Emails** and list exactly two
    addresses: Yifan's and Jingyi's.
@@ -85,9 +85,9 @@ public). GitHub Pages cannot add a login, and on a free account it only serves p
    six-digit code; no password, no app to install.
 5. Save. Open the URL in a private window to confirm it asks for an email first.
 
-Pages also creates preview URLs (`<hash>.yi-at-first-sight.pages.dev`) for other branches.
+Pages also creates preview URLs (`<hash>.yi.pages.dev`) for other branches.
 To cover them with the same login, add a second application with domain
-`*.yi-at-first-sight.pages.dev` and the same policy, or turn off preview deployments in the
+`*.yi.pages.dev` and the same policy, or turn off preview deployments in the
 Pages project settings.
 
 ### 3. (Optional) a nicer address

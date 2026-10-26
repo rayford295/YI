@@ -1,7 +1,5 @@
 # Yi at First Sight · 仪见钟情
 
-**English** | [中文](README.zh-CN.md)
-
 A private, bilingual (中文 / English) website for Yifan and Jingyi, a long-distance couple
 between **Shenzhen, China** and **College Station, Texas**: thirteen hours and one Pacific
 Ocean apart. Built as a birthday gift for **October 31, 2026**, and meant to grow with us.
@@ -9,7 +7,7 @@ Ocean apart. Built as a birthday gift for **October 31, 2026**, and meant to gro
 The name puns on the Chinese idiom for "love at first sight" (一见钟情, *yi jian zhong qing*).
 Both names contain the syllable *Yi*: Yi-fan and Jing-yi; the title swaps in the 仪 from Jingyi's name.
 
-> Live at <https://rayford295.github.io/Yi-at-First-Sight/> (not indexed by search engines). Personal photos and messages live here; do not redistribute.
+> Live at <https://rayford295.github.io/YI/> (not indexed by search engines). Personal photos and messages live here; do not redistribute.
 > We plan to publish it once more features are in (see [docs/DEPLOY.md](docs/DEPLOY.md)).
 
 <p align="center">
@@ -49,7 +47,7 @@ backend, no accounts, nothing leaves the device.
 ## Repository Layout
 
 ```
-Yi-at-First-Sight/
+YI/
 ├── index.html                  # page shell, fonts
 ├── public/media/<feature>/     # photos and videos, one folder per feature
 ├── src/
