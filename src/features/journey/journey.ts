@@ -30,9 +30,8 @@ export function renderJourney(root: HTMLElement): () => void {
     const glyph = cleared ? '✓' : open ? String(i + 1) : '🔒';
     const label = escapeAttr(t(l.title));
     const inner = `<circle r="26"/><text class="glyph" dy="0.35em">${glyph}</text><text class="label" y="48">${label}</text>`;
-    return open
-      ? `<a class="node ${state}" href="${l.route}" transform="translate(${x} ${y})" aria-label="${label}">${inner}</a>`
-      : `<g class="node ${state}" transform="translate(${x} ${y})" aria-label="${label}">${inner}</g>`;
+    // A list to read, not a shortcut: every level is entered through its door in the town.
+    return `<g class="node ${state}" transform="translate(${x} ${y})" aria-label="${label}">${inner}</g>`;
   }).join('');
 
   root.innerHTML = `

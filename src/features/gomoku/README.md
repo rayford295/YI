@@ -1,7 +1,7 @@
 # Gomoku
 
 Gomoku on one device, a nod to our first game, played on a Zoom whiteboard
-(purple for Jingyi, green for Yifan). Route: `/gomoku` (the "Games" link in the top bar).
+(purple for Jingyi, green for Yifan). Route: `/gomoku`, entered through its house in the town like every level.
 
 ## Rules
 

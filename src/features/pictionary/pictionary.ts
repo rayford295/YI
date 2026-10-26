@@ -3,7 +3,6 @@ import { t } from '../../core/i18n';
 import { safeStorage } from '../../core/storage';
 import { nameOf } from '../../core/players';
 import { escapeAttr as escape } from '../../core/html';
-import { gameTabs } from '../games/tabs';
 import {
   newMatch, startRound, guess, markCorrect, skip, tick, timeLeft, nextRound, pickWord, otherPlayer,
   ROUND_MS, type Match, type Player,
@@ -31,7 +30,6 @@ export function renderPictionary(root: HTMLElement): () => void {
 
   root.innerHTML = `
     <section class="draw">
-      ${gameTabs('/draw')}
       <header class="draw-head sign">
         <h1>${t('pictionary.title')}</h1>
         <p>${t('pictionary.subtitle')}</p>

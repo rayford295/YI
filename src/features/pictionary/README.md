@@ -1,7 +1,7 @@
 # Pictionary
 
 Draw-and-guess on one device, after our first round of Pictionary on Zoom (Oct 23).
-Route: `/draw` (also reachable from the game tabs on the Gomoku page).
+Route: `/draw`, its own house in the town.
 
 ## How a round goes
 

@@ -2,6 +2,12 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.3.0 (2026-10-26)
+
+- Every level is entered on foot: the cleared card now says "step out and walk to the next
+  house", the top bar and the list view no longer link to levels, the game tabs are gone, and a
+  level address reached any other way goes back to the town (`src/core/door.ts`).
+
 ## 1.2.1 (2026-10-26)
 
 - Clean addresses: `jingyifan.love/cs` instead of `jingyifan.love/#/cs`. A `404.html` copy of

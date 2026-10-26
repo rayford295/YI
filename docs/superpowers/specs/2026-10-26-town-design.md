@@ -72,6 +72,11 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
     (`docs/superpowers/specs/2026-10-26-college-station-design.md`). The engine and the tile
     painters take any `TownMap`. (Added 2026-10-26.)
 
+15. Every level is entered on foot. The cleared card, the top bar, the list view and a typed
+    address never open a level: `src/core/door.ts` records the door the town opened for this
+    tab and the router sends anything else back to the town (owner, 2026-10-26: "每一关结束，必须
+    出房子，再走到下一个房子才行"). (Added 2026-10-26.)
+
 ## Testing
 
 `town.test.ts`: the grid parses to the declared size; every level in `LEVELS` has exactly one

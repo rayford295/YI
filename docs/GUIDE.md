@@ -73,6 +73,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [x] Home, Love Map, Moments, Gomoku, Pictionary (v1, 2026-10-24)
 - [x] Game of levels with real locks, Puzzle, That Night's Sky, the ring, the epilogue letter, the entry gate, PWA (2026-10-25 and 10-26)
 - [x] The town as the home page, with tap-to-walk and house name plates (2026-10-26)
+- [x] Levels open only through their doors; no shortcuts from the top bar, list or cleared card (v1.3.0, 2026-10-26)
 - [x] 110 unit tests; the build type-checks with `strict` TypeScript; CI runs both on every push
 - [x] Checked in a real browser at desktop, 390 px and 320 px widths
 - [ ] Yifan rewrites the last letter in his own words (`src/features/birthday-map/letter.ts`)

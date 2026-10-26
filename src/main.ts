@@ -4,11 +4,12 @@ import { t, getLang, setLang, onLangChange } from './core/i18n';
 import { renderStart } from './features/start/start';
 import { renderJourney } from './features/journey/journey';
 import { renderWorld } from './features/world/world';
-import { LEVELS, getPlayer, isUnlocked, levelByRoute, clearedByAll } from './core/quest';
+import { getPlayer, isUnlocked, levelByRoute, clearedByAll } from './core/quest';
 import { avatarHtml, toast } from './core/quest-ui';
 import { gatePassed } from './core/gate';
 import { renderGate } from './features/gate/gate';
 import { interceptLinks, onNavigate, resolve } from './core/router';
+import { closeDoors, enteredThrough } from './core/door';
 
 export type Page = (root: HTMLElement) => () => void;
 
@@ -31,7 +32,6 @@ const routes: Record<string, () => Promise<Page>> = {
   '/cs': () => import('./features/cstation/cstation').then((m) => m.renderCStation),
 };
 const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'cs' };
-const GAMES = ['/gomoku', '/draw'];
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 let renderSeq = 0;   // a navigation that starts while a page is still loading wins
@@ -63,24 +63,27 @@ async function render(): Promise<void> {
   else {
     const level = levelByRoute(path);
     if (level && !isUnlocked(level.id)) { path = '/'; toast(t('quest.locked')); }
+    // A level opens only from its door: no top-bar link, no typed address, no 'next' button.
+    else if (level && !enteredThrough(path)) { path = '/'; toast(t('quest.walk')); }
     // The epilogue is not a level: it opens once both players have reached the ring on this device.
     if (path === '/letter' && !isUnlocked('ring')) { path = '/'; toast(t('quest.locked')); }
   }
   // Settle the address: a redirect, an old #/ link or a trailing slash all become the clean path.
+  if (path === '/') closeDoors();
   const want = path === '/start' ? '/start' : path === asked().path ? path + asked().search : path;
   if (want !== location.pathname + location.search || location.hash) history.replaceState(null, '', want);
   const lang = getLang();
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = `${t('site.title')} · ${lang === 'zh' ? 'Yi at First Sight' : '仪见钟情'}`;
   const link = (href: string, label: string) => {
-    const active = path === href || (href === '/gomoku' && GAMES.includes(path));
+    const active = path === href;
     return `<a href="${href}" class="${active ? 'active' : ''}">${label}</a>`;
   };
   const player = getPlayer();
-  // Only unlocked levels appear in the top bar; games share one entry.
+  // The top bar never links to a level: every house is entered on foot. Only the town and, at the
+  // end, the epilogue.
   const navLinks = player
-    ? [link('/', t('nav.journey')), ...LEVELS.filter((l) => l.route !== '/draw' && isUnlocked(l.id, player)).map((l) => link(l.route, t(l.title))),
-       ...(clearedByAll('ring') ? [link('/letter', t('letter.title'))] : [])].join('')
+    ? [link('/', t('nav.journey')), ...(clearedByAll('ring') ? [link('/letter', t('letter.title'))] : [])].join('')
     : '';
   app.innerHTML = `
     <header class="topbar">

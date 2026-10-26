@@ -53,6 +53,11 @@ back.
 Going into a house, the picture closes to a circle on the player (an iris, 380 ms); coming back it
 opens again. Reduced motion skips both.
 
+A level opens only through its door: going in records the route for the tab (`src/core/door.ts`,
+`sessionStorage`), the router sends any other way in (top bar, typed address, the old "next"
+button) back to the town with a toast, and the record is cleared whenever the town renders. The
+"level cleared" card therefore says *step out and walk to the next house* and leads home.
+
 Where the player stood is kept in `localStorage` (`yi.world.<player>`); coming back from a level
 puts them in front of that house's door, facing it. "Start over" in the footer clears it with
 the progress.

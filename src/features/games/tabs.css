@@ -1,6 +1,0 @@
-.game-tabs { display: flex; justify-content: center; gap: 6px; margin: 0 auto 14px; }
-.game-tabs a {
-  text-decoration: none; font-size: 14px; color: var(--muted);
-  padding: 5px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-}
-.game-tabs a.active { color: #fff; background: var(--rose); border-color: var(--rose); }

@@ -3,7 +3,6 @@ import { t } from '../../core/i18n';
 import { safeStorage } from '../../core/storage';
 import { nameOf } from '../../core/players';
 import { SIZE, newGame, place, undo, turn, boardOf, status, type Game, type Stone } from './core';
-import { gameTabs } from '../games/tabs';
 import { loadRecord, saveRecord, recordResult, loadGame, saveGame, type GameRecord } from './record';
 import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared } from '../../core/quest-ui';
@@ -45,7 +44,6 @@ export function renderGomoku(root: HTMLElement): () => void {
 
   root.innerHTML = `
     <section class="gomoku">
-      ${gameTabs('/gomoku')}
       <header class="gomoku-head sign">
         <h1>${t('gomoku.title')}</h1>
         <p>${t('gomoku.subtitle')}</p>

@@ -6,6 +6,7 @@ import { avatarHtml, playerName } from '../../core/quest-ui';
 import { prefersReducedMotion } from '../../core/motion';
 import { escapeAttr } from '../../core/html';
 import { go as navigate } from '../../core/router';
+import { openDoor } from '../../core/door';
 import { BUILDINGS, CAT_HOMES, PARTNER, SIGNPOST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
 import { bindControls, padHtml } from './controls';
@@ -175,7 +176,7 @@ export function renderWorld(root: HTMLElement): () => void {
   const go = (path: string) => {
     if (leaving) return;
     leaving = true; doorSound(); closeDialog();
-    const after = () => { navigate(path); };
+    const after = () => { openDoor(path); navigate(path); };
     if (prefersReducedMotion()) after(); else void engine.iris('close', 380).then(after);
   };
   function onDoor(b: Building): void {
