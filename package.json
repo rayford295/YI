@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "ring:pack": "npx -y @gltf-transform/cli@4 optimize public/media/ring/meridian_hers.glb public/media/ring/meridian_hers.glb --compress meshopt --texture-compress false && npx -y @gltf-transform/cli@4 optimize public/media/ring/meridian_his.glb public/media/ring/meridian_his.glb --compress meshopt --texture-compress false"
   },
   "repository": {
     "type": "git",

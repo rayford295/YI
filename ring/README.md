@@ -25,7 +25,7 @@ coordinates where we meet on the right.
 | `meridian.py` | Both models, materials, lights, cameras, render and GLB export. Per-ring parameters are in the `RINGS` dict at the top. |
 | `meridian_hers.blend`, `meridian_his.blend` | Saved scenes, regenerated on every run; open in Blender to orbit around. |
 | `renders/` | `hers_*` and `his_*`: hero, top, profile, inside, detail. |
-| `../public/media/ring/*.glb` | Web copies used by the `#/ring` page. |
+| `../public/media/ring/*.glb` | Web copies used by the `#/ring` page. After every `--export`, run `npm run ring:pack` (meshopt compression, about 8× smaller; the page loads them with three.js's MeshoptDecoder). |
 
 ## Run
 

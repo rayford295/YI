@@ -8,8 +8,9 @@ import { escapeAttr } from '../../core/html';
 import { isCleared } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 
+import { shuffle } from '../../core/random';
+
 const PUZZLE_SIZE = 5;
-const shuffle = <T,>(a: T[]): T[] => a.map((v) => [Math.random(), v] as const).sort((x, y) => x[0] - y[0]).map(([, v]) => v);
 
 function mediaHtml(m: Memory): string {
   return m.media

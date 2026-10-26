@@ -2,7 +2,8 @@
 import { nextFirst, newGame, place, type Game, type Status, type Stone } from './core';
 
 export interface GameRecord { purple: number; green: number; draws: number; nextFirst: Stone }
-export type StoreLike = Pick<Storage, 'getItem' | 'setItem'>;
+import type { StoreLike } from '../../core/storage';
+export type { StoreLike };
 
 const KEY = 'yi.gomoku';
 // Jingyi opens the very first game.

@@ -1,6 +1,8 @@
 import './pictionary.css';
-import { t, pick } from '../../core/i18n';
-import { config } from '../../core/config';
+import { t } from '../../core/i18n';
+import { safeStorage } from '../../core/storage';
+import { nameOf } from '../../core/players';
+import { escapeAttr as escape } from '../../core/html';
 import { gameTabs } from '../games/tabs';
 import {
   newMatch, startRound, guess, markCorrect, skip, tick, timeLeft, nextRound, pickWord, otherPlayer,
@@ -22,18 +24,9 @@ let tool = { color: '#3b2430', size: 0.012, erase: false };
 const COLORS = ['#3b2430', '#d4506d', '#8a56d1', '#3f9a62', '#c39a5c', '#4a8fd1'];
 const SIZES = [0.006, 0.012, 0.024];
 
-const store = (): Pick<Storage, 'getItem' | 'setItem'> => {
-  try {
-    return window.localStorage;
-  } catch {
-    return { getItem: () => null, setItem: () => undefined };
-  }
-};
-const nameOf = (p: Player) => pick(p === 'purple' ? config.her.name : config.him.name);
-const escape = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 export function renderPictionary(root: HTMLElement): () => void {
-  const s = store();
+  const s = safeStorage();
   match ??= newMatch('purple', loadTally(s)); // Jingyi draws first
 
   root.innerHTML = `

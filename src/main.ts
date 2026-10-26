@@ -1,11 +1,5 @@
 import './styles/base.css';
 import { t, getLang, setLang, onLangChange } from './core/i18n';
-import { renderHome } from './features/home/home';
-import { renderMap } from './features/birthday-map/map';
-import { renderGomoku } from './features/gomoku/gomoku';
-import { renderPictionary } from './features/pictionary/pictionary';
-import { renderMoments } from './features/moments/moments';
-import { renderRing } from './features/ring/ring';
 import { renderStart } from './features/start/start';
 import { renderJourney } from './features/journey/journey';
 import { LEVELS, getPlayer, isUnlocked, levelByRoute } from './core/quest';
@@ -13,16 +7,30 @@ import { avatarHtml, toast } from './core/quest-ui';
 
 export type Page = (root: HTMLElement) => () => void;
 
-const routes: Record<string, Page> = { '/': renderJourney, '/start': renderStart, '/met': renderHome, '/map': renderMap, '/moments': renderMoments, '/gomoku': renderGomoku, '/draw': renderPictionary, '/ring': renderRing };
+// Start and the journey map ship in the main bundle; every level loads on first visit, so the
+// first paint does not carry Leaflet, three.js or MediaPipe.
+const routes: Record<string, () => Promise<Page>> = {
+  '/': async () => renderJourney,
+  '/start': async () => renderStart,
+  '/met': () => import('./features/home/home').then((m) => m.renderHome),
+  '/map': () => import('./features/birthday-map/map').then((m) => m.renderMap),
+  '/moments': () => import('./features/moments/moments').then((m) => m.renderMoments),
+  '/gomoku': () => import('./features/gomoku/gomoku').then((m) => m.renderGomoku),
+  '/draw': () => import('./features/pictionary/pictionary').then((m) => m.renderPictionary),
+  '/ring': () => import('./features/ring/ring').then((m) => m.renderRing),
+};
 const viewClass: Record<string, string> = { '/': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/gomoku': 'gomoku', '/draw': 'draw', '/ring': 'ring' };
 const GAMES = ['/gomoku', '/draw'];
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
+let renderSeq = 0;   // a navigation that starts while a page is still loading wins
 
 const currentPath = () => (location.hash.slice(1) in routes ? location.hash.slice(1) : '/');
 
-function render(): void {
+async function render(): Promise<void> {
+  const seq = ++renderSeq;
   cleanup?.();
+  cleanup = undefined;
   let path = currentPath();
   // The journey's rules: pick a player first; a locked level sends you back to the map.
   if (!getPlayer()) path = '/start';
@@ -55,9 +63,11 @@ function render(): void {
     <div class="floating-hearts" aria-hidden="true">${'<i>❤</i>'.repeat(12)}</div>`;
   app.querySelector('#lang-btn')!.addEventListener('click', () => setLang(getLang() === 'zh' ? 'en' : 'zh'));
   window.scrollTo(0, 0);
-  cleanup = routes[path](app.querySelector<HTMLElement>('#view')!);
+  const page = await routes[path]();
+  if (seq !== renderSeq) return;
+  cleanup = page(app.querySelector<HTMLElement>('#view')!);
 }
 
-onLangChange(render);
-window.addEventListener('hashchange', render);
-render();
+onLangChange(() => { void render(); });
+window.addEventListener('hashchange', () => { void render(); });
+void render();

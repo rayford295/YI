@@ -6,7 +6,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { t } from '../../core/i18n';
 import { reducedMotion } from '../../core/html';
-import { startTryOn, type TryOnHandles } from './tryon';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import type { TryOnHandles } from './tryon';
 import { captureTryOn, composeTogether, download, loadImage } from './photo';
 import { config } from '../../core/config';
 import { getLang } from '../../core/i18n';
@@ -133,6 +134,7 @@ export function renderRing(root: HTMLElement): () => void {
   let which: Which = getPlayer() === 'yifan' ? 'his' : 'hers';   // your own ring first
   const whichBtn = (w: Which) => root.querySelector<HTMLButtonElement>(`.ring-which button[data-which="${w}"]`)!;
   const loader = new GLTFLoader();
+  loader.setMeshoptDecoder(MeshoptDecoder);   // the GLBs are meshopt-compressed (see ring/README.md)
   const pose = (v: View) => ({ pos: VIEWS[v].pos.clone().multiplyScalar(scale), target: VIEWS[v].target.clone().multiplyScalar(scale) });
 
   const load = (which: Which) => {
@@ -208,6 +210,7 @@ export function renderRing(root: HTMLElement): () => void {
     tryBusy = true;
     say(t('ring.tryon.starting'));
     try {
+      const { startTryOn } = await import('./tryon');   // MediaPipe only loads when someone tries the ring on
       const h = await startTryOn(stage, scene.environment as THREE.Texture);
       if (disposed) { h.stop(); return; }
       tryon = h;

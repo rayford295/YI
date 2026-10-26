@@ -6,8 +6,7 @@ import { dayNumberSince, clockIn, hoursApart, countdownTo } from '../../core/dat
 import { QUESTIONS } from '../../core/quiz';
 import { isCleared } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
-
-const shuffle = <T,>(a: T[]): T[] => a.map((v) => [Math.random(), v] as const).sort((x, y) => x[0] - y[0]).map(([, v]) => v);
+import { shuffle } from '../../core/random';
 
 function clockCard(id: string, label: string): string {
   return `<div class="clock card" id="clock-${id}">

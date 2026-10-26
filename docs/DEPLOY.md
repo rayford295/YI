@@ -4,7 +4,9 @@
 
 The repository is public and the site is live at
 <https://rayford295.github.io/Yi-at-First-Sight/>. Every push to `main` redeploys it through
-the `deploy` job in `.github/workflows/ci.yml`. We keep it online so it can be opened at any
+the `deploy` job in `.github/workflows/ci.yml`, which only runs while the repository variable
+`PUBLISH` is `true` (Settings → Secrets and variables → Actions → Variables); with the repository
+private the variable is unset, the job is skipped and CI stays green. We keep it online so it can be opened at any
 time (decided 2026-10-25); `index.html` carries `noindex, nofollow`.
 
 ## How It Was Published: GitHub Pages (Public, Free)

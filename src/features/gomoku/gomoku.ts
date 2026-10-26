@@ -1,6 +1,7 @@
 import './gomoku.css';
-import { t, pick } from '../../core/i18n';
-import { config } from '../../core/config';
+import { t } from '../../core/i18n';
+import { safeStorage } from '../../core/storage';
+import { nameOf } from '../../core/players';
 import { SIZE, newGame, place, undo, turn, boardOf, status, type Game, type Stone } from './core';
 import { gameTabs } from '../games/tabs';
 import { loadRecord, saveRecord, recordResult, loadGame, saveGame, type GameRecord } from './record';
@@ -16,15 +17,6 @@ export const HEART: [number, number][] = [
 let game: Game | undefined;
 let record: GameRecord | undefined;
 
-const store = (): Storage | { getItem: () => null; setItem: () => void } => {
-  try {
-    return window.localStorage;
-  } catch {
-    return { getItem: () => null, setItem: () => undefined };
-  }
-};
-
-const nameOf = (s: Stone) => pick(s === 'purple' ? config.her.name : config.him.name);
 const STARS = [[3, 3], [3, 11], [7, 7], [11, 3], [11, 11]];
 
 function gridSvg(): string {
@@ -38,7 +30,7 @@ function gridSvg(): string {
 }
 
 export function renderGomoku(root: HTMLElement): () => void {
-  const s = store();
+  const s = safeStorage();
   record ??= loadRecord(s);
   game ??= loadGame(s, record.nextFirst);
 
