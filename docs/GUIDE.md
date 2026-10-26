@@ -48,7 +48,7 @@ sprites (`scripts/icon.ts`, `scripts/icon-png.py`), like `npm run banner` does f
 
 **Add a memory.** Drop the photo into `public/media/moments/` (JPEG, at most 1600 px on the
 long side) and append an entry to `src/features/moments/memories.ts`. It appears on the map,
-the timeline and the puzzle. The tests fail if the file is missing or either language is empty.
+the timeline (the puzzle uses `src/features/puzzle/portraits.ts` instead). The tests fail if the file is missing or either language is empty.
 
 **Edit the letter.** Change the paragraphs in `src/features/birthday-map/letter.ts`, keeping
 Chinese and English in step. `{h}` is replaced with the live hour difference.
@@ -79,10 +79,10 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [x] Game of levels with real locks, Puzzle, That Night's Sky, the ring, the epilogue letter, the entry gate, PWA (2026-10-25 and 10-26)
 - [x] The town as the home page, with tap-to-walk and house name plates (2026-10-26)
 - [x] Jukebox in the corner of every page and a mailbox of voice notes in the town (v1.5.0, 2026-10-26)
-- [x] A day of Jingyi's in Shenzhen (`/sz`): Tencent, the metro, the bay, the cats at the door; west signpost (v1.4.0, 2026-10-26)
+- [x] A day of Jingyi's in Shenzhen (`/sz`): her Tesla, Tencent, the bay, the cats at the door; west signpost (v1.4.0, 2026-10-26)
 - [x] Puzzle uses portraits of the other one (`src/features/puzzle/portraits.ts`, v1.3.1, 2026-10-26)
 - [x] Levels open only through their doors; no shortcuts from the top bar, list or cleared card (v1.3.0, 2026-10-26)
-- [x] 110 unit tests; the build type-checks with `strict` TypeScript; CI runs both on every push
+- [x] 128 unit tests; the build type-checks with `strict` TypeScript; CI runs both on every push
 - [x] Checked in a real browser at desktop, 390 px and 320 px widths
 - [ ] Yifan rewrites the last letter in his own words (`src/features/birthday-map/letter.ts`)
 - [ ] Record voice lines for the cleared cards (`public/media/voice/README.md`)

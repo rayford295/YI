@@ -47,6 +47,7 @@ export function levelCleared(id: string): void {
   audio.addEventListener('canplay', () => { voice.hidden = false; }, { once: true });
   voice.addEventListener('click', () => { audio.currentTime = 0; void audio.play(); });
   document.body.appendChild(el);
+  el.querySelector<HTMLElement>('.cleared-next')!.focus();
   requestAnimationFrame(() => el.classList.add('in'));
   confetti(el);
   chime();

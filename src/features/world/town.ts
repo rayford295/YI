@@ -77,7 +77,6 @@ export const tileAt = (x: number, y: number, map: TownMap = YI_TOWN): Tile =>
 
 export const buildingAt = (x: number, y: number, map: TownMap = YI_TOWN): Building | undefined =>
   map.buildings.find((b) => b.door.x === x && b.door.y === y);
-export const buildingFor = (level: string): Building | undefined => BUILDINGS.find((b) => b.level === level);
 /** The tile in front of a door, where the guard of a locked building stands. */
 export const guardSpot = (b: Building): Point => ({ x: b.door.x, y: b.door.y + 1 });
 

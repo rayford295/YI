@@ -54,7 +54,6 @@ a { color: inherit; }
 .topbar nav::-webkit-scrollbar { display: none; }
 .topbar nav a { text-decoration: none; color: var(--muted); padding: 4px 0; border-bottom: 2px solid transparent; }
 .topbar nav a.active { color: var(--rose-deep); border-color: var(--rose); }
-.nav-soon { color: var(--muted); opacity: 0.45; cursor: default; padding: 4px 0; }
 .lang-btn {
   font: inherit; font-size: 14px; cursor: pointer;
   border: 1px solid var(--rose); color: var(--rose-deep); background: transparent;

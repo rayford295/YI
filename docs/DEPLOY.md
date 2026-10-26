@@ -27,8 +27,8 @@ off the domain root (say back to `/YI/`), set Vite's `base` to that folder and t
 
 Bought at Cloudflare Registrar (at cost, WHOIS privacy and auto-renew included), so the DNS
 lives in the Cloudflare dashboard: **jingyifan.love → DNS → Records**. The site is built with
-`base: './'`, so it runs at the root of a domain and under `/YI/` alike; nothing in the code
-changes with the address.
+`base: '/'` (clean paths, see Status); moving it under a folder such as `/YI/` means setting
+`base` and the manifest's `start_url` / `scope` in `vite.config.ts`.
 
 ### DNS records (Cloudflare dashboard → DNS → Records)
 
@@ -114,7 +114,7 @@ Nobody else can.
 The site is static (`dist/` after `npm run build`), so any static host works. The plan below
 uses **Cloudflare Pages** for hosting and **Cloudflare Access** for the login gate; both are
 free at this scale, and Pages can build straight from the GitHub repository (private or
-public). GitHub Pages cannot add a login, and on a free account it only serves public repositories.
+public). GitHub Pages cannot add a login. (The private-repository limit turned out not to apply to this account; see Status.)
 
 ## One-Time Setup (About 15 Minutes)
 

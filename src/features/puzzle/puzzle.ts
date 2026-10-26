@@ -47,7 +47,7 @@ export function renderPuzzle(root: HTMLElement): () => void {
     board.innerHTML = order.map((v, i) => {
       const r = Math.floor(v / N), c = v % N;
       return `<button type="button" class="pz-tile${i === picked ? ' picked' : ''}" data-i="${i}" aria-label="${escapeAttr(String(v + 1))}"
-        style="background-image:url('${photo.src}');background-position:${(c * 100) / (N - 1)}% ${(r * 100) / (N - 1)}%"></button>`;
+        style="background-image:url('${import.meta.env.BASE_URL}${photo.src}');background-position:${(c * 100) / (N - 1)}% ${(r * 100) / (N - 1)}%"></button>`;
     }).join('');
     caption.textContent = finished ? pick(photo.alt) : '';
   };
@@ -58,7 +58,7 @@ export function renderPuzzle(root: HTMLElement): () => void {
     const img = new Image();
     img.onload = () => { board.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`; paint(); };
     img.onerror = () => { board.style.aspectRatio = '1 / 1'; paint(); };
-    img.src = photo.src;
+    img.src = `${import.meta.env.BASE_URL}${photo.src}`;
     paint();
   };
   board.addEventListener('click', (e) => {

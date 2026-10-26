@@ -7,6 +7,11 @@ import { escapeAttr } from '../../core/html';
 import { go as navigate } from '../../core/router';
 
 export function renderJourney(root: HTMLElement): () => void {
+  mountJourney(root);
+  return onQuestChange(() => { if (getPlayer()) mountJourney(root); });
+}
+
+function mountJourney(root: HTMLElement): void {
   const p = getPlayer()!;
   const cur = current(p);
   const done = LEVELS.filter((l) => isCleared(l.id, p)).length;
@@ -61,6 +66,4 @@ export function renderJourney(root: HTMLElement): () => void {
 
   root.querySelector('#journey-switch')!.addEventListener('click', () => { setPlayer(null); navigate('/start'); });
   root.querySelector('#journey-reset')!.addEventListener('click', () => { if (window.confirm(t('journey.reset.confirm'))) reset(p); });
-  const off = onQuestChange(() => { if (getPlayer()) renderJourney(root); });
-  return off;
 }

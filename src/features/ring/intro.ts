@@ -38,6 +38,10 @@ const wait = (ms: number, signal: AbortSignal) => new Promise<void>((res) => {
  * The stage itself is lifted above the black veil for the ring step, so the real, already
  * loading model is what surfaces; nothing is faked.
  */
+let current: AbortController | null = null;
+/** Cut a running reveal short (leaving the page); the veil is removed at once. */
+export const stopIntro = (): void => { current?.abort(); };
+
 export async function playIntro(stage: HTMLElement): Promise<void> {
   if (prefersReducedMotion()) return;
   const veil = document.createElement('div');
@@ -47,6 +51,7 @@ export async function playIntro(stage: HTMLElement): Promise<void> {
   document.body.appendChild(veil);
   document.body.classList.add('ring-intro-on');
   const ctl = new AbortController();
+  current?.abort(); current = ctl;
   veil.querySelector('.intro-skip')!.addEventListener('click', () => ctl.abort());
   const step = async (cls: string, ms: number) => { if (ctl.signal.aborted) return; veil.classList.add(cls); await wait(ms, ctl.signal); };
 
@@ -63,4 +68,5 @@ export async function playIntro(stage: HTMLElement): Promise<void> {
   stage.classList.remove('intro-lift');
   document.body.classList.remove('ring-intro-on');
   veil.remove();
+  if (current === ctl) current = null;
 }

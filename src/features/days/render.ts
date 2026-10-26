@@ -89,6 +89,7 @@ export function renderDay(day: Day, root: HTMLElement): () => void {
     engine.paused = true; engine.releaseAll();
     nameEl.textContent = name;
     faceEl.hidden = !photo; if (photo) faceEl.src = photo;
+    root.querySelector('#world-panel')!.classList.toggle('has-face', !!photo);
     actionsEl.innerHTML = '';
     primary = actions[0];
     actions.forEach((a, i) => {

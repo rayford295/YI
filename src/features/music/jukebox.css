@@ -1,6 +1,6 @@
 /* The jukebox: a navy strip with a gold ring in the bottom-right corner, like the talk box. */
 .jukebox {
-  position: fixed; right: 12px; bottom: 12px; z-index: 30; display: flex; align-items: center; gap: 6px;
+  position: fixed; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 30; display: flex; align-items: center; gap: 6px;
   padding: 4px 6px; border-radius: 999px; background: rgba(11, 32, 54, 0.92); color: #f1e4c8;
   border: 2px solid #d3a557; box-shadow: 0 4px 0 rgba(11, 32, 54, 0.25); font-size: 13px; max-width: min(70vw, 320px);
 }

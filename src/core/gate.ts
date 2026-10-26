@@ -31,7 +31,6 @@ export async function hash(text: string): Promise<string> {
 }
 
 export const gatePassed = (): boolean => store.getItem(KEY) === '1';
-export const gateReset = (): void => store.setItem(KEY, '0');
 
 /** True (and remembered) when `answer` is one of ours. */
 export async function tryGate(answer: string, answers: readonly string[] = ANSWERS): Promise<boolean> {

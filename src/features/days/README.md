@@ -16,7 +16,7 @@ what they are doing; bumping a cat shows its photo and a line.
 |---|---|
 | `day.ts` | `Day`, `Stop` (a building with `hours`), `stopAt(day, hour)` |
 | `cs.ts` | Yifan: `CS_GRID` (32×22, `=` road, `C` court), seven stops: home at 2250 Dartmouth St, the Southside gym, Dr. Zou's office, the golf course, the Rec gym (with the court), the pool, grocery; he drives |
-| `sz.ts` | Jingyi: `SZ_GRID` (Tencent's wide tower, lunch, Shenzhen Bay up top; home, the metro and the bay's water below), five stops (home, her Tesla, Tencent, lunch, Shenzhen Bay), Coffee and Duoduo by the door |
+| `sz.ts` | Jingyi: `SZ_GRID` (Tencent's wide tower, lunch, Shenzhen Bay up top; home, her Tesla's garage and the bay's water below), five stops (home, her Tesla, Tencent, lunch, Shenzhen Bay), Coffee and Duoduo by the door |
 | `render.ts`, `days.css` | The page; reuses `world.css`, the engine, the shared controls |
 | `days.test.ts` | For both days: rectangle, every door reachable from the spawn, cats on free ground, numbers in day order, the schedule covers the day |
 

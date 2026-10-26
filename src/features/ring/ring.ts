@@ -5,14 +5,14 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { t } from '../../core/i18n';
-import { reducedMotion } from '../../core/html';
+import { prefersReducedMotion } from '../../core/motion';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import type { TryOnHandles } from './tryon';
 import { captureTryOn, composeTogether, download, loadImage } from './photo';
 import { config } from '../../core/config';
 import { getLang } from '../../core/i18n';
 import { getPlayer, isCleared } from '../../core/quest';
-import { playIntro } from './intro';
+import { playIntro, stopIntro } from './intro';
 import { levelCleared } from '../../core/quest-ui';
 
 const MODELS = { hers: 'meridian_hers.glb', his: 'meridian_his.glb', hers_v1: 'meridian_hers_v1.glb' } as const;
@@ -135,7 +135,7 @@ export function renderRing(root: HTMLElement): () => void {
   controls.minDistance = 14;
   controls.maxDistance = 90;
   controls.enablePan = false;
-  controls.autoRotate = !reducedMotion();
+  controls.autoRotate = !prefersReducedMotion();
   controls.autoRotateSpeed = 1.2;
 
   const key = new THREE.DirectionalLight(0xffffff, 2.2);
@@ -340,7 +340,8 @@ export function renderRing(root: HTMLElement): () => void {
   return () => {
     disposed = true;
     cancelAnimationFrame(raf);
-    tryon?.stop();
+    stopIntro();
+    tryon?.stop(); tryon = null;
     ro.disconnect();
     controls.dispose();
     pmrem.dispose();

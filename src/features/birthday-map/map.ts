@@ -7,7 +7,8 @@ import { config } from '../../core/config';
 import { letter, letterParagraphs } from './letter';
 import { greatCircle, pacificLng, pointAlong, type LatLng } from '../../core/geo';
 import { formatDate, hoursApart } from '../../core/dates';
-import { escapeAttr, reducedMotion } from '../../core/html';
+import { escapeAttr } from '../../core/html';
+import { prefersReducedMotion } from '../../core/motion';
 import { attachMediaFallback } from './media';
 import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared } from '../../core/quest-ui';
@@ -66,7 +67,7 @@ export function renderMap(root: HTMLElement): () => void {
     .addTo(map)
     .bindTooltip(t('map.flight', { flight: nm.flight, date: formatDate(nm.date, getLang()) }), { sticky: true });
 
-  const still = reducedMotion();
+  const still = prefersReducedMotion();
   const t0 = performance.now();
   let raf = 0;
   const fly = (now: number) => {

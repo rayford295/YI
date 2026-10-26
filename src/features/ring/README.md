@@ -1,6 +1,6 @@
 # The Ring
 
-Route: `/ring` (top-bar entry: 戒指 / The Ring)
+Route: `/ring`, the eighth house in the town; like every level it opens only from its door.
 
 An interactive 3D view of the pair of Meridian rings designed in `ring/meridian.py`. **Hers / His**
 switches the model; drag to turn it, scroll to zoom, and press **Look inside** to fly the camera
@@ -17,7 +17,6 @@ to the hidden sapphire and the engraving (the other's name and birthday on one s
   browser the stone points at +Y and the band's axis is Z.
 - Reflections come from three.js's `RoomEnvironment`; there is no HDRI file to load.
 - Auto-rotation stops on the first drag and is off under `prefers-reduced-motion`.
-- To put the page in the navigation, add `nav.ring` to `i18n.ts` and a `link('/ring', …)` in `main.ts`.
 
 ## Try it on
 

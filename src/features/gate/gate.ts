@@ -18,6 +18,7 @@ export function renderGate(root: HTMLElement, onPass: () => void): () => void {
       </form>
     </section>`;
   const form = root.querySelector<HTMLFormElement>('#gate-form')!;
+  root.querySelector<HTMLInputElement>('#gate-answer')!.focus();   // Safari ignores autofocus in injected markup
   const input = root.querySelector<HTMLInputElement>('#gate-answer')!;
   const wrong = root.querySelector<HTMLElement>('#gate-wrong')!;
   form.addEventListener('submit', async (e) => {

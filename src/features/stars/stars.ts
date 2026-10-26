@@ -113,4 +113,3 @@ export function renderStars(root: HTMLElement): () => void {
   return () => undefined;
 }
 
-export const STAR_COUNT = STARS.length;

@@ -1,7 +1,7 @@
 // Carry progress between our two phones: show this device's code and link, take the other's.
 import './sync.css';
 import { t } from '../../core/i18n';
-import { LEVELS, PLAYERS, getPlayer, getProgress, type PlayerId } from '../../core/quest';
+import { LEVELS, getPlayer, getProgress, type PlayerId } from '../../core/quest';
 import { playerName } from '../../core/quest-ui';
 import { encodeProgress, importProgress, syncLink } from '../../core/sync';
 import { escapeAttr } from '../../core/html';
@@ -61,7 +61,6 @@ export function renderSync(root: HTMLElement): () => void {
   const merge = () => {
     const carried = importProgress(input.value);
     if (!carried) { say(result, t('sync.bad'), true); return; }
-    if (!PLAYERS.includes(carried.player)) { say(result, t('sync.bad'), true); return; }
     say(result, t('sync.merged', { name: playerName(carried.player), done: done(carried.player), total: LEVELS.length }));
     input.value = '';
     history.replaceState(null, '', '/sync');

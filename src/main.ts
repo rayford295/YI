@@ -4,7 +4,7 @@ import { t, getLang, setLang, onLangChange } from './core/i18n';
 import { renderStart } from './features/start/start';
 import { renderJourney } from './features/journey/journey';
 import { renderWorld } from './features/world/world';
-import { getPlayer, isUnlocked, levelByRoute, clearedByAll } from './core/quest';
+import { getPlayer, isCleared, isUnlocked, levelByRoute, clearedByAll } from './core/quest';
 import { avatarHtml, toast } from './core/quest-ui';
 import { gatePassed } from './core/gate';
 import { renderGate } from './features/gate/gate';
@@ -49,6 +49,7 @@ async function render(): Promise<void> {
   const seq = ++renderSeq;
   cleanup?.();
   cleanup = undefined;
+  document.querySelector('.level-cleared')?.remove();   // a cleared card never outlives its page
   let path = currentPath();
   // The front door comes before everything: one question, answered once per device.
   if (!gatePassed()) {
@@ -68,12 +69,14 @@ async function render(): Promise<void> {
     // A level opens only from its door: no top-bar link, no typed address, no 'next' button.
     else if (level && !enteredThrough(path)) { path = '/'; toast(t('quest.walk')); }
     // The epilogue is not a level: it opens once both players have reached the ring on this device.
-    if (path === '/letter' && !isUnlocked('ring')) { path = '/'; toast(t('quest.locked')); }
+    if (path === '/letter' && !isCleared('ring')) { path = '/'; toast(t('quest.locked')); }
   }
   // Settle the address: a redirect, an old #/ link or a trailing slash all become the clean path.
   if (path === '/') closeDoors();
-  const want = path === '/start' ? '/start' : path === asked().path ? path + asked().search : path;
-  if (want !== location.pathname + location.search || location.hash) history.replaceState(null, '', want);
+  // While the picker stands in for another address (a /sync?c=… link on a fresh phone), that
+  // address is kept so the picker can hand it back.
+  const want = path === asked().path ? path + asked().search : path;
+  if (path !== '/start' && (want !== location.pathname + location.search || location.hash)) history.replaceState(null, '', want);
   const lang = getLang();
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = `${t('site.title')} · ${lang === 'zh' ? 'Yi at First Sight' : '仪见钟情'}`;

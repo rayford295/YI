@@ -35,6 +35,7 @@ export default defineConfig({
         globIgnores: ['**/media/**', '**/mediapipe/**'],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
         navigateFallback: 'index.html',
+        navigateFallbackDenylist: [/^\/media\//, /^\/mediapipe\//],
         runtimeCaching: [
           { urlPattern: ({ url }) => url.pathname.includes('/media/') || url.pathname.includes('/mediapipe/'),
             handler: 'CacheFirst', options: { cacheName: 'yi-media', expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 365 } } },

@@ -27,7 +27,7 @@ html[lang='en'] .cleared-card h2 { font-family: var(--serif-en); font-style: ita
 .cleared-stay { background: none; border: 0; color: rgba(241, 228, 200, 0.6); font: inherit; font-size: 14px; cursor: pointer; text-decoration: underline; }
 
 .quest-toast {
-  position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); z-index: 2001; padding: 10px 18px; border-radius: 999px;
+  position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); z-index: 2001; padding: 10px 18px; border-radius: 999px;
   background: #102e49; color: #f1e4c8; border: 1px solid rgba(211, 165, 87, 0.5); font-size: 14px; opacity: 0; pointer-events: none;
   transition: opacity 220ms ease, transform 220ms ease; max-width: calc(100vw - 32px);
 }

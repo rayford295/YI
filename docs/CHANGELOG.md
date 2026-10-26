@@ -2,6 +2,25 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.5.1 (2026-10-26)
+
+Repository check-up (a fresh-eyes review plus a page sweep at 320, 390 and 1280 px):
+
+- Fixed: a `/sync?c=…` link opened on a phone with no player picked lost its code at the picker.
+- Fixed: "Start over" in the town left a second engine, its key handlers and timers running
+  behind every later page; the list view stacked listeners the same way.
+- Fixed: a "level cleared" card could outlive its page (browser back); it now goes with the page,
+  and it takes keyboard focus when it opens.
+- Fixed: the epilogue opened once the ring was merely unlocked; it now needs the ring cleared, as
+  the docs and the partner say.
+- Fixed: the ring reveal kept running on the body after leaving the page; the try-on countdown
+  could render on a disposed renderer; a cat photo in the day pages sat above the words.
+- The jukebox and the toast respect the phone's home-indicator inset; the gate's answer box gets
+  focus on Safari; the sync page no longer overflows a 320 px screen.
+- Service worker: direct links to `/media/…` are no longer answered with the app shell.
+- Removed dead strings, CSS and exports; two stray `.blend1` files dropped from the repository;
+  CI runs on pushes to `main` only; docs brought in line (tests count, portraits, both days).
+
 ## 1.5.0 (2026-10-26)
 
 - Fixed: the ring's reveal showed the 3D card instead of the rose (the card's own entrance

@@ -3,11 +3,6 @@ export type L10n = { zh: string; en: string };
 
 const zh = {
   'site.title': '仪见钟情',
-  'nav.home': '首页',
-  'nav.map': '爱情地图',
-  'nav.moments': '时刻',
-  'nav.games': '小游戏',
-  'nav.ring': '戒指',
   'nav.journey': '旅程',
   'start.eyebrow': '仪见钟情 · 一场闯关',
   'start.title': '你是谁？',
@@ -49,14 +44,12 @@ const zh = {
   'quest.task.moments.wrong': '顺序还不对，再试试。',
   'quest.task.gomoku': '第 {n} 关 · 把棋盘上那颗心填满（{done} / {total}）',
   'quest.task.draw': '第 {n} 关 · 猜对 {total} 个词（已猜对 {done}）',
-  'nav.soon': '即将上线',
   'ring.eyebrow': '一个还没说出口的问题',
   'ring.title': '子午线',
   'ring.subtitle': '一对戒指，同一条金色经线，同一种平宽拉丝的环身。她的那枚：主钻沉进环里，与表面齐平，金边圈着它；经线上两侧各嵌两颗小钻。戒圈内侧各藏一颗蓝宝石：左边是对方的名字和生日，右边是我们认识的日子和相见的坐标。',
   'ring.history.title': '设计历程',
   'ring.history.text': '她的这枚改过一次。两版都留着，点开可以在 3D 里转着看。',
   'ring.history.view': '在 3D 里看',
-  'ring.history.viewing': '正在看这一版',
   'ring.v1.name': '第一版 · 光环单钻',
   'ring.v1.date': '2026 年 10 月 25 日',
   'ring.v1.note': '细圆环，7 毫米主钻架在四爪罗盘上，外面一圈十八颗碎钻，肩部各五颗顺着经线。太高、太张扬，日常戴会勾到东西。',
@@ -294,18 +287,12 @@ const zh = {
   'world.partner.line': '我在这儿等你。我已经过了 {done} 关，你呢？',
   'world.partner.epilogue': '我们都走到最后了。去读那封信吧。',
   'world.partner.epilogue.go': '去读信',
-  'world.door.go': '进「{title}」',
 } as const;
 
 export type Key = keyof typeof zh;
 
 const en: Record<Key, string> = {
   'site.title': 'Yi at First Sight',
-  'nav.home': 'Home',
-  'nav.map': 'Love Map',
-  'nav.moments': 'Moments',
-  'nav.games': 'Games',
-  'nav.ring': 'The Ring',
   'nav.journey': 'Journey',
   'start.eyebrow': 'Yi at First Sight · a game of levels',
   'start.title': 'Who are you?',
@@ -347,14 +334,12 @@ const en: Record<Key, string> = {
   'quest.task.moments.wrong': 'Not in order yet. Try again.',
   'quest.task.gomoku': 'Level {n} · fill the heart on the board ({done} / {total})',
   'quest.task.draw': 'Level {n} · guess {total} words right ({done} so far)',
-  'nav.soon': 'Coming soon',
   'ring.eyebrow': 'A question not yet asked',
   'ring.title': 'Meridian',
   'ring.subtitle': 'A pair of rings sharing one gold meridian and one wide, brushed, flat band. Hers: the centre diamond sunk into the band, flush with the surface and ringed in gold; two small diamonds set into the meridian on either side. Inside each band hides a sapphire: on its left, the other’s name and birthday; on its right, the day we met and where we meet.',
   'ring.history.title': 'Design history',
   'ring.history.text': 'Hers was redesigned once. Both versions are kept; open either one and turn it in 3D.',
   'ring.history.view': 'View in 3D',
-  'ring.history.viewing': 'Viewing this version',
   'ring.v1.name': 'Version 1 · halo solitaire',
   'ring.v1.date': '25 October 2026',
   'ring.v1.note': 'A slim round band, a 7 mm stone on four compass prongs, a halo of eighteen small diamonds, five more on each shoulder along the meridian. Too tall and too loud for every day; it would catch on everything.',
@@ -386,7 +371,7 @@ const en: Record<Key, string> = {
   'ring.view.inside': 'Look inside',
   'ring.fact.met': '2026 · 09 · 20, the day we met',
   'ring.fact.coords': '40.64°N 73.78°W, where we meet',
-  'ring.fact.compass': 'Compass prongs, a halo of eighteen',
+  'ring.fact.compass': 'Centre stone sunk flush into the band, ringed in gold',
   'ring.fact.sapphire': 'A sapphire underneath only you can see',
   'lang.toggle': '中文',
   'home.eyebrow': 'October 31 · Jingyi’s birthday',
@@ -592,7 +577,6 @@ const en: Record<Key, string> = {
   'world.partner.line': 'I am waiting here. I have cleared {done} levels. You?',
   'world.partner.epilogue': 'We both made it to the end. Go read the letter.',
   'world.partner.epilogue.go': 'Read the letter',
-  'world.door.go': 'Enter “{title}”',
 };
 
 export const dict: Record<Lang, Record<Key, string>> = { zh, en };

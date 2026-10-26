@@ -52,6 +52,13 @@ function savePos(p: PlayerId, q: Point): void {
 interface Action { label: string; cls?: string; run: () => void }
 
 export function renderWorld(root: HTMLElement): () => void {
+  // A reset ("start over") rebuilds the town; the page's own cleanup always tears down the latest one.
+  let inner = mountWorld(root);
+  const offQuest = onQuestChange(() => { if (getPlayer()) { inner(); inner = mountWorld(root); } });
+  return () => { offQuest(); inner(); };
+}
+
+function mountWorld(root: HTMLElement): () => void {
   const p = getPlayer()!;
   const other: PlayerId = p === 'jingyi' ? 'yifan' : 'jingyi';
   const cur = current(p);
@@ -143,7 +150,8 @@ export function renderWorld(root: HTMLElement): () => void {
 
   let typing = 0;
   let primary: Action | undefined;
-  const closeDialog = () => { dialog.hidden = true; engine.paused = false; primary = undefined; clearInterval(typing); };
+  const notePlayer = new Audio();   // the mailbox's voice notes; silenced with the talk box
+  const closeDialog = () => { notePlayer.pause(); dialog.hidden = true; engine.paused = false; primary = undefined; clearInterval(typing); };
   function openDialog(name: string, html: string, actions: Action[], photo?: string): void {
     engine.paused = true; engine.releaseAll();
     nameEl.textContent = name;
@@ -165,7 +173,6 @@ export function renderWorld(root: HTMLElement): () => void {
     if (prefersReducedMotion()) { textEl.innerHTML = html; return; }
     const tmp = document.createElement('span'); tmp.innerHTML = html;
     const full = tmp.textContent ?? '';
-    const tag = tmp.querySelector('.tag')?.outerHTML ?? '';
     let i = 0;
     textEl.textContent = '';
     typing = window.setInterval(() => {
@@ -173,7 +180,6 @@ export function renderWorld(root: HTMLElement): () => void {
       textEl.textContent = full.slice(0, i);
       if (i >= full.length) { clearInterval(typing); textEl.innerHTML = html; }
     }, 24);
-    void tag;
   }
 
   // Going in: the iris closes on the player, then the level opens.
@@ -198,10 +204,9 @@ export function renderWorld(root: HTMLElement): () => void {
       const notes = notesFor(p);
       const close = { label: t('world.close'), run: closeDialog };
       if (!notes.length) { openDialog(t('world.mailbox.name'), t('world.mailbox.empty'), [close]); return; }
-      const player = new Audio();
       const fmt = (d: string) => getLang() === 'zh' ? `${Number(d.slice(5, 7))} 月 ${Number(d.slice(8, 10))} 日` : new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
       openDialog(t('world.mailbox.name'), t('world.mailbox.line', { n: notes.length, name: playerName(other) }), [
-        ...notes.map((note) => ({ label: `▶ ${fmt(note.date)} · ${note.seconds}″`, cls: 'quiet', run: () => { player.src = `${import.meta.env.BASE_URL}${note.src}`; void player.play(); } })),
+        ...notes.map((note) => ({ label: `▶ ${fmt(note.date)} · ${note.seconds}″`, cls: 'quiet', run: () => { notePlayer.src = `${import.meta.env.BASE_URL}${note.src}`; void notePlayer.play(); } })),
         close,
       ]);
       return;
@@ -295,7 +300,6 @@ export function renderWorld(root: HTMLElement): () => void {
   });
   root.querySelector('#world-switch')!.addEventListener('click', () => { setPlayer(null); navigate('/start'); });
   root.querySelector('#world-reset')!.addEventListener('click', () => { if (window.confirm(t('journey.reset.confirm'))) { reset(p); try { localStorage.removeItem(posKey(p)); } catch { /* ignore */ } } });
-  const offQuest = onQuestChange(() => { if (getPlayer()) { teardown(); renderWorld(root); } });
 
   const teardown = () => {
     clearInterval(fidget); timers.forEach((id) => clearTimeout(id));
@@ -304,7 +308,7 @@ export function renderWorld(root: HTMLElement): () => void {
     engine.destroy();
     clearInterval(typing);
     unbind();
-    offQuest();
+    notePlayer.pause();
   };
   return teardown;
 }

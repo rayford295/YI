@@ -15,7 +15,7 @@ points to the epilogue.
 
 | File | What |
 |---|---|
-| `town.ts` | `TownMap` and `makeMap` (any walkable map; Yi Town is `YI_TOWN`), the grid `TOWN`, `BUILDINGS` (level id, door tile, roof colour, optional sign number), `SPAWN`, `PARTNER`, `SIGNPOST`, `CAT_HOMES`, pure helpers that take a map `walkable`, `buildingAt`, `guardSpot`, `reachable` |
+| `town.ts` | `TownMap` and `makeMap` (any walkable map; Yi Town is `YI_TOWN`), the grid `TOWN`, `BUILDINGS` (level id, door tile, roof colour, optional sign number), `SPAWN`, `PARTNER`, `SIGNPOST`, `SIGNPOST_WEST`, `MAILBOX`, `CAT_HOMES`, pure helpers that take a map `walkable`, `buildingAt`, `guardSpot`, `reachable` |
 | `tiles.ts` | Paints the ground and the houses once onto an offscreen canvas (`renderTown`), the pond in three phases (`renderWater`), the fountain glint and the roof `flag` |
 | `sprites.ts` | Pixel art in code: `JINGYI`, `YIFAN` (12×16, four facings, two walk frames), the cats `COFFEE` and `DUODUO` (two frames, a tail flick); `buildSheet` / `buildCat` pre-render them |
 | `controls.ts` | Keyboard, tap-to-walk and the d-pad, shared with the College Station page (`bindControls`, `padHtml`) |

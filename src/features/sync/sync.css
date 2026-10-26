@@ -1,4 +1,5 @@
 .sync { max-width: 640px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 18px; }
+.sync > * { min-width: 0; }
 .sync-head { text-align: center; display: grid; justify-items: center; gap: 6px; animation: rise 0.7s ease both; }
 .sync-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 42px; color: var(--rose-deep); line-height: 1.2; }
 html[lang='en'] .sync-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
@@ -7,13 +8,13 @@ html[lang='en'] .sync-head h1 { font-family: var(--serif-en); font-style: italic
 .sync-card h2 { margin: 0; font-size: 17px; color: var(--rose-deep); }
 .sync-card p { margin: 0; font-size: 14px; color: var(--muted); }
 .sync-code {
-  justify-self: center; font-family: ui-monospace, Menlo, monospace; font-size: 40px; letter-spacing: 0.18em;
+  justify-self: center; font-family: ui-monospace, Menlo, monospace; font-size: clamp(28px, 9vw, 40px); letter-spacing: 0.18em;
   padding: 8px 22px 8px 26px; border-radius: 12px; background: #0b2036; color: #ffd98a; border: 2px solid #d3a557; text-shadow: none;
 }
 .sync-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .sync-row .cta { padding: 10px 20px; font-size: 15px; }
 .sync-row .cta.quiet { background: #f4e9d6; color: var(--rose-deep); border: 1px solid var(--rose); }
-.sync-input { display: flex; gap: 10px; }
+.sync-input { display: flex; flex-wrap: wrap; gap: 10px; }
 .sync-input input {
   flex: 1; min-width: 0; font: inherit; font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 10px 14px; border-radius: 12px; border: 2px solid #102e49; background: #fffaf0; color: var(--ink);
