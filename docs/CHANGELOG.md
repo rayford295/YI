@@ -4,6 +4,10 @@ Versions are tags of feeling more than of code; the site deploys on every push.
 
 ## 1.5.0 (2026-10-26)
 
+- Both days corrected by the owner: Yifan drives (Southside gym, Dr. Zou's office, golf, the Rec
+  gym, the pool, grocery); Jingyi drives her Tesla, and the Shenzhen Bay stop carries the
+  "buy it and I'll marry you" line.
+
 - A jukebox in the corner of every page for Chinese songs (`public/media/music/`, listed in
   `tracks.ts`; hidden until there is one), remembered per device.
 - A red mailbox by the fountain: the other one's voice notes (`public/media/voice/notes/`,

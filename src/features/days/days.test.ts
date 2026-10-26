@@ -23,16 +23,18 @@ describe.each([CS, SZ])('a day ($id)', (day) => {
   });
   it('knows where they are at every minute of the day', () => {
     for (let m = 0; m < 24 * 60; m += 7) expect(stopAt(day, m / 60)).toBeDefined();
-    expect(stopAt(day, 7).level).toBe('home');
+    expect(stopAt(day, 3).level).toBe('home');
     expect(stopAt(day, 10.5).level).toBe('office');
-    expect(stopAt(day, 12.25).level).toBe('lunch');
     expect(stopAt(day, 22).level).toBe('home');
     expect(stopAt(day, -1).level).toBe('home');
   });
 });
 
-it('keeps Yifan at the court at six and Jingyi by the bay after work', () => {
-  expect(stopAt(CS, 18).level).toBe('gym');
+it('keeps Yifan at the Rec gym at six and Jingyi by the bay after work', () => {
+  expect(stopAt(CS, 18).level).toBe('rec');
+  expect(stopAt(CS, 7.5).level).toBe('southside');
+  expect(stopAt(SZ, 9).level).toBe('tesla');
+  expect(stopAt(SZ, 12.25).level).toBe('lunch');
   expect(stopAt(SZ, 19.5).level).toBe('bay');
   expect(SZ.cats?.map((c) => c.id)).toEqual(['coffee', 'duoduo']);
 });
