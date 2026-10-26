@@ -4,6 +4,9 @@ Versions are tags of feeling more than of code; the site deploys on every push.
 
 ## 1.3.1 (2026-10-26)
 
+- The tab and home-screen icon is now the two of us in pixels, drawn from the sprites
+  (`npm run icon`), instead of the ring.
+
 - The puzzle is always a face: Jingyi pieces Yifan together (5 photos), Yifan pieces Jingyi
   (7 photos); `public/media/portraits/`, more welcome.
 

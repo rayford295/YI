@@ -41,6 +41,9 @@ YI/
 Each feature folder has its own README explaining its files and rules.
 ## Everyday Edits
 
+**Redraw the icons.** `npm run icon` redraws `public/favicon.svg` and the PNG icons from the
+sprites (`scripts/icon.ts`, `scripts/icon-png.py`), like `npm run banner` does for the README.
+
 **Add a memory.** Drop the photo into `public/media/moments/` (JPEG, at most 1600 px on the
 long side) and append an entry to `src/features/moments/memories.ts`. It appears on the map,
 the timeline and the puzzle. The tests fail if the file is missing or either language is empty.
