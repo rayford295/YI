@@ -26,7 +26,7 @@ YI/
 │       ├── world/              #   the town: town.ts (maps), tiles.ts, sprites.ts, engine.ts, controls.ts, world.ts
 │       ├── cstation/           #   a day in College Station: day.ts (grid, stops, hours), cstation.ts
 │       ├── journey/            #   the list view
-│       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ pictionary/ games/
+│       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ pictionary/
 │       ├── stars/              #   catalog.ts (stars), sky.ts (projection), stars.ts (page)
 │       ├── ring/               #   3D viewer, webcam try-on, photo card
 │       └── letter/             #   the epilogue
@@ -73,6 +73,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [x] Home, Love Map, Moments, Gomoku, Pictionary (v1, 2026-10-24)
 - [x] Game of levels with real locks, Puzzle, That Night's Sky, the ring, the epilogue letter, the entry gate, PWA (2026-10-25 and 10-26)
 - [x] The town as the home page, with tap-to-walk and house name plates (2026-10-26)
+- [x] Puzzle uses portraits of the other one (`src/features/puzzle/portraits.ts`, v1.3.1, 2026-10-26)
 - [x] Levels open only through their doors; no shortcuts from the top bar, list or cleared card (v1.3.0, 2026-10-26)
 - [x] 110 unit tests; the build type-checks with `strict` TypeScript; CI runs both on every push
 - [x] Checked in a real browser at desktop, 390 px and 320 px widths

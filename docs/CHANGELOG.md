@@ -2,6 +2,11 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.3.1 (2026-10-26)
+
+- The puzzle is always a face: Jingyi pieces Yifan together (5 photos), Yifan pieces Jingyi
+  (7 photos); `public/media/portraits/`, more welcome.
+
 ## 1.3.0 (2026-10-26)
 
 - Every level is entered on foot: the cleared card now says "step out and walk to the next

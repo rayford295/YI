@@ -1,9 +1,9 @@
-// Level: a photo from our moments cut into a 3×3 grid; tap two tiles to swap until it is whole.
+// Level: the other one's face cut into a 3×3 grid; tap two tiles to swap until it is whole.
 import './puzzle.css';
 import { t, pick } from '../../core/i18n';
-import { sortedMemories } from '../moments/memories';
+import { nextPortrait, portraitsFor } from './portraits';
 import { shuffle } from '../../core/random';
-import { isCleared, levelNumber } from '../../core/quest';
+import { getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { levelCleared } from '../../core/quest-ui';
 import { escapeAttr } from '../../core/html';
 
@@ -19,13 +19,15 @@ export function scramble(n = N * N, rnd = shuffle): number[] {
 export const solved = (order: number[]): boolean => order.every((v, i) => v === i);
 
 export function renderPuzzle(root: HTMLElement): () => void {
-  const photos = sortedMemories().flatMap((m) => m.media.filter((x) => x.type === 'image').map((x) => ({ src: x.src, alt: pick(x.alt), title: pick(m.title) })));
+  const me = getPlayer()!;
+  const photos = portraitsFor(me);
+  let photoIndex = -1;
   const done = isCleared('puzzle');
   root.innerHTML = `
     <section class="puzzle">
       <header class="puzzle-head sign">
         <h1>${t('puzzle.title')}</h1>
-        <p>${t('puzzle.subtitle')}</p>
+        <p>${t(me === 'jingyi' ? 'puzzle.subtitle.him' : 'puzzle.subtitle.her')}</p>
       </header>
       <p class="quest-task${done ? ' done' : ''}" id="pz-task">${done ? t('quest.cleared.eyebrow', { n: levelNumber('puzzle') }) : t('quest.task.puzzle', { n: levelNumber('puzzle') })}</p>
       <div class="puzzle-board card" id="pz-board" role="group"></div>
@@ -36,7 +38,8 @@ export function renderPuzzle(root: HTMLElement): () => void {
   const caption = root.querySelector<HTMLElement>('#pz-caption')!;
   let order: number[] = [];
   let picked = -1;
-  let photo = photos[Math.floor(Math.random() * photos.length)];
+  let photo = photos[0];
+  const pickPhoto = () => { photo = nextPortrait(photos, photos[photoIndex]); photoIndex = photos.indexOf(photo); };
 
   const paint = () => {
     const finished = solved(order);
@@ -46,10 +49,10 @@ export function renderPuzzle(root: HTMLElement): () => void {
       return `<button type="button" class="pz-tile${i === picked ? ' picked' : ''}" data-i="${i}" aria-label="${escapeAttr(String(v + 1))}"
         style="background-image:url('${photo.src}');background-position:${(c * 100) / (N - 1)}% ${(r * 100) / (N - 1)}%"></button>`;
     }).join('');
-    caption.textContent = finished ? photo.title : '';
+    caption.textContent = finished ? pick(photo.alt) : '';
   };
   const start = () => {
-    photo = photos[Math.floor(Math.random() * photos.length)];
+    pickPhoto();
     order = isCleared('puzzle') ? Array.from({ length: N * N }, (_, i) => i) : scramble();
     picked = -1;
     const img = new Image();
