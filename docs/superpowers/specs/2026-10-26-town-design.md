@@ -68,7 +68,8 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
 8. Keyboard: arrows/WASD move, Enter/Space/Z interact, Escape closes the dialogue. The canvas
    takes focus on click so page scrolling is not hijacked before the player chooses to play.
 
-14. A signpost at the east edge of the square leads to the second map, a day in College Station
+14. A signpost at the east edge of the square leads to the second map, a day in College Station;
+    one at the west edge (added later the same day) leads to a day in Shenzhen
     (`docs/superpowers/specs/2026-10-26-college-station-design.md`). The engine and the tile
     painters take any `TownMap`. (Added 2026-10-26.)
 

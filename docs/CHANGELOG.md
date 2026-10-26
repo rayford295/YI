@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.4.0 (2026-10-26)
+
+- A day of Jingyi's (`/sz`): Shenzhen on its own clock, Tencent's tower, the metro, lunch,
+  Shenzhen Bay, and Coffee and Duoduo waiting by the door of home. A second signpost at the
+  west edge of the town leads there. The day page now draws any `Day` (`src/features/days/`).
+- Tapping a stop where the person is standing walks you up to them instead of failing.
+
 ## 1.3.1 (2026-10-26)
 
 - The tab and home-screen icon is now the two of us in pixels, drawn from the sprites

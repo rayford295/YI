@@ -7,7 +7,7 @@ import { prefersReducedMotion } from '../../core/motion';
 import { escapeAttr } from '../../core/html';
 import { go as navigate } from '../../core/router';
 import { openDoor } from '../../core/door';
-import { BUILDINGS, CAT_HOMES, PARTNER, SIGNPOST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
+import { BUILDINGS, CAT_HOMES, PARTNER, SIGNPOST, SIGNPOST_WEST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
 import { bindControls, padHtml } from './controls';
 import { JINGYI, YIFAN, buildCat, buildSheet, buildSign, type CatId, type Dir } from './sprites';
@@ -85,6 +85,8 @@ export function renderWorld(root: HTMLElement): () => void {
         <span aria-hidden="true"> · </span>
         <a href="/cs">${t('world.cs')}</a>
         <span aria-hidden="true"> · </span>
+        <a href="/sz">${t('world.sz')}</a>
+        <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="world-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="world-reset">${t('journey.reset')}</button>
@@ -128,6 +130,7 @@ export function renderWorld(root: HTMLElement): () => void {
   const npcs: Npc[] = [
     { id: `partner:${other}`, x: PARTNER.x, y: PARTNER.y, frames: [], sheet: buildSheet(other === 'jingyi' ? JINGYI : YIFAN), dir: 'left' },
     { id: 'sign:cs', x: SIGNPOST.x, y: SIGNPOST.y, frames: buildSign() },   // the road to College Station
+    { id: 'sign:sz', x: SIGNPOST_WEST.x, y: SIGNPOST_WEST.y, frames: buildSign() },   // the road to Shenzhen
     ...cats,
   ];
 
@@ -189,8 +192,9 @@ export function renderWorld(root: HTMLElement): () => void {
     ]);
   }
   function onBump(n: Npc): void {
-    if (n.id === 'sign:cs') {
-      openDialog(t('world.sign.name'), t('world.sign.line'), [{ label: t('world.sign.go'), run: () => go('/cs') }, { label: t('world.later'), run: closeDialog }]);
+    if (n.id.startsWith('sign:')) {
+      const to = n.id.slice(5);
+      openDialog(t('world.sign.name'), t(`world.sign.${to}` as Key), [{ label: t('world.sign.go'), run: () => go(`/${to}`) }, { label: t('world.later'), run: closeDialog }]);
       return;
     }
     const cat = catOf.get(n.id);

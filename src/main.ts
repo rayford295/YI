@@ -29,9 +29,10 @@ const routes: Record<string, () => Promise<Page>> = {
   '/draw': () => import('./features/pictionary/pictionary').then((m) => m.renderPictionary),
   '/ring': () => import('./features/ring/ring').then((m) => m.renderRing),
   '/sync': () => import('./features/sync/sync').then((m) => m.renderSync),
-  '/cs': () => import('./features/cstation/cstation').then((m) => m.renderCStation),
+  '/cs': () => import('./features/days/render').then((m) => m.renderCS),
+  '/sz': () => import('./features/days/render').then((m) => m.renderSZ),
 };
-const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'cs' };
+const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 let renderSeq = 0;   // a navigation that starts while a page is still loading wins

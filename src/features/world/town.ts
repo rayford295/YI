@@ -61,6 +61,8 @@ export const SPAWN: Point = { x: 11, y: 10 };
 export const PARTNER: Point = { x: 12, y: 9 };
 /** The signpost to College Station, at the east edge of the square. */
 export const SIGNPOST: Point = { x: 22, y: 9 };
+/** The signpost at the west edge: the road to Shenzhen. */
+export const SIGNPOST_WEST: Point = { x: 1, y: 9 };
 /** Where a cat rests when it has no door to guard: Coffee by the pond, Duoduo in the middle of the square. */
 export const CAT_HOMES: Record<'coffee' | 'duoduo', Point> = { coffee: { x: 13, y: 6 }, duoduo: { x: 10, y: 10 } };
 

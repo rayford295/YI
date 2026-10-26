@@ -16,8 +16,8 @@ no clearing, nothing in the quest changes.
 | Any map | `src/features/world/town.ts` | `TownMap` (grid, buildings, size) and `makeMap`; every helper takes a map and defaults to Yi Town. `Building.number` gives a roof sign without a level. Tiles `=` (road) and `C` (court) |
 | Engine | `src/features/world/engine.ts`, `tiles.ts` | `map` option; painters take a map; road and court painters (the court draws its own hoop on a top-edge tile with court on both sides) |
 | Controls | `src/features/world/controls.ts` | Keyboard, tap-to-walk and the d-pad, shared by the town and this page (`bindControls`, `padHtml`) |
-| The day | `src/features/cstation/day.ts` | 32×22 grid, seven stops in day order (home, bus stop, office, lunch, library, the court, grocery) each with its hours, `stopAt(hour)` |
-| Page | `src/features/cstation/cstation.ts`, `.css` | Route `#/cs`: the sign with Yifan's avatar and "it is HH:MM in College Station; Yifan is at …", a strip of the seven stops (the current one lit; tap one to walk there), the map, the talk box |
+| The day | `src/features/days/cs.ts` (was `cstation/day.ts`) | 32×22 grid, seven stops in day order (home, bus stop, office, lunch, library, the court, grocery) each with its hours, `stopAt(hour)` |
+| Page | `src/features/days/render.ts`, `days.css` (was `cstation/cstation.ts`) | Route `#/cs`: the sign with Yifan's avatar and "it is HH:MM in College Station; Yifan is at …", a strip of the seven stops (the current one lit; tap one to walk there), the map, the talk box |
 | Way in | the town | A signpost at the east edge of the square (`SIGNPOST`), a footer link |
 
 ## Rules
@@ -38,3 +38,11 @@ no clearing, nothing in the quest changes.
 `day.test.ts`: rectangle of known tiles; every stop has a door tile reachable from the spawn with
 free ground in front; numbers follow day order; `stopAt` covers every minute and lands on the
 expected stops. The town test checks the signpost stands on free ground that nobody else uses.
+
+## Amendment 2026-10-26: Shenzhen
+
+The owner asked for the same for Jingyi ("也可以做jingyi的啦，她是腾讯的产品经理，白天要上班，晚上回家，家里有两只猫咪"). The page
+now takes a `Day` (`src/features/days/day.ts`): `cs.ts` is Yifan's, `sz.ts` is Jingyi's (Asia/Shanghai; home,
+metro, Tencent, lunch, Shenzhen Bay; Coffee and Duoduo sit by the door of home and have their own lines).
+A second signpost at the west edge of the town (`SIGNPOST_WEST`) leads to `/sz`; the footer links both days.
+When the person stands in front of the stop you tap, the walk ends at them. The hours are a first draft.
