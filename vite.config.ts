@@ -1,9 +1,13 @@
 import { defineConfig } from 'vitest/config';
 import { VitePWA } from 'vite-plugin-pwa';
+import { copyFileSync } from 'node:fs';
 
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [
+    // Clean paths on a static host: GitHub Pages answers any unknown path with 404.html, so a copy
+    // of the app shell there lets /cs or /sync?c=J7A open the app directly (see src/core/router.ts).
+    { name: 'spa-404', closeBundle() { copyFileSync('dist/index.html', 'dist/404.html'); } },
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
@@ -12,8 +16,8 @@ export default defineConfig({
         short_name: 'YI',
         description: 'A journey of levels for two people.',
         lang: 'zh-CN',
-        start_url: './',
-        scope: './',
+        start_url: '/',
+        scope: '/',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#fbf4ee',

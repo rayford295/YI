@@ -1,6 +1,6 @@
 # The Ring
 
-Route: `#/ring` (top-bar entry: 戒指 / The Ring)
+Route: `/ring` (top-bar entry: 戒指 / The Ring)
 
 An interactive 3D view of the pair of Meridian rings designed in `ring/meridian.py`. **Hers / His**
 switches the model; drag to turn it, scroll to zoom, and press **Look inside** to fly the camera

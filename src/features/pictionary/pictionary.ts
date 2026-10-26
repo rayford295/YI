@@ -31,7 +31,7 @@ export function renderPictionary(root: HTMLElement): () => void {
 
   root.innerHTML = `
     <section class="draw">
-      ${gameTabs('#/draw')}
+      ${gameTabs('/draw')}
       <header class="draw-head sign">
         <h1>${t('pictionary.title')}</h1>
         <p>${t('pictionary.subtitle')}</p>

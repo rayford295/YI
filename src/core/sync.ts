@@ -1,6 +1,6 @@
 // Progress travels between our two phones as a short code, since there is no server: a letter for
 // the player, the cleared levels as a bitmask in base 36, and one check character. "J7K" means
-// Jingyi has cleared the first three levels. A code can also ride in a link (#/sync?c=J7K), which
+// Jingyi has cleared the first three levels. A code can also ride in a link (/sync?c=J7K), which
 // imports it when opened. Merging is a union, so a code never takes progress away.
 import { LEVELS, PLAYERS, getProgress, levelIndex, mergeProgress, type PlayerId } from './quest';
 
@@ -34,7 +34,7 @@ export function codeFrom(text: string): string {
   return (m ? m[1] : text).trim();
 }
 
-export const syncLink = (code: string): string => `${location.origin}${location.pathname}#/sync?c=${code}`;
+export const syncLink = (code: string): string => `${location.origin}/sync?c=${code}`;
 
 /** Merge a code into this device. Returns what was carried, or null when the code is not ours. */
 export function importProgress(raw: string): Carried | null {

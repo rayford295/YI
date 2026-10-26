@@ -2,6 +2,11 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.2.1 (2026-10-26)
+
+- Clean addresses: `jingyifan.love/cs` instead of `jingyifan.love/#/cs`. A `404.html` copy of
+  the app shell lets GitHub Pages open any path; links sent with `#/` still work.
+
 ## 1.2.0 (2026-10-26)
 
 - A Day in College Station (`#/cs`): a second map of Yifan's day, seven stops with hours and

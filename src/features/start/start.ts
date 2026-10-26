@@ -1,5 +1,6 @@
 // Pick a player. Shown before anything else until a player is chosen.
 import './start.css';
+import { go, refresh } from '../../core/router';
 import { t } from '../../core/i18n';
 import { setPlayer, type PlayerId } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
@@ -22,10 +23,9 @@ export function renderStart(root: HTMLElement): () => void {
     </section>`;
   root.querySelectorAll<HTMLButtonElement>('.start-card').forEach((b) => b.addEventListener('click', () => {
     setPlayer(b.dataset.player as PlayerId);
-    // The picker stands in for whatever page was asked for (#/, or a link such as #/sync?c=J7A),
-    // so keep that address and ask the router to render it; only #/start itself goes to the town.
-    if (location.hash === '#/start' || location.hash === '') location.hash = '#/';
-    else window.dispatchEvent(new HashChangeEvent('hashchange'));
+    // The picker stands in for whatever page was asked for (/, or a link such as /sync?c=J7A),
+    // so keep that address and ask the router to render it; only /start itself goes to the town.
+    if (location.pathname === '/start') go('/'); else refresh();
   }));
   return () => undefined;
 }

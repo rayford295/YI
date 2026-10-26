@@ -22,6 +22,7 @@ describe('progress codes', () => {
   });
   it('reads a code out of a link, with any case and spacing', () => {
     const code = encodeProgress('jingyi', [LEVELS[0].id]);
+    expect(codeFrom(`https://jingyifan.love/sync?c=${code}`)).toBe(code);
     expect(codeFrom(`https://jingyifan.love/#/sync?c=${code}`)).toBe(code);
     expect(decodeProgress(` ${code.toLowerCase()} `)?.player).toBe('jingyi');
   });

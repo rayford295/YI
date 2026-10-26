@@ -1,6 +1,6 @@
 # A Day in College Station
 
-Route: `#/cs`, reached from the signpost at the east edge of the town square or the town's
+Route: `/cs`, reached from the signpost at the east edge of the town square or the town's
 footer. A second walkable map of Yifan's day: seven stops in order (home at 2250 Dartmouth St,
 the bus stop, the office, lunch, the library, the basketball court, the grocery store), each a
 house with its number on the roof. Stepping onto a door opens that stop's hours and story.

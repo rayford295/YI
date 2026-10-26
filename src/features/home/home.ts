@@ -49,7 +49,7 @@ export function renderHome(root: HTMLElement): () => void {
           `<button type="button" class="quiz-opt" data-ok="${i === q.answer ? 1 : 0}">${pick(o)}</button>`).join('')}</div>`;
       })()}
     </section>
-    <a class="cta" href="#/map">${t('home.cta.map')} →</a>`;
+    <a class="cta" href="/map">${t('home.cta.map')} →</a>`;
 
   root.querySelectorAll<HTMLButtonElement>('.quiz-opt').forEach((b) => b.addEventListener('click', () => {
     if (b.dataset.ok === '1') {

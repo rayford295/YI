@@ -1,9 +1,10 @@
-// The journey list: one node per level along a gold meridian. The fallback view of the town (#/journey).
+// The journey list: one node per level along a gold meridian. The fallback view of the town (/journey).
 import './journey.css';
 import { t } from '../../core/i18n';
 import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange, clearedByAll } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
 import { escapeAttr } from '../../core/html';
+import { go as navigate } from '../../core/router';
 
 export function renderJourney(root: HTMLElement): () => void {
   const p = getPlayer()!;
@@ -30,7 +31,7 @@ export function renderJourney(root: HTMLElement): () => void {
     const label = escapeAttr(t(l.title));
     const inner = `<circle r="26"/><text class="glyph" dy="0.35em">${glyph}</text><text class="label" y="48">${label}</text>`;
     return open
-      ? `<a class="node ${state}" href="#${l.route}" transform="translate(${x} ${y})" aria-label="${label}">${inner}</a>`
+      ? `<a class="node ${state}" href="${l.route}" transform="translate(${x} ${y})" aria-label="${label}">${inner}</a>`
       : `<g class="node ${state}" transform="translate(${x} ${y})" aria-label="${label}">${inner}</g>`;
   }).join('');
 
@@ -49,9 +50,9 @@ export function renderJourney(root: HTMLElement): () => void {
           ${nodes}
         </svg>
       </div>
-      ${isCleared('ring', p) ? `<a class="cta journey-epilogue${clearedByAll('ring') ? '' : ' sealed'}" href="#/letter">${t('journey.epilogue')}</a>` : ''}
+      ${isCleared('ring', p) ? `<a class="cta journey-epilogue${clearedByAll('ring') ? '' : ' sealed'}" href="/letter">${t('journey.epilogue')}</a>` : ''}
       <p class="journey-foot">
-        <a href="#/">${t('world.town')}</a>
+        <a href="/">${t('world.town')}</a>
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="journey-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>
@@ -59,7 +60,7 @@ export function renderJourney(root: HTMLElement): () => void {
       </p>
     </section>`;
 
-  root.querySelector('#journey-switch')!.addEventListener('click', () => { setPlayer(null); location.hash = '#/start'; });
+  root.querySelector('#journey-switch')!.addEventListener('click', () => { setPlayer(null); navigate('/start'); });
   root.querySelector('#journey-reset')!.addEventListener('click', () => { if (window.confirm(t('journey.reset.confirm'))) reset(p); });
   const off = onQuestChange(() => { if (getPlayer()) renderJourney(root); });
   return off;

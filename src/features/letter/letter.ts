@@ -23,7 +23,7 @@ export function renderLetter(root: HTMLElement): () => void {
         <p class="signature">— ${pick(letter.signature)}</p>
       </article>` : `
       <p class="letter-locked card">${here.length === 1 ? t('letter.locked.one', { name: playerName(here[0]) }) : t('letter.locked')}</p>`}
-      <a class="cta" href="#/">${t('letter.back')}</a>
+      <a class="cta" href="/">${t('letter.back')}</a>
     </section>`;
   return () => undefined;
 }

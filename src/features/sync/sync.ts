@@ -11,7 +11,7 @@ export function renderSync(root: HTMLElement): () => void {
   const other: PlayerId = me === 'jingyi' ? 'yifan' : 'jingyi';
   const done = (p: PlayerId) => getProgress(p).cleared.length;
   const code = encodeProgress(me);
-  const fromLink = /[?&]c=([A-Za-z0-9]+)/.exec(location.hash)?.[1] ?? '';
+  const fromLink = /[?&]c=([A-Za-z0-9]+)/.exec(location.search)?.[1] ?? '';
 
   root.innerHTML = `
     <section class="sync">
@@ -40,7 +40,7 @@ export function renderSync(root: HTMLElement): () => void {
         </form>
         <p class="sync-result" id="sync-result"></p>
       </section>
-      <p class="sync-foot"><a href="#/">${t('sync.back')}</a></p>
+      <p class="sync-foot"><a href="/">${t('sync.back')}</a></p>
     </section>`;
 
   const copied = root.querySelector<HTMLElement>('#sync-copied')!;
@@ -64,7 +64,7 @@ export function renderSync(root: HTMLElement): () => void {
     if (!PLAYERS.includes(carried.player)) { say(result, t('sync.bad'), true); return; }
     say(result, t('sync.merged', { name: playerName(carried.player), done: done(carried.player), total: LEVELS.length }));
     input.value = '';
-    history.replaceState(null, '', '#/sync');
+    history.replaceState(null, '', '/sync');
   };
   root.querySelector('#sync-form')!.addEventListener('submit', (e) => { e.preventDefault(); merge(); });
   if (fromLink) merge();

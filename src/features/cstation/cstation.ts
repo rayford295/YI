@@ -61,7 +61,7 @@ export function renderCStation(root: HTMLElement): () => void {
       ${padHtml()}
       <p class="world-hint keys">${t('world.hint.keys')}</p>
       <p class="world-hint touch">${t('world.hint.touch')}</p>
-      <p class="world-foot"><a href="#/">${t('cs.back')}</a></p>
+      <p class="world-foot"><a href="/">${t('cs.back')}</a></p>
     </section>`;
 
   const canvas = root.querySelector<HTMLCanvasElement>('#world-canvas')!;

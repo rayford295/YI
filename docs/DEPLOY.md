@@ -16,6 +16,13 @@ With the repository private the source and the photos in it are ours alone; the 
 public at the domain, behind the gate. Making the repository public again is never needed for
 publishing.
 
+Addresses are clean paths (`/cs`, `/sync?c=J7A`), not `#/cs`. Pages has no rewrite rules, so
+the build copies `index.html` to `404.html` (the `spa-404` plugin in `vite.config.ts`): Pages
+answers any unknown path with it, the app starts and reads `location.pathname`
+(`src/core/router.ts`). Links with the old `#/` still open the same page. If the site ever moves
+off the domain root (say back to `/YI/`), set Vite's `base` to that folder and the manifest's
+`start_url` / `scope` with it.
+
 ## The Domain: jingyifan.love
 
 Bought at Cloudflare Registrar (at cost, WHOIS privacy and auto-renew included), so the DNS

@@ -75,7 +75,7 @@ Browser (Shenzhen)  ─┐                         ┌─ Browser (Texas)
 ```
 
 - **Build:** Vite + TypeScript, no UI framework (small surface, fast to ship).
-- **Routing:** hash routes — `#/`, `#/map`, `#/gomoku`, `#/draw`.
+- **Routing:** hash routes — `#/`, `#/map`, `#/gomoku`, `#/draw`. (Superseded 2026-10-26: clean paths `/map` etc. via `404.html`, see `docs/DEPLOY.md`.)
 - **Map:** Leaflet with a raster tile layer; custom heart markers; arc drawn as a
   polyline sampled along the great circle.
 - **Real-time:** Supabase Realtime Broadcast for moves/strokes/guesses and Presence for

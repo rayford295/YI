@@ -8,6 +8,7 @@ import { LEVELS, getPlayer, isUnlocked, levelByRoute, clearedByAll } from './cor
 import { avatarHtml, toast } from './core/quest-ui';
 import { gatePassed } from './core/gate';
 import { renderGate } from './features/gate/gate';
+import { interceptLinks, onNavigate, resolve } from './core/router';
 
 export type Page = (root: HTMLElement) => () => void;
 
@@ -35,9 +36,9 @@ const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 let renderSeq = 0;   // a navigation that starts while a page is still loading wins
 
-// A hash may carry a query (#/sync?c=J7K); the route is the part before it.
-const hashPath = () => location.hash.slice(1).split('?')[0];
-const currentPath = () => (hashPath() in routes ? hashPath() : '/');
+// The address is a plain path (/sync?c=J7K); an old #/ link is read the same way and rewritten.
+const asked = () => resolve(location);
+const currentPath = () => (asked().path in routes ? asked().path : '/');
 
 import { refreshMeadow, startMeadow } from './features/world/meadow';
 
@@ -50,7 +51,7 @@ async function render(): Promise<void> {
   // The front door comes before everything: one question, answered once per device.
   if (!gatePassed()) {
     document.documentElement.lang = getLang() === 'zh' ? 'zh-CN' : 'en';
-    app.innerHTML = `<header class="topbar"><a class="brand" href="#/"><span class="brand-zh">仪见钟情</span><span class="brand-en">Yi at First Sight</span></a>
+    app.innerHTML = `<header class="topbar"><a class="brand" href="/"><span class="brand-zh">仪见钟情</span><span class="brand-en">Yi at First Sight</span></a>
       <button class="lang-btn" id="lang-btn" type="button">${t('lang.toggle')}</button></header><main id="view" class="view view-gate"></main>`;
     app.querySelector('#lang-btn')!.addEventListener('click', () => setLang(getLang() === 'zh' ? 'en' : 'zh'));
     cleanup = renderGate(app.querySelector<HTMLElement>('#view')!, () => { void render(); });
@@ -65,13 +66,15 @@ async function render(): Promise<void> {
     // The epilogue is not a level: it opens once both players have reached the ring on this device.
     if (path === '/letter' && !isUnlocked('ring')) { path = '/'; toast(t('quest.locked')); }
   }
-  if (path !== hashPath() && path !== '/start') history.replaceState(null, '', `#${path}`);
+  // Settle the address: a redirect, an old #/ link or a trailing slash all become the clean path.
+  const want = path === '/start' ? '/start' : path === asked().path ? path + asked().search : path;
+  if (want !== location.pathname + location.search || location.hash) history.replaceState(null, '', want);
   const lang = getLang();
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = `${t('site.title')} · ${lang === 'zh' ? 'Yi at First Sight' : '仪见钟情'}`;
   const link = (href: string, label: string) => {
     const active = path === href || (href === '/gomoku' && GAMES.includes(path));
-    return `<a href="#${href}" class="${active ? 'active' : ''}">${label}</a>`;
+    return `<a href="${href}" class="${active ? 'active' : ''}">${label}</a>`;
   };
   const player = getPlayer();
   // Only unlocked levels appear in the top bar; games share one entry.
@@ -81,9 +84,9 @@ async function render(): Promise<void> {
     : '';
   app.innerHTML = `
     <header class="topbar">
-      <a class="brand" href="#/"><span class="brand-zh">仪见钟情</span><span class="brand-en">Yi at First Sight</span></a>
+      <a class="brand" href="/"><span class="brand-zh">仪见钟情</span><span class="brand-en">Yi at First Sight</span></a>
       <nav>${navLinks}</nav>
-      ${player ? `<a class="topbar-avatar" href="#/" aria-label="${t('nav.journey')}">${avatarHtml(player)}</a>` : ''}
+      ${player ? `<a class="topbar-avatar" href="/" aria-label="${t('nav.journey')}">${avatarHtml(player)}</a>` : ''}
       <button class="lang-btn" id="lang-btn" type="button">${t('lang.toggle')}</button>
     </header>
     <main id="view" class="view view-${viewClass[path]}"></main>
@@ -99,5 +102,6 @@ async function render(): Promise<void> {
 registerSW({ immediate: true });
 
 onLangChange(() => { void render(); });
-window.addEventListener('hashchange', () => { void render(); });
+interceptLinks();
+onNavigate(() => { void render(); });
 void render();

@@ -5,6 +5,7 @@ import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, on
 import { avatarHtml, playerName } from '../../core/quest-ui';
 import { prefersReducedMotion } from '../../core/motion';
 import { escapeAttr } from '../../core/html';
+import { go as navigate } from '../../core/router';
 import { BUILDINGS, CAT_HOMES, PARTNER, SIGNPOST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
 import { bindControls, padHtml } from './controls';
@@ -77,11 +78,11 @@ export function renderWorld(root: HTMLElement): () => void {
       <p class="world-hint keys">${t('world.hint.keys')}</p>
       <p class="world-hint touch">${t('world.hint.touch')}</p>
       <p class="world-foot">
-        <a href="#/journey">${t('world.list')}</a>
+        <a href="/journey">${t('world.list')}</a>
         <span aria-hidden="true"> · </span>
-        <a href="#/sync">${t('world.sync')}</a>
+        <a href="/sync">${t('world.sync')}</a>
         <span aria-hidden="true"> · </span>
-        <a href="#/cs">${t('world.cs')}</a>
+        <a href="/cs">${t('world.cs')}</a>
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="world-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>
@@ -171,10 +172,10 @@ export function renderWorld(root: HTMLElement): () => void {
 
   // Going in: the iris closes on the player, then the level opens.
   let leaving = false;
-  const go = (hash: string) => {
+  const go = (path: string) => {
     if (leaving) return;
     leaving = true; doorSound(); closeDialog();
-    const after = () => { location.hash = hash; };
+    const after = () => { navigate(path); };
     if (prefersReducedMotion()) after(); else void engine.iris('close', 380).then(after);
   };
   function onDoor(b: Building): void {
@@ -182,13 +183,13 @@ export function renderWorld(root: HTMLElement): () => void {
     const level = LEVELS[levelIndex(b.level)];
     const cleared = isCleared(b.level, p);
     openDialog(t(level.title), `${t(level.story)}${cleared ? `<span class="tag">${t('world.cleared.tag')}</span>` : ''}`, [
-      { label: cleared ? t('world.again') : t('world.enter'), run: () => go(`#${level.route}`) },
+      { label: cleared ? t('world.again') : t('world.enter'), run: () => go(level.route) },
       { label: t('world.later'), run: closeDialog },
     ]);
   }
   function onBump(n: Npc): void {
     if (n.id === 'sign:cs') {
-      openDialog(t('world.sign.name'), t('world.sign.line'), [{ label: t('world.sign.go'), run: () => go('#/cs') }, { label: t('world.later'), run: closeDialog }]);
+      openDialog(t('world.sign.name'), t('world.sign.line'), [{ label: t('world.sign.go'), run: () => go('/cs') }, { label: t('world.later'), run: closeDialog }]);
       return;
     }
     const cat = catOf.get(n.id);
@@ -203,12 +204,12 @@ export function renderWorld(root: HTMLElement): () => void {
     const theirs = LEVELS.filter((l) => isCleared(l.id, other)).length;
     if (clearedByAll('ring')) {
       openDialog(playerName(other), t('world.partner.epilogue'), [
-        { label: t('world.partner.epilogue.go'), run: () => go('#/letter') },
+        { label: t('world.partner.epilogue.go'), run: () => go('/letter') },
         { label: t('world.close'), run: closeDialog },
       ]);
     } else openDialog(playerName(other), t('world.partner.line', { done: theirs }), [
       { label: t('world.close'), run: closeDialog },
-      { label: t('world.partner.sync'), run: () => go('#/sync') },
+      { label: t('world.partner.sync'), run: () => go('/sync') },
     ]);
   }
 
@@ -273,7 +274,7 @@ export function renderWorld(root: HTMLElement): () => void {
     soundBtn.textContent = t(on ? 'world.sound.on' : 'world.sound.off'); soundBtn.setAttribute('aria-pressed', String(on));
     if (on) talkSound();
   });
-  root.querySelector('#world-switch')!.addEventListener('click', () => { setPlayer(null); location.hash = '#/start'; });
+  root.querySelector('#world-switch')!.addEventListener('click', () => { setPlayer(null); navigate('/start'); });
   root.querySelector('#world-reset')!.addEventListener('click', () => { if (window.confirm(t('journey.reset.confirm'))) { reset(p); try { localStorage.removeItem(posKey(p)); } catch { /* ignore */ } } });
   const offQuest = onQuestChange(() => { if (getPlayer()) { teardown(); renderWorld(root); } });
 

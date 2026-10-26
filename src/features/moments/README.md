@@ -1,7 +1,7 @@
 # Moments
 
 The record of our love moments: the single source of truth for every memory shown on the
-map and on the timeline page. Route: `#/moments`.
+map and on the timeline page. Route: `/moments`.
 
 | File | Role |
 |---|---|

@@ -1,6 +1,6 @@
 # World (the town)
 
-Route: `#/`, the home page. A top-down pixel town in the style of a handheld RPG: the player
+Route: `/`, the home page. A top-down pixel town in the style of a handheld RPG: the player
 walks a sprite of themselves between eight houses, one per level. Stepping onto an open door
 opens a talk box (level title, one-line story, Go in / Not now); every roof carries a sign with
 its level number (a 3×5 pixel digit); a cleared house flies a gold flag. Two real cats live in the town, drawn after their photos: **Coffee** (a seal-point Ragdoll)
@@ -32,7 +32,7 @@ shortest path (`WorldEngine.walkTo`); tapping a cat, the partner or a locked doo
 and acts like a bump. On touch, the pad below the canvas does the same as the keys. A house's number and name
 float over its roof while the player is within two tiles of its door.
 
-The footer links to `#/sync`, and the partner's talk box offers **Bring their progress**, since
+The footer links to `/sync`, and the partner's talk box offers **Bring their progress**, since
 each phone keeps its own progress (see `src/features/sync/README.md`).
 
 The first visit on a device opens one welcome line with the controls (`yi.world.intro`), never
@@ -59,4 +59,4 @@ the progress.
 
 Adding a level: append it to `LEVELS` (see `src/core/quest.ts`) and add a building to `BUILDINGS`
 with a door tile (`D`) on the grid; the test fails until the spawn can reach that door. The old
-node map is kept as the list view at `#/journey`.
+node map is kept as the list view at `/journey`.

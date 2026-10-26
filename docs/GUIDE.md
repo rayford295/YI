@@ -10,7 +10,7 @@ YI/
 ├── index.html                  # page shell, fonts
 ├── public/media/<feature>/     # photos, videos, models, avatars; one folder per feature
 ├── src/
-│   ├── main.ts                 # app shell, gate, hash router, lazy routes, language toggle
+│   ├── main.ts                 # app shell, gate, path router (core/router.ts), lazy routes, language toggle
 │   ├── styles/base.css         # design tokens, top bar, cards, animations
 │   ├── core/                   # shared by every feature
 │   │   ├── i18n.ts             #   zh/en dictionary, t(), pick(), language state
@@ -79,9 +79,9 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [ ] Record voice lines for the cleared cards (`public/media/voice/README.md`)
 - [ ] Add inside-joke words to Pictionary (`src/features/pictionary/words.ts`)
 - [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
-- [x] A Day in College Station (`#/cs`): second map with seven stops, Yifan standing where the clock puts him; engine takes any map (v1.2.0, 2026-10-26)
+- [x] A Day in College Station (`/cs`): second map with seven stops, Yifan standing where the clock puts him; engine takes any map (v1.2.0, 2026-10-26)
 - [ ] Yifan checks the hours and stories of his day (`src/features/cstation/day.ts`, `cs.story.*` in `i18n.ts`)
-- [x] Progress codes: `#/sync` carries progress between phones as a code or link (v1.1.0, 2026-10-26)
+- [x] Progress codes: `/sync` carries progress between phones as a code or link (v1.1.0, 2026-10-26)
 - [x] The whole site stands on the town's pixel meadow with the time-of-day wash; headings on signs, panels in cream and navy (2026-10-26)
 - [x] Town: a one-time welcome line with the controls; phone checklist in DEPLOY.md (2026-10-26)
 - [x] Town: day and night follow the player's own city, with lit windows; resting cats fidget (2026-10-26)

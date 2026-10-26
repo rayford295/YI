@@ -1,6 +1,6 @@
 # Birthday Map
 
-Route: `#/map`
+Route: `/map`
 
 A Pacific-centred map of us. One heart marker per place opens that place's memory cards.
 A dashed rose arc joins Shenzhen and College Station, with a small heart flying along it;

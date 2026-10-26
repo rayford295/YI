@@ -33,8 +33,8 @@ export function levelCleared(id: string): void {
       <h2>${t(level.title)}</h2>
       <p class="cleared-story">${t(level.story)}</p>
       ${after
-        ? `<a class="btn cleared-next" href="#${after.route}">${t('quest.cleared.next', { title: t(after.title) })} →</a>`
-        : `<a class="btn cleared-next" href="#/">${t('quest.cleared.done')}</a>`}
+        ? `<a class="btn cleared-next" href="${after.route}">${t('quest.cleared.next', { title: t(after.title) })} →</a>`
+        : `<a class="btn cleared-next" href="/">${t('quest.cleared.done')}</a>`}
       <button type="button" class="cleared-voice" hidden>▶ ${t('quest.celebrate.listen')}</button>
       <button type="button" class="cleared-stay">${t('quest.cleared.stay')}</button>
     </div>`;
