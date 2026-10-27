@@ -9,7 +9,9 @@ card and at `/letter`.)
 
 | File | Role |
 |---|---|
-| `home.ts` | `renderHome(root) => cleanup`; ticks once a second |
+| `home.ts` | `renderHome(root) => cleanup`; ticks once a second; the question, then the vow |
+| `vow.ts` | `VOW` (both vows, zh + en), `LINE` (what to say), `saidTheLine` (needs 我爱你, the other one's name or a homophone, 我愿意) |
+| `speech.ts` | `canListen`, `listen`: the browser's speech recogniser, Mandarin, five alternatives |
 | `home.css` | styles for this page only |
 
 - The day counter uses Shenzhen's calendar date (`Asia/Shanghai`), with the day we met counted as day 1.

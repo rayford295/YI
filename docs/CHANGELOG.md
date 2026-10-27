@@ -2,6 +2,14 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.10.0 (2026-10-26)
+
+- Level 1 gains its second half (owner): after the question, the vow. Wedding vows rewritten
+  as the vow of becoming each other's boyfriend and girlfriend once more, then one line to say
+  to the phone: Yifan "我爱你，陈静仪，我愿意", Jingyi "我爱你，杨一帆，我愿意". The browser's
+  speech recogniser listens (Mandarin; homophones of the names count); where it cannot listen,
+  or after a few misses, the line can be typed. The level clears only once the line is said.
+
 ## 1.9.0 (2026-10-26)
 
 - Level 2 rebuilt (owner): six places, a heart in each. A street-level photo comes first; name

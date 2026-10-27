@@ -37,3 +37,19 @@ html[lang='en'] .hero-title { font-family: var(--serif-en); font-style: italic; 
 .quiz-opt:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--gold); }
 .quiz-opt.right { background: #d3a557; border-color: #d3a557; color: #102e49; }
 .quiz-opt.wrong { opacity: 0.45; text-decoration: line-through; }
+
+/* Level 1, second half: the vow */
+.vow { display: grid; gap: 10px; justify-items: center; text-align: center; padding: 22px 18px; }
+.vow[hidden] { display: none; }
+.vow-eyebrow { margin: 0; font-size: 12px; letter-spacing: 0.2em; color: var(--muted); }
+.vow h2 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 34px; color: var(--rose-deep); }
+html[lang='en'] .vow h2 { font-family: var(--serif-en); font-style: italic; font-weight: 600; font-size: 28px; }
+.vow-text { margin: 0; max-width: 30em; font-family: var(--serif-zh); font-size: 17px; line-height: 1.9; color: var(--ink); }
+html[lang='en'] .vow-text { font-family: var(--serif-en); font-style: italic; }
+.vow-ask { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.vow-line { margin: 0; font-family: var(--hand); font-size: 28px; color: var(--rose-deep); }
+.vow-mic.listening { animation: beat 0.9s ease-in-out infinite; }
+.vow-heard { margin: 0; min-height: 1.4em; font-size: 14px; color: var(--muted); max-width: 30em; }
+.vow-typed { display: grid; gap: 8px; width: 100%; max-width: 360px; }
+.vow-typed[hidden] { display: none; }
+.vow-typed input { font: inherit; font-size: 16px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff8e7; color: var(--ink); }
