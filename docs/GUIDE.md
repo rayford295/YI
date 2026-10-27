@@ -28,7 +28,7 @@ YI/
 │       ├── voice/              #   the mailbox of voice notes (notes.ts is the list)
 │       ├── days/               #   a day in College Station (cs.ts) and in Shenzhen (sz.ts); render.ts draws both
 │       ├── journey/            #   the list view
-│       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ pictionary/
+│       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ songs/
 │       ├── stars/              #   catalog.ts (stars), sky.ts (projection), stars.ts (page)
 │       ├── poems/              #   lines.ts (five poems, bank/blank/solved), poems.ts (page)
 │       ├── ring/               #   3D viewer, webcam try-on, photo card
@@ -54,8 +54,10 @@ the timeline (the puzzle uses `src/features/puzzle/portraits.ts` instead). The t
 **Edit the letter.** Change the paragraphs in `src/features/birthday-map/letter.ts`, keeping
 Chinese and English in step. `{h}` is replaced with the live hour difference.
 
-**Add Pictionary words.** Append to `src/features/pictionary/words.ts`; `alt` lists other
-answers that also count. A test fails if two words share an answer.
+**Add the song files.** Put each song at `public/media/music/<id>.mp3`, with the ids from
+`src/features/songs/list.ts` (`start` and `length` pick the passage the level plays). The jukebox
+plays the same files whole. A Gomoku position is a list of stones in `src/features/gomoku/puzzles.ts`;
+the test fails unless the mover has exactly one winning point.
 
 **Change a key date.** Everything is in `src/core/config.ts`.
 
@@ -87,7 +89,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 - [x] Checked in a real browser at desktop, 390 px and 320 px widths
 - [ ] Yifan rewrites the last letter in his own words (`src/features/birthday-map/letter.ts`)
 - [ ] Record voice lines for the cleared cards (`public/media/voice/README.md`)
-- [ ] Add inside-joke words to Pictionary (`src/features/pictionary/words.ts`)
+- [ ] Drop the six song files into `public/media/music/` (ids in `src/features/songs/list.ts`)
 - [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
 - [x] A Day in College Station (`/cs`): second map with seven stops, Yifan standing where the clock puts him; engine takes any map (v1.2.0, 2026-10-26)
 - [ ] Yifan checks the hours and stories of his day (`src/features/days/cs.ts`, `cs.story.*` in `i18n.ts`)
@@ -120,7 +122,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
   <img src="screenshots/moments.png" width="32%" alt="Level 3: Moments" />
   <img src="screenshots/puzzle.png" width="32%" alt="Level 4: Puzzle" />
   <img src="screenshots/gomoku.png" width="32%" alt="Level 5: Gomoku" />
-  <img src="screenshots/draw.png" width="32%" alt="Level 6: Pictionary" />
+  <img src="screenshots/songs.png" width="32%" alt="Level 6: Our Songs" />
   <img src="screenshots/stars.png" width="32%" alt="Level 7: That Night's Sky" />
   <img src="screenshots/poems.png" width="32%" alt="Level 8: Us, in Old Verse" />
   <img src="screenshots/town.png" width="32%" alt="Yi Town" />

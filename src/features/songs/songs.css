@@ -1,0 +1,30 @@
+.songs { max-width: 560px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 14px; }
+.songs-head { text-align: center; animation: rise 0.7s ease both; }
+.songs-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 46px; color: var(--rose-deep); line-height: 1.2; }
+html[lang='en'] .songs-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.songs-head p { margin: 4px auto 0; color: var(--muted); max-width: 34em; }
+.songs-card { padding: 22px 18px 20px; display: grid; gap: 12px; justify-items: center; animation: rise 0.8s ease both; animation-delay: 100ms; }
+.so-count { margin: 0; font-size: 12px; letter-spacing: 0.2em; color: var(--muted); }
+.so-play { background: none; border: 0; padding: 0; cursor: pointer; border-radius: 50%; }
+.so-disc {
+  display: grid; place-items: center; width: 132px; height: 132px; border-radius: 50%;
+  background: repeating-radial-gradient(circle, #171717 0 2px, #262626 2px 4px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), inset 0 0 0 6px #0f0f0f;
+}
+.so-disc i { width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #f3d58a, var(--rose-deep) 70%); box-shadow: inset 0 0 0 3px #fff8e7; }
+.so-play.on .so-disc { animation: spin 3s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .so-play.on .so-disc { animation: none; } }
+.so-hint { margin: 0; font-size: 13px; color: var(--muted); min-height: 1.4em; text-align: center; }
+.so-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 420px; }
+.so-option {
+  font: inherit; font-size: 17px; padding: 14px 10px; border-radius: 12px; cursor: pointer; color: #f1e4c8; background: #102e49; border: 0; box-shadow: 0 3px 0 #06111f;
+  transition: transform 120ms ease, opacity 160ms ease;
+}
+.so-option:active { transform: translateY(2px); box-shadow: 0 1px 0 #06111f; }
+.so-option.out { opacity: 0.25; text-decoration: line-through; cursor: default; box-shadow: none; }
+.so-reveal { display: grid; gap: 6px; justify-items: center; }
+.so-title { margin: 4px 0 0; font-family: var(--hand); font-size: 32px; color: var(--rose-deep); }
+.so-artist, .so-note { margin: 0; font-size: 13px; color: var(--muted); text-align: center; }
+.so-reveal .cta { margin-top: 8px; }
+.so-reveal .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+@media (max-width: 380px) { .so-options { grid-template-columns: 1fr; } }

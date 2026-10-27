@@ -2,6 +2,18 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.7.0 (2026-10-26)
+
+Two levels rebuilt so one person on one phone can clear them (owner, 2026-10-26):
+
+- **Gomoku** is now three endgame positions. The player sees their own colour to move and taps
+  the one stone that makes five; a wrong stone fades, the right line lights up. The third
+  position has the other side one move from winning. The full two-player game, the tally and
+  the saved game are gone.
+- **Pictionary** is replaced by **Our Songs** (`/songs`, level id `songs`): six of our songs, a
+  passage each; pick the title from four. The jukebox now plays the same six files whole and
+  turns itself off when none of them is there yet. The files are the owner's to add.
+
 ## 1.6.0 (2026-10-26)
 
 - A ninth level, **Us, in Old Verse** (`/poems`), now the eighth house: five classical lines

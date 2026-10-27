@@ -41,6 +41,9 @@ contain the syllable *Yi* (Yi-fan, Jing-yi). The Chinese title swaps in the *yi*
 3. From Shenzhen and Texas, they can each open Gomoku and play a full game live; moves
    appear on the other side within about one second.
 4. Same for Pictionary: one draws, the other sees strokes appear live and types guesses.
+   (Superseded 2026-10-26: both games were two-player on one phone while the two of us are on
+   two phones; Gomoku became three win-in-one endgames and Pictionary became Our Songs, a
+   listen-and-pick level. See `docs/CHANGELOG.md` 1.7.0.)
 5. Nobody without an invited login can see the content.
 6. Adding a new memory means editing one data file and dropping media into one folder.
 

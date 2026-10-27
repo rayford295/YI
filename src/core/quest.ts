@@ -13,7 +13,7 @@ export const LEVELS: Level[] = [
   { id: 'moments', route: '/moments', title: 'quest.level.moments', story: 'quest.story.moments' },
   { id: 'puzzle', route: '/puzzle', title: 'quest.level.puzzle', story: 'quest.story.puzzle' },
   { id: 'gomoku', route: '/gomoku', title: 'quest.level.gomoku', story: 'quest.story.gomoku' },
-  { id: 'draw', route: '/draw', title: 'quest.level.draw', story: 'quest.story.draw' },
+  { id: 'songs', route: '/songs', title: 'quest.level.songs', story: 'quest.story.songs' },
   { id: 'stars', route: '/stars', title: 'quest.level.stars', story: 'quest.story.stars' },
   { id: 'poems', route: '/poems', title: 'quest.level.poems', story: 'quest.story.poems' },
   { id: 'ring', route: '/ring', title: 'quest.level.ring', story: 'quest.story.ring' },

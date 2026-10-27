@@ -36,7 +36,12 @@ export function mountJukebox(): void {
   const skip = () => { at = nextIndex(at, TRACKS.length); load(); if (on) play(); show(); };
 
   audio.addEventListener('ended', skip);
-  audio.addEventListener('error', () => { if (TRACKS.length > 1) skip(); });
+  const bad = new Set<number>();
+  audio.addEventListener('error', () => {
+    bad.add(at);
+    if (bad.size >= TRACKS.length) { on = false; write(ON_KEY, 'off'); show(); return; }
+    skip();
+  });
   audio.addEventListener('play', show); audio.addEventListener('pause', show);
   toggle.addEventListener('click', () => { on = !on; write(ON_KEY, on ? 'on' : 'off'); if (on) play(); else audio.pause(); show(); });
   title.addEventListener('click', skip);

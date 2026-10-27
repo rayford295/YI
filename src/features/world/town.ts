@@ -50,7 +50,7 @@ export const BUILDINGS: Building[] = [
   { level: 'moments', door: { x: 18, y: 3 },  roof: '#d8973c', trim: '#8a5a1a' },
   { level: 'puzzle',  door: { x: 2,  y: 8 },  roof: '#5f9e5a', trim: '#2f5e2d' },
   { level: 'gomoku',  door: { x: 21, y: 8 },  roof: '#8d6a4b', trim: '#4e3621' },
-  { level: 'draw',    door: { x: 7,  y: 15 }, roof: '#8c62b8', trim: '#4f3570' },
+  { level: 'songs',   door: { x: 7,  y: 15 }, roof: '#8c62b8', trim: '#4f3570' },
   { level: 'stars',   door: { x: 11, y: 15 }, roof: '#2d3f6e', trim: '#171f3a' },
   { level: 'poems',   door: { x: 21, y: 15 }, roof: '#b0413e', trim: '#5e1f1d' },
   { level: 'ring',    door: { x: 16, y: 15 }, roof: '#e9c46a', trim: '#9a7a2a' },
