@@ -49,6 +49,7 @@ html[lang='en'] .vow-text { font-family: var(--serif-en); font-style: italic; }
 .vow-ask { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
 .vow-line { margin: 0; font-family: var(--hand); font-size: 28px; color: var(--rose-deep); }
 .vow-mic.listening { animation: beat 0.9s ease-in-out infinite; }
+.vow-or { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
 .vow-heard { margin: 0; min-height: 1.4em; font-size: 14px; color: var(--muted); max-width: 30em; }
 .vow-typed { display: grid; gap: 8px; width: 100%; max-width: 360px; }
 .vow-typed[hidden] { display: none; }

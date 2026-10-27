@@ -61,6 +61,7 @@ export function renderHome(root: HTMLElement): () => void {
       <p class="vow-line">${escapeAttr(LINE[me])}</p>
       ${isCleared('met') ? '' : `
       <button type="button" class="cta vow-mic" id="vow-mic">${canListen() ? t('home.vow.mic') : t('home.vow.type')}</button>
+      ${canListen() ? `<button type="button" class="link vow-or" id="vow-or">${t('home.vow.ortype')}</button>` : ''}
       <p class="vow-heard" id="vow-heard" aria-live="polite"></p>
       <form class="vow-typed" id="vow-typed" hidden autocomplete="off">
         <input type="text" id="vow-input" placeholder="${escapeAttr(LINE[me])}" required>
@@ -108,6 +109,7 @@ export function renderHome(root: HTMLElement): () => void {
       if (misses >= 2 && typed) typed.hidden = false;
     }).finally(() => { session = null; mic.classList.remove('listening'); mic.textContent = t('home.vow.mic'); });
   });
+  root.querySelector('#vow-or')?.addEventListener('click', (e) => { typed!.hidden = false; (e.currentTarget as HTMLElement).hidden = true; root.querySelector<HTMLInputElement>('#vow-input')!.focus(); });
   typed?.addEventListener('submit', (e) => { e.preventDefault(); accept(root.querySelector<HTMLInputElement>('#vow-input')!.value); });
 
   const q = <T extends HTMLElement = HTMLElement>(sel: string) => root.querySelector<T>(sel)!;

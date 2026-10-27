@@ -2,6 +2,10 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.12.1 (2026-10-26)
+
+- Level 1: typing the line is offered alongside the microphone from the start (owner).
+
 ## 1.12.0 (2026-10-26)
 
 - Levels 3 and 4 merged (owner): **Moments** now asks for the days in order and then the
