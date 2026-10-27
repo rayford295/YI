@@ -1,0 +1,18 @@
+.dash { width: min(820px, 100%); margin: 0 auto; padding: 24px 16px 48px; display: flex; flex-direction: column; gap: 22px; }
+.dash-head { text-align: center; }
+.dash-head h1 { margin: 2px 0 0; font-family: var(--hand); font-size: clamp(36px, 10vw, 56px); line-height: 1.15; color: #102e49; letter-spacing: 0.06em; }
+.dash-sub { margin: 4px 0 0; color: var(--muted); }
+.dash-grid { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 640px) { .dash-grid { grid-template-columns: 1.4fr 1fr; } }
+.dash-card { display: flex; flex-direction: column; padding: 0; overflow: hidden; text-decoration: none; color: inherit; transition: transform .15s ease; }
+a.dash-card:hover, a.dash-card:focus-visible { transform: translateY(-3px); }
+.dash-card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 30%; border-bottom: 3px solid #102e49; image-rendering: pixelated; }
+.dash-body { padding: 14px 18px 18px; }
+.dash-body h2 { margin: 0; font-size: 22px; color: #102e49; }
+.dash-body p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+.dash-status { font-variant-numeric: tabular-nums; color: #102e49 !important; }
+.dash-go { margin-top: 12px; display: inline-block; font-weight: 600; letter-spacing: .08em; font-size: 14px;
+  color: #fff; background: var(--rose); border: 2px solid #102e49; border-radius: 8px; padding: 3px 12px; }
+.dash-soon { text-align: center; border-style: dashed; opacity: .9; }
+.dash-seed { font-size: 32px; line-height: 1; }
+@media (prefers-reduced-motion: reduce) { a.dash-card { transition: none; } }

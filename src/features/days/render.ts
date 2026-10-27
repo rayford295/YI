@@ -70,7 +70,7 @@ export function renderDay(day: Day, root: HTMLElement): () => void {
       ${padHtml()}
       <p class="world-hint keys">${t('world.hint.keys')}</p>
       <p class="world-hint touch">${t('world.hint.touch')}</p>
-      <p class="world-foot"><a href="/">${t('world.back.town')}</a></p>
+      <p class="world-foot"><a href="/town">${t('world.back.town')}</a></p>
     </section>`;
 
   const canvas = root.querySelector<HTMLCanvasElement>('#world-canvas')!;

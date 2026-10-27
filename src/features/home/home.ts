@@ -68,7 +68,7 @@ export function renderHome(root: HTMLElement): () => void {
         <button type="submit" class="cta">${t('home.vow.send')}</button>
       </form>`}
     </section>
-    <a class="cta" href="/">${t('quest.back.town')}</a>`;
+    <a class="cta" href="/town">${t('quest.back.town')}</a>`;
 
   root.querySelectorAll<HTMLButtonElement>('.quiz-opt').forEach((b) => b.addEventListener('click', () => {
     if (b.dataset.ok === '1') {

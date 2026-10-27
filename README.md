@@ -33,11 +33,14 @@
 
 ```
   ┌──────────────────────────────────────────────────────────────┐
-  │  ONE QUESTION  →  WHO ARE YOU?  →  THE TOWN  →  EIGHT DOORS   │
+  │  ONE QUESTION  →  DASHBOARD  →  WHO ARE YOU?  →  THE TOWN     │
   └──────────────────────────────────────────────────────────────┘
 ```
 
 - **One question** only the two of us can answer opens the door. The answer is stored as a hash.
+- **The dashboard** at `jingyifan.love/` lists everything we build under the domain, one card per
+  product (`src/features/dashboard/products.ts`). Yi Town is the first, at `/town`; every later
+  product lives in this repository too.
 - **Pick who you are.** Progress is kept per player, per device, so both of us can play on one phone.
 - **Walk the town** with the arrow keys or WASD, a tap on any tile, or the d-pad on a phone. Your
   partner waits by the fountain and tells you how far they have got. The sky follows the clock

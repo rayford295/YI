@@ -61,7 +61,7 @@ export function renderMoments(root: HTMLElement): () => void {
           <p class="moment-more">${t('moments.more')}</p>
         </li>
       </ol>
-      <a class="cta" href="/">${t('quest.back.town')}</a>
+      <a class="cta" href="/town">${t('quest.back.town')}</a>
     </section>`;
   attachMediaFallback(root, t('map.media.missing'));
 

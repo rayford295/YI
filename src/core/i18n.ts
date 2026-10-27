@@ -2,6 +2,14 @@ export type Lang = 'zh' | 'en';
 export type L10n = { zh: string; en: string };
 
 const zh = {
+  'dash.eyebrow': 'jingyifan.love',
+  'dash.title': '静仪 · 一帆',
+  'dash.subtitle': '我们一起做的小东西，都放在这里。',
+  'dash.enter': '进入',
+  'dash.town.title': '仪见钟情小镇',
+  'dash.town.blurb': '九道门，九个关卡，走进我们的故事。',
+  'dash.soon.title': '下一个',
+  'dash.soon.blurb': '还在种。',
   'site.title': '仪见钟情',
   'nav.journey': '旅程',
   'start.eyebrow': '仪见钟情 · 一场闯关',
@@ -352,6 +360,14 @@ const zh = {
 export type Key = keyof typeof zh;
 
 const en: Record<Key, string> = {
+  'dash.eyebrow': 'jingyifan.love',
+  'dash.title': 'Jingyi & Yifan',
+  'dash.subtitle': 'Everything we make together lives here.',
+  'dash.enter': 'Enter',
+  'dash.town.title': 'Yi Town',
+  'dash.town.blurb': 'Nine doors, nine levels: walk into our story.',
+  'dash.soon.title': 'Next',
+  'dash.soon.blurb': 'Still growing.',
   'site.title': 'Yi at First Sight',
   'nav.journey': 'Journey',
   'start.eyebrow': 'Yi at First Sight · a game of levels',

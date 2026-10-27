@@ -17,7 +17,8 @@ export type Page = (root: HTMLElement) => () => void;
 // Start, the town and the list view ship in the main bundle; every level loads on first visit, so the
 // first paint does not carry Leaflet, three.js or MediaPipe.
 const routes: Record<string, () => Promise<Page>> = {
-  '/': async () => renderWorld,
+  '/': () => import('./features/dashboard/dashboard').then((m) => m.renderDashboard),
+  '/town': async () => renderWorld,
   '/journey': async () => renderJourney,
   '/start': async () => renderStart,
   '/met': () => import('./features/home/home').then((m) => m.renderHome),
@@ -34,7 +35,7 @@ const routes: Record<string, () => Promise<Page>> = {
   '/cs': () => import('./features/days/render').then((m) => m.renderCS),
   '/sz': () => import('./features/days/render').then((m) => m.renderSZ),
 };
-const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/tattoo': 'tattoo', '/gomoku': 'gomoku', '/songs': 'songs', '/stars': 'stars', '/poems': 'poems', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
+const viewClass: Record<string, string> = { '/': 'dashboard', '/town': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/tattoo': 'tattoo', '/gomoku': 'gomoku', '/songs': 'songs', '/stars': 'stars', '/poems': 'poems', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 let renderSeq = 0;   // a navigation that starts while a page is still loading wins
@@ -61,19 +62,21 @@ async function render(): Promise<void> {
     cleanup = renderGate(app.querySelector<HTMLElement>('#view')!, () => { void render(); });
     return;
   }
-  // The journey's rules: pick a player first; a locked level sends you back to the map.
-  if (!getPlayer()) path = '/start';
-  else if (path === '/start') path = '/';
+  // The dashboard needs only the gate. The town's rules: pick a player first; a locked level sends
+  // you back to the town.
+  if (path === '/') { /* the dashboard */ }
+  else if (!getPlayer()) path = '/start';
+  else if (path === '/start') path = '/town';
   else {
     const level = levelByRoute(path);
-    if (level && !isUnlocked(level.id)) { path = '/'; toast(t('quest.locked')); }
+    if (level && !isUnlocked(level.id)) { path = '/town'; toast(t('quest.locked')); }
     // A level opens only from its door: no top-bar link, no typed address, no 'next' button.
-    else if (level && !enteredThrough(path)) { path = '/'; toast(t('quest.walk')); }
+    else if (level && !enteredThrough(path)) { path = '/town'; toast(t('quest.walk')); }
     // The epilogue is not a level: it opens once both players have reached the ring on this device.
-    if (path === '/letter' && !isCleared('ring')) { path = '/'; toast(t('quest.locked')); }
+    if (path === '/letter' && !isCleared('ring')) { path = '/town'; toast(t('quest.locked')); }
   }
   // Settle the address: a redirect, an old #/ link or a trailing slash all become the clean path.
-  if (path === '/') closeDoors();
+  if (path === '/' || path === '/town') closeDoors();
   // While the picker stands in for another address (a /sync?c=… link on a fresh phone), that
   // address is kept so the picker can hand it back.
   const want = path === asked().path ? path + asked().search : path;
@@ -89,13 +92,13 @@ async function render(): Promise<void> {
   // The top bar never links to a level: every house is entered on foot. Only the town and, at the
   // end, the epilogue.
   const navLinks = player
-    ? [link('/', t('nav.journey')), ...(clearedByAll('ring') ? [link('/letter', t('letter.title'))] : [])].join('')
+    ? [link('/town', t('nav.journey')), ...(clearedByAll('ring') ? [link('/letter', t('letter.title'))] : [])].join('')
     : '';
   app.innerHTML = `
     <header class="topbar">
       <a class="brand" href="/"><span class="brand-zh">仪见钟情</span><span class="brand-en">Yi at First Sight</span></a>
       <nav>${navLinks}</nav>
-      ${player ? `<a class="topbar-avatar" href="/" aria-label="${t('nav.journey')}">${avatarHtml(player)}</a>` : ''}
+      ${player ? `<a class="topbar-avatar" href="/town" aria-label="${t('nav.journey')}">${avatarHtml(player)}</a>` : ''}
       <button class="lang-btn" id="lang-btn" type="button">${t('lang.toggle')}</button>
     </header>
     <main id="view" class="view view-${viewClass[path]}"></main>

@@ -76,6 +76,13 @@ numbers are derived from the registry; a test fails until the new door is reacha
 **Add a feature.** Create `src/features/<name>/` with a README, a page module
 (`renderX(root) => cleanup`), CSS and tests; put media in `public/media/<name>/`; register
 the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts`.
+
+**Add a product to the dashboard.** The site root `/` is the dashboard
+(`src/features/dashboard/`); Yi Town is one product on it, at `/town`. A new product is a
+feature as above plus one entry in `PRODUCTS` (`src/features/dashboard/products.ts`): route,
+title and blurb keys, an optional picture under `public/`, and an optional `status()` line.
+Routes other than `/` ask for a player first; add an exception in `render()` in `src/main.ts`
+if a product should not.
 ## Status
 
 - [x] Home, Love Map, Moments, Gomoku, Pictionary (v1, 2026-10-24)

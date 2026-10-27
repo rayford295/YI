@@ -56,7 +56,7 @@ function mountJourney(root: HTMLElement): void {
       </div>
       ${isCleared('ring', p) ? `<a class="cta journey-epilogue${clearedByAll('ring') ? '' : ' sealed'}" href="/letter">${t('journey.epilogue')}</a>` : ''}
       <p class="journey-foot">
-        <a href="/">${t('world.town')}</a>
+        <a href="/town">${t('world.town')}</a>
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="journey-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>

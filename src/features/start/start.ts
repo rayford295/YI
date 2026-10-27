@@ -25,7 +25,7 @@ export function renderStart(root: HTMLElement): () => void {
     setPlayer(b.dataset.player as PlayerId);
     // The picker stands in for whatever page was asked for (/, or a link such as /sync?c=J7A),
     // so keep that address and ask the router to render it; only /start itself goes to the town.
-    if (location.pathname === '/start') go('/'); else refresh();
+    if (location.pathname === '/start') go('/town'); else refresh();
   }));
   return () => undefined;
 }

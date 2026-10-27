@@ -2,6 +2,14 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.14.0 (2026-10-27)
+
+- `jingyifan.love/` is now a dashboard: one card per thing we build, with each player's level
+  count on the town's card. The town moved to `/town`; the brand in the top bar leads to the
+  dashboard, the avatar and "Journey" to the town. Same domain and same repository, so every
+  save stays where it was. New products: a folder in `src/features/`, routes in `main.ts`, a
+  line in `src/features/dashboard/products.ts`.
+
 ## 1.13.0 (2026-10-27)
 
 - Rayford, the town's guide: Yifan in a suit, standing just south of the fountain. He explains

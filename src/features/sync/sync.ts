@@ -40,7 +40,7 @@ export function renderSync(root: HTMLElement): () => void {
         </form>
         <p class="sync-result" id="sync-result"></p>
       </section>
-      <p class="sync-foot"><a href="/">${t('sync.back')}</a></p>
+      <p class="sync-foot"><a href="/town">${t('sync.back')}</a></p>
     </section>`;
 
   const copied = root.querySelector<HTMLElement>('#sync-copied')!;
