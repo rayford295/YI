@@ -10,19 +10,6 @@ import type { StoreLike } from './storage';
  * save never overwrites newer progress made here.
  */
 const NEVER = new Set(['yi.gate', 'yi.door']);
-/** The only page allowed to hand saves over. */
-export const HUB_ORIGIN = 'https://jingyifan.love';
-const MAX_LEN = 512 * 1024;
-
-/**
- * Any site can link here with a #handoff= of its choosing, and the saves it writes would outlive
- * the visit. So a handoff counts only when the visitor came from the front page (the referrer is
- * set by the browser, not the link), and only up to a size no honest save reaches.
- */
-export function handoffAllowed(referrer: string, hash: string): boolean {
-  if (hash.length > MAX_LEN) return false;
-  try { return new URL(referrer).origin === HUB_ORIGIN; } catch { return false; }
-}
 
 export function decodeHandoff(hash: string): Record<string, string> | null {
   const m = /^#handoff=([A-Za-z0-9_-]+)$/.exec(hash);

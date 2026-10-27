@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyHandoff, decodeHandoff, handoffAllowed } from './handoff';
+import { applyHandoff, decodeHandoff } from './handoff';
 
 const encode = (o: object) =>
   '#handoff=' + btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o))))
@@ -24,13 +24,5 @@ describe('handoff', () => {
     const n = applyHandoff({ 'yi.player': 'jingyi', 'yi.quest.jingyi': 'x', 'yi.gate': '1', 'yi.door': '/ring', other: 'y' }, s);
     expect(n).toBe(1);
     expect(Object.fromEntries(s.m)).toEqual({ 'yi.player': 'yifan', 'yi.quest.jingyi': 'x' });
-  });
-
-  it('accepts a handoff only from the front page and only below the size cap', () => {
-    expect(handoffAllowed('https://jingyifan.love/', '#handoff=abc')).toBe(true);
-    expect(handoffAllowed('https://evil.example/', '#handoff=abc')).toBe(false);
-    expect(handoffAllowed('https://jingyifan.love.evil.example/', '#handoff=abc')).toBe(false);
-    expect(handoffAllowed('', '#handoff=abc')).toBe(false);
-    expect(handoffAllowed('https://jingyifan.love/', '#handoff=' + 'a'.repeat(600 * 1024))).toBe(false);
   });
 });

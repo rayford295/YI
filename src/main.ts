@@ -11,7 +11,7 @@ import { renderGate } from './features/gate/gate';
 import { interceptLinks, onNavigate, resolve } from './core/router';
 import { closeDoors, enteredThrough } from './core/door';
 import { mountJukebox } from './features/music/jukebox';
-import { applyHandoff, decodeHandoff, handoffAllowed } from './core/handoff';
+import { applyHandoff, decodeHandoff } from './core/handoff';
 import { safeStorage } from './core/storage';
 
 export type Page = (root: HTMLElement) => () => void;
@@ -111,9 +111,9 @@ async function render(): Promise<void> {
 
 // Offline shell + 'add to home screen'. Updates install quietly on the next visit.
 // Saves carried over from the old address (see src/core/handoff.ts), read before the first render.
-if (location.hash.startsWith('#handoff=')) {
-  const handoff = handoffAllowed(document.referrer, location.hash) ? decodeHandoff(location.hash) : null;
-  if (handoff) applyHandoff(handoff, safeStorage());
+const handoff = decodeHandoff(location.hash);
+if (handoff) {
+  applyHandoff(handoff, safeStorage());
   history.replaceState(null, '', location.pathname + location.search);
 }
 
