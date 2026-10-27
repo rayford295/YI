@@ -17,7 +17,9 @@ subdomain. That repository's README has the recipe for adding one.
   `town.jingyifan.love` by themselves. The front page reads them and appends
   `#handoff=<base64url JSON>` to its links into the town; `src/core/handoff.ts` writes them in
   before the first render, never overwriting a key the town already has, and never taking
-  `yi.gate` or `yi.door`. Progress codes (`/sync`) remain the manual fallback.
+  `yi.gate` or `yi.door`. A handoff counts only when the referrer is `https://jingyifan.love`
+  (so another site cannot plant saves with a crafted link) and stays under 512 KB; if a browser
+  strips the referrer, nothing is imported. Progress codes (`/sync`) remain the manual fallback.
 - The town's old service worker on phones that installed the app is replaced by a self-removing
   `sw.js` served from the front page.
 - An installed home-screen icon from before the move points at the front page; add the town to
