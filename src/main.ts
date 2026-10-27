@@ -28,12 +28,13 @@ const routes: Record<string, () => Promise<Page>> = {
   '/letter': () => import('./features/letter/letter').then((m) => m.renderLetter),
   '/gomoku': () => import('./features/gomoku/gomoku').then((m) => m.renderGomoku),
   '/draw': () => import('./features/pictionary/pictionary').then((m) => m.renderPictionary),
+  '/poems': () => import('./features/poems/poems').then((m) => m.renderPoems),
   '/ring': () => import('./features/ring/ring').then((m) => m.renderRing),
   '/sync': () => import('./features/sync/sync').then((m) => m.renderSync),
   '/cs': () => import('./features/days/render').then((m) => m.renderCS),
   '/sz': () => import('./features/days/render').then((m) => m.renderSZ),
 };
-const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
+const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/draw': 'draw', '/stars': 'stars', '/poems': 'poems', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 let renderSeq = 0;   // a navigation that starts while a page is still loading wins

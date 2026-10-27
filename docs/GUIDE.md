@@ -30,6 +30,7 @@ YI/
 │       ├── journey/            #   the list view
 │       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ pictionary/
 │       ├── stars/              #   catalog.ts (stars), sky.ts (projection), stars.ts (page)
+│       ├── poems/              #   lines.ts (five poems, bank/blank/solved), poems.ts (page)
 │       ├── ring/               #   3D viewer, webcam try-on, photo card
 │       └── letter/             #   the epilogue
 ├── ring/                       # the ring's Blender script and renders
@@ -121,6 +122,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
   <img src="screenshots/gomoku.png" width="32%" alt="Level 5: Gomoku" />
   <img src="screenshots/draw.png" width="32%" alt="Level 6: Pictionary" />
   <img src="screenshots/stars.png" width="32%" alt="Level 7: That Night's Sky" />
+  <img src="screenshots/poems.png" width="32%" alt="Level 8: Us, in Old Verse" />
   <img src="screenshots/town.png" width="32%" alt="Yi Town" />
   <img src="screenshots/town-phone.png" width="32%" alt="The town on a phone" />
 </p>

@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.6.0 (2026-10-26)
+
+- A ninth level, **Us, in Old Verse** (`/poems`), now the eighth house: five classical lines
+  about love with their second half taken out, put back character by character from a bank with
+  decoys. The poems are the owner's (Su Wu, Guan Daosheng, Li Shangyin, the *Yutai xinyong*
+  birds, one anonymous couplet). The ring is the ninth house: nine levels for 九九.
+
 ## 1.5.1 (2026-10-26)
 
 Repository check-up (a fresh-eyes review plus a page sweep at 320, 390 and 1280 px):

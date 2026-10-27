@@ -1,0 +1,33 @@
+.poems { max-width: 640px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 14px; }
+.poems-head { text-align: center; animation: rise 0.7s ease both; }
+.poems-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 46px; color: var(--rose-deep); line-height: 1.2; }
+html[lang='en'] .poems-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.poems-head p { margin: 4px auto 0; color: var(--muted); max-width: 34em; }
+.poems-card { padding: 22px 18px 20px; display: grid; gap: 10px; animation: rise 0.8s ease both; animation-delay: 100ms; }
+.poems-card.shake { animation: shake 400ms ease; }
+@keyframes shake { 0%, 100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.po-count { margin: 0; text-align: center; font-size: 12px; letter-spacing: 0.2em; color: var(--muted); }
+.po-line { margin: 0; text-align: center; font-family: var(--serif-zh); font-size: 22px; line-height: 2; color: var(--ink); }
+.po-boxes { display: inline-flex; gap: 3px; white-space: nowrap; vertical-align: middle; margin: 0 2px; }
+.poems-card.long .po-line { font-size: 19px; line-height: 1.9; }
+.po-box {
+  display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; margin: 0 1px; padding: 0; font: inherit; color: var(--rose-deep);
+  border: 1.5px dashed rgba(16, 46, 73, 0.45); border-radius: 6px; background: rgba(255, 255, 255, 0.45); cursor: pointer; transition: border-color 160ms ease, background 160ms ease;
+}
+.po-box.set { border-style: solid; border-color: var(--gold); background: #fff8e7; }
+.po-box.next { border-color: var(--rose-deep); }
+span.po-box { cursor: default; }
+.po-bank { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
+.po-tile {
+  width: 46px; height: 46px; font: inherit; font-family: var(--serif-zh); font-size: 24px; color: #f1e4c8; background: #102e49; border: 0; border-radius: 8px;
+  cursor: pointer; box-shadow: 0 3px 0 #06111f; transition: transform 120ms ease, opacity 160ms ease;
+}
+.po-tile:active { transform: translateY(2px); box-shadow: 0 1px 0 #06111f; }
+.po-tile:disabled { opacity: 0.18; cursor: default; box-shadow: none; }
+.po-reveal { display: grid; gap: 8px; justify-items: center; margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--line); }
+.po-source { margin: 0; font-size: 13px; color: var(--muted); }
+.po-gloss { margin: 0; text-align: center; font-family: var(--hand); font-size: 22px; color: var(--rose-deep); max-width: 24em; }
+html[lang='en'] .po-gloss { font-family: var(--serif-en); font-style: italic; font-size: 18px; }
+.poems-foot { text-align: center; margin: 0; font-size: 13px; }
+.poems-foot .link, .po-reveal .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+@media (max-width: 380px) { .po-line { font-size: 19px; } .po-tile { width: 40px; height: 40px; font-size: 21px; } }

@@ -1,7 +1,7 @@
 # World (the town)
 
 Route: `/`, the home page. A top-down pixel town in the style of a handheld RPG: the player
-walks a sprite of themselves between eight houses, one per level. Stepping onto an open door
+walks a sprite of themselves between nine houses, one per level. Stepping onto an open door
 opens a talk box (level title, one-line story, Go in / Not now); every roof carries a sign with
 its level number (a 3×5 pixel digit); a cleared house flies a gold flag. Two real cats live in the town, drawn after their photos: **Coffee** (a seal-point Ragdoll)
 sits in front of the next locked door and **Duoduo** (a bicolour Ragdoll) in front of the one

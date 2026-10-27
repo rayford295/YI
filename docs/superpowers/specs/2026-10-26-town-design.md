@@ -83,6 +83,9 @@ Shenzhen to College Station (option B, maybe later), any game-engine dependency.
     jukebox outside the router plays the owner's songs on every page (`src/features/music/`).
     (Added 2026-10-26.)
 
+17. A ninth house, south-east below Gomoku's, holds level 8, the poems (owner, 2026-10-26: nine
+    levels for 九九); the ring moves to ninth. (Added 2026-10-26.)
+
 ## Testing
 
 `town.test.ts`: the grid parses to the declared size; every level in `LEVELS` has exactly one

@@ -1,4 +1,4 @@
-// The town: a character grid (one char per 16×16 tile), the eight buildings and who stands where.
+// The town: a character grid (one char per 16×16 tile), the nine buildings and who stands where.
 // Pure data and helpers; nothing here touches the DOM, so the map can be tested.
 import { LEVELS } from '../../core/quest';
 
@@ -20,10 +20,10 @@ export const TOWN = [
   'T...#....#####.....#...T',
   'T...#.T....#....T..#...T',
   'T...################...T',
-  'T...#.RRR.RRR..RRR.#...T',
-  'T...#.RRR.RRR..RRR.#...T',
-  'T...#.WDW.WDW..WDW.#...T',
-  'T...#..#...#....#..#...T',
+  'T...#.RRR.RRR..RRR.#RRRT',
+  'T...#.RRR.RRR..RRR.#RRRT',
+  'T...#.WDW.WDW..WDW.#WDWT',
+  'T...#..#...#....#..#.#.T',
   'T...################...T',
   'T,.T...,..T...,..T..,..T',
   'TTTTTTTTTTTTTTTTTTTTTTTT',
@@ -52,6 +52,7 @@ export const BUILDINGS: Building[] = [
   { level: 'gomoku',  door: { x: 21, y: 8 },  roof: '#8d6a4b', trim: '#4e3621' },
   { level: 'draw',    door: { x: 7,  y: 15 }, roof: '#8c62b8', trim: '#4f3570' },
   { level: 'stars',   door: { x: 11, y: 15 }, roof: '#2d3f6e', trim: '#171f3a' },
+  { level: 'poems',   door: { x: 21, y: 15 }, roof: '#b0413e', trim: '#5e1f1d' },
   { level: 'ring',    door: { x: 16, y: 15 }, roof: '#e9c46a', trim: '#9a7a2a' },
 ];
 

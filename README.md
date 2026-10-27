@@ -4,8 +4,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/for-two%20players-d3a557?style=flat-square&labelColor=0b2036" alt="for two players" />
-  <img src="https://img.shields.io/badge/levels-8%20%2B%20an%20epilogue-d3a557?style=flat-square&labelColor=0b2036" alt="8 levels and an epilogue" />
-  <img src="https://img.shields.io/badge/tests-128%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="128 tests passing" />
+  <img src="https://img.shields.io/badge/levels-9%20%2B%20an%20epilogue-d3a557?style=flat-square&labelColor=0b2036" alt="9 levels and an epilogue" />
+  <img src="https://img.shields.io/badge/tests-132%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="132 tests passing" />
   <img src="https://img.shields.io/badge/TypeScript-strict-d3a557?style=flat-square&labelColor=0b2036" alt="TypeScript strict" />
   <img src="https://img.shields.io/badge/backend-none-d3a557?style=flat-square&labelColor=0b2036" alt="no backend" />
   <img src="https://img.shields.io/badge/art-drawn%20in%20code-d3a557?style=flat-square&labelColor=0b2036" alt="all art drawn in code" />
@@ -52,7 +52,7 @@
   day of Jingyi's in Shenzhen. Each is a map of that person's stops with their hours, and their
   sprite stands wherever the clock in that city puts them. A red mailbox by the fountain holds
   the voice notes the other one left; a jukebox in the corner plays our songs.
-- **The ring** is the eighth house. When both of us have reached it, the partner points to the
+- **The ring** is the ninth house, nine for 九九, a love that lasts. When both of us have reached it, the partner points to the
   last letter. Progress lives on each phone, so a short code (or a link) carries it across.
 
 The whole site stands on the town's meadow, and every heading is a sign in the same cream and navy.
@@ -72,7 +72,8 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 | 🟫 | 5 | Gomoku | Fill the heart outline | Two players on one device, with a saved game |
 | 🟪 | 6 | Pictionary | Three correct guesses | Draw, guess by typing or speaking, 90-second rounds |
 | ⬛ | 7 | That Night's Sky | Find Vega and Altair | The sky over both cities at 21:00 on 2026-09-20, computed in the browser |
-| 🟨 | 8 | The Ring | The reward | What is inside is not written down here |
+| 🟥 | 8 | Us, in Old Verse | Put the missing characters of five love poems back | Su Wu, Guan Daosheng, Li Shangyin, the paired birds of the *Yutai xinyong*, one anonymous couplet |
+| 🟨 | 9 | The Ring | The reward | What is inside is not written down here |
 | ✉️ | · | The Last Letter | The epilogue | Opens once both players have reached the ring |
 
 ## ⌨ Develop
@@ -80,7 +81,7 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 ```bash
 npm install
 npm run dev       # http://localhost:5173
-npm test          # 128 unit tests (Vitest)
+npm test          # 132 unit tests (Vitest)
 npm run build     # strict type-check + production build
 npm run banner    # redraw docs/banner.svg from the sprite data
 npm run icon      # redraw favicon.svg and the PNG icons from the sprites
