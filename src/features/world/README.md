@@ -11,7 +11,8 @@ was last seen is kept per player (`yi.world.cats.<player>`), so coming back from
 the cat get up and walk to its new post rather than find it already there. Bumping a cat
 shows its photo (`public/media/cats/`) beside the words. The partner stands by the fountain and
 reports their own progress on this device; once both players have reached the ring, the partner
-points to the epilogue.
+points to the epilogue. **Rayford**, the guide (Yifan in a suit), stands just south of the
+fountain and answers questions about the project and the next level; see `src/features/guide/`.
 
 | File | What |
 |---|---|

@@ -115,6 +115,33 @@ export const YIFAN: Figure = {
   legs: JINGYI.legs,
 };
 
+// Rayford, the guide: Yifan in a suit. Same face and hair, a navy jacket over a white shirt and
+// his red as the tie, so he reads as "the other me" rather than a stranger.
+export const RAYFORD: Figure = {
+  palette: { ...YIFAN.palette, j: '#273047', w: '#f4f1ea', k: '#b8323d', p: '#1d2233' },
+  body: {
+    down: [...YIFAN.body.down.slice(0, 8),
+      '..jjwkkwjj..',
+      '..jjjwkjjj..',
+      '..sjjjkjjjs.',
+      '...jjjjjj...',
+    ],
+    up: [...YIFAN.body.up.slice(0, 8),
+      '..jjjjjjjj..',
+      '..jjjjjjjj..',
+      '..sjjjjjjjs.',
+      '...jjjjjj...',
+    ],
+    side: [...YIFAN.body.side.slice(0, 8),
+      '....jwjj....',
+      '...jjwkjj...',
+      '...jjjjjs...',
+      '...jjjjjj...',
+    ],
+  },
+  legs: JINGYI.legs,
+};
+
 // The two cats, drawn after the real ones: Coffee, a seal-point Ragdoll (cream fluff, a dark
 // mask around blue eyes, dark ears and tail), and Duoduo, a bicolour Ragdoll (white, a tan cap
 // over the ears, a tan saddle on the back, a white blaze and a pink nose). One facing, two frames
@@ -302,4 +329,18 @@ export function buildCat(id: CatId): HTMLCanvasElement[] {
     paint(c.getContext('2d')!, rows, cat.palette, 0, 0);
     return c;
   });
+}
+
+/** A head-and-shoulders portrait of a figure (the facing-down body, no legs) for the talk box. */
+export function portraitUrl(f: Figure, bg = '#102e49', scale = 4): string {
+  const rows = f.body.down;
+  const c = document.createElement('canvas');
+  const pad = 2;
+  c.width = (SPRITE_W + pad * 2) * scale; c.height = (rows.length + pad * 2) * scale;
+  const ctx = c.getContext('2d')!;
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, c.width, c.height);
+  ctx.save(); ctx.scale(scale, scale);
+  paint(ctx, rows, f.palette, pad, pad + 1);
+  ctx.restore();
+  return c.toDataURL();
 }

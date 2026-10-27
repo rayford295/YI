@@ -8,10 +8,11 @@ import { escapeAttr } from '../../core/html';
 import { go as navigate } from '../../core/router';
 import { openDoor } from '../../core/door';
 import { notesFor } from '../voice/notes';
-import { BUILDINGS, CAT_HOMES, MAILBOX, PARTNER, SIGNPOST, SIGNPOST_WEST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
+import { rayfordSays, type Topic } from '../guide/rayford';
+import { BUILDINGS, CAT_HOMES, MAILBOX, PARTNER, RAYFORD_SPOT, SIGNPOST, SIGNPOST_WEST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
 import { bindControls, padHtml } from './controls';
-import { JINGYI, YIFAN, buildCat, buildMailbox, buildSheet, buildSign, type CatId, type Dir } from './sprites';
+import { JINGYI, RAYFORD, YIFAN, buildCat, portraitUrl, buildMailbox, buildSheet, buildSign, type CatId, type Dir } from './sprites';
 import { WATER_PHASES, renderWater } from './tiles';
 import { phaseAt, tintFor } from './daylight';
 import { clockIn } from '../../core/dates';
@@ -140,6 +141,7 @@ function mountWorld(root: HTMLElement): () => void {
     { id: 'sign:cs', x: SIGNPOST.x, y: SIGNPOST.y, frames: buildSign() },   // the road to College Station
     { id: 'sign:sz', x: SIGNPOST_WEST.x, y: SIGNPOST_WEST.y, frames: buildSign() },   // the road to Shenzhen
     { id: 'mailbox', x: MAILBOX.x, y: MAILBOX.y, frames: buildMailbox() },   // the voice notes
+    { id: 'rayford', x: RAYFORD_SPOT.x, y: RAYFORD_SPOT.y, frames: [], sheet: buildSheet(RAYFORD), dir: 'down' },   // the guide
     ...cats,
   ];
 
@@ -156,7 +158,7 @@ function mountWorld(root: HTMLElement): () => void {
     engine.paused = true; engine.releaseAll();
     nameEl.textContent = name;
     // A real photo beside the words when a cat talks.
-    face.hidden = !photo; panel.classList.toggle('has-face', !!photo);
+    face.hidden = !photo; panel.classList.toggle('has-face', !!photo); panel.classList.remove('pixel-face');
     if (photo) face.src = photo;
     actionsEl.innerHTML = '';
     primary = actions[0];
@@ -199,7 +201,22 @@ function mountWorld(root: HTMLElement): () => void {
       { label: t('world.later'), run: closeDialog },
     ]);
   }
+  // Rayford: a menu of written answers; "take me there" closes the box and walks to the door.
+  const rayfordFace = portraitUrl(RAYFORD);
+  function talkRayford(topic: Topic): void {
+    const line = rayfordSays(topic, { player: p, other, name: playerName, cleared: (id, who) => isCleared(id, who) });
+    openDialog(t('guide.name'), line.text, line.choices.map((c) => ({
+      label: c.label,
+      run: () => {
+        if ('to' in c) talkRayford(c.to);
+        else if ('walkTo' in c) { closeDialog(); engine.walkTo(c.walkTo); }
+        else closeDialog();
+      },
+    })), rayfordFace);
+    panel.classList.add('pixel-face');
+  }
   function onBump(n: Npc): void {
+    if (n.id === 'rayford') { talkRayford('hello'); return; }
     if (n.id === 'mailbox') {
       const notes = notesFor(p);
       const close = { label: t('world.close'), run: closeDialog };
@@ -265,7 +282,12 @@ function mountWorld(root: HTMLElement): () => void {
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     window.setTimeout(() => {
       if (!dialog.hidden) return;
-      openDialog(t('world.intro.name'), t(fine ? 'world.intro.keys' : 'world.intro.touch'), [{ label: t('world.intro.go'), run: () => { closeDialog(); try { localStorage.setItem(INTRO_KEY, '1'); } catch { /* ignore */ } } }]);
+      const seen = () => { try { localStorage.setItem(INTRO_KEY, '1'); } catch { /* ignore */ } };
+      openDialog(t('world.intro.name'), t(fine ? 'world.intro.keys' : 'world.intro.touch'), [
+        { label: t('world.intro.go'), run: () => { closeDialog(); seen(); } },
+        { label: t('guide.intro.more'), run: () => { seen(); talkRayford('me'); } },
+      ], rayfordFace);
+      panel.classList.add('pixel-face');
     }, 600);
   }
   window.setTimeout(() => { for (const w of walks) engine.walkNpc(w.id, w.to); }, returning ? 500 : 200);

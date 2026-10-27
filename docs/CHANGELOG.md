@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.13.0 (2026-10-27)
+
+- Rayford, the town's guide: Yifan in a suit, standing just south of the fountain. He explains
+  what Yi Town is, lists the levels, tells you about the cats, mailbox and signposts, says where
+  to go next with a hint for that level, and can walk you to its door. He also gives the
+  first-visit welcome. All lines are written in advance, in both languages.
+
 ## 1.12.4 (2026-10-27)
 
 - Gomoku: the ten gold stones now form a heart you can actually see (two lobes, the dip, the

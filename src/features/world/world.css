@@ -58,3 +58,10 @@ html[lang='en'] .world-head h1 { font-family: var(--serif-en); font-style: itali
 .world-foot a { color: #f1e4c8; }
 @media (hover: hover) and (pointer: fine) { .world-hint.touch { display: none; } }
 @media not ((hover: hover) and (pointer: fine)) { .world-hint.keys { display: none; } }
+
+/* Rayford, the guide: a pixel portrait (kept crisp) and the list of levels. */
+.world-panel.pixel-face .world-face { image-rendering: pixelated; object-fit: contain; }
+.guide-levels { margin: 8px 0 0; padding: 0; list-style: none; columns: 2; column-gap: 16px; font-size: 14px; }
+.guide-levels li { padding: 1px 0; opacity: 0.75; break-inside: avoid; }
+.guide-levels li.done { opacity: 1; color: #e9c46a; }
+.guide-levels li.done::after { content: ' ✓'; }

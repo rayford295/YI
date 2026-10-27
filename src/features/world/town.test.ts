@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BUILDINGS, CAT_HOMES, HEIGHT, MAILBOX, PARTNER, SIGNPOST, SIGNPOST_WEST, SPAWN, TOWN, WIDTH, guardSpot, levelIds, reachable, tileAt, walkable } from './town';
+import { BUILDINGS, CAT_HOMES, HEIGHT, MAILBOX, PARTNER, RAYFORD_SPOT, SIGNPOST, SIGNPOST_WEST, SPAWN, TOWN, WIDTH, guardSpot, levelIds, reachable, tileAt, walkable } from './town';
 
 describe('town', () => {
   it('is a rectangle of known tiles', () => {
@@ -28,7 +28,7 @@ describe('town', () => {
   });
 
   it('gives each cat a resting spot on the ground that is nobody else\'s', () => {
-    const taken = new Set([SPAWN, PARTNER, SIGNPOST, SIGNPOST_WEST, MAILBOX].map((q) => `${q.x},${q.y}`));
+    const taken = new Set([SPAWN, PARTNER, SIGNPOST, SIGNPOST_WEST, MAILBOX, RAYFORD_SPOT].map((q) => `${q.x},${q.y}`));
     expect(walkable(SIGNPOST.x, SIGNPOST.y)).toBe(true);
     expect(walkable(SIGNPOST_WEST.x, SIGNPOST_WEST.y)).toBe(true);
     expect(walkable(MAILBOX.x, MAILBOX.y)).toBe(true);
@@ -37,6 +37,23 @@ describe('town', () => {
       expect(taken.has(`${home.x},${home.y}`)).toBe(false);
       taken.add(`${home.x},${home.y}`);
     }
+  });
+
+  it('puts Rayford on free ground without cutting any door off from the spawn', () => {
+    expect(walkable(RAYFORD_SPOT.x, RAYFORD_SPOT.y)).toBe(true);
+    const others = [SPAWN, PARTNER, SIGNPOST, SIGNPOST_WEST, MAILBOX, ...Object.values(CAT_HOMES)];
+    expect(others.some((q) => q.x === RAYFORD_SPOT.x && q.y === RAYFORD_SPOT.y)).toBe(false);
+    // Flood fill with Rayford's tile solid: every door must still be reachable.
+    const solid = `${RAYFORD_SPOT.x},${RAYFORD_SPOT.y}`;
+    const seen = new Set([`${SPAWN.x},${SPAWN.y}`]); const queue = [SPAWN];
+    while (queue.length) {
+      const q = queue.shift()!;
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const n = { x: q.x + dx, y: q.y + dy }, k = `${n.x},${n.y}`;
+        if (k !== solid && !seen.has(k) && walkable(n.x, n.y)) { seen.add(k); queue.push(n); }
+      }
+    }
+    for (const b of BUILDINGS) expect(seen.has(`${b.door.x},${b.door.y}`), b.level).toBe(true);
   });
 
   it('keeps a locked door shut', () => {
