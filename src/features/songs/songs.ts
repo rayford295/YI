@@ -4,7 +4,7 @@ import { t, pick } from '../../core/i18n';
 import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { escapeAttr } from '../../core/html';
-import { SONGS, choices, shuffle, songSrc, type Song } from './list';
+import { SONGS, choices, qqPlayer, shuffle, songSrc, type Song } from './list';
 
 export function renderSongs(root: HTMLElement): () => void {
   const done = isCleared('songs');
@@ -52,10 +52,17 @@ export function renderSongs(root: HTMLElement): () => void {
     const playing = !audio.paused && !audio.ended;
     card.innerHTML = `
       <p class="so-count">${t('songs.count', { i: i + 1, n: order.length })}</p>
-      <button type="button" class="so-play${playing ? ' on' : ''}" id="so-play" aria-label="${playing ? t('songs.pause') : t('songs.play')}">
-        <span class="so-disc"><i></i></span>
-      </button>
-      <p class="so-hint">${missing ? t('songs.missing') : playing ? t('songs.listening') : t('songs.tap')}</p>
+      ${s.qq
+        ? `<div class="so-embed" aria-label="${t('songs.play')}">
+            <iframe src="${qqPlayer(s.qq)}" title="${t('songs.play')}" allow="autoplay" loading="lazy"></iframe>
+            <span class="so-mask so-mask-btn" aria-hidden="true"><span class="so-disc small"><i></i></span></span>
+            <span class="so-mask so-mask-rest" aria-hidden="true">${t('songs.embed')}</span>
+          </div>
+          <p class="so-hint">${t('songs.tap.embed')}</p>`
+        : `<button type="button" class="so-play${playing ? ' on' : ''}" id="so-play" aria-label="${playing ? t('songs.pause') : t('songs.play')}">
+            <span class="so-disc"><i></i></span>
+          </button>
+          <p class="so-hint">${missing ? t('songs.missing') : playing ? t('songs.listening') : t('songs.tap')}</p>`}
       ${answered
         ? `<div class="so-reveal">
             <p class="so-title">${escapeAttr(s.title)}</p>
@@ -72,7 +79,7 @@ export function renderSongs(root: HTMLElement): () => void {
       : t('quest.task.songs', { n: levelNumber('songs'), done: got, total: order.length });
   };
   const start = (k: number, asAnswered: boolean) => {
-    i = k; answered = asAnswered; wrong.clear(); options = choices(song()); load(song()); paint();
+    i = k; answered = asAnswered; wrong.clear(); options = choices(song()); if (!song().qq) load(song()); else audio.pause(); paint();
   };
 
   card.addEventListener('click', (e) => {
@@ -92,6 +99,7 @@ export function renderSongs(root: HTMLElement): () => void {
     else if (el.closest('#so-prev')) start(i - 1, true);
   });
 
+  document.body.classList.add('songs-quiz');   // the jukebox would show a title; hide it here
   start(0, done);
-  return () => { audio.pause(); audio.removeAttribute('src'); };
+  return () => { audio.pause(); audio.removeAttribute('src'); document.body.classList.remove('songs-quiz'); };
 }

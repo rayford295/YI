@@ -3,16 +3,23 @@
 // public/media/music/<id>.mp3 (the owner's own copies).
 import type { L10n } from '../../core/i18n';
 
-export interface Song { id: string; title: string; artist?: string; start: number; length: number; note?: L10n }
+export interface Song {
+  id: string; title: string; artist?: string;
+  /** QQ Music song id: the level embeds the official player (`qqPlayer`) instead of a file. */
+  qq?: number;
+  start: number; length: number; note?: L10n;
+}
 export const songSrc = (s: Song): string => `media/music/${s.id}.mp3`;
+/** The official QQ Music out-chain player for a song (plays from its start; title shown inside). */
+export const qqPlayer = (id: number): string => `https://i.y.qq.com/n2/m/outchain/player/index.html?songid=${id}&songtype=0`;
 
 export const SONGS: Song[] = [
-  { id: 'only-you', title: '只对你有感觉', artist: '飞轮海 / 田馥甄', start: 60, length: 20 },
-  { id: 'drop-tower', title: '跳楼机', artist: 'LBI利比', start: 50, length: 20 },
-  { id: 'last-page', title: '最后一页', artist: '江语晨', start: 60, length: 20 },
-  { id: 'best-in-the-world', title: '天下第一好', artist: '李小眼', start: 60, length: 20 },
-  { id: 'until-you-came', title: '直到你降临', artist: '阿肆', start: 60, length: 20 },
-  { id: 'more-and-more', title: '越来越爱', artist: '飞轮海', start: 60, length: 20 },
+  { id: 'only-you', qq: 7126044, title: '只对你有感觉', artist: '飞轮海 / 田馥甄', start: 60, length: 20 },
+  { id: 'drop-tower', qq: 542574330, title: '跳楼机', artist: 'LBI利比', start: 50, length: 20 },
+  { id: 'last-page', qq: 721636, title: '最后一页', artist: '江语晨', start: 60, length: 20 },
+  { id: 'best-in-the-world', qq: 620077883, title: '天下第一好', artist: '李小眼', start: 60, length: 20 },
+  { id: 'until-you-came', qq: 102201966, title: '直到你降临', artist: '阿肆', start: 60, length: 20 },
+  { id: 'more-and-more', qq: 7121887, title: '越来越爱', artist: '飞轮海', start: 60, length: 20 },
 ];
 
 /** Shuffle a copy of `xs` with `rnd`. */

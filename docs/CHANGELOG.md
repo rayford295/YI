@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.7.1 (2026-10-26)
+
+- Our Songs plays through the official QQ Music out-chain player (song ids in
+  `src/features/songs/list.ts`) under masks that hide its title and cover; the local-file path
+  remains for a song without an id. The jukebox is hidden on that page. Singers added for
+  天下第一好 (李小眼) and 直到你降临 (阿肆).
+
 ## 1.7.0 (2026-10-26)
 
 Two levels rebuilt so one person on one phone can clear them (owner, 2026-10-26):
