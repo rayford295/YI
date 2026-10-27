@@ -23,7 +23,7 @@ export const LINE: Record<PlayerId, string> = {
 
 /** Ways a recogniser tends to hear each name (homophones); any counts. */
 const NAMES: Record<PlayerId, string[]> = {
-  yifan: ['陈静仪', '陈静怡', '陈静宜', '陈婧仪', '陈靖仪', '陈静一', '陈静仪', '静仪', '静怡', '静宜'],
+  yifan: ['陈静仪', '陈静怡', '陈静宜', '陈婧仪', '陈靖仪', '陈静一', '静仪', '静怡', '静宜'],
   jingyi: ['杨一帆', '杨一凡', '杨亦帆', '杨艺凡', '杨依帆', '杨奕帆', '一帆', '一凡'],
 };
 

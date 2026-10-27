@@ -5,7 +5,6 @@ import { t, pick } from '../../core/i18n';
 import { config } from '../../core/config';
 import { getPlayer, isCleared, levelNumber, type PlayerId } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
-import { escapeAttr } from '../../core/html';
 import { paint, toUnit, type Stroke } from './strokes';
 import { inked, loadTattoo, saveTattoo, type Spot } from './store';
 
@@ -13,13 +12,14 @@ const INK = '#22303c';
 const SIZE = 0.012;
 
 /** A simple skin: an arm seen from the side, or a shoulder, as inline SVG under the canvas. */
-function skinSvg(spot: Spot): string {
+function skinSvg(spot: Spot, sized = false): string {
+  const size = sized ? ' width="600" height="300" xmlns="http://www.w3.org/2000/svg"' : '';
   const skin = '<linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d7b8"/><stop offset="1" stop-color="#e2b592"/></linearGradient>';
-  if (spot === 'arm') return `<svg viewBox="0 0 600 300" aria-hidden="true"><defs>${skin}</defs>
+  if (spot === 'arm') return `<svg${size} viewBox="0 0 600 300" aria-hidden="true"><defs>${skin}</defs>
     <path d="M30,150 C30,105 80,84 140,86 L470,94 C545,96 572,122 572,150 C572,178 545,204 470,206 L140,214 C80,216 30,195 30,150 Z" fill="url(#sk)"/>
     <path d="M30,150 C30,195 80,216 140,214 L470,206 C545,204 572,178 572,150" fill="none" stroke="#c9906c" stroke-opacity="0.35" stroke-width="6"/>
     <path d="M24,120 C8,130 8,172 24,182" fill="none" stroke="#c9906c" stroke-opacity="0.5" stroke-width="4"/></svg>`;
-  return `<svg viewBox="0 0 600 300" aria-hidden="true"><defs>${skin}</defs>
+  return `<svg${size} viewBox="0 0 600 300" aria-hidden="true"><defs>${skin}</defs>
     <path d="M40,300 C60,190 150,110 300,104 C450,98 540,170 572,300 Z" fill="url(#sk)"/>
     <path d="M300,104 C330,70 330,30 300,0 L240,0 C250,40 250,80 230,112" fill="#f0cfae"/>
     <path d="M120,300 C150,230 180,190 240,160" fill="none" stroke="#102e49" stroke-width="18" stroke-linecap="round" opacity="0.85"/></svg>`;
@@ -94,12 +94,12 @@ export function renderTattoo(root: HTMLElement): () => void {
   // Drawing with a finger, a pen or a mouse.
   const at = (e: PointerEvent) => toUnit(e.clientX, e.clientY, skin.getBoundingClientRect());
   canvas.addEventListener('pointerdown', (e) => {
-    if (done) return;
+    if (done || !e.isPrimary) return;
     canvas.setPointerCapture(e.pointerId);
     drawing = { color: INK, size: SIZE, erase: false, points: [at(e)] };
     redraw();
   });
-  canvas.addEventListener('pointermove', (e) => { if (!drawing) return; drawing.points.push(at(e)); redraw(); });
+  canvas.addEventListener('pointermove', (e) => { if (!drawing || !e.isPrimary) return; drawing.points.push(at(e)); redraw(); });
   const up = () => { if (!drawing) return; strokes.push(drawing); drawing = null; redraw(); };
   canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
 
@@ -137,7 +137,8 @@ export function renderTattoo(root: HTMLElement): () => void {
       const a = document.createElement('a');
       a.download = `tattoo-for-${them}.png`; a.href = out.toDataURL('image/png'); a.click();
     };
-    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(skinSvg(spot).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" '))}`;
+    img.onerror = () => { toast(t('tattoo.save.failed')); };
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(skinSvg(spot, true))}`;
   });
 
   paintChrome();
@@ -146,4 +147,3 @@ export function renderTattoo(root: HTMLElement): () => void {
   return () => window.removeEventListener('resize', resize);
 }
 
-export const forName = escapeAttr;

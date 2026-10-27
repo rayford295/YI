@@ -25,7 +25,9 @@ export function renderGomoku(root: HTMLElement): () => void {
   let i = done ? PUZZLES.length : 0;     // puzzles solved so far; PUZZLES[i] is the one on the board
   let board: Board = boardFor(i);
   let win: Cell[] = [];                  // the line lit after a right answer
-  let timer = 0, burstTimer = 0;
+  let timer = 0, burstTimer = 0, wrongTimer = 0;
+  let wrongAt: Cell | null = null;     // a stone shown for a moment after a wrong tap
+  const revertWrong = () => { clearTimeout(wrongTimer); if (wrongAt) { board[wrongAt[0]][wrongAt[1]] = null; wrongAt = null; } };
 
   function boardFor(k: number): Board {
     const p = PUZZLES[k];
@@ -85,7 +87,8 @@ export function renderGomoku(root: HTMLElement): () => void {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.cell');
     if (!btn || win.length || i >= PUZZLES.length) return;
     const r = Number(btn.dataset.r), c = Number(btn.dataset.c);
-    if (board[r][c] || gold().has(goldKey(r, c))) return;
+    revertWrong();
+    if (board[r][c] || gold().has(goldKey(r, c))) { update(); return; }
     const line = winningLine(board, me, r, c);
     if (line) {
       board[r][c] = me; win = line; update();
@@ -96,14 +99,13 @@ export function renderGomoku(root: HTMLElement): () => void {
         if (i === PUZZLES.length) { celebrate(); levelCleared('gomoku'); }
       }, 900);
     } else {
-      board[r][c] = me; update();
+      board[r][c] = me; wrongAt = [r, c]; update();
       btn.classList.add('wrong');
       toast(t('gomoku.wrong'));
-      clearTimeout(timer);
-      timer = window.setTimeout(() => { board[r][c] = null; update(); }, 500);
+      wrongTimer = window.setTimeout(() => { revertWrong(); update(); }, 500);
     }
   });
 
   update();
-  return () => { clearTimeout(timer); clearTimeout(burstTimer); };
+  return () => { clearTimeout(timer); clearTimeout(burstTimer); clearTimeout(wrongTimer); };
 }

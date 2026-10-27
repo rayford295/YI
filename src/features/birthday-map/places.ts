@@ -2,6 +2,7 @@
 // first; name it right and its heart appears on the map to be picked up. The photos are free
 // (Creative Commons, Wikimedia Commons) with their authors credited; swap in your own any time.
 import type { L10n } from '../../core/i18n';
+import { shuffle } from '../../core/random';
 
 export interface Place {
   id: string;
@@ -31,12 +32,6 @@ export const HEART_PLACES: Place[] = [
     lat: 40.7580, lng: -73.9855, photo: P('newyork', 'Terabass', 'CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0', 'https://commons.wikimedia.org/wiki/File:New_york_times_square-terabass.jpg') },
 ];
 
-/** Shuffle a copy. */
-export function shuffle<T>(xs: readonly T[], rnd: () => number = Math.random): T[] {
-  const a = [...xs];
-  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-  return a;
-}
 
 /** Four names to choose from: the right one and three others, shuffled. */
 export function choices(p: Place, all: readonly Place[] = HEART_PLACES, n = 4, rnd: () => number = Math.random): Place[] {

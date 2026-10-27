@@ -10,14 +10,15 @@ import { formatDate, hoursApart } from '../../core/dates';
 import { escapeAttr } from '../../core/html';
 import { prefersReducedMotion } from '../../core/motion';
 import { attachMediaFallback } from './media';
-import { isCleared, levelNumber } from '../../core/quest';
+import { getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
-import { HEART_PLACES, choices, shuffle, type Place } from './places';
+import { HEART_PLACES, choices, type Place } from './places';
+import { shuffle } from '../../core/random';
 
 // Level 2: a heart in each of six places. A street-level photo comes first; name the place and
 // its heart appears on the map to pick up. Found state lasts for the visit; once the level is
 // cleared every heart shows with its reason.
-let found = new Set<string>();
+const foundBy = new Map<string, Set<string>>();   // per player, for the visit
 
 const at = (lat: number, lng: number): LatLng => [lat, pacificLng(lng)];
 
@@ -100,7 +101,10 @@ export function renderMap(root: HTMLElement): () => void {
     .bindTooltip(t('map.meeting', { place: pick(nm.place) }), { direction: 'top', offset: [0, -14] });
 
   // The six hearts: one per place, hidden until its street view is named.
-  if (isCleared('map')) found = new Set(HEART_PLACES.map((p) => p.id));
+  const me = getPlayer() ?? 'jingyi';
+  const found = foundBy.get(me) ?? new Set<string>();
+  foundBy.set(me, found);
+  if (isCleared('map')) for (const p of HEART_PLACES) found.add(p.id);
   const task = root.querySelector<HTMLElement>('#map-task')!;
   const quiz = root.querySelector<HTMLElement>('#map-quiz')!;
   const queue: Place[] = shuffle(HEART_PLACES.filter((p) => !found.has(p.id)));
@@ -132,7 +136,7 @@ export function renderMap(root: HTMLElement): () => void {
   const paintQuiz = () => {
     const p = queue[0];
     quiz.hidden = !p;
-    requestAnimationFrame(() => map.invalidateSize());   // the card above changes the map's height
+    requestAnimationFrame(() => { if (map.getContainer().isConnected) map.invalidateSize(); });   // the card above changes the map's height
     if (!p) return;
     if (optionsFor !== p.id) { options = choices(p); optionsFor = p.id; wrong.clear(); }
     quiz.innerHTML = `

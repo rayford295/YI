@@ -2,6 +2,7 @@
 // for `length` seconds on the level, and the jukebox plays them whole. Files live in
 // public/media/music/<id>.mp3 (the owner's own copies).
 import type { L10n } from '../../core/i18n';
+import { shuffle } from '../../core/random';
 
 export interface Song {
   id: string; title: string; artist?: string;
@@ -30,12 +31,6 @@ export const SONGS: Song[] = [
   { id: 'more-and-more', yt: 'JIuTky3sj4U', qq: 7121887, title: '越来越爱', artist: '飞轮海', start: 60, length: 20 },
 ];
 
-/** Shuffle a copy of `xs` with `rnd`. */
-export function shuffle<T>(xs: readonly T[], rnd: () => number = Math.random): T[] {
-  const a = [...xs];
-  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-  return a;
-}
 
 /** Four titles to choose from: the right one and three others, in random order. */
 export function choices(song: Song, all: readonly Song[] = SONGS, n = 4, rnd: () => number = Math.random): Song[] {

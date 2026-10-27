@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { SONGS, choices, shuffle, songSrc } from './list';
+import { SONGS, choices, songSrc } from './list';
+import { shuffle } from '../../core/random';
 
 describe('songs', () => {
   it('lists six songs with distinct ids and titles under media/music', () => {

@@ -2,6 +2,23 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.12.2 (2026-10-26)
+
+Check-up (a fresh-eyes review plus a scripted play-through of all nine levels and a sweep of
+every route at 320, 390 and 1280 px in both languages):
+
+- Fixed: the map's found hearts were shared between players in one tab, so the second player
+  could find the quiz gone and the level unclearable; now per player.
+- Fixed: Our Songs counted a song answered twice after Prev/Next and could clear early; it now
+  tracks which songs were named.
+- Fixed: Gomoku left a stray stone when two wrong taps came within half a second.
+- Fixed: the jukebox kept playing under the Songs level; it now pauses when the level opens.
+- Fixed: a speech result arriving after leaving level 1 could open the cleared card elsewhere.
+- Fixed: the Songs players overflowed a 320 px screen; the 330 px player now scales to the card.
+- Tattoo: the saved picture carries an explicit size (Safari drew it blank), a failed save says
+  so, and a second finger no longer swallows the first stroke.
+- One shared `shuffle`; a duplicate homophone dropped; an unused export removed.
+
 ## 1.12.1 (2026-10-26)
 
 - Level 1: typing the line is offered alongside the microphone from the start (owner).

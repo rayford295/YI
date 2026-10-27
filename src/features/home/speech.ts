@@ -16,12 +16,12 @@ const ctor = (): Ctor | null => {
 
 export const canListen = (): boolean => ctor() !== null;
 
-export interface Listening { done: Promise<string>; stop(): void }
+export interface Listening { done: Promise<string>; stop(): void; abort(): void }
 
 /** Listen once (Mandarin). The promise resolves with all alternatives joined, so a homophone in any of them counts. */
 export function listen(lang = 'zh-CN'): Listening {
   const C = ctor();
-  if (!C) return { done: Promise.reject(new Error('unsupported')), stop: () => undefined };
+  if (!C) return { done: Promise.reject(new Error('unsupported')), stop: () => undefined, abort: () => undefined };
   const r = new C();
   r.lang = lang; r.interimResults = false; r.maxAlternatives = 5; r.continuous = false;
   let settled = false;
@@ -35,5 +35,5 @@ export function listen(lang = 'zh-CN'): Listening {
     r.onend = () => { if (!settled) { settled = true; reject(new Error('silence')); } };
     try { r.start(); } catch (err) { settled = true; reject(err instanceof Error ? err : new Error('failed')); }
   });
-  return { done, stop: () => { try { r.stop(); } catch { /* already stopped */ } } };
+  return { done, stop: () => { try { r.stop(); } catch { /* already stopped */ } }, abort: () => { settled = true; try { r.abort(); } catch { /* gone */ } } };
 }

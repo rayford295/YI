@@ -4,7 +4,9 @@ import { t, pick } from '../../core/i18n';
 import { getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { escapeAttr } from '../../core/html';
-import { SONGS, choices, defaultSource, qqPlayer, shuffle, songSrc, ytPlayer, type Song, type Source } from './list';
+import { SONGS, choices, defaultSource, qqPlayer, songSrc, ytPlayer, type Song, type Source } from './list';
+import { shuffle } from '../../core/random';
+import { pauseJukebox } from '../music/jukebox';
 
 const SOURCE_KEY = 'yi.songs.source';
 const readSource = (): Source | null => { try { const v = localStorage.getItem(SOURCE_KEY); return v === 'qq' || v === 'yt' ? v : null; } catch { return null; } };
@@ -14,7 +16,7 @@ export function renderSongs(root: HTMLElement): () => void {
   const done = isCleared('songs');
   const order = done ? [...SONGS] : shuffle(SONGS);
   let i = 0;
-  let got = 0;                       // right answers so far
+  const answeredIds = new Set<string>(done ? SONGS.map((s) => s.id) : []);   // songs named right
   let options: Song[] = [];
   let answered = done;               // the current song's title is shown
   const wrong = new Set<string>();   // options already tried on this song
@@ -52,27 +54,36 @@ export function renderSongs(root: HTMLElement): () => void {
   audio.addEventListener('play', () => paint());
   audio.addEventListener('pause', () => paint());
 
+  /** The players are 330 px wide; on a narrower card, scale the whole frame (masks included) down. */
+  const fit = () => {
+    const embed = card.querySelector<HTMLElement>('.so-embed'), frame = card.querySelector<HTMLElement>('.so-frame');
+    if (!embed || !frame) return;
+    const base = embed.classList.contains('so-yt') ? 186 : 86;
+    const k = Math.min(1, embed.clientWidth / 330);
+    frame.style.transform = `scale(${k})`;
+    embed.style.height = `${Math.round(base * k)}px`;
+  };
   const paint = () => {
     const s = song();
     const playing = !audio.paused && !audio.ended;
     card.innerHTML = `
       <p class="so-count">${t('songs.count', { i: i + 1, n: order.length })}</p>
       ${source === 'qq' && s.qq
-        ? `<div class="so-embed so-qq" aria-label="${t('songs.play')}">
+        ? `<div class="so-embed so-qq" aria-label="${t('songs.play')}"><div class="so-frame">
             <iframe src="${qqPlayer(s.qq)}" title="${t('songs.play')}" allow="autoplay" loading="lazy"></iframe>
             <span class="so-mask so-mask-btn" aria-hidden="true"><span class="so-disc small"><i></i></span></span>
             <span class="so-mask so-mask-rest" aria-hidden="true">${t('songs.embed.qq')}</span>
-          </div>
+          </div></div>
           <p class="so-hint">${t('songs.tap.embed')} · <button type="button" class="link" id="so-source">${t('songs.source.yt')}</button></p>`
         : source === 'yt' && s.yt
-        ? `<div class="so-embed so-yt" aria-label="${t('songs.play')}">
+        ? `<div class="so-embed so-yt" aria-label="${t('songs.play')}"><div class="so-frame">
             <iframe src="${ytPlayer(s.yt)}" title="${t('songs.play')}" allow="autoplay; encrypted-media" loading="lazy"></iframe>
             <span class="so-mask so-yt-top" aria-hidden="true">${t('songs.embed.yt')}</span>
             <span class="so-mask so-yt-left" aria-hidden="true"></span>
             <span class="so-mask so-yt-right" aria-hidden="true"></span>
             <span class="so-mask so-yt-bottom" aria-hidden="true"></span>
             <span class="so-mask so-yt-hole" aria-hidden="true"><span class="so-disc small"><i></i></span></span>
-          </div>
+          </div></div>
           <p class="so-hint">${t('songs.tap.embed')} · <button type="button" class="link" id="so-source">${t('songs.source.qq')}</button></p>`
         : `<button type="button" class="so-play${playing ? ' on' : ''}" id="so-play" aria-label="${playing ? t('songs.pause') : t('songs.play')}">
             <span class="so-disc"><i></i></span>
@@ -88,10 +99,11 @@ export function renderSongs(root: HTMLElement): () => void {
           </div>`
         : `<div class="so-options" role="group" aria-label="${t('songs.which')}">${options.map((o) =>
             `<button type="button" class="so-option${wrong.has(o.id) ? ' out' : ''}" data-id="${o.id}" ${wrong.has(o.id) ? 'disabled' : ''}>${escapeAttr(o.title)}</button>`).join('')}</div>`}`;
+    fit();
     const cleared = isCleared('songs');
     task.classList.toggle('done', cleared);
     task.textContent = cleared ? t('quest.cleared.eyebrow', { n: levelNumber('songs') })
-      : t('quest.task.songs', { n: levelNumber('songs'), done: got, total: order.length });
+      : t('quest.task.songs', { n: levelNumber('songs'), done: answeredIds.size, total: order.length });
   };
   const start = (k: number, asAnswered: boolean) => {
     i = k; answered = asAnswered; wrong.clear(); options = choices(song()); if (!song().qq && !song().yt) load(song()); else audio.pause(); paint();
@@ -104,18 +116,20 @@ export function renderSongs(root: HTMLElement): () => void {
     const opt = el.closest<HTMLButtonElement>('.so-option');
     if (opt && !answered) {
       if (opt.dataset.id === song().id) {
-        answered = true; got++; paint();
-        if (got === order.length) levelCleared('songs'); else toast(t('songs.right'));
+        answered = true; answeredIds.add(song().id); paint();
+        if (answeredIds.size === order.length) levelCleared('songs'); else toast(t('songs.right'));
       } else {
         wrong.add(opt.dataset.id!); toast(t('songs.wrong')); paint();
       }
       return;
     }
-    if (el.closest('#so-next')) start(i + 1, isCleared('songs'));
-    else if (el.closest('#so-prev')) start(i - 1, true);
+    if (el.closest('#so-next')) start(i + 1, answeredIds.has(order[i + 1].id));
+    else if (el.closest('#so-prev')) start(i - 1, answeredIds.has(order[i - 1].id));
   });
 
   document.body.classList.add('songs-quiz');   // the jukebox would show a title; hide it here
+  pauseJukebox();                               // and it must not play under the quiz
   start(0, done);
-  return () => { audio.pause(); audio.removeAttribute('src'); document.body.classList.remove('songs-quiz'); };
+  window.addEventListener('resize', fit);
+  return () => { audio.pause(); audio.removeAttribute('src'); document.body.classList.remove('songs-quiz'); window.removeEventListener('resize', fit); };
 }

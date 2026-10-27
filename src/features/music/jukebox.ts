@@ -9,6 +9,10 @@ const ON_KEY = 'yi.music', AT_KEY = 'yi.music.track';
 const read = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const write = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
 
+let pauseNow: (() => void) | null = null;
+/** Pause the jukebox and remember it as off (a page that plays its own music calls this). */
+export function pauseJukebox(): void { pauseNow?.(); }
+
 export function mountJukebox(): void {
   if (!TRACKS.length || document.querySelector('#jukebox')) return;
   const audio = new Audio();
@@ -42,6 +46,7 @@ export function mountJukebox(): void {
     if (bad.size >= TRACKS.length) { on = false; write(ON_KEY, 'off'); show(); return; }
     skip();
   });
+  pauseNow = () => { if (!on && audio.paused) return; on = false; write(ON_KEY, 'off'); audio.pause(); show(); };
   audio.addEventListener('play', show); audio.addEventListener('pause', show);
   toggle.addEventListener('click', () => { on = !on; write(ON_KEY, on ? 'on' : 'off'); if (on) play(); else audio.pause(); show(); });
   title.addEventListener('click', skip);

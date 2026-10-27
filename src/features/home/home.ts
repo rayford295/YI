@@ -85,7 +85,9 @@ export function renderHome(root: HTMLElement): () => void {
   const typed = root.querySelector<HTMLFormElement>('#vow-typed');
   let session: Listening | null = null;
   let misses = 0;
+  let disposed = false;
   const accept = (text: string) => {
+    if (disposed) return;
     if (!saidTheLine(text, me)) {
       misses++;
       heard!.textContent = t('home.vow.notyet', { heard: text });
@@ -140,5 +142,5 @@ export function renderHome(root: HTMLElement): () => void {
 
   tick();
   const timer = setInterval(tick, 1000);
-  return () => { clearInterval(timer); session?.stop(); };
+  return () => { clearInterval(timer); disposed = true; session?.abort(); };
 }
