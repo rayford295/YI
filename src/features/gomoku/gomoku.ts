@@ -3,10 +3,13 @@
 import './gomoku.css';
 import { t } from '../../core/i18n';
 import { nameOf } from '../../core/players';
-import { getPlayer, isCleared, levelNumber } from '../../core/quest';
+import { clear, getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { SIZE, boardWith, other, winningLine, type Board, type Cell, type Stone } from './core';
 import { HEART, PUZZLES } from './puzzles';
+
+/** How long the completed heart is shown before the "level cleared" card. */
+const HEART_HOLD_MS = 3200;
 
 const STARS = [[3, 3], [3, 11], [7, 7], [11, 3], [11, 11]];
 
@@ -25,7 +28,7 @@ export function renderGomoku(root: HTMLElement): () => void {
   let i = done ? PUZZLES.length : 0;     // puzzles solved so far; PUZZLES[i] is the one on the board
   let board: Board = boardFor(i);
   let win: Cell[] = [];                  // the line lit after a right answer
-  let timer = 0, burstTimer = 0, wrongTimer = 0;
+  let timer = 0, burstTimer = 0, wrongTimer = 0, clearTimer = 0;
   let wrongAt: Cell | null = null;     // a stone shown for a moment after a wrong tap
   const revertWrong = () => { clearTimeout(wrongTimer); if (wrongAt) { board[wrongAt[0]][wrongAt[1]] = null; wrongAt = null; } };
 
@@ -96,7 +99,10 @@ export function renderGomoku(root: HTMLElement): () => void {
       clearTimeout(timer);
       timer = window.setTimeout(() => {           // the stone turns gold and the next position is laid
         i++; win = []; board = boardFor(i); update();
-        if (i === PUZZLES.length) { celebrate(); levelCleared('gomoku'); }
+        if (i === PUZZLES.length) {           // let the finished heart glow on its own before the card covers it
+          celebrate();
+          clearTimer = window.setTimeout(() => { clearTimer = 0; levelCleared('gomoku'); }, HEART_HOLD_MS);
+        }
       }, 900);
     } else {
       board[r][c] = me; wrongAt = [r, c]; update();
@@ -107,5 +113,8 @@ export function renderGomoku(root: HTMLElement): () => void {
   });
 
   update();
-  return () => { clearTimeout(timer); clearTimeout(burstTimer); clearTimeout(wrongTimer); };
+  return () => {
+    clearTimeout(timer); clearTimeout(burstTimer); clearTimeout(wrongTimer);
+    if (clearTimer) { clearTimeout(clearTimer); clear('gomoku'); }   // left before the card: still counts
+  };
 }

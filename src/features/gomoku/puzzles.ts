@@ -7,8 +7,17 @@ import { SIZE, boardWith, inside, winningCells, type Cell } from './core';
 
 export interface Puzzle { id: string; mover: Cell[]; other: Cell[]; answer: Cell }
 
-/** The heart, ten points, found in this order (left lobe, right lobe, then down to the tip). */
-export const HEART: Cell[] = [[4, 5], [5, 4], [4, 9], [5, 10], [5, 7], [6, 5], [6, 9], [7, 6], [7, 8], [8, 7]];
+/**
+ * The heart, ten points, found in this order: from the dip between the lobes round the left side
+ * to the tip and back up the right, so the outline draws itself as the puzzles are solved.
+ *
+ *     . X . X .      row 4
+ *     X . X . X      row 5
+ *     X . . . X      row 6
+ *     . X . X .      row 7
+ *     . . X . .      row 8
+ */
+export const HEART: Cell[] = [[5, 7], [4, 6], [5, 5], [6, 5], [7, 6], [8, 7], [7, 8], [6, 9], [5, 9], [4, 8]];
 
 const DIRS: Cell[] = [[0, 1], [1, 0], [1, 1], [1, -1], [0, -1], [-1, 0], [-1, -1], [-1, 1]];
 const inHeart = (r: number, c: number) => HEART.some(([hr, hc]) => hr === r && hc === c);
@@ -27,9 +36,9 @@ const DECOYS: { mover: Cell[]; other: Cell[] } = {
 };
 
 function build(answer: Cell, i: number): Puzzle | null {
-  for (let t = 0; t < DIRS.length; t++) {
+  for (let t = 0; t < DIRS.length * PATTERNS.length; t++) {
     const d = DIRS[(i + t) % DIRS.length];
-    const pat = PATTERNS[i % PATTERNS.length];
+    const pat = PATTERNS[(i + Math.floor(t / DIRS.length)) % PATTERNS.length];
     const mover = pat.mover.map((k) => add(answer, d, k));
     const other = pat.other.map((k) => add(answer, d, k));
     const cells = [...mover, ...other];

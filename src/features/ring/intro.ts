@@ -39,8 +39,32 @@ const wait = (ms: number, signal: AbortSignal) => new Promise<void>((res) => {
  * loading model is what surfaces; nothing is faked.
  */
 let current: AbortController | null = null;
-/** Cut a running reveal short (leaving the page); the veil is removed at once. */
-export const stopIntro = (): void => { current?.abort(); };
+/** Cut a running reveal short (leaving the page); the veil is removed at once and the music fades. */
+export const stopIntro = (): void => { current?.abort(); fadeOutMarch(); };
+
+// Mendelssohn's Wedding March under the reveal: the opening 30 s of a public-domain recording
+// (see public/media/ring/README.md). It starts with the black and plays out on its own after the
+// page appears; leaving the page fades it. A blocked autoplay just means a silent reveal.
+let march: HTMLAudioElement | null = null;
+function playMarch(): void {
+  fadeOutMarch();
+  const a = new Audio(`${import.meta.env.BASE_URL}media/ring/wedding-march.m4a`);
+  a.volume = 0.8;
+  a.addEventListener('ended', () => { if (march === a) march = null; });
+  march = a;
+  a.play().catch(() => { if (march === a) march = null; });
+}
+function fadeOutMarch(ms = 1200): void {
+  const a = march; march = null;
+  if (!a) return;
+  const from = a.volume, t0 = performance.now();
+  const tick = (now: number) => {
+    const k = Math.min(1, (now - t0) / ms);
+    a.volume = from * (1 - k);
+    if (k < 1) requestAnimationFrame(tick); else a.pause();
+  };
+  requestAnimationFrame(tick);
+}
 
 export async function playIntro(stage: HTMLElement): Promise<void> {
   if (prefersReducedMotion()) return;
@@ -56,6 +80,7 @@ export async function playIntro(stage: HTMLElement): Promise<void> {
   const step = async (cls: string, ms: number) => { if (ctl.signal.aborted) return; veil.classList.add(cls); await wait(ms, ctl.signal); };
 
   stage.scrollIntoView({ block: 'center', behavior: 'instant' as ScrollBehavior });
+  playMarch();
   await step('in', 900);           // black
   await step('rose', 4200);        // the rose draws itself
   await step('bloom', 2400);       // ...and takes colour
