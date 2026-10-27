@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.8.0 (2026-10-26)
+
+- Level 7 is now **Libra and Scorpius** (owner: the computed sky "wasn't much fun"): our two
+  signs at their real star positions, side by side; tap two stars to draw each line of both
+  figures, 20 in all. A note tells that Libra's brightest stars are still the Scorpion's claws.
+  The astronomy library and the star catalogue are gone.
+
 ## 1.7.2 (2026-10-26)
 
 - Our Songs: a second source, the official YouTube embed (official or auto-generated "Topic"

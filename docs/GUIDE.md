@@ -29,7 +29,7 @@ YI/
 │       ├── days/               #   a day in College Station (cs.ts) and in Shenzhen (sz.ts); render.ts draws both
 │       ├── journey/            #   the list view
 │       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ songs/
-│       ├── stars/              #   catalog.ts (stars), sky.ts (projection), stars.ts (page)
+│       ├── stars/              #   constellations.ts (Libra + Scorpius stars and lines), stars.ts (page)
 │       ├── poems/              #   lines.ts (five poems, bank/blank/solved), poems.ts (page)
 │       ├── ring/               #   3D viewer, webcam try-on, photo card
 │       └── letter/             #   the epilogue
@@ -123,7 +123,7 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
   <img src="screenshots/puzzle.png" width="32%" alt="Level 4: Puzzle" />
   <img src="screenshots/gomoku.png" width="32%" alt="Level 5: Gomoku" />
   <img src="screenshots/songs.png" width="32%" alt="Level 6: Our Songs" />
-  <img src="screenshots/stars.png" width="32%" alt="Level 7: That Night's Sky" />
+  <img src="screenshots/stars.png" width="32%" alt="Level 7: Libra and Scorpius" />
   <img src="screenshots/poems.png" width="32%" alt="Level 8: Us, in Old Verse" />
   <img src="screenshots/town.png" width="32%" alt="Yi Town" />
   <img src="screenshots/town-phone.png" width="32%" alt="The town on a phone" />

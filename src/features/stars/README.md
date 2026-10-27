@@ -1,16 +1,16 @@
-# That Night's Sky (level)
+# Libra and Scorpius (level)
 
-The sky over Shenzhen and over College Station at 21:00 local time on the day we met
-(`config.metOn`), computed in the browser.
+Our two signs, next to each other in the sky: Libra for Yifan (25 September), Scorpius for
+Jingyi (31 October). Libra's two brightest stars are still called the Scorpion's claws
+(Zubenelgenubi, the southern claw; Zubeneschamali, the northern): Libra used to be part of
+Scorpius. The chart shows both figures' stars at their real places (J2000, a flat chart with
+east on the left as when looking up). Tap two stars to join them; a pair that is not a line of
+the figure, or is already drawn, is refused. Finishing one figure names it in gold; finishing
+both (20 lines) clears the level (`levelCleared('stars')`). "Show the figures" draws the lines
+faintly as a guide. Named stars show their name once joined.
 
-- `catalog.ts`: ~130 bright stars (J2000 RA/Dec, magnitude) and the constellation lines shown
-  with the hint (Lyra, Aquila, Cygnus, the Summer Triangle, Scorpius, the Teapot, the Big Dipper,
-  Cassiopeia, the Great Square).
-- `sky.ts`: `computeSky(date, lat, lng)` turns the catalogue plus Moon, Venus, Mars, Jupiter and
-  Saturn into horizontal coordinates with astronomy-engine and projects them onto a disc
-  (azimuthal equidistant, zenith at the centre, north up, east on the left as when looking up).
-- `stars.ts`: the page. Task: tap Vega (织女) and Altair (牛郎). Bright stars are drawn last so a
-  faint neighbour's hit area never covers them; faint stars get a smaller hit radius.
-
-Tests check the projection and that both target stars are well above the horizon from both
-places that evening.
+| File | What |
+|---|---|
+| `constellations.ts` | `CONSTELLATIONS` (stars with RA/Dec/magnitude, the stick-figure edges), `project`, `isEdge`, `edgeKey` |
+| `stars.ts`, `stars.css` | The page: an SVG chart, picked-star halo, gold lines, twinkle |
+| `constellations.test.ts` | Distinct ids; every edge joins two stars of its figure; each figure is one piece; the chart keeps every star in view with Antares south-east of the claws |

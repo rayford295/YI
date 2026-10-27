@@ -1,6 +1,6 @@
 {
   "name": "yi",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.1.1",
-    "astronomy-engine": "^2.1.19",
     "leaflet": "^1.9.4",
     "three": "^0.186.1"
   },
