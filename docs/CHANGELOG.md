@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.12.4 (2026-10-27)
+
+- Gomoku: the ten gold stones now form a heart you can actually see (two lobes, the dip, the
+  sides, the tip), drawn in order as the puzzles are solved, and the finished heart glows on
+  its own for a few seconds before the "level cleared" card appears.
+- Ring: Mendelssohn's Wedding March plays under the reveal (public-domain recording).
+
 ## 1.12.3 (2026-10-27)
 
 - Renamed the repository from `YI` to `yi-town`, after the pixel town the site opens on (the
