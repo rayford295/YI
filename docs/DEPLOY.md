@@ -122,7 +122,7 @@ public). GitHub Pages cannot add a login. (The private-repository limit turned o
 
 1. Sign in at <https://dash.cloudflare.com> (create a free account if needed).
 2. **Workers & Pages → Create → Pages → Connect to Git**, authorise GitHub, pick
-   `rayford295/YI`.
+   `rayford295/yi-town`.
 3. Build settings:
    - Production branch: `main`
    - Framework preset: **Vite**

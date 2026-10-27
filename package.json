@@ -1,6 +1,6 @@
 {
-  "name": "yi",
-  "version": "1.12.2",
+  "name": "yi-town",
+  "version": "1.12.3",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rayford295/YI.git"
+    "url": "git+https://github.com/rayford295/yi-town.git"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.1.1",

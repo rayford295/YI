@@ -2,6 +2,12 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.12.3 (2026-10-27)
+
+- Renamed the repository from `YI` to `yi-town`, after the pixel town the site opens on (the
+  old address redirects). The installed app is now titled "Yi Town". Test badge corrected to
+  113.
+
 ## 1.12.2 (2026-10-26)
 
 Check-up (a fresh-eyes review plus a scripted play-through of all nine levels and a sweep of

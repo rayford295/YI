@@ -6,7 +6,7 @@ the usual edits, what is done and what is still owed.
 ## Repository Layout
 
 ```
-YI/
+yi-town/
 ├── index.html                  # page shell, fonts
 ├── public/media/<feature>/     # photos, videos, models, avatars; one folder per feature
 ├── src/

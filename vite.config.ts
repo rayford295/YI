@@ -12,8 +12,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'YI · 仪见钟情',
-        short_name: 'YI',
+        name: 'Yi Town · 仪见钟情',
+        short_name: 'Yi Town',
         description: 'A journey of levels for two people.',
         lang: 'zh-CN',
         start_url: '/',
