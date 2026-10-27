@@ -1,10 +1,14 @@
 // Level: our songs. A passage plays; pick its title from four. Six right clears the level.
 import './songs.css';
 import { t, pick } from '../../core/i18n';
-import { isCleared, levelNumber } from '../../core/quest';
+import { getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { escapeAttr } from '../../core/html';
-import { SONGS, choices, qqPlayer, shuffle, songSrc, type Song } from './list';
+import { SONGS, choices, defaultSource, qqPlayer, shuffle, songSrc, ytPlayer, type Song, type Source } from './list';
+
+const SOURCE_KEY = 'yi.songs.source';
+const readSource = (): Source | null => { try { const v = localStorage.getItem(SOURCE_KEY); return v === 'qq' || v === 'yt' ? v : null; } catch { return null; } };
+const writeSource = (v: Source) => { try { localStorage.setItem(SOURCE_KEY, v); } catch { /* ignore */ } };
 
 export function renderSongs(root: HTMLElement): () => void {
   const done = isCleared('songs');
@@ -17,6 +21,7 @@ export function renderSongs(root: HTMLElement): () => void {
   const audio = new Audio();
   audio.preload = 'none';
   let stopAt = 0, missing = false;
+  let source: Source = readSource() ?? defaultSource(getPlayer());
 
   root.innerHTML = `
     <section class="songs">
@@ -52,13 +57,23 @@ export function renderSongs(root: HTMLElement): () => void {
     const playing = !audio.paused && !audio.ended;
     card.innerHTML = `
       <p class="so-count">${t('songs.count', { i: i + 1, n: order.length })}</p>
-      ${s.qq
-        ? `<div class="so-embed" aria-label="${t('songs.play')}">
+      ${source === 'qq' && s.qq
+        ? `<div class="so-embed so-qq" aria-label="${t('songs.play')}">
             <iframe src="${qqPlayer(s.qq)}" title="${t('songs.play')}" allow="autoplay" loading="lazy"></iframe>
             <span class="so-mask so-mask-btn" aria-hidden="true"><span class="so-disc small"><i></i></span></span>
-            <span class="so-mask so-mask-rest" aria-hidden="true">${t('songs.embed')}</span>
+            <span class="so-mask so-mask-rest" aria-hidden="true">${t('songs.embed.qq')}</span>
           </div>
-          <p class="so-hint">${t('songs.tap.embed')}</p>`
+          <p class="so-hint">${t('songs.tap.embed')} · <button type="button" class="link" id="so-source">${t('songs.source.yt')}</button></p>`
+        : source === 'yt' && s.yt
+        ? `<div class="so-embed so-yt" aria-label="${t('songs.play')}">
+            <iframe src="${ytPlayer(s.yt)}" title="${t('songs.play')}" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+            <span class="so-mask so-yt-top" aria-hidden="true">${t('songs.embed.yt')}</span>
+            <span class="so-mask so-yt-left" aria-hidden="true"></span>
+            <span class="so-mask so-yt-right" aria-hidden="true"></span>
+            <span class="so-mask so-yt-bottom" aria-hidden="true"></span>
+            <span class="so-mask so-yt-hole" aria-hidden="true"><span class="so-disc small"><i></i></span></span>
+          </div>
+          <p class="so-hint">${t('songs.tap.embed')} · <button type="button" class="link" id="so-source">${t('songs.source.qq')}</button></p>`
         : `<button type="button" class="so-play${playing ? ' on' : ''}" id="so-play" aria-label="${playing ? t('songs.pause') : t('songs.play')}">
             <span class="so-disc"><i></i></span>
           </button>
@@ -79,12 +94,13 @@ export function renderSongs(root: HTMLElement): () => void {
       : t('quest.task.songs', { n: levelNumber('songs'), done: got, total: order.length });
   };
   const start = (k: number, asAnswered: boolean) => {
-    i = k; answered = asAnswered; wrong.clear(); options = choices(song()); if (!song().qq) load(song()); else audio.pause(); paint();
+    i = k; answered = asAnswered; wrong.clear(); options = choices(song()); if (!song().qq && !song().yt) load(song()); else audio.pause(); paint();
   };
 
   card.addEventListener('click', (e) => {
     const el = e.target as HTMLElement;
     if (el.closest('#so-play')) { if (!audio.paused) audio.pause(); else play(); return; }
+    if (el.closest('#so-source')) { source = source === 'qq' ? 'yt' : 'qq'; writeSource(source); paint(); return; }
     const opt = el.closest<HTMLButtonElement>('.so-option');
     if (opt && !answered) {
       if (opt.dataset.id === song().id) {

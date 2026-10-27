@@ -1,7 +1,10 @@
 # Songs (level)
 
-Our six songs, played by the official QQ Music out-chain player (`qq` ids in `list.ts`), under two
-opaque masks: the cover area passes taps to the player's button and shows our disc; the part
+Our six songs, played by an official embedded player under opaque masks. Two sources: QQ Music
+(`qq` ids; mainland China only) and YouTube (`yt` ids, official or Topic uploads; outside China).
+Jingyi starts on QQ Music, Yifan on YouTube (`defaultSource`), and a link on the page switches
+(`yi.songs.source`). The YouTube frame is covered except a hole over its play button. QQ Music's
+masks: the cover area passes taps to the player's button and shows our disc; the part
 with the title and cover art is covered. A song without a `qq` id falls back to a local file
 (`public/media/music/<id>.mp3`, a passage from `start` for `length` seconds). Pick the title from four.
 A wrong title is crossed out and the song can be played again; the right one shows title and

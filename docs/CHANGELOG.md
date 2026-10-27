@@ -2,6 +2,13 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.7.2 (2026-10-26)
+
+- Our Songs: a second source, the official YouTube embed (official or auto-generated "Topic"
+  uploads), covered except a hole over its play button. Jingyi gets QQ Music by default, Yifan
+  YouTube, and either can switch on the page (`yi.songs.source`): QQ Music plays only from
+  mainland China, YouTube only outside it.
+
 ## 1.7.1 (2026-10-26)
 
 - Our Songs plays through the official QQ Music out-chain player (song ids in
