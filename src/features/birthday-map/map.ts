@@ -11,12 +11,13 @@ import { escapeAttr } from '../../core/html';
 import { prefersReducedMotion } from '../../core/motion';
 import { attachMediaFallback } from './media';
 import { isCleared, levelNumber } from '../../core/quest';
-import { levelCleared } from '../../core/quest-ui';
+import { levelCleared, toast } from '../../core/quest-ui';
+import { HEART_PLACES, choices, shuffle, type Place } from './places';
 
-// Level 2: three hearts hidden along the way between us. Found state lasts for the visit;
-// once the level is cleared they are shown as found.
-const HIDDEN: LatLng[] = [[21.31, -157.86], [35.68, 139.69], [40.64, -73.78 - 6]];
-let found = new Set<number>();
+// Level 2: a heart in each of six places. A street-level photo comes first; name the place and
+// its heart appears on the map to pick up. Found state lasts for the visit; once the level is
+// cleared every heart shows with its reason.
+let found = new Set<string>();
 
 const at = (lat: number, lng: number): LatLng => [lat, pacificLng(lng)];
 
@@ -37,6 +38,7 @@ export function renderMap(root: HTMLElement): () => void {
   root.innerHTML = `
     <section class="map-page">
       <p class="quest-task${isCleared('map') ? ' done' : ''}" id="map-task"></p>
+      <div class="map-quiz card" id="map-quiz" hidden></div>
       <div class="map-head sign">
         <h2>${t('map.title')}</h2>
         <button class="btn" id="story-btn" type="button">${t('map.story')} ▶</button>
@@ -97,25 +99,68 @@ export function renderMap(root: HTMLElement): () => void {
     .addTo(map)
     .bindTooltip(t('map.meeting', { place: pick(nm.place) }), { direction: 'top', offset: [0, -14] });
 
-  // Hidden hearts
-  if (isCleared('map')) found = new Set(HIDDEN.map((_, i) => i));
+  // The six hearts: one per place, hidden until its street view is named.
+  if (isCleared('map')) found = new Set(HEART_PLACES.map((p) => p.id));
   const task = root.querySelector<HTMLElement>('#map-task')!;
+  const quiz = root.querySelector<HTMLElement>('#map-quiz')!;
+  const queue: Place[] = shuffle(HEART_PLACES.filter((p) => !found.has(p.id)));
+  let revealed: Place | null = null;          // named right; its heart waits on the map
+  let options: Place[] = [];
+  let optionsFor = '';                        // which place `options` were drawn for
+  const wrong = new Set<string>();
+  const hearts = new Map<string, L.Marker>();
   const paintTask = () => {
     task.textContent = isCleared('map') ? t('quest.cleared.eyebrow', { n: levelNumber('map') })
-      : `${t('quest.task.map', { n: levelNumber('map'), total: HIDDEN.length })} · ${t('quest.task.map.found', { found: found.size, total: HIDDEN.length })}`;
+      : `${t('quest.task.map', { n: levelNumber('map'), total: HEART_PLACES.length })} · ${t('quest.task.map.found', { found: found.size, total: HEART_PLACES.length })}`;
     task.classList.toggle('done', isCleared('map'));
   };
-  paintTask();
-  HIDDEN.forEach((ll, i) => {
-    const mk = L.marker(at(ll[0], ll[1]), { icon: heartIcon(found.has(i) ? 'hidden found' : 'hidden'), keyboard: true, title: '?' }).addTo(map);
-    mk.on('click', () => {
-      if (found.has(i)) return;
-      found.add(i);
-      mk.setIcon(heartIcon('hidden found'));
+  const placeHeart = (p: Place, state: 'waiting' | 'found') => {
+    hearts.get(p.id)?.remove();
+    const mk = L.marker(at(p.lat, p.lng), { icon: heartIcon(`hidden ${state}`), keyboard: true, title: pick(p.name), alt: pick(p.name), zIndexOffset: state === 'waiting' ? 1000 : 500 }).addTo(map);
+    mk.bindTooltip(`<b>${escapeAttr(pick(p.name))}</b><br>${escapeAttr(pick(p.why))}`, { direction: 'top', offset: [0, -16] });
+    if (state === 'waiting') mk.on('click', () => {
+      found.add(p.id); revealed = null;
+      if (queue[0]?.id === p.id) queue.shift();
+      placeHeart(p, 'found');
+      hearts.get(p.id)!.openTooltip();
       paintTask();
-      if (found.size === HIDDEN.length) { levelCleared('map'); paintTask(); }
+      if (found.size === HEART_PLACES.length) { levelCleared('map'); paintTask(); }
+      paintQuiz();
     });
+    hearts.set(p.id, mk);
+  };
+  const paintQuiz = () => {
+    const p = queue[0];
+    quiz.hidden = !p;
+    requestAnimationFrame(() => map.invalidateSize());   // the card above changes the map's height
+    if (!p) return;
+    if (optionsFor !== p.id) { options = choices(p); optionsFor = p.id; wrong.clear(); }
+    quiz.innerHTML = `
+      <p class="mq-count">${t('map.quiz.count', { i: found.size + 1, n: HEART_PLACES.length })}</p>
+      <div class="mq-photo"><img src="${import.meta.env.BASE_URL}${p.photo.src}" alt="" decoding="async"></div>
+      ${revealed
+        ? `<p class="mq-right">${t('map.quiz.right', { place: pick(p.name) })}</p>`
+        : `<p class="mq-ask">${t('map.quiz.ask')}</p>
+           <div class="mq-options">${options.map((o) => `<button type="button" class="mq-option${wrong.has(o.id) ? ' out' : ''}" data-id="${o.id}" ${wrong.has(o.id) ? 'disabled' : ''}>${escapeAttr(pick(o.name))}</button>`).join('')}</div>`}
+      <p class="mq-credit">${t('map.quiz.photo')} <a href="${p.photo.page}" target="_blank" rel="noopener">${escapeAttr(p.photo.author)}</a> · <a href="${p.photo.licenceUrl}" target="_blank" rel="noopener">${p.photo.licence}</a></p>`;
+  };
+  quiz.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('.mq-option');
+    if (!b || revealed) return;
+    const p = queue[0];
+    if (b.dataset.id === p.id) {
+      revealed = p;
+      hearts.forEach((m) => m.closeTooltip());   // a found heart's label must not cover the new one
+      placeHeart(p, 'waiting');
+      map.flyTo(at(p.lat, p.lng), 5, { duration: 1.4, animate: !still });
+      map.getContainer().scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'center' });
+      paintQuiz();
+      toast(t('map.quiz.go'));
+    } else { wrong.add(b.dataset.id!); toast(t('map.quiz.wrong')); paintQuiz(); }
   });
+  for (const p of HEART_PLACES) if (found.has(p.id)) placeHeart(p, 'found');
+  paintTask();
+  paintQuiz();
 
   let storyTimer = 0;
   let lastFocus: HTMLElement | null = null;

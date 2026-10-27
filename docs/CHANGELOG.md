@@ -2,6 +2,14 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.9.0 (2026-10-26)
+
+- Level 2 rebuilt (owner): six places, a heart in each. A street-level photo comes first; name
+  the place and its heart appears on the map to pick up. Texas (his PhD), Los Angeles (his
+  master's), Japan (a place she loves), Shenzhen (where she is), Hong Kong (her master's), New
+  York (where we may meet). Free Commons photos with credits; the map refreshes its size when
+  the card changes the layout.
+
 ## 1.8.0 (2026-10-26)
 
 - Level 7 is now **Libra and Scorpius** (owner: the computed sky "wasn't much fun"): our two

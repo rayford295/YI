@@ -5,7 +5,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/for-two%20players-d3a557?style=flat-square&labelColor=0b2036" alt="for two players" />
   <img src="https://img.shields.io/badge/levels-9%20%2B%20an%20epilogue-d3a557?style=flat-square&labelColor=0b2036" alt="9 levels and an epilogue" />
-  <img src="https://img.shields.io/badge/tests-101%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="101 tests passing" />
+  <img src="https://img.shields.io/badge/tests-103%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="103 tests passing" />
   <img src="https://img.shields.io/badge/TypeScript-strict-d3a557?style=flat-square&labelColor=0b2036" alt="TypeScript strict" />
   <img src="https://img.shields.io/badge/backend-none-d3a557?style=flat-square&labelColor=0b2036" alt="no backend" />
   <img src="https://img.shields.io/badge/art-drawn%20in%20code-d3a557?style=flat-square&labelColor=0b2036" alt="all art drawn in code" />
@@ -66,7 +66,7 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 | Roof | # | Level | The task | Behind the door |
 |:---:|:---:|---|---|---|
 | 🟥 | 1 | The Day We Met | Answer one question | Day counter since we met, twin clocks, countdown to the next flight |
-| 🟦 | 2 | Love Map | Find three hidden hearts | A Pacific-centred map of every place that matters, with our story as a tour |
+| 🟦 | 2 | Love Map | Name six street views; each right answer puts a heart on the map to pick up | Texas, Los Angeles, Japan, Shenzhen, Hong Kong, New York, and why each is ours |
 | 🟧 | 3 | Moments | Put five memories in order | The timeline, each memory badged with its day number |
 | 🟩 | 4 | Puzzle | Put the photo back together | The other one's face in nine tiles |
 | 🟫 | 5 | Gomoku | Three endgames: find the one stone that makes five | Your own colour to move, after our first game on a Zoom whiteboard |
@@ -81,7 +81,7 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 ```bash
 npm install
 npm run dev       # http://localhost:5173
-npm test          # 101 unit tests (Vitest)
+npm test          # 103 unit tests (Vitest)
 npm run build     # strict type-check + production build
 npm run banner    # redraw docs/banner.svg from the sprite data
 npm run icon      # redraw favicon.svg and the PNG icons from the sprites
