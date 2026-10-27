@@ -1,0 +1,19 @@
+.tattoo { max-width: 640px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 14px; }
+.tattoo-head { text-align: center; animation: rise 0.7s ease both; }
+.tattoo-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 46px; color: var(--rose-deep); line-height: 1.2; }
+html[lang='en'] .tattoo-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
+.tattoo-head p { margin: 4px auto 0; color: var(--muted); max-width: 34em; }
+.tattoo-spot { display: flex; justify-content: center; gap: 8px; }
+.tattoo-spot button { font: inherit; font-size: 14px; padding: 6px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; }
+.tattoo-spot button.active { background: #102e49; color: #f1e4c8; border-color: #102e49; }
+.tattoo-skin { position: relative; aspect-ratio: 2 / 1; padding: 0; overflow: hidden; background: #f6ecd9; touch-action: none; animation: rise 0.8s ease both; animation-delay: 100ms; }
+.tattoo-svg, .tattoo-svg svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.tattoo-skin canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.tattoo-skin.inked canvas { cursor: default; }
+.tattoo-skin.settle canvas { animation: settle 1.2s ease both; }
+@keyframes settle { 0% { filter: brightness(1.6) contrast(0.7); } 60% { filter: brightness(0.9) contrast(1.3); } 100% { filter: none; } }
+.tattoo-tools { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
+.tattoo-tools[hidden] { display: none; }
+.tattoo-tools .link, .tattoo-foot .link, .tattoo-note .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }
+.tattoo-note { margin: 0; text-align: center; font-size: 14px; color: var(--muted); }
+.tattoo-foot { margin: 0; text-align: center; font-size: 13px; }

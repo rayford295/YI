@@ -67,8 +67,8 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 |:---:|:---:|---|---|---|
 | 🟥 | 1 | The Day We Met | Answer one question, then say the vow line out loud | Day counter, twin clocks, countdown; the vow of being each other's again, heard by the browser |
 | 🟦 | 2 | Love Map | Name six street views; each right answer puts a heart on the map to pick up | Texas, Los Angeles, Japan, Shenzhen, Hong Kong, New York, and why each is ours |
-| 🟧 | 3 | Moments | Put five memories in order | The timeline, each memory badged with its day number |
-| 🟩 | 4 | Puzzle | Put the photo back together | The other one's face in nine tiles |
+| 🟧 | 3 | Tattoo | Handwrite a tattoo for the other one, on an arm or a shoulder, and ink it | Kept on the device; save it as a picture to send |
+| 🟩 | 4 | Moments | Put five memories in order, then put the other one's photo back together | The timeline, each memory badged with its day number; the portrait puzzle |
 | 🟫 | 5 | Gomoku | Ten endgames, one stone each; the stones you place stay and the tenth completes a heart | Your own colour to move, after our first game on a Zoom whiteboard |
 | 🟪 | 6 | Our Songs | Hear a passage, pick the title from four | Six of our songs; the same files feed the jukebox |
 | ⬛ | 7 | Libra and Scorpius | Join the stars of both our signs | Real star positions; Libra's brightest stars are still the Scorpion's claws |

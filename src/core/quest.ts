@@ -10,8 +10,8 @@ export interface Level { id: string; route: string; title: Key; story: Key }
 export const LEVELS: Level[] = [
   { id: 'met', route: '/met', title: 'quest.level.met', story: 'quest.story.met' },
   { id: 'map', route: '/map', title: 'quest.level.map', story: 'quest.story.map' },
+  { id: 'tattoo', route: '/tattoo', title: 'quest.level.tattoo', story: 'quest.story.tattoo' },
   { id: 'moments', route: '/moments', title: 'quest.level.moments', story: 'quest.story.moments' },
-  { id: 'puzzle', route: '/puzzle', title: 'quest.level.puzzle', story: 'quest.story.puzzle' },
   { id: 'gomoku', route: '/gomoku', title: 'quest.level.gomoku', story: 'quest.story.gomoku' },
   { id: 'songs', route: '/songs', title: 'quest.level.songs', story: 'quest.story.songs' },
   { id: 'stars', route: '/stars', title: 'quest.level.stars', story: 'quest.story.stars' },

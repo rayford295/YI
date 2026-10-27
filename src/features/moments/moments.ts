@@ -9,6 +9,7 @@ import { isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 
 import { shuffle } from '../../core/random';
+import { mountPuzzle } from '../puzzle/puzzle';
 
 const PUZZLE_SIZE = 5;
 
@@ -38,6 +39,7 @@ export function renderMoments(root: HTMLElement): () => void {
         <ol class="order-list" id="order-list"></ol>
         <button type="button" class="btn" id="order-check">${t('quest.task.moments.check')}</button>
       </section>`}
+      <div class="moments-puzzle" id="moments-puzzle" ${isCleared('moments') ? '' : 'hidden'}></div>
       <ol class="timeline">
         ${list.map((m, i) => `
         <li class="moment${i % 2 ? ' flip' : ''}" style="--i:${i}">
@@ -85,8 +87,15 @@ export function renderMoments(root: HTMLElement): () => void {
       const ok = order.every((m, i) => i === 0 || order[i - 1].date <= m.date);
       if (!ok) { toast(t('quest.task.moments.wrong')); return; }
       root.querySelector('#order .quest-task')!.classList.add('done');
-      levelCleared('moments');
+      root.querySelector('#order .quest-task')!.textContent = t('quest.task.moments.ordered');
+      root.querySelector<HTMLButtonElement>('#order-check')!.hidden = true;
+      const host = root.querySelector<HTMLElement>('#moments-puzzle')!;
+      host.hidden = false;
+      mountPuzzle(host, false, () => levelCleared('moments'));
+      host.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+  } else {
+    mountPuzzle(root.querySelector<HTMLElement>('#moments-puzzle')!, true, () => undefined);
   }
   return () => undefined;
 }

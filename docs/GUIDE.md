@@ -28,7 +28,7 @@ YI/
 │       ├── voice/              #   the mailbox of voice notes (notes.ts is the list)
 │       ├── days/               #   a day in College Station (cs.ts) and in Shenzhen (sz.ts); render.ts draws both
 │       ├── journey/            #   the list view
-│       ├── home/ birthday-map/ moments/ puzzle/ gomoku/ songs/
+│       ├── home/ birthday-map/ tattoo/ moments/ (+ puzzle/ mounted inside it) gomoku/ songs/
 │       ├── stars/              #   constellations.ts (Libra + Scorpius stars and lines), stars.ts (page)
 │       ├── poems/              #   lines.ts (five poems, bank/blank/solved), poems.ts (page)
 │       ├── ring/               #   3D viewer, webcam try-on, photo card
@@ -119,8 +119,8 @@ the route in `src/main.ts` and the strings (both languages) in `src/core/i18n.ts
 <p align="center">
   <img src="screenshots/met.png" width="32%" alt="Level 1: The Day We Met" />
   <img src="screenshots/map.png" width="32%" alt="Level 2: Love Map" />
-  <img src="screenshots/moments.png" width="32%" alt="Level 3: Moments" />
-  <img src="screenshots/puzzle.png" width="32%" alt="Level 4: Puzzle" />
+  <img src="screenshots/tattoo.png" width="32%" alt="Level 3: Tattoo" />
+  <img src="screenshots/moments.png" width="32%" alt="Level 4: Moments" />
   <img src="screenshots/gomoku.png" width="32%" alt="Level 5: Gomoku" />
   <img src="screenshots/songs.png" width="32%" alt="Level 6: Our Songs" />
   <img src="screenshots/stars.png" width="32%" alt="Level 7: Libra and Scorpius" />

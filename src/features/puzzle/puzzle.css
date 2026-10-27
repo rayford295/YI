@@ -1,8 +1,7 @@
-.puzzle { max-width: 640px; margin: 0 auto; padding: 28px 16px 72px; display: grid; gap: 14px; }
-.puzzle-head { text-align: center; animation: rise 0.7s ease both; }
-.puzzle-head h1 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 46px; color: var(--rose-deep); line-height: 1.2; }
-html[lang='en'] .puzzle-head h1 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
-.puzzle-head p { margin: 4px 0 0; color: var(--muted); }
+.puzzle { max-width: 640px; margin: 0 auto; display: grid; gap: 12px; }
+.puzzle-title { margin: 0; text-align: center; font-family: var(--hand); font-weight: 400; font-size: 34px; color: var(--rose-deep); line-height: 1.2; }
+html[lang='en'] .puzzle-title { font-family: var(--serif-en); font-style: italic; font-weight: 600; font-size: 28px; }
+.puzzle-sub { margin: 0; text-align: center; color: var(--muted); }
 .puzzle-board {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 6px; aspect-ratio: 1 / 1;
   background: #1c1c1c; animation: rise 0.8s ease both; animation-delay: 100ms; transition: gap 400ms ease, padding 400ms ease;

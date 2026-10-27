@@ -2,6 +2,12 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.12.0 (2026-10-26)
+
+- Levels 3 and 4 merged (owner): **Moments** now asks for the days in order and then the
+  portrait puzzle, in one house. The freed third house is **Tattoo**: handwrite a tattoo for
+  the other one on an arm or a shoulder and ink it; kept on the device, exportable as a PNG.
+
 ## 1.11.0 (2026-10-26)
 
 - Gomoku (owner): ten positions instead of three, one stone each; every answer stays on the

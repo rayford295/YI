@@ -1,10 +1,10 @@
-// Level: the other one's face cut into a 3×3 grid; tap two tiles to swap until it is whole.
+// The other one's face cut into a 3×3 grid; tap two tiles to swap until it is whole. Mounted by
+// the Moments level after the days are in order.
 import './puzzle.css';
 import { t, pick } from '../../core/i18n';
 import { nextPortrait, portraitsFor } from './portraits';
 import { shuffle } from '../../core/random';
-import { getPlayer, isCleared, levelNumber } from '../../core/quest';
-import { levelCleared } from '../../core/quest-ui';
+import { getPlayer, type PlayerId } from '../../core/quest';
 import { escapeAttr } from '../../core/html';
 
 const N = 3;
@@ -18,18 +18,17 @@ export function scramble(n = N * N, rnd = shuffle): number[] {
 }
 export const solved = (order: number[]): boolean => order.every((v, i) => v === i);
 
-export function renderPuzzle(root: HTMLElement): () => void {
-  const me = getPlayer()!;
+/** Mount the puzzle in `root`; `done` shows it solved; `onSolved` fires once when it is put together. */
+export function mountPuzzle(root: HTMLElement, done: boolean, onSolved: () => void): () => void {
+  const me: PlayerId = getPlayer() ?? 'jingyi';
   const photos = portraitsFor(me);
   let photoIndex = -1;
-  const done = isCleared('puzzle');
+  let solvedOnce = done;
   root.innerHTML = `
     <section class="puzzle">
-      <header class="puzzle-head sign">
-        <h1>${t('puzzle.title')}</h1>
-        <p>${t(me === 'jingyi' ? 'puzzle.subtitle.him' : 'puzzle.subtitle.her')}</p>
-      </header>
-      <p class="quest-task${done ? ' done' : ''}" id="pz-task">${done ? t('quest.cleared.eyebrow', { n: levelNumber('puzzle') }) : t('quest.task.puzzle', { n: levelNumber('puzzle') })}</p>
+      <h2 class="puzzle-title">${t('puzzle.title')}</h2>
+      <p class="puzzle-sub">${t(me === 'jingyi' ? 'puzzle.subtitle.him' : 'puzzle.subtitle.her')}</p>
+      <p class="quest-task${done ? ' done' : ''}" id="pz-task">${done ? t('quest.task.puzzle.done') : t('quest.task.puzzle')}</p>
       <div class="puzzle-board card" id="pz-board" role="group"></div>
       <p class="puzzle-caption" id="pz-caption"></p>
       <p class="puzzle-foot"><button type="button" class="link" id="pz-shuffle">${t('quest.task.puzzle.shuffle')}</button></p>
@@ -53,7 +52,7 @@ export function renderPuzzle(root: HTMLElement): () => void {
   };
   const start = () => {
     pickPhoto();
-    order = isCleared('puzzle') ? Array.from({ length: N * N }, (_, i) => i) : scramble();
+    order = solvedOnce ? Array.from({ length: N * N }, (_, i) => i) : scramble();
     picked = -1;
     const img = new Image();
     img.onload = () => { board.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`; paint(); };
@@ -71,11 +70,11 @@ export function renderPuzzle(root: HTMLElement): () => void {
     paint();
     if (solved(order)) {
       root.querySelector('#pz-task')!.classList.add('done');
-      root.querySelector('#pz-task')!.textContent = t('quest.cleared.eyebrow', { n: levelNumber('puzzle') });
-      levelCleared('puzzle');
+      root.querySelector('#pz-task')!.textContent = t('quest.task.puzzle.done');
+      if (!solvedOnce) { solvedOnce = true; onSolved(); }
     }
   });
-  root.querySelector('#pz-shuffle')!.addEventListener('click', () => { if (!isCleared('puzzle')) start(); else { order = scramble(); picked = -1; paint(); } });
+  root.querySelector('#pz-shuffle')!.addEventListener('click', () => { if (!solvedOnce) start(); else { order = scramble(); picked = -1; paint(); } });
   start();
   return () => undefined;
 }

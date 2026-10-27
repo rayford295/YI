@@ -23,7 +23,7 @@ const routes: Record<string, () => Promise<Page>> = {
   '/met': () => import('./features/home/home').then((m) => m.renderHome),
   '/map': () => import('./features/birthday-map/map').then((m) => m.renderMap),
   '/moments': () => import('./features/moments/moments').then((m) => m.renderMoments),
-  '/puzzle': () => import('./features/puzzle/puzzle').then((m) => m.renderPuzzle),
+  '/tattoo': () => import('./features/tattoo/tattoo').then((m) => m.renderTattoo),
   '/stars': () => import('./features/stars/stars').then((m) => m.renderStars),
   '/letter': () => import('./features/letter/letter').then((m) => m.renderLetter),
   '/gomoku': () => import('./features/gomoku/gomoku').then((m) => m.renderGomoku),
@@ -34,7 +34,7 @@ const routes: Record<string, () => Promise<Page>> = {
   '/cs': () => import('./features/days/render').then((m) => m.renderCS),
   '/sz': () => import('./features/days/render').then((m) => m.renderSZ),
 };
-const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/puzzle': 'puzzle', '/gomoku': 'gomoku', '/songs': 'songs', '/stars': 'stars', '/poems': 'poems', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
+const viewClass: Record<string, string> = { '/': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/tattoo': 'tattoo', '/gomoku': 'gomoku', '/songs': 'songs', '/stars': 'stars', '/poems': 'poems', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 let renderSeq = 0;   // a navigation that starts while a page is still loading wins
