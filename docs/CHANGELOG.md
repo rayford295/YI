@@ -2,6 +2,14 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.14.0 (2026-10-27)
+
+- The town moves to its own address, <https://town.jingyifan.love/>. `jingyifan.love` becomes a
+  front page for everything we build under the domain (repository `rayford295/jingyifan-love`).
+  Saves made at the old address come along: the front page's link into the town carries them
+  (`#handoff=`, `src/core/handoff.ts`), and the town keeps anything it already has. The gate
+  question is asked once more. Old links such as `jingyifan.love/cs` forward to the town.
+
 ## 1.13.0 (2026-10-27)
 
 - Rayford, the town's guide: Yifan in a suit, standing just south of the fountain. He explains

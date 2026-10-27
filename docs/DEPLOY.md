@@ -2,7 +2,31 @@
 
 ## Status
 
-Live at <https://jingyifan.love/> since 2026-10-26. The repository is **private** again (the
+Live at <https://town.jingyifan.love/> since 2026-10-27 (at <https://jingyifan.love/> from
+2026-10-26 until then). The domain root is now a front page for every project under the domain,
+served from its own private repository `rayford295/jingyifan-love`; each project gets a
+subdomain. That repository's README has the recipe for adding one.
+
+### The move to the subdomain
+
+- DNS (Cloudflare): `CNAME town → rayford295.github.io`, DNS only. The apex records below stay
+  and now serve the front page.
+- `public/CNAME` here holds `town.jingyifan.love`; Settings → Pages → Custom domain of this
+  repository was switched to it, and `jingyifan.love` went to the front-page repository.
+- localStorage belongs to an origin, so saves made at `jingyifan.love` do not appear at
+  `town.jingyifan.love` by themselves. The front page reads them and appends
+  `#handoff=<base64url JSON>` to its links into the town; `src/core/handoff.ts` writes them in
+  before the first render, never overwriting a key the town already has, and never taking
+  `yi.gate` or `yi.door`. Progress codes (`/sync`) remain the manual fallback.
+- The town's old service worker on phones that installed the app is replaced by a self-removing
+  `sw.js` served from the front page.
+- An installed home-screen icon from before the move points at the front page; add the town to
+  the home screen again from `town.jingyifan.love`.
+
+The paragraphs below describe the original setup at the apex; read `jingyifan.love` there as
+the front page's domain.
+
+Earlier status: The repository is **private** again (the
 account's plan allows Pages from a private repository, checked 2026-10-26: the site stayed up and
 redeployed after the switch), GitHub Pages has
 `jingyifan.love` as its custom domain with **Enforce HTTPS** on, `www.` and the old
