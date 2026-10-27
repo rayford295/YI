@@ -1,11 +1,12 @@
-// Level: three endgame positions from the board we played on. One stone wins each; find it.
+// Level: ten endgame positions, one stone each. Every answer stays on the board in gold; the
+// tenth completes a heart.
 import './gomoku.css';
 import { t } from '../../core/i18n';
 import { nameOf } from '../../core/players';
 import { getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { SIZE, boardWith, other, winningLine, type Board, type Cell, type Stone } from './core';
-import { PUZZLES } from './puzzles';
+import { HEART, PUZZLES } from './puzzles';
 
 const STARS = [[3, 3], [3, 11], [7, 7], [11, 3], [11, 11]];
 
@@ -21,16 +22,17 @@ function gridSvg(): string {
 export function renderGomoku(root: HTMLElement): () => void {
   const me: Stone = getPlayer() === 'yifan' ? 'green' : 'purple';
   const done = isCleared('gomoku');
-  let i = done ? PUZZLES.length - 1 : 0;
-  let board: Board = emptyFor(i);
-  let win: Cell[] = [];          // the line lit after a right answer
-  let solved = done;
+  let i = done ? PUZZLES.length : 0;     // puzzles solved so far; PUZZLES[i] is the one on the board
+  let board: Board = boardFor(i);
+  let win: Cell[] = [];                  // the line lit after a right answer
   let timer = 0, burstTimer = 0;
 
-  function emptyFor(k: number): Board {
+  function boardFor(k: number): Board {
     const p = PUZZLES[k];
-    return boardWith({ [me]: p.mover, [other(me)]: p.other });
+    return p ? boardWith({ [me]: p.mover, [other(me)]: p.other }) : boardWith({});
   }
+  const goldKey = (r: number, c: number) => `${r},${c}`;
+  const gold = () => new Set(HEART.slice(0, i).map(([r, c]) => goldKey(r, c)));
 
   const cells = Array.from({ length: SIZE * SIZE }, (_, k) =>
     `<button type="button" class="cell" data-r="${Math.floor(k / SIZE)}" data-c="${k % SIZE}"></button>`).join('');
@@ -46,7 +48,6 @@ export function renderGomoku(root: HTMLElement): () => void {
         <div class="board" id="board" data-turn="${me}">${gridSvg()}${cells}</div>
         <div class="burst" id="burst" aria-hidden="true"></div>
       </div>
-      <div class="gomoku-actions" id="g-actions"></div>
     </section>`;
   const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
   const boardEl = $('#board');
@@ -54,30 +55,25 @@ export function renderGomoku(root: HTMLElement): () => void {
   const burst = $('#burst');
 
   const update = () => {
-    const p = PUZZLES[i];
+    const g = gold();
     const lit = new Set(win.map(([a, b]) => a * SIZE + b));
+    const finished = i >= PUZZLES.length;
     buttons.forEach((btn, k) => {
       const r = Math.floor(k / SIZE), c = k % SIZE;
       const stone = board[r][c];
-      const last = solved && r === p.answer[0] && c === p.answer[1];
-      btn.className = `cell${stone ? ` stone ${stone}` : ''}${lit.has(k) ? ' win' : ''}${last ? ' last' : ''}`;
+      const isGold = g.has(goldKey(r, c));
+      btn.className = `cell${isGold ? ' stone gold' : stone ? ` stone ${stone}` : ''}${lit.has(k) ? ' win' : ''}${finished && isGold ? ' heart' : ''}`;
       const where = t('gomoku.cell', { r: r + 1, c: c + 1 });
-      btn.setAttribute('aria-label', stone ? `${where} · ${nameOf(stone)}` : where);
+      btn.setAttribute('aria-label', isGold ? `${where} · ♥` : stone ? `${where} · ${nameOf(stone)}` : where);
     });
-    boardEl.dataset.turn = solved ? '' : me;
+    boardEl.dataset.turn = finished || win.length ? '' : me;
     const cleared = isCleared('gomoku');
     $('#g-task').classList.toggle('done', cleared);
     $('#g-task').textContent = cleared ? t('quest.cleared.eyebrow', { n: levelNumber('gomoku') })
       : t('quest.task.gomoku', { n: levelNumber('gomoku'), done: i, total: PUZZLES.length });
-    $('#g-status').textContent = solved ? t('gomoku.solved', { i: i + 1 }) : t('gomoku.puzzle', { i: i + 1, n: PUZZLES.length, name: nameOf(me) });
-    $('#g-status').dataset.state = solved ? 'won' : 'playing';
-    $('#g-actions').innerHTML = `${i > 0 ? `<button type="button" class="g-btn" id="g-prev">${t('gomoku.prev')}</button>` : ''}
-      ${solved && i + 1 < PUZZLES.length ? `<button type="button" class="g-btn primary" id="g-next">${t('gomoku.next')}</button>` : ''}`;
-  };
-  const show = (k: number, asSolved: boolean) => {
-    i = k; solved = asSolved; board = emptyFor(k); win = [];
-    if (asSolved) { const [r, c] = PUZZLES[k].answer; win = winningLine(board, me, r, c) ?? []; board[r][c] = me; }
-    update();
+    $('#g-status').textContent = finished ? t('gomoku.heart')
+      : win.length ? t('gomoku.solved', { i: i }) : t('gomoku.puzzle', { i: i + 1, n: PUZZLES.length, name: nameOf(me) });
+    $('#g-status').dataset.state = finished ? 'won' : 'playing';
   };
   const celebrate = () => {
     burst.innerHTML = Array.from({ length: 18 }, (_, k) => `<i style="--a:${k * 20}deg;--d:${(k % 3) * 60}ms" class="${me}">❤</i>`).join('');
@@ -87,13 +83,18 @@ export function renderGomoku(root: HTMLElement): () => void {
 
   boardEl.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.cell');
-    if (!btn || solved) return;
+    if (!btn || win.length || i >= PUZZLES.length) return;
     const r = Number(btn.dataset.r), c = Number(btn.dataset.c);
-    if (board[r][c]) return;
+    if (board[r][c] || gold().has(goldKey(r, c))) return;
     const line = winningLine(board, me, r, c);
     if (line) {
-      board[r][c] = me; win = line; solved = true; update(); celebrate();
-      if (i + 1 === PUZZLES.length) levelCleared('gomoku'); else toast(t('gomoku.right'));
+      board[r][c] = me; win = line; update();
+      toast(t('gomoku.right'));
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {           // the stone turns gold and the next position is laid
+        i++; win = []; board = boardFor(i); update();
+        if (i === PUZZLES.length) { celebrate(); levelCleared('gomoku'); }
+      }, 900);
     } else {
       board[r][c] = me; update();
       btn.classList.add('wrong');
@@ -102,12 +103,7 @@ export function renderGomoku(root: HTMLElement): () => void {
       timer = window.setTimeout(() => { board[r][c] = null; update(); }, 500);
     }
   });
-  root.addEventListener('click', (e) => {
-    const el = e.target as HTMLElement;
-    if (el.closest('#g-next')) show(i + 1, isCleared('gomoku'));
-    else if (el.closest('#g-prev')) show(i - 1, true);
-  });
 
-  show(i, done);
+  update();
   return () => { clearTimeout(timer); clearTimeout(burstTimer); };
 }

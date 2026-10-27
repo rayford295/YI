@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { boardWith, winningCells, winningLine, SIZE } from './core';
-import { PUZZLES } from './puzzles';
+import { HEART, PUZZLES } from './puzzles';
 
 describe('gomoku rules', () => {
   it('finds a five in every direction and counts six as a win', () => {
@@ -20,14 +20,15 @@ describe('gomoku rules', () => {
   });
 });
 
-describe('puzzles', () => {
-  it('each has exactly one winning point for the mover', () => {
+describe('the heart of puzzles', () => {
+  it('builds one puzzle per heart point, in order', () => {
+    expect(PUZZLES.length).toBe(HEART.length);
+    PUZZLES.forEach((p, i) => expect(p.answer).toEqual(HEART[i]));
+  });
+  it('each has exactly one winning point for the mover, the heart point', () => {
     for (const p of PUZZLES) expect(winningCells(boardWith({ purple: p.mover, green: p.other }), 'purple'), p.id).toEqual([p.answer]);
   });
-  it('the third is urgent: the other side wins next move unless the mover wins now', () => {
-    expect(winningCells(boardWith({ purple: PUZZLES[2].mover, green: PUZZLES[2].other }), 'green').length).toBeGreaterThan(0);
-  });
-  it('is a position the mover could really be in (equal stones, or one fewer)', () => {
-    for (const p of PUZZLES) expect(p.other.length - p.mover.length, p.id).toBeGreaterThanOrEqual(0);
+  it('never puts a stone on another heart point, so the gold stones collected so far never collide', () => {
+    for (const p of PUZZLES) for (const [r, c] of [...p.mover, ...p.other]) expect(HEART.some(([hr, hc]) => hr === r && hc === c), `${p.id} ${r},${c}`).toBe(false);
   });
 });

@@ -2,6 +2,12 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.11.0 (2026-10-26)
+
+- Gomoku (owner): ten positions instead of three, one stone each; every answer stays on the
+  board in gold and the tenth completes a heart. Positions are generated from three patterns
+  around the heart's points and checked to have exactly one winning point.
+
 ## 1.10.0 (2026-10-26)
 
 - Level 1 gains its second half (owner): after the question, the vow. Wedding vows rewritten
