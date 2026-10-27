@@ -5,7 +5,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/for-two%20players-d3a557?style=flat-square&labelColor=0b2036" alt="for two players" />
   <img src="https://img.shields.io/badge/levels-9%20%2B%20an%20epilogue-d3a557?style=flat-square&labelColor=0b2036" alt="9 levels and an epilogue" />
-  <img src="https://img.shields.io/badge/tests-121%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="118 tests passing" />
+  <img src="https://img.shields.io/badge/tests-118%20passing-d3a557?style=flat-square&labelColor=0b2036" alt="118 tests passing" />
   <img src="https://img.shields.io/badge/TypeScript-strict-d3a557?style=flat-square&labelColor=0b2036" alt="TypeScript strict" />
   <img src="https://img.shields.io/badge/backend-none-d3a557?style=flat-square&labelColor=0b2036" alt="no backend" />
   <img src="https://img.shields.io/badge/art-drawn%20in%20code-d3a557?style=flat-square&labelColor=0b2036" alt="all art drawn in code" />
@@ -102,7 +102,7 @@ Node 22. CI runs the tests and the build on every push.
 - Each folder under `src/features/` has its own README.
 
 <p align="center">
-  <sub>Live at <a href="https://town.jingyifan.love/">town.jingyifan.love</a> (front page: <a href="https://jingyifan.love/">jingyifan.love</a>), unlisted. Personal photos and messages live here; please do not redistribute.</sub>
+  <sub>Live at <a href="https://jingyifan.love/">jingyifan.love</a>, unlisted. Personal photos and messages live here; please do not redistribute.</sub>
 </p>
 
 <p align="center">
