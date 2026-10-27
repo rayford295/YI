@@ -10,8 +10,8 @@ export const SONGS: Song[] = [
   { id: 'only-you', title: '只对你有感觉', artist: '飞轮海 / 田馥甄', start: 60, length: 20 },
   { id: 'drop-tower', title: '跳楼机', artist: 'LBI利比', start: 50, length: 20 },
   { id: 'last-page', title: '最后一页', artist: '江语晨', start: 60, length: 20 },
-  { id: 'best-in-the-world', title: '天下第一好', start: 60, length: 20 },
-  { id: 'until-you-came', title: '直到你降临', start: 60, length: 20 },
+  { id: 'best-in-the-world', title: '天下第一好', artist: '李小眼', start: 60, length: 20 },
+  { id: 'until-you-came', title: '直到你降临', artist: '阿肆', start: 60, length: 20 },
   { id: 'more-and-more', title: '越来越爱', artist: '飞轮海', start: 60, length: 20 },
 ];
 
