@@ -11,6 +11,7 @@ import { renderGate } from './features/gate/gate';
 import { interceptLinks, onNavigate, resolve } from './core/router';
 import { closeDoors, enteredThrough } from './core/door';
 import { mountJukebox } from './features/music/jukebox';
+import { birthdaySeen } from './features/birthday/seen';
 
 export type Page = (root: HTMLElement) => () => void;
 
@@ -27,6 +28,8 @@ const routes: Record<string, () => Promise<Page>> = {
   '/tattoo': () => import('./features/tattoo/tattoo').then((m) => m.renderTattoo),
   '/stars': () => import('./features/stars/stars').then((m) => m.renderStars),
   '/letter': () => import('./features/letter/letter').then((m) => m.renderLetter),
+  '/birthday': () => import('./features/birthday/birthday').then((m) => m.renderBirthday),
+  '/wedding': () => import('./features/wedding/wedding').then((m) => m.renderWedding),
   '/gomoku': () => import('./features/gomoku/gomoku').then((m) => m.renderGomoku),
   '/songs': () => import('./features/songs/songs').then((m) => m.renderSongs),
   '/poems': () => import('./features/poems/poems').then((m) => m.renderPoems),
@@ -35,7 +38,7 @@ const routes: Record<string, () => Promise<Page>> = {
   '/cs': () => import('./features/days/render').then((m) => m.renderCS),
   '/sz': () => import('./features/days/render').then((m) => m.renderSZ),
 };
-const viewClass: Record<string, string> = { '/': 'dashboard', '/town': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/tattoo': 'tattoo', '/gomoku': 'gomoku', '/songs': 'songs', '/stars': 'stars', '/poems': 'poems', '/ring': 'ring', '/letter': 'letter', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
+const viewClass: Record<string, string> = { '/': 'dashboard', '/town': 'world', '/journey': 'journey', '/start': 'start', '/met': 'home', '/map': 'map', '/moments': 'moments', '/tattoo': 'tattoo', '/gomoku': 'gomoku', '/songs': 'songs', '/stars': 'stars', '/poems': 'poems', '/ring': 'ring', '/letter': 'letter', '/birthday': 'theatre', '/wedding': 'theatre', '/sync': 'sync', '/cs': 'day', '/sz': 'day' };
 const app = document.querySelector<HTMLElement>('#app')!;
 let cleanup: (() => void) | undefined;
 let renderSeq = 0;   // a navigation that starts while a page is still loading wins
@@ -74,6 +77,10 @@ async function render(): Promise<void> {
     else if (level && !enteredThrough(path)) { path = '/town'; toast(t('quest.walk')); }
     // The epilogue is not a level: it opens once both players have reached the ring on this device.
     if (path === '/letter' && !isCleared('ring')) { path = '/town'; toast(t('quest.locked')); }
+    // The wedding comes after the letter, so it needs both players past the last level.
+    if (path === '/wedding' && !clearedByAll('ring')) { path = '/town'; toast(t('quest.locked')); }
+    // Her birthday comes first: the town opens after the prologue has played once for this player.
+    if (path === '/town' && !birthdaySeen(getPlayer()!)) path = '/birthday';
   }
   // Settle the address: a redirect, an old #/ link or a trailing slash all become the clean path.
   if (path === '/' || path === '/town') closeDoors();

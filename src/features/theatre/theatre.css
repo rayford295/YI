@@ -1,0 +1,69 @@
+/* The cutscene page: a framed pixel picture, words underneath, a skip link. */
+.theatre { max-width: 900px; margin: 0 auto; padding: 16px 16px 56px; display: grid; gap: 12px; }
+.th-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.th-top .eyebrow { margin: 0; }
+.th-skip { font: inherit; font-size: 13px; color: var(--muted); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; cursor: pointer; }
+.th-skip:hover { color: var(--rose-deep); border-color: var(--rose); }
+.th-frame { position: relative; border-radius: 16px; overflow: hidden; background: #08061a; border: 4px solid #102e49; box-shadow: var(--shadow); }
+.th-canvas { display: block; width: 100%; aspect-ratio: 128 / 80; image-rendering: pixelated; image-rendering: crisp-edges; cursor: pointer; }
+.th-overlay { position: absolute; inset: 0; pointer-events: none; }
+.th-overlay > * { position: absolute; }
+.th-caption { display: grid; gap: 8px; padding: 12px 16px; border-radius: 14px; background: #0b2036; border: 2px solid #d3a557; color: #f1e4c8; min-height: 92px; }
+.th-caption[hidden] { display: none; }
+.th-name { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; color: #d3a557; }
+.th-name[hidden] { display: none; }
+.th-text { margin: 0; font-size: 16px; line-height: 1.65; white-space: pre-line; }
+.th-text em { color: #f3c4cd; font-style: normal; }
+.th-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center; }
+.th-actions .btn { padding: 8px 18px; font-size: 14px; }
+.th-actions .btn.go { background: #d3a557; color: #102e49; border-color: #d3a557; }
+.th-actions .btn.quiet { background: transparent; color: #f1e4c8; border: 1px solid rgba(241, 228, 200, 0.4); }
+.th-meter { flex: 1 1 160px; height: 10px; border-radius: 999px; background: rgba(241, 228, 200, 0.15); overflow: hidden; }
+.th-meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #f3c4cd, #d3a557); transition: width 120ms linear; }
+.th-hold { touch-action: none; user-select: none; -webkit-user-select: none; }
+
+/* Words drawn over the picture: kept as HTML so they stay sharp at any size. */
+.th-clock { transform: translate(-50%, 0); font: 700 clamp(8px, 1.7vw, 14px)/1 ui-monospace, Menlo, monospace; color: #7ef0a8; text-shadow: 0 0 6px rgba(126, 240, 168, 0.6); letter-spacing: 0.05em; white-space: nowrap; }
+.th-clock small { display: block; font-size: 0.7em; color: #f1e4c8; opacity: 0.8; text-align: center; margin-bottom: 2px; text-shadow: none; }
+.th-icing { transform: translate(-50%, -50%); font-family: var(--hand); color: #7a3f2a; font-size: clamp(14px, 3.4vw, 30px); white-space: nowrap; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
+html[lang='en'] .th-icing { font-family: var(--serif-en); font-style: italic; font-weight: 700; font-size: clamp(11px, 2.6vw, 24px); }
+.th-icing span { opacity: 0; transition: opacity 260ms ease; }
+.th-icing span.on { opacity: 1; }
+.th-title { left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center; color: #f6e6d0; padding: 0 8%; font-family: var(--hand); font-size: clamp(18px, 4.4vw, 40px); line-height: 1.4; opacity: 0; transition: opacity 900ms ease; }
+html[lang='en'] .th-title { font-family: var(--serif-en); font-style: italic; }
+.th-title small { display: block; font-family: var(--serif-zh); font-size: 0.42em; letter-spacing: 0.2em; color: #d3a557; margin-top: 10px; }
+html[lang='en'] .th-title small { font-family: var(--serif-en); }
+.th-title.on { opacity: 1; }
+.th-banner { left: 50%; top: 9%; transform: translateX(-50%) scale(0.6); opacity: 0; transition: all 700ms cubic-bezier(.2, 1.4, .4, 1); font-family: var(--hand); color: #fff6dc; font-size: clamp(16px, 4vw, 36px); text-shadow: 0 2px 0 #a8324f, 0 0 12px rgba(212, 80, 109, 0.6); white-space: nowrap; }
+html[lang='en'] .th-banner { font-family: var(--serif-en); font-style: italic; font-weight: 700; }
+.th-banner.on { opacity: 1; transform: translateX(-50%) scale(1); }
+
+/* The two rings, side by side, sliding together. */
+.th-rings { left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; gap: 4%; width: 74%; opacity: 0; transition: opacity 800ms ease; }
+.th-rings.on { opacity: 1; }
+.th-rings figure { margin: 0; flex: 1; text-align: center; color: #f1e4c8; font-size: clamp(10px, 1.8vw, 14px); transition: transform 1600ms cubic-bezier(.3, .8, .3, 1); }
+.th-rings img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; border: 3px solid #d3a557; box-shadow: 0 0 24px rgba(243, 201, 78, 0.45); }
+.th-rings.close .hers { transform: translateX(18%) rotate(-6deg); }
+.th-rings.close .his { transform: translateX(-18%) rotate(6deg); }
+
+/* The last card of each scene. */
+.th-card { position: fixed; inset: 0; z-index: 3000; display: grid; place-items: center; padding: 16px; background: rgba(16, 10, 30, 0.55); backdrop-filter: blur(4px); animation: th-in 600ms ease both; }
+.th-card-inner { width: min(520px, 100%); max-height: calc(100dvh - 32px); overflow: auto; text-align: center; padding: 28px 22px 22px; border-radius: 20px; background: linear-gradient(180deg, #fffaf3, #fdf0e6); border: 3px solid #d3a557; box-shadow: 0 0 0 4px #102e49, 0 20px 50px rgba(0, 0, 0, 0.35); display: grid; gap: 12px; justify-items: center; }
+.th-card h2 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 40px; line-height: 1.2; color: var(--rose-deep); }
+html[lang='en'] .th-card h2 { font-family: var(--serif-en); font-style: italic; font-weight: 700; }
+.th-card p { margin: 0; color: var(--ink); line-height: 1.8; }
+.th-card .eyebrow { color: var(--gold); letter-spacing: 0.18em; font-size: 13px; }
+.th-card .pair { display: flex; align-items: center; gap: 12px; }
+.th-card .pair b { font-size: 26px; color: var(--rose); }
+.th-card .row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+.th-card .fine { font-size: 13px; color: var(--muted); }
+.th-cert { width: 100%; border-radius: 12px; border: 1px solid #e6d3b5; }
+@keyframes th-in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 480px) {
+  .theatre { padding: 10px 10px 40px; }
+  .th-text { font-size: 15px; }
+  .th-card h2 { font-size: 32px; }
+}
+.th-count { font-size: 14px; color: #d3a557; font-variant-numeric: tabular-nums; margin-right: auto; }
+.th-overlay.dim > * { opacity: 0.4; }

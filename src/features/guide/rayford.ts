@@ -11,6 +11,7 @@ export type Topic = 'hello' | 'about' | 'next' | 'levels' | 'town' | 'me';
 export type Choice =
   | { label: string; to: Topic }
   | { label: string; walkTo: Point }
+  | { label: string; go: string }
   | { label: string; close: true };
 
 export interface Line { text: string; choices: Choice[] }
@@ -20,6 +21,8 @@ export interface GuideState {
   other: PlayerId;
   name(p: PlayerId): string;
   cleared(level: string, p: PlayerId): boolean;
+  /** The wedding has happened on this device (only then may he say what the suit was for). */
+  wed?: boolean;
 }
 
 const doorOf = (level: string): Point => BUILDINGS.find((b) => b.level === level)!.door;
@@ -40,6 +43,7 @@ export function rayfordSays(topic: Topic, s: GuideState): Line {
           { label: t('guide.ask.levels'), to: 'levels' },
           { label: t('guide.ask.town'), to: 'town' },
           { label: t('guide.ask.me'), to: 'me' },
+          { label: t('guide.ask.birthday'), go: '/birthday' },
           bye(),
         ],
       };
@@ -61,6 +65,7 @@ export function rayfordSays(topic: Topic, s: GuideState): Line {
           choices: [{ label: t('guide.take'), walkTo: doorOf(next.id) }, back()],
         };
       }
+      if (s.wed) return { text: t(s.player === 'jingyi' ? 'guide.wed' : 'guide.wed.yifan'), choices: [{ label: t('world.wedding'), go: '/wedding' }, back(), bye()] };
       if (!s.cleared('ring', s.other)) return { text: t('guide.wait', { other: them }), choices: [back(), bye()] };
       return { text: t('guide.done', { other: them }), choices: [back(), bye()] };
     }

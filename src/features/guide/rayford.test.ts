@@ -44,3 +44,13 @@ describe('Rayford', () => {
     expect(waiting.text).not.toBe(done.text);
   });
 });
+
+describe('Rayford after the wedding', () => {
+  it('congratulates and offers the wedding again; before it, never mentions it', () => {
+    const all = LEVELS.map((l) => l.id);
+    const wed = rayfordSays('next', { ...state(all, all), wed: true });
+    expect(wed.choices.some((c) => 'go' in c && c.go === '/wedding')).toBe(true);
+    const before = rayfordSays('next', state(all, all));
+    expect(before.choices.some((c) => 'go' in c && c.go === '/wedding')).toBe(false);
+  });
+});

@@ -12,12 +12,13 @@ import { rayfordSays, type Topic } from '../guide/rayford';
 import { BUILDINGS, CAT_HOMES, MAILBOX, PARTNER, RAYFORD_SPOT, SIGNPOST, SIGNPOST_WEST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
 import { bindControls, padHtml } from './controls';
-import { JINGYI, RAYFORD, YIFAN, buildCat, portraitUrl, buildMailbox, buildSheet, buildSign, type CatId, type Dir } from './sprites';
+import { JINGYI, JINGYI_BRIDE, RAYFORD, YIFAN, YIFAN_GROOM, buildCat, portraitUrl, buildMailbox, buildSheet, buildSign, type CatId, type Dir } from './sprites';
 import { WATER_PHASES, renderWater } from './tiles';
 import { phaseAt, tintFor } from './daylight';
 import { clockIn } from '../../core/dates';
 import { config } from '../../core/config';
 import { getLang } from '../../core/i18n';
+import { weddingDone } from '../wedding/seen';
 import { bumpSound, doorSound, setSoundOn, soundOn, stepSound, talkSound } from './sound';
 
 const catPhoto = (id: CatId): string => `${import.meta.env.BASE_URL}media/cats/${id}.jpg`;
@@ -61,6 +62,9 @@ export function renderWorld(root: HTMLElement): () => void {
 
 function mountWorld(root: HTMLElement): () => void {
   const p = getPlayer()!;
+  // After the wedding the two of them walk the town as bride and groom.
+  const wed = weddingDone();
+  const figure = (who: PlayerId) => (who === 'jingyi' ? (wed ? JINGYI_BRIDE : JINGYI) : (wed ? YIFAN_GROOM : YIFAN));
   const other: PlayerId = p === 'jingyi' ? 'yifan' : 'jingyi';
   const cur = current(p);
   const done = LEVELS.filter((l) => isCleared(l.id, p)).length;
@@ -95,6 +99,10 @@ function mountWorld(root: HTMLElement): () => void {
         <a href="/cs">${t('world.cs')}</a>
         <span aria-hidden="true"> · </span>
         <a href="/sz">${t('world.sz')}</a>
+        <span aria-hidden="true"> · </span>
+        <a href="/birthday">${t('world.birthday')}</a>${wed ? `
+        <span aria-hidden="true"> · </span>
+        <a href="/wedding">${t('world.wedding')}</a>` : ''}
         <span aria-hidden="true"> · </span>
         <button type="button" class="link" id="world-switch">${t('journey.switch')}</button>
         <span aria-hidden="true"> · </span>
@@ -137,7 +145,7 @@ function mountWorld(root: HTMLElement): () => void {
   if (!walks.length) saveCatSpots();
   window.addEventListener('pagehide', saveCatSpots);
   const npcs: Npc[] = [
-    { id: `partner:${other}`, x: PARTNER.x, y: PARTNER.y, frames: [], sheet: buildSheet(other === 'jingyi' ? JINGYI : YIFAN), dir: 'left' },
+    { id: `partner:${other}`, x: PARTNER.x, y: PARTNER.y, frames: [], sheet: buildSheet(figure(other)), dir: 'left' },
     { id: 'sign:cs', x: SIGNPOST.x, y: SIGNPOST.y, frames: buildSign() },   // the road to College Station
     { id: 'sign:sz', x: SIGNPOST_WEST.x, y: SIGNPOST_WEST.y, frames: buildSign() },   // the road to Shenzhen
     { id: 'mailbox', x: MAILBOX.x, y: MAILBOX.y, frames: buildMailbox() },   // the voice notes
@@ -204,12 +212,13 @@ function mountWorld(root: HTMLElement): () => void {
   // Rayford: a menu of written answers; "take me there" closes the box and walks to the door.
   const rayfordFace = portraitUrl(RAYFORD);
   function talkRayford(topic: Topic): void {
-    const line = rayfordSays(topic, { player: p, other, name: playerName, cleared: (id, who) => isCleared(id, who) });
+    const line = rayfordSays(topic, { player: p, other, name: playerName, cleared: (id, who) => isCleared(id, who), wed });
     openDialog(t('guide.name'), line.text, line.choices.map((c) => ({
       label: c.label,
       run: () => {
         if ('to' in c) talkRayford(c.to);
         else if ('walkTo' in c) { closeDialog(); engine.walkTo(c.walkTo); }
+        else if ('go' in c) go(c.go);
         else closeDialog();
       },
     })), rayfordFace);
@@ -243,7 +252,13 @@ function mountWorld(root: HTMLElement): () => void {
       return;
     }
     const theirs = LEVELS.filter((l) => isCleared(l.id, other)).length;
-    if (clearedByAll('ring')) {
+    if (wed) {
+      openDialog(playerName(other), t('world.partner.wed'), [
+        { label: t('world.partner.wed.go'), run: () => go('/wedding') },
+        { label: t('world.partner.epilogue.go'), cls: 'quiet', run: () => go('/letter') },
+        { label: t('world.close'), run: closeDialog },
+      ]);
+    } else if (clearedByAll('ring')) {
       openDialog(playerName(other), t('world.partner.epilogue'), [
         { label: t('world.partner.epilogue.go'), run: () => go('/letter') },
         { label: t('world.close'), run: closeDialog },
@@ -257,7 +272,7 @@ function mountWorld(root: HTMLElement): () => void {
   const zone = p === 'jingyi' ? config.her.zone : config.him.zone;
   let tintAt = 0, tint: ReturnType<typeof tintFor>;
   const engine = new WorldEngine({
-    canvas, sheet: buildSheet(p === 'jingyi' ? JINGYI : YIFAN), start, dir, npcs,
+    canvas, sheet: buildSheet(figure(p)), start, dir, npcs,
     walkable: (x, y) => walkable(x, y, (id) => isUnlocked(id, p)),
     cleared: (id) => isCleared(id, p),
     onDoor, onBump, onMove: (q) => savePos(p, q),

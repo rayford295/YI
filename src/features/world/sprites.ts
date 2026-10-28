@@ -142,6 +142,59 @@ export const RAYFORD: Figure = {
   legs: JINGYI.legs,
 };
 
+// Costumes for the two cutscenes (the birthday prologue and the wedding). Same faces, new clothes.
+
+// 小日 the pastry chef: a tall white toque over his hair and a cream apron over the red top.
+export const YIFAN_CHEF: Figure = {
+  palette: { ...YIFAN.palette, w: '#ffffff', a: '#fff1e2', o: '#e3c9b0' },
+  body: {
+    down: ['..wwwwwwww..', '...wwwwww...', '.hhhhhhhhhh.', ...YIFAN.body.down.slice(3, 8),
+      '..taaaaaat..', '..taaaaaat..', '..saaaaaas..', '...aoaaoa...'],
+    up: ['..wwwwwwww..', '...wwwwww...', ...YIFAN.body.up.slice(2, 8),
+      '..tttatttt..', '..tttatttt..', '..sttatttts.', '...tttttt...'],
+    side: ['...wwwwwww..', '....wwwww...', '..hhhhhhhh..', ...YIFAN.body.side.slice(3, 8),
+      '....taaa....', '...ttaaaa...', '...ttaaas...', '...ttaaaa...'],
+  },
+  legs: JINGYI.legs,
+};
+
+// Jingyi on her birthday: a little gold crown with a pink stone.
+export const JINGYI_CROWN: Figure = {
+  palette: { ...JINGYI.palette, g: '#f3c94e', k: '#e0517a' },
+  body: {
+    down: ['...g.kg.g...', ...JINGYI.body.down.slice(1)],
+    up: ['...g.gg.g...', ...JINGYI.body.up.slice(1)],
+    side: ['....gkgg....', ...JINGYI.body.side.slice(1)],
+  },
+  legs: JINGYI.legs,
+};
+
+// The bride: a white gown to the floor, a veil falling past her shoulders, red roses in her hands.
+const GOWN = ['..vvvvvvvv..', '..vvvvvvvv..', '.vvvvvvvvvv.', '.vvvvvvvvvv.'];
+export const JINGYI_BRIDE: Figure = {
+  palette: { ...JINGYI.palette, t: '#fffdf7', u: '#fbf3ea', v: '#fffaf2', l: 'rgba(255,255,255,0.78)', r: '#d4304f', f: '#5f8f4e', w: '#f6e7b0' },
+  body: {
+    down: ['....hwwh....', '..hhhhhhhh..', '.lhhhhhhhhl.', '.lhhsssshhl.', '.lssssssssl.', '.lsessssesl.',
+      '.lscsssscsl.', '.l.hssssh.l.', '.l..tttt..l.', '.l.trrfttt..', '..strrrttts.', '...uuuuuu...'],
+    up: ['....hwwh....', '..hhhhhhhh..', '.lllllllll..', '.llllllllll.', '.llllllllll.', '.llllllllll.',
+      '.llllllllll.', '..llllllll..', '...lttttl...', '...tttttt...', '..sttttttts.', '...uuuuuu...'],
+    side: ['....hwwh....', '...hhhhhhh..', '.lhhhhhhhh..', '.lhhhhhsss..', '.lhhhhssss..', '.lhhhhsess..',
+      '.lhhhhscss..', '.l.hhsssss..', '.l..tttt....', '.l.ttttrr...', '...tttsrr...', '...uuuuuu...'],
+  },
+  legs: { front: [GOWN, GOWN], side: [GOWN, ['..vvvvvvvv..', '..vvvvvvvv..', '.vvvvvvvvvv.', '..vvvvvvvvvv']] },
+};
+
+// The groom: Rayford's suit made black tie, with a red rose on the lapel.
+export const YIFAN_GROOM: Figure = {
+  palette: { ...RAYFORD.palette, j: '#1d1b26', k: '#1d1b26', w: '#fbf8f2', r: '#d4304f', p: '#14121a' },
+  body: {
+    down: [...YIFAN.body.down.slice(0, 8), '..jjwkkwjj..', '..jrjwwjjj..', '..sjjjwjjjs.', '...jjjjjj...'],
+    up: RAYFORD.body.up,
+    side: [...YIFAN.body.side.slice(0, 8), '....jwjj....', '...jjwrjj...', '...jjjjjs...', '...jjjjjj...'],
+  },
+  legs: JINGYI.legs,
+};
+
 // The two cats, drawn after the real ones: Coffee, a seal-point Ragdoll (cream fluff, a dark
 // mask around blue eyes, dark ears and tail), and Duoduo, a bicolour Ragdoll (white, a tan cap
 // over the ears, a tan saddle on the back, a white blaze and a pink nose). One facing, two frames
