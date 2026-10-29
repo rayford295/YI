@@ -4,8 +4,8 @@ Writing about Yi Town, kept apart from the code.
 
 | File | What it is |
 |---|---|
-| `love-at-first-sprite.pdf` | **Love at First Sprite: A Pixel Town for Two, Thirteen Hours and One Ocean Apart.** Jingyi Chen and Yifan Yang (corresponding). Two-column academic paper (ACM `sigconf` style, 10 pages). |
-| `love-at-first-sprite.tex`, `references.bib` | Its LaTeX source. Every DOI in the bibliography was checked against Crossref. |
+| `meridian.pdf` | **MERIDIAN: Memory-Encoded Rituals for Intimacy across Distance in an Interactive, Asynchronous Neighbourhood.** Jingyi Chen and Yifan Yang (corresponding, yifan@jingyifan.love). Two-column academic paper (ACM `sigconf` style, 10 pages). |
+| `meridian.tex`, `references.bib` | Its LaTeX source. Every DOI in the bibliography was checked against Crossref. |
 | `report-zh.pdf` | The Chinese feature report (功能报告说明书, 26 A4 pages): what the town is, how to play every level, progress codes, privacy, architecture, maintenance, FAQ. |
 | `report-zh.html` | Its source, printed to PDF with Chromium. |
 | `figures/` | Screenshots of the live site and art rendered from the sprite code, shared by both documents. |
@@ -19,8 +19,8 @@ The paper (TinyTeX; `CJKutf8` with Arphic fonts for the Chinese lines):
 
 ```bash
 export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
-pdflatex love-at-first-sprite && bibtex love-at-first-sprite
-pdflatex love-at-first-sprite && pdflatex love-at-first-sprite
+pdflatex meridian && bibtex meridian
+pdflatex meridian && pdflatex meridian
 ```
 
 The report (Playwright, from this folder):
