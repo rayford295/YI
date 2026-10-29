@@ -53,6 +53,7 @@ in an \ini{I}nteractive, \ini{A}synchronous \ini{N}eighbourhood}
 
 \author{Jingyi Chen}
 \affiliation{\institution{Yi Town}\country{}}
+\email{jingyi@jingyifan.love}
 
 \author{Yifan Yang}
 \authornote{Corresponding author.}
@@ -67,8 +68,8 @@ apart, one in Shenzhen, China, the other in College Station, Texas. This paper r
 design and implementation of \yt{}, a bilingual, browser-only game made by this couple for
 themselves, first as a birthday gift and then as a shared artefact that keeps growing. Each
 player walks a pixel avatar through a small town whose nine houses are levels, and each level
-turns one shared memory into a game mechanic: a vow spoken aloud and recognised in the browser,
-street views to be named on a map of six places, a tattoo handwritten on a drawn arm, a timeline
+turns one shared memory into a game mechanic: a vow spoken aloud,
+street views to name on a map of six places, a tattoo handwritten on a drawn arm, a timeline
 to put back in order, Gomoku endgames whose answers trace a heart, songs named from a passage,
 the stars of two birth signs joined by hand, missing characters restored to classical Chinese love
 poems, and a procedurally modelled ring tried on through hand tracking. A birthday prologue and a
@@ -80,8 +81,9 @@ merging two devices' progress needs no server. It travels between phones as a co
 four characters guarded by an ISO~7064 MOD~37,36 check character. The sky follows each player's
 own clock, and a unit test keeps the final surprise out of every string shown before it. The
 system comprises about 8{,}400 lines of strict TypeScript and 153 unit tests and was built in 109
-commits over five days. We reflect on what designing for an audience of exactly one other person
-reveals about privacy, asynchrony and ceremony in intimate computing.
+commits over five days; its source is public at \url{https://github.com/rayford295/yi-town}. We
+reflect on what designing for an audience of exactly one other person reveals about privacy,
+asynchrony and ceremony in intimate computing.
 \end{abstract}
 
 \begin{CCSXML}
@@ -879,6 +881,15 @@ large: a vow, six places, a tattoo, forty days, a heart of stones, six songs, tw
 five poems, a ring, a cake and a wedding. For an audience of exactly one other person, technical
 choices and emotional ones turned out to be the same choices, and we hope the commitments listed
 here are useful to others who build for the person on the other side of the ocean.
+
+\section*{Code and Data Availability}
+The complete source of \yt{}, with its tests, design notes, changelog and the Blender script for
+the rings, is available at \url{https://github.com/rayford295/yi-town}; this paper describes
+version 1.17.0 (28 October 2026). The repository also holds the personal photographs, voice notes
+and letters that the game is made of, published with the consent of both authors. The street-view
+photographs come from Wikimedia Commons under the Creative Commons licences credited in the game,
+and the \emph{Wedding March} recording is in the public domain. The paper's source and figures
+are in the repository's \code{paper/} folder.
 
 \section*{Declaration of Generative AI Use}
 The authors used Claude (Anthropic), through the Claude Code assistant, in two ways. First, for the

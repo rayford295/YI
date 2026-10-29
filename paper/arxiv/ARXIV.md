@@ -9,7 +9,12 @@ pdfLaTeX build should produce; it was compiled from exactly the files in the tar
 - [ ] **Jingyi has read the paper and agrees to be an author.** arXiv requires every author's
       consent, and the paper describes the ring and the wedding, so this waits until after she
       has played (on or after 31 October 2026).
-- [ ] `yifan@jingyifan.love` receives mail (Cloudflare Email Routing; see the steps given in chat).
+- [ ] `yifan@jingyifan.love` and `jingyi@jingyifan.love` both receive mail (Cloudflare Email
+      Routing: one rule per address).
+- [ ] **Make `rayford295/yi-town` public on submission day, not before** (the abstract links it).
+      Before flipping it, decide whether to remove Yifan's street address from the College Station
+      day (`cs.story.*` in `src/core/i18n.ts`); git history keeps whatever was ever committed.
+      Command: `gh repo edit rayford295/yi-town --visibility public --accept-visibility-change-consequences`.
 - [ ] Submit from an arXiv account in Yifan's name; cs.HC may ask for an endorsement on a
       first submission to that category.
 - [ ] Read `meridian-preview.pdf` once more; the version on arXiv stays public for good.
@@ -24,13 +29,13 @@ MERIDIAN: Memory-Encoded Rituals for Intimacy across Distance in an Interactive,
 
 Jingyi Chen, Yifan Yang
 
-**Abstract** (1867 characters; the limit is 1,920)
+**Abstract** (1896 characters; the limit is 1,920)
 
-Two people met on 20 September 2026 and have since lived thirteen hours and one Pacific Ocean apart, one in Shenzhen, China, the other in College Station, Texas. This paper reports the design and implementation of Yi Town, a bilingual, browser-only game made by this couple for themselves, first as a birthday gift and then as a shared artefact that keeps growing. Each player walks a pixel avatar through a small town whose nine houses are levels, and each level turns one shared memory into a game mechanic: a vow spoken aloud and recognised in the browser, street views to be named on a map of six places, a tattoo handwritten on a drawn arm, a timeline to put back in order, Gomoku endgames whose answers trace a heart, songs named from a passage, the stars of two birth signs joined by hand, missing characters restored to classical Chinese love poems, and a procedurally modelled ring tried on through hand tracking. A birthday prologue and a wedding finale play as pixel cutscenes. Using research through design and autobiographical design, we state six design commitments (memory as mechanics, earned access, intimacy without a server, parity between the two languages, art drawn in code, and secrecy as narrative tension) and show how the system realises each of them. Progress is modelled as a grow-only set, so merging two devices' progress needs no server. It travels between phones as a code of at most four characters guarded by an ISO 7064 MOD 37,36 check character. The sky follows each player's own clock, and a unit test keeps the final surprise out of every string shown before it. The system comprises about 8,400 lines of strict TypeScript and 153 unit tests and was built in 109 commits over five days. We reflect on what designing for an audience of exactly one other person reveals about privacy, asynchrony and ceremony in intimate computing.
+Two people met on 20 September 2026 and have since lived thirteen hours and one Pacific Ocean apart, one in Shenzhen, China, the other in College Station, Texas. This paper reports the design and implementation of Yi Town, a bilingual, browser-only game made by this couple for themselves, first as a birthday gift and then as a shared artefact that keeps growing. Each player walks a pixel avatar through a small town whose nine houses are levels, and each level turns one shared memory into a game mechanic: a vow spoken aloud, street views to name on a map of six places, a tattoo handwritten on a drawn arm, a timeline to put back in order, Gomoku endgames whose answers trace a heart, songs named from a passage, the stars of two birth signs joined by hand, missing characters restored to classical Chinese love poems, and a procedurally modelled ring tried on through hand tracking. A birthday prologue and a wedding finale play as pixel cutscenes. Using research through design and autobiographical design, we state six design commitments (memory as mechanics, earned access, intimacy without a server, parity between the two languages, art drawn in code, and secrecy as narrative tension) and show how the system realises each of them. Progress is modelled as a grow-only set, so merging two devices' progress needs no server. It travels between phones as a code of at most four characters guarded by an ISO 7064 MOD 37,36 check character. The sky follows each player's own clock, and a unit test keeps the final surprise out of every string shown before it. The system comprises about 8,400 lines of strict TypeScript and 153 unit tests and was built in 109 commits over five days; its source is public at https://github.com/rayford295/yi-town. We reflect on what designing for an audience of exactly one other person reveals about privacy, asynchrony and ceremony in intimate computing.
 
 **Comments**
 
-11 pages, 9 figures, 5 tables
+11 pages, 9 figures, 5 tables; source code at https://github.com/rayford295/yi-town
 
 **Primary category:** cs.HC (Human-Computer Interaction)
 **Cross-list:** cs.CY (Computers and Society)
