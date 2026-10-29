@@ -73,6 +73,7 @@ html[lang='en'] .ring-together h2 { font-family: var(--serif-en); font-style: it
 .ring-views { bottom: 44px; }
 .ring-which { top: 16px; }
 .ring-views button, .ring-which button {
+  white-space: nowrap;
   border: 1px solid rgba(211, 165, 87, 0.55); background: rgba(16, 46, 73, 0.6); color: #f1e4c8;
   padding: 7px 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; backdrop-filter: blur(6px);
   transition: background 160ms ease, color 160ms ease;

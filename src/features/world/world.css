@@ -18,7 +18,12 @@ html[lang='en'] .world-head h1 { font-family: var(--serif-en); font-style: itali
 /* The talk box, like a handheld RPG: a name plate on the frame and a dark text panel. */
 .world-dialog { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 2; max-height: calc(100% - 20px); overflow: auto; }
 /* On a narrow phone the map is short, so the talk box goes under it instead of covering it. */
-@media (max-width: 480px) { .world-dialog { position: relative; left: 0; right: 0; bottom: 0; max-height: none; margin: 8px; } }
+@media (max-width: 480px) {
+  .world-dialog { position: relative; left: 0; right: 0; bottom: 0; max-height: none; margin: 8px; }
+  /* The choices run under the portrait in a tight row, not one per line beside it. */
+  .world-panel.has-face .world-actions { grid-column: 1 / -1; justify-content: flex-start; }
+  .world-actions .btn { padding: 7px 12px; font-size: 13px; }
+}
 .world-dialog[hidden] { display: none; }
 .world-name {
   display: inline-block; margin: 0 0 -2px 10px; padding: 4px 14px; border-radius: 10px 10px 0 0;
