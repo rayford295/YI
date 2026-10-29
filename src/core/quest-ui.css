@@ -34,7 +34,7 @@ html[lang='en'] .cleared-card h2 { font-family: var(--serif-en); font-style: ita
 .quest-toast.in { opacity: 1; transform: translate(-50%, 0); }
 
 .quest-task {
-  margin: 0 auto 14px; max-width: 640px; padding: 10px 16px; border-radius: 999px; text-align: center; font-size: 14px;
+  margin: 0 auto 14px; max-width: 640px; width: fit-content; justify-self: center; padding: 10px 16px; border-radius: 999px; text-align: center; font-size: 14px;
   background: #102e49; color: #f1e4c8; border: 1px solid rgba(211, 165, 87, 0.5); box-shadow: 0 8px 24px -12px rgba(16, 46, 73, 0.6);
 }
 .quest-task.done { background: #d3a557; color: #102e49; }

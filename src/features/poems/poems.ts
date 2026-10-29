@@ -61,7 +61,9 @@ export function renderPoems(root: HTMLElement): () => void {
       const boxes = need.map((c, k) => open
         ? `<span class="po-box set">${esc(c)}</span>`
         : `<button type="button" class="po-box${filled[k] ? ' set' : ''}${k === filled.length ? ' next' : ''}" data-k="${k}" aria-label="${t('poems.box', { n: k + 1 })}">${esc(filled[k] ?? '')}</button>`).join('');
-      return `<p class="po-line po-blank">${esc(before)}<span class="po-boxes">${boxes}</span>${esc(after)}</p>`;
+      // Punctuation right after the blanks stays glued to them instead of dropping to its own line.
+      const glue = /^[，。、；：！？]/.exec(after)?.[0] ?? '';
+      return `<p class="po-line po-blank">${esc(before)}<span class="po-glue"><span class="po-boxes">${boxes}</span>${esc(glue)}</span>${esc(after.slice(glue.length))}</p>`;
     }).join('');
     const bankHtml = open ? '' : `<div class="po-bank" role="group" aria-label="${t('poems.bank')}">${tiles.map((c, k) =>
       `<button type="button" class="po-tile" data-k="${k}" ${used.includes(k) ? 'disabled' : ''}>${esc(c)}</button>`).join('')}</div>`;

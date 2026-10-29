@@ -49,7 +49,6 @@ html[lang='en'] .mq-right { font-family: var(--serif-en); font-style: italic; fo
 .mq-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
 .mq-option { font: inherit; font-size: 16px; padding: 12px 8px; border-radius: 10px; cursor: pointer; color: #f1e4c8; background: #102e49; border: 0; box-shadow: 0 3px 0 #06111f; }
 .mq-option:active { transform: translateY(2px); box-shadow: 0 1px 0 #06111f; }
-.mq-option.out { opacity: 0.25; text-decoration: line-through; cursor: default; box-shadow: none; }
 .mq-credit { margin: 0; font-size: 11px; color: var(--muted); }
 .mq-credit a { color: inherit; }
 .heart-marker.hidden.waiting span { opacity: 1; font-size: 30px; filter: none; color: var(--rose); animation: beat 0.9s ease-in-out infinite; }

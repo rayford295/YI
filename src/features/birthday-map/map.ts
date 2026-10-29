@@ -6,7 +6,7 @@ import { sortedMemories, PLACES, type Memory } from '../moments/memories';
 import { config } from '../../core/config';
 import { letter, letterParagraphs } from './letter';
 import { greatCircle, pacificLng, pointAlong, type LatLng } from '../../core/geo';
-import { formatDate, hoursApart } from '../../core/dates';
+import { dayNumberSince, formatDate, hoursApart } from '../../core/dates';
 import { escapeAttr } from '../../core/html';
 import { prefersReducedMotion } from '../../core/motion';
 import { attachMediaFallback } from './media';
@@ -14,11 +14,12 @@ import { getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { HEART_PLACES, choices, type Place } from './places';
 import { shuffle } from '../../core/random';
+import { liveKey, sessionState } from '../../core/storage';
 
 // Level 2: a heart in each of six places. A street-level photo comes first; name the place and
-// its heart appears on the map to pick up. Found state lasts for the visit; once the level is
-// cleared every heart shows with its reason.
-const foundBy = new Map<string, Set<string>>();   // per player, for the visit
+// its heart appears on the map to pick up. Found state lasts for the tab (so a language toggle
+// or a reload keeps it); once the level is cleared every heart shows with its reason. A wrong
+// name deals the four options again, so there is no working through them.
 
 const at = (lat: number, lng: number): LatLng => [lat, pacificLng(lng)];
 
@@ -102,8 +103,8 @@ export function renderMap(root: HTMLElement): () => void {
 
   // The six hearts: one per place, hidden until its street view is named.
   const me = getPlayer() ?? 'jingyi';
-  const found = foundBy.get(me) ?? new Set<string>();
-  foundBy.set(me, found);
+  const live = sessionState<string[]>(liveKey('map', me));
+  const found = new Set<string>((live.get() ?? []).filter((id) => HEART_PLACES.some((p) => p.id === id)));
   if (isCleared('map')) for (const p of HEART_PLACES) found.add(p.id);
   const task = root.querySelector<HTMLElement>('#map-task')!;
   const quiz = root.querySelector<HTMLElement>('#map-quiz')!;
@@ -111,7 +112,6 @@ export function renderMap(root: HTMLElement): () => void {
   let revealed: Place | null = null;          // named right; its heart waits on the map
   let options: Place[] = [];
   let optionsFor = '';                        // which place `options` were drawn for
-  const wrong = new Set<string>();
   const hearts = new Map<string, L.Marker>();
   const paintTask = () => {
     task.textContent = isCleared('map') ? t('quest.cleared.eyebrow', { n: levelNumber('map') })
@@ -124,6 +124,7 @@ export function renderMap(root: HTMLElement): () => void {
     mk.bindTooltip(`<b>${escapeAttr(pick(p.name))}</b><br>${escapeAttr(pick(p.why))}`, { direction: 'top', offset: [0, -16] });
     if (state === 'waiting') mk.on('click', () => {
       found.add(p.id); revealed = null;
+      if (!isCleared('map')) live.set([...found]);
       if (queue[0]?.id === p.id) queue.shift();
       placeHeart(p, 'found');
       hearts.get(p.id)!.openTooltip();
@@ -138,14 +139,14 @@ export function renderMap(root: HTMLElement): () => void {
     quiz.hidden = !p;
     requestAnimationFrame(() => { if (map.getContainer().isConnected) map.invalidateSize(); });   // the card above changes the map's height
     if (!p) return;
-    if (optionsFor !== p.id) { options = choices(p); optionsFor = p.id; wrong.clear(); }
+    if (optionsFor !== p.id) { options = choices(p); optionsFor = p.id; }
     quiz.innerHTML = `
       <p class="mq-count">${t('map.quiz.count', { i: found.size + 1, n: HEART_PLACES.length })}</p>
       <div class="mq-photo"><img src="${import.meta.env.BASE_URL}${p.photo.src}" alt="" decoding="async"></div>
       ${revealed
         ? `<p class="mq-right">${t('map.quiz.right', { place: pick(p.name) })}</p>`
         : `<p class="mq-ask">${t('map.quiz.ask')}</p>
-           <div class="mq-options">${options.map((o) => `<button type="button" class="mq-option${wrong.has(o.id) ? ' out' : ''}" data-id="${o.id}" ${wrong.has(o.id) ? 'disabled' : ''}>${escapeAttr(pick(o.name))}</button>`).join('')}</div>`}
+           <div class="mq-options">${options.map((o) => `<button type="button" class="mq-option" data-id="${o.id}">${escapeAttr(pick(o.name))}</button>`).join('')}</div>`}
       <p class="mq-credit">${t('map.quiz.photo')} <a href="${p.photo.page}" target="_blank" rel="noopener">${escapeAttr(p.photo.author)}</a> · <a href="${p.photo.licenceUrl}" target="_blank" rel="noopener">${p.photo.licence}</a></p>`;
   };
   quiz.addEventListener('click', (e) => {
@@ -160,7 +161,7 @@ export function renderMap(root: HTMLElement): () => void {
       map.getContainer().scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'center' });
       paintQuiz();
       toast(t('map.quiz.go'));
-    } else { wrong.add(b.dataset.id!); toast(t('map.quiz.wrong')); paintQuiz(); }
+    } else { toast(t('map.quiz.wrong')); options = choices(p); paintQuiz(); }   // dealt again, so a miss teaches nothing
   });
   for (const p of HEART_PLACES) if (found.has(p.id)) placeHeart(p, 'found');
   paintTask();
@@ -219,7 +220,7 @@ export function renderMap(root: HTMLElement): () => void {
       <div class="card-body finale">
         <p class="finale-hearts" aria-hidden="true">❤ ❤ ❤</p>
         <h3>${t('home.letter.title')}</h3>
-        ${letterParagraphs(getLang(), hoursApart(config.her.zone, config.him.zone, new Date())).map((p) => `<p>${p}</p>`).join('')}
+        ${letterParagraphs(getLang(), hoursApart(config.her.zone, config.him.zone, new Date()), dayNumberSince(config.metOn, new Date(), config.her.zone)).map((p) => `<p>${p}</p>`).join('')}
         <p class="signature">— ${pick(letter.signature)}</p>
       </div>`);
   }

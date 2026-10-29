@@ -1,4 +1,6 @@
 // Level: our songs. A passage plays; pick its title from four. Six right clears the level.
+// The four titles unlock only after the passage has been heard, and a wrong pick reshuffles
+// them, so tapping through the options never gets you there without listening.
 import './songs.css';
 import { t, pick } from '../../core/i18n';
 import { getPlayer, isCleared, levelNumber } from '../../core/quest';
@@ -7,22 +9,43 @@ import { escapeAttr } from '../../core/html';
 import { SONGS, choices, defaultSource, qqPlayer, songSrc, ytPlayer, type Song, type Source } from './list';
 import { shuffle } from '../../core/random';
 import { pauseJukebox } from '../music/jukebox';
+import { liveKey, sessionState } from '../../core/storage';
 
 const SOURCE_KEY = 'yi.songs.source';
 const readSource = (): Source | null => { try { const v = localStorage.getItem(SOURCE_KEY); return v === 'qq' || v === 'yt' ? v : null; } catch { return null; } };
 const writeSource = (v: Source) => { try { localStorage.setItem(SOURCE_KEY, v); } catch { /* ignore */ } };
+/** An embedded (QQ / YouTube) player gives no play event, so its passage counts as heard after this long on screen. */
+const EMBED_HEARD_MS = 8000;
+
+export interface SongsLive { order: string[]; i: number; answered: string[]; heard: string[] }
+/** The visit's order, place, right answers and passages heard, from what the tab remembers. */
+export function restoreSongs(saved: unknown, all: readonly Song[], done: boolean, rnd: () => number = Math.random): { order: Song[]; i: number; answered: Set<string>; heard: Set<string> } {
+  const ids = all.map((s) => s.id);
+  if (done) return { order: [...all], i: 0, answered: new Set(ids), heard: new Set(ids) };
+  const s = (saved ?? {}) as Partial<SongsLive>;
+  const known = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string' && ids.includes(x)) : []);
+  const savedOrder = known(s.order);
+  const samePermutation = savedOrder.length === ids.length && new Set(savedOrder).size === ids.length;
+  const order = samePermutation ? savedOrder.map((id) => all.find((x) => x.id === id)!) : shuffle(all, rnd);
+  const i = typeof s.i === 'number' && Number.isInteger(s.i) && s.i >= 0 && s.i < order.length ? s.i : 0;
+  return { order, i, answered: new Set(known(s.answered)), heard: new Set(known(s.heard)) };
+}
 
 export function renderSongs(root: HTMLElement): () => void {
   const done = isCleared('songs');
-  const order = done ? [...SONGS] : shuffle(SONGS);
-  let i = 0;
-  const answeredIds = new Set<string>(done ? SONGS.map((s) => s.id) : []);   // songs named right
+  const live = sessionState<SongsLive>(liveKey('songs', getPlayer() ?? 'jingyi'));   // a language toggle re-renders the page
+  const was = restoreSongs(live.get(), SONGS, done);
+  const order = was.order;
+  let i = was.i;
+  const answeredIds = was.answered;   // songs named right
+  const heard = was.heard;            // songs whose passage has played (or been on screen) at least once
+  const remember = () => { if (!isCleared('songs')) live.set({ order: order.map((s) => s.id), i, answered: [...answeredIds], heard: [...heard] }); };
   let options: Song[] = [];
   let answered = done;               // the current song's title is shown
-  const wrong = new Set<string>();   // options already tried on this song
   const audio = new Audio();
   audio.preload = 'none';
   let stopAt = 0, missing = false;
+  let embedTimer = 0, embedFor = '';   // the song whose embed is being timed
   let source: Source = readSource() ?? defaultSource(getPlayer());
 
   root.innerHTML = `
@@ -51,7 +74,7 @@ export function renderSongs(root: HTMLElement): () => void {
   };
   audio.addEventListener('timeupdate', () => { if (stopAt && audio.currentTime >= stopAt) audio.pause(); });
   audio.addEventListener('error', () => { missing = true; paint(); });
-  audio.addEventListener('play', () => paint());
+  audio.addEventListener('play', () => { heard.add(song().id); remember(); paint(); });
   audio.addEventListener('pause', () => paint());
 
   /** The players are 330 px wide; on a narrower card, scale the whole frame (masks included) down. */
@@ -66,6 +89,12 @@ export function renderSongs(root: HTMLElement): () => void {
   const paint = () => {
     const s = song();
     const playing = !audio.paused && !audio.ended;
+    const embedded = (source === 'qq' && !!s.qq) || (source === 'yt' && !!s.yt);
+    if (embedded && !answered && !heard.has(s.id) && embedFor !== s.id) {   // playback inside the iframe cannot be seen: time it on screen instead
+      clearTimeout(embedTimer); embedFor = s.id;
+      embedTimer = window.setTimeout(() => { heard.add(s.id); remember(); paint(); }, EMBED_HEARD_MS);
+    }
+    const canPick = heard.has(s.id) || (!embedded && missing);   // no file to hear: go with your gut
     card.innerHTML = `
       <p class="so-count">${t('songs.count', { i: i + 1, n: order.length })}</p>
       ${source === 'qq' && s.qq
@@ -97,8 +126,9 @@ export function renderSongs(root: HTMLElement): () => void {
             ${i + 1 < order.length ? `<button type="button" class="cta" id="so-next">${t('songs.next')}</button>` : ''}
             ${i > 0 ? `<button type="button" class="link" id="so-prev">${t('songs.prev')}</button>` : ''}
           </div>`
-        : `<div class="so-options" role="group" aria-label="${t('songs.which')}">${options.map((o) =>
-            `<button type="button" class="so-option${wrong.has(o.id) ? ' out' : ''}" data-id="${o.id}" ${wrong.has(o.id) ? 'disabled' : ''}>${escapeAttr(o.title)}</button>`).join('')}</div>`}`;
+        : `${canPick ? '' : `<p class="so-hint so-lock">${t('songs.listen.first')}</p>`}
+          <div class="so-options" role="group" aria-label="${t('songs.which')}">${options.map((o) =>
+            `<button type="button" class="so-option${canPick ? '' : ' wait'}" data-id="${o.id}" ${canPick ? '' : 'disabled'}>${escapeAttr(o.title)}</button>`).join('')}</div>`}`;
     fit();
     const cleared = isCleared('songs');
     task.classList.toggle('done', cleared);
@@ -106,7 +136,7 @@ export function renderSongs(root: HTMLElement): () => void {
       : t('quest.task.songs', { n: levelNumber('songs'), done: answeredIds.size, total: order.length });
   };
   const start = (k: number, asAnswered: boolean) => {
-    i = k; answered = asAnswered; wrong.clear(); options = choices(song()); if (!song().qq && !song().yt) load(song()); else audio.pause(); paint();
+    i = k; answered = asAnswered; options = choices(song()); if (!song().qq && !song().yt) load(song()); else audio.pause(); remember(); paint();
   };
 
   card.addEventListener('click', (e) => {
@@ -114,12 +144,13 @@ export function renderSongs(root: HTMLElement): () => void {
     if (el.closest('#so-play')) { if (!audio.paused) audio.pause(); else play(); return; }
     if (el.closest('#so-source')) { source = source === 'qq' ? 'yt' : 'qq'; writeSource(source); paint(); return; }
     const opt = el.closest<HTMLButtonElement>('.so-option');
-    if (opt && !answered) {
+    if (opt && !answered && !opt.disabled) {
       if (opt.dataset.id === song().id) {
-        answered = true; answeredIds.add(song().id); paint();
+        answered = true; answeredIds.add(song().id); remember(); paint();
         if (answeredIds.size === order.length) levelCleared('songs'); else toast(t('songs.right'));
       } else {
-        wrong.add(opt.dataset.id!); toast(t('songs.wrong')); paint();
+        toast(t('songs.wrong'));
+        options = choices(song()); paint();   // dealt again: the wrong one may come back, so guessing has nothing to go on
       }
       return;
     }
@@ -129,7 +160,7 @@ export function renderSongs(root: HTMLElement): () => void {
 
   document.body.classList.add('songs-quiz');   // the jukebox would show a title; hide it here
   pauseJukebox();                               // and it must not play under the quiz
-  start(0, done);
+  start(i, done || answeredIds.has(song().id));
   window.addEventListener('resize', fit);
-  return () => { audio.pause(); audio.removeAttribute('src'); document.body.classList.remove('songs-quiz'); window.removeEventListener('resize', fit); };
+  return () => { clearTimeout(embedTimer); audio.pause(); audio.removeAttribute('src'); document.body.classList.remove('songs-quiz'); window.removeEventListener('resize', fit); };
 }

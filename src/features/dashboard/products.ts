@@ -1,7 +1,7 @@
 // Everything we build under jingyifan.love, newest last. The dashboard shows one card per entry;
 // adding a product means a folder in src/features/, its routes in main.ts, and a line here.
 import type { Key } from '../../core/i18n';
-import { LEVELS, PLAYERS, getProgress } from '../../core/quest';
+import { LEVELS, getPlayer, getProgress } from '../../core/quest';
 import { playerName } from '../../core/quest-ui';
 
 export type Product = {
@@ -23,11 +23,13 @@ export const PRODUCTS: Product[] = [
     title: 'dash.town.title',
     blurb: 'dash.town.blurb',
     image: 'media/dashboard/town.png',
-    // Levels cleared by each player on this device, e.g. "静仪 4/9 · 一帆 9/9".
+    // Levels cleared by whoever plays on this device, e.g. "静仪 4/9". The other one's count is not
+    // shown: how far Yifan has got would give away that there is an end worth reaching.
     status: () => {
-      const total = LEVELS.length;
-      const parts = PLAYERS.map((p) => ({ p, n: getProgress(p).cleared.length })).filter((x) => x.n > 0);
-      return parts.length ? parts.map((x) => `${playerName(x.p)} ${x.n}/${total}`).join(' · ') : null;
+      const p = getPlayer();
+      if (!p) return null;
+      const n = getProgress(p).cleared.length;
+      return n ? `${playerName(p)} ${n}/${LEVELS.length}` : null;
     },
   },
 ];

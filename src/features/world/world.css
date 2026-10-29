@@ -19,6 +19,7 @@ html[lang='en'] .world-head h1 { font-family: var(--serif-en); font-style: itali
 .world-dialog { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 2; max-height: calc(100% - 20px); overflow: auto; }
 /* On a narrow phone the map is short, so the talk box goes under it instead of covering it. */
 @media (max-width: 480px) {
+  .world-stage canvas { aspect-ratio: 4 / 5; }   /* a short wide map shows almost nothing on a phone */
   .world-dialog { position: relative; left: 0; right: 0; bottom: 0; max-height: none; margin: 8px; }
   /* The choices run under the portrait in a tight row, not one per line beside it. */
   .world-panel.has-face .world-actions { grid-column: 1 / -1; justify-content: flex-start; }

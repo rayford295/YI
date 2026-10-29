@@ -21,7 +21,7 @@ html[lang='en'] .songs-head h1 { font-family: var(--serif-en); font-style: itali
   transition: transform 120ms ease, opacity 160ms ease;
 }
 .so-option:active { transform: translateY(2px); box-shadow: 0 1px 0 #06111f; }
-.so-option.out { opacity: 0.25; text-decoration: line-through; cursor: default; box-shadow: none; }
+.so-option.wait { opacity: 0.35; cursor: default; box-shadow: none; }
 .so-reveal { display: grid; gap: 6px; justify-items: center; }
 .so-title { margin: 4px 0 0; font-family: var(--hand); font-size: 32px; color: var(--rose-deep); }
 .so-artist, .so-note { margin: 0; font-size: 13px; color: var(--muted); text-align: center; }

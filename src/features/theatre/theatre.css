@@ -13,7 +13,7 @@
 .th-caption[hidden] { display: none; }
 .th-name { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; color: #d3a557; }
 .th-name[hidden] { display: none; }
-.th-text { margin: 0; font-size: 16px; line-height: 1.65; white-space: pre-line; }
+.th-text { margin: 0; font-size: 16px; line-height: 1.65; white-space: pre-line; min-height: 3.3em; }   /* the buttons do not jump while a line types */
 .th-text em { color: #f3c4cd; font-style: normal; }
 .th-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center; }
 .th-actions .btn { padding: 8px 18px; font-size: 14px; }

@@ -2,8 +2,8 @@
 import './letter.css';
 import { t, pick, getLang } from '../../core/i18n';
 import { config } from '../../core/config';
-import { hoursApart } from '../../core/dates';
-import { letter, letterParagraphs } from '../birthday-map/letter';
+import { dayNumberSince, hoursApart } from '../../core/dates';
+import { epilogue, epilogueParagraphs } from './text';
 import { PLAYERS, clearedByAll, isCleared } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
 
@@ -19,8 +19,8 @@ export function renderLetter(root: HTMLElement): () => void {
       </header>
       ${open ? `
       <article class="letter card">
-        ${letterParagraphs(getLang(), hoursApart(config.her.zone, config.him.zone, new Date())).map((p) => `<p>${p}</p>`).join('')}
-        <p class="signature">— ${pick(letter.signature)}</p>
+        ${epilogueParagraphs(getLang(), dayNumberSince(config.metOn, new Date(), config.her.zone), hoursApart(config.her.zone, config.him.zone, new Date())).map((p) => `<p>${p}</p>`).join('')}
+        <p class="signature">— ${pick(epilogue.signature)}</p>
       </article>` : `
       <p class="letter-locked card">${here.length === 1 ? t('letter.locked.one', { name: playerName(here[0]) }) : t('letter.locked')}</p>`}
       ${open ? `<a class="cta letter-more" href="/wedding">${t('letter.more')}</a>` : ''}

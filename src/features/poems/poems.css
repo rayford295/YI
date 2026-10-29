@@ -8,6 +8,7 @@ html[lang='en'] .poems-head h1 { font-family: var(--serif-en); font-style: itali
 @keyframes shake { 0%, 100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 .po-count { margin: 0; text-align: center; font-size: 12px; letter-spacing: 0.2em; color: var(--muted); }
 .po-line { margin: 0; text-align: center; font-family: var(--serif-zh); font-size: 22px; line-height: 2; color: var(--ink); }
+.po-glue { white-space: nowrap; }
 .po-boxes { display: inline-flex; gap: 3px; white-space: nowrap; vertical-align: middle; margin: 0 2px; }
 .poems-card.long .po-line { font-size: 19px; line-height: 1.9; }
 .po-box {

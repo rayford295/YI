@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { LEVELS, clear, current, getPlayer, getProgress, isCleared, isUnlocked, next, reset, setPlayer, useStore } from './quest';
+import { liveKey, memorySession, sessionState, useSession } from './storage';
 
 const mem = () => {
   const m = new Map<string, string>();
@@ -7,7 +8,7 @@ const mem = () => {
 };
 
 describe('quest progress', () => {
-  beforeEach(() => { useStore(mem()); });
+  beforeEach(() => { useStore(mem()); useSession(memorySession()); });
 
   it('starts with no player and nothing unlocked', () => {
     expect(getPlayer()).toBeNull();
@@ -47,6 +48,17 @@ describe('quest progress', () => {
     reset('yifan');
     expect(getProgress('yifan').cleared).toEqual([]);
     expect(getProgress('jingyi').cleared).toEqual(['met']);
+  });
+
+  it('drops a level\'s half-way state when it is cleared, and all of it on reset', () => {
+    setPlayer('jingyi');
+    const met = sessionState(liveKey('met', 'jingyi')), map = sessionState(liveKey('map', 'jingyi'));
+    met.set(1); map.set([1]);
+    clear('met');
+    expect(met.get()).toBeNull();
+    expect(map.get()).toEqual([1]);
+    reset('jingyi');
+    expect(map.get()).toBeNull();
   });
 
   it('survives corrupt storage', () => {
