@@ -80,7 +80,7 @@ async function render(): Promise<void> {
     // The wedding comes after the letter, so it needs both players past the last level.
     if (path === '/wedding' && !clearedByAll('ring')) { path = '/town'; toast(t('quest.locked')); }
     // Her birthday comes first: the town opens after the prologue has played once for this player.
-    if (path === '/town' && !birthdaySeen(getPlayer()!)) path = '/birthday';
+    if (path === '/town' && !birthdaySeen(getPlayer()!)) { path = '/birthday'; closeDoors(); }
   }
   // Settle the address: a redirect, an old #/ link or a trailing slash all become the clean path.
   if (path === '/' || path === '/town') closeDoors();
@@ -112,7 +112,15 @@ async function render(): Promise<void> {
     <div class="floating-hearts" aria-hidden="true">${'<i>❤</i>'.repeat(12)}</div>`;
   app.querySelector('#lang-btn')!.addEventListener('click', () => setLang(getLang() === 'zh' ? 'en' : 'zh'));
   window.scrollTo(0, 0);
-  const page = await routes[path]();
+  let page: Page;
+  try { page = await routes[path](); }
+  catch (err) {
+    // A chunk from an older deploy is gone (the service worker updated underneath an open tab):
+    // one reload fetches the new app shell. A second failure is shown rather than looped.
+    if (!sessionStorage.getItem('yi.reloaded')) { sessionStorage.setItem('yi.reloaded', '1'); location.reload(); return; }
+    throw err;
+  }
+  sessionStorage.removeItem('yi.reloaded');
   if (seq !== renderSeq) return;
   cleanup = page(app.querySelector<HTMLElement>('#view')!);
 }

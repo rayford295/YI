@@ -26,7 +26,7 @@ export function renderHome(root: HTMLElement): () => void {
   root.innerHTML = `
     <section class="hero sign">
       <p class="eyebrow">${t('home.eyebrow')}</p>
-      <h1 class="hero-title">${t('home.greeting')}</h1>
+      <h1 class="hero-title">${t(getPlayer() === 'yifan' ? 'home.greeting.yifan' : 'home.greeting')}</h1>
       <p class="hero-sub">${t('home.subline')}</p>
     </section>
     <section class="counter card">

@@ -32,13 +32,15 @@ export default defineConfig({
         // The app shell is precached; photos, rings and the hand model are fetched on demand and
         // then kept, so the 21 MB MediaPipe bundle never downloads at install time.
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
-        globIgnores: ['**/media/**', '**/mediapipe/**'],
+        globIgnores: ['**/media/**', '**/mediapipe/**', '**/assets/ring-*', '**/assets/tryon-*', '**/assets/map-*'],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
         navigateFallback: 'index.html',
         navigateFallbackDenylist: [/^\/media\//, /^\/mediapipe\//],
         runtimeCaching: [
           { urlPattern: ({ url }) => url.pathname.includes('/media/') || url.pathname.includes('/mediapipe/'),
-            handler: 'CacheFirst', options: { cacheName: 'yi-media', expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 365 } } },
+            // Served from cache at once, refreshed in the background: a re-exported ring or a re-cropped
+            // photo under the same name reaches an installed phone on its next visit.
+            handler: 'StaleWhileRevalidate', options: { cacheName: 'yi-media', expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 365 } } },
           { urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com',
             handler: 'StaleWhileRevalidate', options: { cacheName: 'yi-fonts', expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 } } },
           { urlPattern: ({ url }) => url.hostname.endsWith('tile.openstreetmap.org'),

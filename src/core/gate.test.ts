@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { sha256Hex } from './sha256';
 import { normalise, tryGate, hash, ANSWERS } from './gate';
+import { dict } from './i18n';
 
 describe('gate', () => {
   it('sha256 matches the reference vectors', () => {
@@ -12,6 +13,9 @@ describe('gate', () => {
     expect(normalise('9 月 20 日')).toBe('920');
     expect(normalise('2026-09-20')).toBe('20260920');
     expect(normalise('九月二十')).toBe('');
+  });
+  it('the placeholder does not give the answer away', async () => {
+    for (const lang of ['zh', 'en'] as const) expect(await tryGate(normalise(dict[lang]['gate.placeholder']))).toBe(false);
   });
   it('accepts the day we met in any spelling and rejects the rest', async () => {
     expect(await hash('920')).toBe(ANSWERS[0]);

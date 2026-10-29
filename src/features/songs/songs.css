@@ -26,7 +26,7 @@ html[lang='en'] .songs-head h1 { font-family: var(--serif-en); font-style: itali
 .so-title { margin: 4px 0 0; font-family: var(--hand); font-size: 32px; color: var(--rose-deep); }
 .so-artist, .so-note { margin: 0; font-size: 13px; color: var(--muted); text-align: center; }
 .so-reveal .cta { margin-top: 8px; }
-.so-reveal .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+.so-hint .link, .so-reveal .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
 @media (max-width: 380px) { .so-options { grid-template-columns: 1fr; } }
 
 body.songs-quiz #jukebox { display: none; }

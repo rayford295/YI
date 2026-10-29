@@ -70,6 +70,8 @@ same domain to the Access application so the login covers it.
 
 ## How It Was Published: GitHub Pages (Public, Free)
 
+*Historical: these are the steps that were used for the public rehearsal; see Status above for the current state.*
+
 1. Make the repository public: **Settings → General → Danger Zone → Change visibility**.
 2. **Settings → Pages → Source: GitHub Actions**.
 3. Add this job to `.github/workflows/ci.yml` (after `test-and-build`, which must upload

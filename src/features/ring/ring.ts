@@ -345,6 +345,17 @@ export function renderRing(root: HTMLElement): () => void {
     ro.disconnect();
     controls.dispose();
     pmrem.dispose();
+    (scene.environment as THREE.Texture | null)?.dispose();
+    current?.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      mesh.geometry?.dispose();
+      for (const m of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+        if (!m) continue;
+        for (const v of Object.values(m)) if (v instanceof THREE.Texture) v.dispose();
+        m.dispose();
+      }
+    });
     renderer.dispose();
+    renderer.forceContextLoss();
   };
 }

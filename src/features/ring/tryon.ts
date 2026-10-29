@@ -76,11 +76,19 @@ export async function startTryOn(mount: HTMLElement, environment: THREE.Texture)
     finger.scale.set(innerR, outerR * 2.2, innerR);
   };
 
-  const [vision] = await Promise.all([FilesetResolver.forVisionTasks(MP), openCamera()]);
-  const landmarker = await HandLandmarker.createFromOptions(vision, {
-    baseOptions: { modelAssetPath: `${MP}/hand_landmarker.task`, delegate: 'GPU' },
-    runningMode: 'VIDEO', numHands: 1, minHandDetectionConfidence: 0.6, minTrackingConfidence: 0.6,
-  });
+  let landmarker: HandLandmarker;
+  try {
+    const [vision] = await Promise.all([FilesetResolver.forVisionTasks(MP), openCamera()]);
+    landmarker = await HandLandmarker.createFromOptions(vision, {
+      baseOptions: { modelAssetPath: `${MP}/hand_landmarker.task`, delegate: 'GPU' },
+      runningMode: 'VIDEO', numHands: 1, minHandDetectionConfidence: 0.6, minTrackingConfidence: 0.6,
+    });
+  } catch (err) {
+    // No camera, or the hand model would not load: leave nothing running behind the error.
+    (stream as MediaStream | null)?.getTracks().forEach((t) => t.stop());
+    video.remove();
+    throw err;
+  }
 
   // Smoothed pose.
   const sPos = new THREE.Vector3(), sQuat = new THREE.Quaternion();

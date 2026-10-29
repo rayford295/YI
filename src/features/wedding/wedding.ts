@@ -7,15 +7,20 @@ import '../theatre/theatre.css';
 import { pick, getLang, type L10n } from '../../core/i18n';
 import { config } from '../../core/config';
 import { avatarHtml, avatarUrl } from '../../core/quest-ui';
-import { go } from '../../core/router';
+import { go, refresh } from '../../core/router';
 import { confetti } from '../../core/celebrate';
 import { pauseJukebox } from '../music/jukebox';
 import { canListen, listen } from '../home/speech';
 import { Aborted, Stage, type Actor } from '../theatre/stage';
 import { audio, bells, boom, hush, twinkle } from '../theatre/music';
+import { soundOn } from '../world/sound';
 import { JINGYI_BRIDE, RAYFORD, YIFAN_GROOM, buildCat } from '../world/sprites';
 import { bigHeart, gardenBack, gardenFront, gardenLit, newGarden } from './garden';
 import { markWedding, weddingDay } from './seen';
+
+// Set once the scene has played to the end in this tab, so a re-render (the language button) shows
+// the certificate instead of a second ceremony. 'Watch again' clears it.
+let finished = false;
 
 const L = (zh: string, en: string): L10n => ({ zh, en });
 const S = {
@@ -36,7 +41,9 @@ const S = {
   askHer: L('陈静仪女士，你是否愿意嫁给杨一帆先生为妻？\n无论顺境或逆境，富有或贫穷，健康或疾病，无论相隔多少个时区，你都爱他、珍惜他、听他说话，直到永远？', 'Ms Jingyi Chen, do you take Mr Yifan Yang to be your husband?\nFor better or worse, richer or poorer, in sickness and in health, across however many time zones, to love him, cherish him and listen to him, for ever?'),
   speak: L('🎙 说出来', '🎙 Say it'),
   iDo: L('我愿意', 'I do'),
-  listening: L('在听……说「我愿意」。', 'Listening… say “I do”.'),
+  listening: L('在听……说「我愿意」。（也可以直接点下面的按钮。）', 'Listening… say “I do”. (Or just press the button.)'),
+  micNo: L('麦克风打不开，那就用按钮说吧。', 'The microphone would not open; say it with the button instead.'),
+  skipped: L('这次先跳过了。想看完整的婚礼，随时从小镇底部的「婚礼」再进来。', 'Skipped for now. The whole ceremony is waiting under “The wedding” at the bottom of the town.'),
   again: L('没听清，再说一次？', 'Didn’t catch that. Once more?'),
   saidHim: L('我愿意。', 'I do.'),
   saidHer: L('我愿意。', 'I do.'),
@@ -80,9 +87,11 @@ export function renderWedding(root: HTMLElement): () => void {
   let card: HTMLElement | undefined;
   const skip = root.querySelector<HTMLButtonElement>('.th-skip')!;
 
+  let vowed = false;
   const finish = () => {
     skip.hidden = true;
-    markWedding(today());
+    if (vowed) { finished = true; markWedding(today()); }
+    else if (!weddingDay()) { showSkipped(); return; }
     const day = weddingDay() ?? today();
     card?.remove();
     card = document.createElement('div');
@@ -103,12 +112,24 @@ export function renderWedding(root: HTMLElement): () => void {
     confetti(card, 180);
     card.querySelector('[data-save]')!.addEventListener('click', () => { void saveCertificate(day); });
     card.querySelector('[data-town]')!.addEventListener('click', () => go('/town'));
-    card.querySelector('[data-again]')!.addEventListener('click', () => { location.reload(); });
+    card.querySelector('[data-again]')!.addEventListener('click', () => { finished = false; refresh(); });
     card.querySelector<HTMLButtonElement>('[data-save]')!.focus();
   };
+  // Skipped before the vows and never married on this device: no certificate, just the way back.
+  const showSkipped = () => {
+    card?.remove();
+    card = document.createElement('div');
+    card.className = 'th-card';
+    card.innerHTML = `<div class="th-card-inner" role="dialog" aria-modal="true"><p>${s(S.skipped)}</p>
+      <div class="row"><button type="button" class="btn go" data-town>${s(S.town)}</button><button type="button" class="btn quiet" data-again>${s(S.again2)}</button></div></div>`;
+    document.body.appendChild(card);
+    card.querySelector('[data-town]')!.addEventListener('click', () => go('/town'));
+    card.querySelector('[data-again]')!.addEventListener('click', () => refresh());
+  };
+  if (finished) { stage.destroy(); finish(); return () => { card?.remove(); }; }
   skip.addEventListener('click', () => { stage.destroy(); fadeOut(march); finish(); });
 
-  void ceremony(stage, march).then(finish, (err: unknown) => { if (!(err instanceof Aborted)) { console.error(err); finish(); } });
+  void ceremony(stage, march, () => { vowed = true; }).then(finish, (err: unknown) => { if (!(err instanceof Aborted)) { console.error(err); finish(); } });
   return () => { stage.destroy(); march.pause(); hush(); card?.remove(); };
 }
 
@@ -120,28 +141,39 @@ function fadeOut(a: HTMLAudioElement, ms = 1500): void {
 
 /** Ask the vow; resolves when "I do" is said (heard by the mic) or pressed. */
 async function vow(stage: Stage, question: string): Promise<void> {
-  const accept = (heard: string) => /愿意|我愿|i do|yes|yeah|i will/i.test(heard);
+  // "I do" in either language; a "no" or a "don't" anywhere in the alternatives is not a yes.
+  const accept = (heard: string) => !/不愿|不要|没有|don'?t|do not|\bno\b|\bnot\b/i.test(heard) && /愿意|我愿|\bi do\b|\byes\b|\byeah\b|\bi will\b/i.test(heard);
   const choices: { label: string; value: 'speak' | 'press'; cls?: string }[] = [{ label: s(S.iDo), value: 'press' }];
-  if (canListen()) choices.unshift({ label: s(S.speak), value: 'speak' });
+  let canSpeak = canListen();
   let prompt = question;
   for (;;) {
-    const how = await stage.ask(s(S.rayford), prompt, choices);
+    const how = await stage.ask(s(S.rayford), prompt, canSpeak ? [{ label: s(S.speak), value: 'speak' as const }, ...choices] : choices);
     if (how === 'press') return;
+    // While listening, the button stays: pressing it is as good as saying it.
     stage.narrate(s(S.rayford), s(S.listening));
+    const box = stage.controls(`<button type="button" class="btn quiet">${s(S.iDo)}</button>`);
+    const btn = box.querySelector<HTMLButtonElement>('button')!;
     const ear = listen(getLang() === 'zh' ? 'zh-CN' : 'en-US');
     const stop = () => ear.abort();
+    let pressed = false;
+    btn.addEventListener('click', () => { pressed = true; ear.abort(); });
+    btn.focus({ preventScroll: true });
     stage.signal.addEventListener('abort', stop, { once: true });
     try {
       const heard = await ear.done;
       if (accept(heard)) return;
-    } catch { /* silence or no permission: ask again, the button is always there */ }
-    finally { stage.signal.removeEventListener('abort', stop); }
+    } catch (err) {
+      if (pressed) return;
+      const why = err instanceof Error ? err.message : '';
+      if (why === 'not-allowed' || why === 'service-not-allowed' || why === 'unsupported') { canSpeak = false; prompt = `${s(S.micNo)}\n\n${question}`; continue; }
+    } finally { stage.signal.removeEventListener('abort', stop); }
     if (stage.signal.aborted) throw new Aborted();
+    if (pressed) return;
     prompt = `${s(S.again)}\n\n${question}`;
   }
 }
 
-async function ceremony(stage: Stage, march: HTMLAudioElement): Promise<void> {
+async function ceremony(stage: Stage, march: HTMLAudioElement, onVowed: () => void): Promise<void> {
   const g = newGarden();
   const cats = [buildCat('coffee'), buildCat('duoduo')];
   const ov = stage.overlay;
@@ -184,9 +216,9 @@ async function ceremony(stage: Stage, march: HTMLAudioElement): Promise<void> {
     await stage.wait(1200);
     await stage.say(s(S.rayford), s(S.r3));
     march.volume = 0.85;
-    march.play().catch(() => undefined);
+    if (soundOn()) march.play().catch(() => undefined);
     stage.narrate('', s(S.n3));
-    void stage.tween(16000, (q) => { g.dusk = q * 0.55; });
+    stage.fire(stage.tween(16000, (q) => { g.dusk = q * 0.55; }));
     await stage.walk(bride, 56, 68, 4.4);
     bride.dir = 'right';
     stage.burst(64, 50, ['#f3c4cd', '#ffffff', '#fff6dc'], 18, 16, 'heart');
@@ -202,6 +234,7 @@ async function ceremony(stage: Stage, march: HTMLAudioElement): Promise<void> {
     await stage.hop(bride, 2);
     stage.emit({ x: 54, y: 48, vy: -10, max: 1600, color: '#e0516b', kind: 'heart' });
     await stage.say(s(S.jingyi), s(S.saidHer));
+    onVowed();
     await stage.say('', s(S.echo));
 
     // ---- 4. Coffee brings the rings
@@ -245,11 +278,11 @@ async function ceremony(stage: Stage, march: HTMLAudioElement): Promise<void> {
     for (let i = 0; i < 6; i++) g.doves.push({ x: 60 + i * 2, y: 50 - (i % 2) * 3, vx: 10 + Math.random() * 12 - (i % 2 ? 20 : 0), vy: -14 - Math.random() * 8 });
     const flyDoves = window.setInterval(() => { for (const d of g.doves) { d.x += d.vx / 30; d.y += d.vy / 30; } }, 33);
     for (let i = 0; i < 90; i++) stage.emit({ x: Math.random() * 128, y: -Math.random() * 30, vx: (Math.random() - 0.5) * 8, vy: 10 + Math.random() * 10, g: 2, max: 7000, color: ['#f3c4cd', '#ffffff', '#d4506d', '#fff6dc'][i % 4], size: i, kind: 'petal' });
-    void stage.tween(4000, (q) => { g.dusk = 0.55 + q * 0.45; });
+    stage.fire(stage.tween(4000, (q) => { g.dusk = 0.55 + q * 0.45; }));
     const colours = ['#f3c94e', '#f3c4cd', '#7fb2d9', '#fff6dc', '#e0516b'];
     const fire = window.setInterval(() => { boom(); stage.burst(14 + Math.random() * 100, 8 + Math.random() * 18, [colours[Math.floor(Math.random() * colours.length)], '#fff6dc'], 24, 22); }, 800);
     try {
-      void stage.hop(bride, 3); void stage.hop(groom, 3);
+      stage.fire(stage.hop(bride, 3)); stage.fire(stage.hop(groom, 3));
       await stage.wait(2400);
       await stage.say(s(S.yifan), s(S.y1));
       ray.dir = 'down';
@@ -298,8 +331,17 @@ async function saveCertificate(day: string): Promise<void> {
   x.restore();
   x.fillStyle = '#a8324f'; x.font = '26px "Ma Shan Zheng", "Kaiti SC", cursive';
   x.fillText(`${pick(config.him.name)} · ${pick(config.her.name)}`, 220, 730);
+  const blob = await new Promise<Blob | null>((res) => c.toBlob(res, 'image/png'));
+  if (!blob) return;
+  const name = `yi-town-wedding-${day}.png`;
+  const file = new File([blob], name, { type: 'image/png' });
+  // On a phone the share sheet saves to Photos; iOS ignores `download` on data links.
+  if (navigator.canShare?.({ files: [file] })) { try { await navigator.share({ files: [file], title: name }); return; } catch { /* dismissed: fall through */ } }
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = c.toDataURL('image/png');
-  a.download = `yi-town-wedding-${day}.png`;
-  a.click();
+  a.href = url; a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 10_000);
+  // And inline, so it can be long-pressed and saved where neither works.
+  const card = document.querySelector('.th-card-inner');
+  if (card && !card.querySelector('.th-cert')) { const img = new Image(); img.className = 'th-cert'; img.src = url; img.alt = name; card.appendChild(img); }
 }

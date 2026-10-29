@@ -33,7 +33,7 @@ function chartSvg(drawn: Set<string>, picked: string | null, hint: boolean): str
     const { x, y } = project(s);
     const r = radius(s.mag);
     const joined = ALL_EDGES.some(([a, b]) => (a === s.id || b === s.id) && drawn.has(edgeKey(a, b)));
-    return `<g class="sk${picked === s.id ? ' picked' : ''}${joined ? ' joined' : ''}" data-id="${escapeAttr(s.id)}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">
+    return `<g class="sk${picked === s.id ? ' picked' : ''}${joined ? ' joined' : ''}" data-id="${escapeAttr(s.id)}" tabindex="0" role="button" aria-label="${escapeAttr(s.name ? pick(s.name) : s.id)}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">
       <circle class="hit" r="${hitRadius(s).toFixed(1)}"/><circle class="halo" r="${(r + 9).toFixed(1)}"/><circle class="dot" r="${r.toFixed(1)}"/>
       ${s.name && joined ? `<text y="${(r + 20).toFixed(0)}">${escapeAttr(pick(s.name))}</text>` : ''}</g>`;
   }).join('');
@@ -70,7 +70,7 @@ export function renderStars(root: HTMLElement): () => void {
     task.textContent = cleared ? t('quest.cleared.eyebrow', { n: levelNumber('stars') })
       : t('quest.task.stars', { n: levelNumber('stars'), done: drawn.size, total: ALL_EDGES.length });
   };
-  dome.addEventListener('click', (e) => {
+  const pickStar = (e: Event) => {
     const g = (e.target as Element).closest<SVGGElement>('.sk');
     if (!g || isCleared('stars')) { picked = null; paint(); return; }
     const id = g.dataset.id!;
@@ -85,7 +85,9 @@ export function renderStars(root: HTMLElement): () => void {
       picked = id; paint();
       toast(t(drawn.has(key) ? 'stars.again' : 'stars.miss'));
     }
-  });
+  };
+  dome.addEventListener('click', pickStar);
+  dome.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickStar(e); } });
   root.querySelector<HTMLButtonElement>('#st-hint')!.addEventListener('click', (e) => {
     hint = !hint;
     (e.currentTarget as HTMLButtonElement).textContent = t(hint ? 'stars.unhint' : 'stars.hint');

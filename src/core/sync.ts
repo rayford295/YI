@@ -6,7 +6,13 @@ import { LEVELS, PLAYERS, getProgress, levelIndex, mergeProgress, type PlayerId 
 
 const LETTER: Record<PlayerId, string> = { jingyi: 'J', yifan: 'Y' };
 const DIGITS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const check = (body: string): string => DIGITS[[...body].reduce((a, ch, i) => a + ch.charCodeAt(0) * (i + 3), 0) % 36];
+// ISO 7064 MOD 37,36: one check character over the 36 symbols that catches every single wrong
+// character and every swap of two neighbours (a plain weighted sum let one-digit typos through).
+const check = (body: string): string => {
+  let c = 36;
+  for (const ch of body) c = (((c + DIGITS.indexOf(ch)) % 36 || 36) * 2) % 37;
+  return DIGITS[(37 - c) % 36];
+};
 
 export interface Carried { player: PlayerId; cleared: string[] }
 

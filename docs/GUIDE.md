@@ -30,6 +30,11 @@ yi-town/
 │       ├── journey/            #   the list view
 │       ├── home/ birthday-map/ tattoo/ moments/ (+ puzzle/ mounted inside it) gomoku/ songs/
 │       ├── stars/              #   constellations.ts (Libra + Scorpius stars and lines), stars.ts (page)
+│       ├── guide/              #   Rayford's lines (rayford.ts), with the secrecy test (secret.test.ts)
+│       ├── dashboard/          #   the front page at /: products.ts lists what is on it
+│       ├── theatre/            #   the pixel cutscene engine: stage.ts, music.ts (synth), blow.ts (breath by mic)
+│       ├── birthday/           #   the prologue: Yifan bakes the cake (kitchen.ts paints it; CANDLES = 9)
+│       ├── wedding/            #   the finale after the letter: garden.ts paints it; the certificate PNG
 │       ├── poems/              #   lines.ts (five poems, bank/blank/solved), poems.ts (page)
 │       ├── ring/               #   3D viewer, webcam try-on, photo card
 │       └── letter/             #   the epilogue

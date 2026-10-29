@@ -80,7 +80,10 @@ export class Stage {
     this.raf = requestAnimationFrame(loop);
   }
 
-  destroy(): void { this.ctl.abort(); cancelAnimationFrame(this.raf); }
+  destroy(): void { this.ctl.abort(); cancelAnimationFrame(this.raf); clearInterval(this.typing); }
+
+  /** Run an animation nobody waits for; leaving the page is not an error. */
+  fire(p: Promise<unknown>): void { void p.catch((e: unknown) => { if (!(e instanceof Aborted)) throw e; }); }
 
   // ---------- actors ----------
   actor(f: Figure, x: number, y: number, dir: Dir = 'down', visible = true): Actor {
@@ -109,8 +112,9 @@ export class Stage {
   wait(ms: number): Promise<void> {
     return new Promise((res, rej) => {
       if (this.signal.aborted) { rej(new Aborted()); return; }
-      const id = setTimeout(res, ms);
-      this.signal.addEventListener('abort', () => { clearTimeout(id); rej(new Aborted()); }, { once: true });
+      const onAbort = () => { clearTimeout(id); rej(new Aborted()); };
+      const id = setTimeout(() => { this.signal.removeEventListener('abort', onAbort); res(); }, ms);
+      this.signal.addEventListener('abort', onAbort, { once: true });
     });
   }
   /** Run `fn(k)` with k from 0 to 1 (eased) over `ms`. */
@@ -134,23 +138,28 @@ export class Stage {
 
   // ---------- words ----------
   private typing = 0;
+  private fullHtml = '';
+  /** True while the typewriter is still printing. */
+  get typingNow(): boolean { return this.typing !== 0; }
+  /** Print the rest of the current line at once. */
+  finishTyping(): void { if (!this.typing) return; clearInterval(this.typing); this.typing = 0; this.textEl.innerHTML = this.fullHtml; }
   private show(name: string, html: string): void {
     this.caption.hidden = false;
     this.nameEl.textContent = name;
     this.nameEl.hidden = !name;
-    clearInterval(this.typing);
+    clearInterval(this.typing); this.typing = 0; this.fullHtml = html;
     if (this.calm) { this.textEl.innerHTML = html; return; }
     const tmp = document.createElement('span'); tmp.innerHTML = html;
     const full = tmp.textContent ?? '';
     let i = 0;
     this.textEl.textContent = '';
     this.typing = window.setInterval(() => {
-      i += 1;
+      i += 2;
       this.textEl.textContent = full.slice(0, i);
-      if (i >= full.length) { clearInterval(this.typing); this.textEl.innerHTML = html; }
-    }, 38);
+      if (i >= full.length) this.finishTyping();
+    }, 24);
   }
-  hideCaption(): void { this.caption.hidden = true; clearInterval(this.typing); }
+  hideCaption(): void { this.caption.hidden = true; clearInterval(this.typing); this.typing = 0; }
 
   /** Show a line and wait for the reader (a "next" button, a tap on the picture, Enter or Space). */
   say(name: string, html: string, next = '▸'): Promise<void> {
@@ -159,20 +168,22 @@ export class Stage {
   /** Show a line with buttons; resolves with the chosen value. */
   ask<T>(name: string, html: string, choices: { label: string; value: T; cls?: string }[]): Promise<T> {
     this.show(name, html);
-    talkSound();
+    if (html) talkSound();   // the title screen comes before any tap: no sound yet
     this.actionsEl.innerHTML = '';
     return new Promise<T>((res, rej) => {
-      const done = (v: T) => { off(); res(v); };
+      // While the line is still printing, the first tap just finishes it.
+      const done = (v: T) => { if (this.typingNow) { this.finishTyping(); return; } off(); res(v); };
       const buttons = choices.map((c, i) => {
         const b = document.createElement('button');
         b.type = 'button'; b.className = `btn ${c.cls ?? (i === 0 ? 'go' : 'quiet')}`; b.textContent = c.label;
+        if (c.label === '▸') b.setAttribute('aria-label', 'next');
         b.addEventListener('click', () => done(c.value));
         this.actionsEl.appendChild(b);
         return b;
       });
       // One choice: a tap anywhere on the picture or a key also moves on.
       const single = choices.length === 1;
-      const onKey = (e: KeyboardEvent) => { if (single && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); done(choices[0].value); } };
+      const onKey = (e: KeyboardEvent) => { if (single && !e.repeat && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); done(choices[0].value); } };
       const onTap = () => { if (single) done(choices[0].value); };
       const onAbort = () => { off(); rej(new Aborted()); };
       const off = () => {
@@ -207,9 +218,9 @@ export class Stage {
     const dt = Math.min(0.05, (now - this.last) / 1000);
     this.last = now;
     const ctx = this.ctx;
+    ctx.clearRect(0, 0, W, H);
     ctx.save();
     if (this.shake > 0 && !this.calm) { ctx.translate(Math.round((Math.random() - 0.5) * this.shake), 0); this.shake = Math.max(0, this.shake - dt * 8); }
-    ctx.clearRect(0, 0, W, H);
     this.back(ctx, now);
     // Actors back to front by their feet.
     for (const a of [...this.actors].sort((p, q) => p.y - q.y)) {
@@ -224,7 +235,7 @@ export class Stage {
     this.drawParticles(ctx, dt, false);
     if (this.dark > 0.001) this.drawDark(ctx, now);
     this.lit(ctx, now);
-    this.drawParticles(ctx, 0, true);
+    this.drawParticles(ctx, dt, true);
     ctx.restore();
   }
 
@@ -257,8 +268,7 @@ export class Stage {
       const p = this.particles[i];
       const glows = p.kind === 'spark';
       if (glows !== litPass) continue;
-      const step = litPass ? Math.min(0.05, 1 / 60) : dt;
-      p.life += step * 1000; p.vy += p.g * step; p.x += p.vx * step; p.y += p.vy * step;
+      p.life += dt * 1000; p.vy += p.g * dt; p.x += p.vx * dt; p.y += p.vy * dt;
       if (p.kind === 'petal') p.vx += Math.sin(p.life / 300 + p.size) * 0.4;
       if (p.life > p.max || p.y > H + 4) { this.particles.splice(i, 1); continue; }
       const alpha = Math.max(0, 1 - p.life / p.max);

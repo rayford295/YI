@@ -2,6 +2,36 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.16.0 (2026-10-28)
+
+- A review pass over the whole site. The gate's placeholder no longer spells the answer; the
+  progress code's check character is ISO 7064 MOD 37,36 (a one-character typo can no longer pass,
+  so codes made before today are invalid: share a new one); Google Fonts no longer block the first
+  paint (they do not load from mainland China); a chunk missing after a deploy reloads once instead
+  of a blank page; media is refreshed in the background when a file changes under the same name;
+  the ring page frees its WebGL context; the try-on turns the camera off if the hand model fails.
+- Levels: Poems remembers a solved line when you go back; Gomoku's tenth answer counts even if
+  you leave at once; Stars works from the keyboard; the cleared card closes with Escape.
+- Phones: the town's talk box sits under a short map instead of being cut off; captions on the
+  grass are cream, not mauve; the jukebox pill hides during a cutscene and stays off the map's
+  zoom buttons; the ring's try-on buttons no longer overlap; text buttons are finger-sized.
+- Cutscenes: skipping the wedding before the vows does not marry anyone; "I don't" is not "I do";
+  an "I do" button stays on screen while the mic listens; the certificate saves through the share
+  sheet on phones; the baker is named Yifan.
+- After the ring, a hole in time opens on the grass by house 9; it leads to the wedding and waits
+  for the other player. Rayford walks you to it.
+
+## 1.15.0 (2026-10-28)
+
+- The birthday prologue (`/birthday`): before the town opens, Yifan bakes Jingyi's cake against
+  the Shenzhen-midnight clock, with the whisk, the ten-strawberry heart, nine candles, the song,
+  a wish and the candles blown out by breath. Plays once per player; replay from the town footer.
+- The wedding (`/wedding`): after the last letter, Rayford officiates in the fountain garden;
+  the Wedding March, vows spoken or pressed, Coffee brings the Meridian rings, bells, doves and
+  a certificate to keep. The town then dresses the two as bride and groom.
+- Rayford, the town and the sync page no longer mention the ring before it is reached; a test
+  (`src/features/guide/secret.test.ts`) keeps it that way.
+
 ## 1.14.0 (2026-10-27)
 
 - `jingyifan.love/` is now a dashboard: one card per thing we build, with each player's level

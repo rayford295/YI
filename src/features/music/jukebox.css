@@ -9,5 +9,7 @@
 .jukebox.playing .jb-toggle { animation: jb-spin 3s linear infinite; }
 .jb-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0.85; }
 .jukebox.playing .jb-title { opacity: 1; }
+/* A cutscene has its own music and its own buttons in that corner. */
+body:has(.view-theatre) .jukebox { display: none; }
 @keyframes jb-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .jukebox.playing .jb-toggle { animation: none; } }

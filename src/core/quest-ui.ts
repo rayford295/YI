@@ -38,8 +38,11 @@ export function levelCleared(id: string): void {
       <button type="button" class="cleared-voice" hidden>▶ ${t('quest.celebrate.listen')}</button>
       <button type="button" class="cleared-stay">${t('quest.cleared.stay')}</button>
     </div>`;
-  el.querySelector('.cleared-stay')!.addEventListener('click', () => el.remove());
-  el.querySelector('.cleared-next')!.addEventListener('click', () => el.remove());
+  const close = () => { audio.pause(); audio.removeAttribute('src'); el.remove(); window.removeEventListener('keydown', onKey); };
+  const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+  window.addEventListener('keydown', onKey);
+  el.querySelector('.cleared-stay')!.addEventListener('click', close);
+  el.querySelector('.cleared-next')!.addEventListener('click', close);
   // A recorded line for this level, if the owner has dropped one in public/media/voice/.
   const voice = el.querySelector<HTMLButtonElement>('.cleared-voice')!;
   const audio = new Audio(voiceUrl(id));

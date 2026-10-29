@@ -20,6 +20,15 @@ describe('progress codes', () => {
     expect(decodeProgress('X1Z')).toBeNull();
     expect(decodeProgress('')).toBeNull();
   });
+  it('rejects every single-character substitution of a valid code', () => {
+    const DIGITS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (let mask = 0; mask < 1 << LEVELS.length; mask++) {
+      const code = encodeProgress('jingyi', LEVELS.filter((_, i) => mask & (1 << i)).map((l) => l.id));
+      for (let i = 0; i < code.length; i++) for (const d of DIGITS) {
+        if (d !== code[i]) expect(decodeProgress(code.slice(0, i) + d + code.slice(i + 1)), code).toBeNull();
+      }
+    }
+  });
   it('reads a code out of a link, with any case and spacing', () => {
     const code = encodeProgress('jingyi', [LEVELS[0].id]);
     expect(codeFrom(`https://jingyifan.love/sync?c=${code}`)).toBe(code);

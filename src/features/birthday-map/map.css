@@ -5,9 +5,8 @@
 .map-head h2 { margin: 0; font-family: var(--hand); font-weight: 400; font-size: 26px; color: var(--rose-deep); }
 html[lang='en'] .map-head h2 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
 .love-map { flex: 1; min-height: 320px; background: #dfe6dc; }
+.love-map .leaflet-bottom { bottom: 52px; }   /* clear of the jukebox pill */
 .love-map .leaflet-tile-pane { filter: sepia(0.35) saturate(0.75) hue-rotate(-12deg) brightness(1.04); }
-.btn { font: inherit; font-size: 15px; cursor: pointer; border: 0; border-radius: 999px; padding: 8px 18px; background: var(--rose); color: #fff; box-shadow: 0 10px 22px -12px var(--rose-deep); white-space: nowrap; }
-.btn:hover { background: var(--rose-deep); }
 .btn-ghost { font: inherit; font-size: 20px; cursor: pointer; border: 1px solid var(--line); background: transparent; color: var(--rose-deep); border-radius: 999px; width: 38px; height: 38px; }
 .btn-ghost:disabled { opacity: 0.3; cursor: default; }
 

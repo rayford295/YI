@@ -168,8 +168,8 @@ export function cakeBack(ctx: CanvasRenderingContext2D, t: number, c: CakeUp): v
   for (let i = 0; i < n; i++) { const x = 31 + Math.round(i * 5.8); rect(ctx, x, 28, 4, 2, '#ffffff'); rect(ctx, x + 1, 27, 2, 1, '#ffffff'); }
   // White chocolate plaque on two sticks (its words are HTML on top).
   if (c.plaque) {
-    rect(ctx, 50, 18, 1, 12, '#c9a77a'); rect(ctx, 77, 18, 1, 12, '#c9a77a');
-    rect(ctx, 41, 8, 46, 12, '#d9b38c'); rect(ctx, 42, 9, 44, 10, '#fff4e0');
+    rect(ctx, 46, 18, 1, 12, '#c9a77a'); rect(ctx, 81, 18, 1, 12, '#c9a77a');
+    rect(ctx, 37, 8, 54, 12, '#d9b38c'); rect(ctx, 38, 9, 52, 10, '#fff4e0');
   }
   // Candles.
   for (let i = 0; i < c.candles; i++) {

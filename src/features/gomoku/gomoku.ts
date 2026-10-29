@@ -115,6 +115,6 @@ export function renderGomoku(root: HTMLElement): () => void {
   update();
   return () => {
     clearTimeout(timer); clearTimeout(burstTimer); clearTimeout(wrongTimer);
-    if (clearTimer) { clearTimeout(clearTimer); clear('gomoku'); }   // left before the card: still counts
+    if (clearTimer || (timer && i + 1 === PUZZLES.length && win.length)) { clearTimeout(clearTimer); clear('gomoku'); }   // left before the card: still counts
   };
 }

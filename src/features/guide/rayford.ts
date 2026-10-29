@@ -50,7 +50,7 @@ export function rayfordSays(topic: Topic, s: GuideState): Line {
     case 'about':
       return { text: t('guide.about', { total: LEVELS.length }), choices: [{ label: t('guide.ask.next'), to: 'next' }, back()] };
     case 'me':
-      return { text: t('guide.me'), choices: [back()] };
+      return { text: t(s.player === 'yifan' ? 'guide.me.yifan' : 'guide.me'), choices: [back()] };
     case 'town':
       return { text: t('guide.town', { other: them }), choices: [back()] };
     case 'levels': {
@@ -66,7 +66,7 @@ export function rayfordSays(topic: Topic, s: GuideState): Line {
         };
       }
       if (s.wed) return { text: t(s.player === 'jingyi' ? 'guide.wed' : 'guide.wed.yifan'), choices: [{ label: t('world.wedding'), go: '/wedding' }, back(), bye()] };
-      if (!s.cleared('ring', s.other)) return { text: t('guide.wait', { other: them }), choices: [back(), bye()] };
+      if (!s.cleared('ring', s.other)) return { text: t('guide.wait', { other: them, total: LEVELS.length }), choices: [back(), bye()] };
       return { text: t('guide.portal'), choices: [{ label: t('guide.take'), walkTo: { x: PORTAL_SPOT.x, y: PORTAL_SPOT.y + 1 } }, back(), bye()] };
     }
   }

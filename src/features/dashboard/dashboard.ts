@@ -1,4 +1,5 @@
 // jingyifan.love's front page: one card per product. The town is the first.
+import { LEVELS } from '../../core/quest';
 import './dashboard.css';
 import { t } from '../../core/i18n';
 import { PRODUCTS, type Product } from './products';
@@ -10,7 +11,7 @@ const card = (p: Product): string => {
       ${p.image ? `<img src="${import.meta.env.BASE_URL}${p.image}" alt="" loading="lazy" />` : ''}
       <div class="dash-body">
         <h2>${t(p.title)}</h2>
-        <p>${t(p.blurb)}</p>
+        <p>${t(p.blurb, { total: LEVELS.length })}</p>
         ${status ? `<p class="dash-status">${status}</p>` : ''}
         <span class="dash-go">${t('dash.enter')} →</span>
       </div>

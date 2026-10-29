@@ -95,8 +95,12 @@ a { color: inherit; }
 .letter h2 { margin: 0 0 12px; font-family: var(--hand); font-weight: 400; font-size: 28px; color: var(--rose-deep); }
 html[lang='en'] .letter h2 { font-family: var(--serif-en); font-style: italic; font-weight: 600; }
 .letter p { margin: 0 0 14px; line-height: 2; }
+/* The one button style, shared by every page (talk boxes, cards, cutscenes). */
+.btn { font: inherit; font-size: 15px; cursor: pointer; border: 0; border-radius: 999px; padding: 8px 18px; background: var(--rose); color: #fff; box-shadow: 0 10px 22px -12px var(--rose-deep); white-space: nowrap; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.btn:hover { background: var(--rose-deep); }
+
 .cta {
-  justify-self: center; text-decoration: none;
+  justify-self: center; text-decoration: none; font: inherit; cursor: pointer; border: 0;
   background: var(--rose); color: #fff; padding: 12px 26px; border-radius: 999px;
   box-shadow: 0 12px 26px -12px var(--rose-deep);
   transition: transform 0.2s;
@@ -115,7 +119,7 @@ html[lang='en'] .letter h2 { font-family: var(--serif-en); font-style: italic; f
 
 @media (max-width: 360px) {
   .topbar { padding: 10px 12px; gap: 6px; }
-  .topbar nav { gap: 8px; font-size: 13px; }
+  .topbar nav { gap: 8px; font-size: 12px; }
   .brand-zh { font-size: 19px; }
   .lang-btn { padding: 3px 9px; font-size: 13px; }
 }
@@ -157,7 +161,15 @@ body { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35); }
 .diff { margin-top: 0; }
 .moment-more, .puzzle-caption { color: #f8e6b8; }
 .gomoku-status[data-state='won'], .gomoku-status[data-state='draw'], .draw-score .sync { color: #ffd98a; }
-.puzzle-foot .link, .stars-foot .link, .stars-foot span, .journey-foot .link, .journey-foot a, .journey-foot span, .draws { color: #f1e4c8; }
+.puzzle-foot .link, .stars-foot .link, .stars-foot span, .journey-foot .link, .journey-foot a, .journey-foot span, .draws,
+.tattoo-note, .tattoo-note .link, .tattoo-tools .link, .tattoo-foot .link, .stars-note, .puzzle-sub, .so-hint, .so-hint .link, .so-reveal .link, .th-skip, .th-top .eyebrow,
+.sync-page .cta.quiet, .letter-page .fine { color: #f1e4c8; }
+.puzzle-caption, .moment-more, #g-status { color: #f3c4cd; }
+/* Little text buttons are still finger-sized. */
+button.link { min-height: 32px; padding: 4px 6px !important; }
 .map-head.sign { margin-bottom: 10px; }
 .g-btn:not(.primary), .d-btn:not(.primary) { background: #f4e9d6; }
 .sync-foot a { color: #f1e4c8; }
+
+/* The narrowest phones: titles one size down so a four-character name does not break in two. */
+@media (max-width: 360px) { #view h1 { font-size: clamp(26px, 9.5vw, 36px); } }

@@ -15,6 +15,7 @@ export function renderPoems(root: HTMLElement): () => void {
   let used: number[] = [];                  // bank indices already placed, parallel to `filled`
   let tiles: string[] = [];
   let open = done;                          // the current poem is solved and shown in full
+  const solvedIds = new Set<number>(done ? POEMS.map((_, k) => k) : []);   // lines solved this visit
   let timer = 0;
 
   root.innerHTML = `
@@ -33,7 +34,7 @@ export function renderPoems(root: HTMLElement): () => void {
   const task = root.querySelector<HTMLElement>('#po-task')!;
   const hint = root.querySelector<HTMLButtonElement>('#po-hint')!;
 
-  const start = (p: Poem) => { tiles = bank(p); filled = []; used = []; open = isCleared('poems'); };
+  const start = (p: Poem) => { tiles = bank(p); filled = []; used = []; open = isCleared('poems') || solvedIds.has(POEMS.indexOf(p)); };
 
   const paint = () => {
     const p = POEMS[i];
@@ -68,7 +69,7 @@ export function renderPoems(root: HTMLElement): () => void {
     const p = POEMS[i];
     if (filled.length < chars(p.answer).length) return;
     if (solved(p, filled)) {
-      open = true;
+      open = true; solvedIds.add(i);
       paint();
       if (i === POEMS.length - 1) levelCleared('poems'); else toast(t('poems.right'));
     } else {

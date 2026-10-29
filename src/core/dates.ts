@@ -33,13 +33,19 @@ export function countdownTo(target: Date, now: Date) {
 }
 
 export function zoneOffsetMinutes(timeZone: string, date: Date): number {
-  const name =
-    new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'longOffset' })
-      .formatToParts(date)
-      .find((p) => p.type === 'timeZoneName')?.value ?? 'GMT';
-  const m = /GMT([+-])(\d{2}):(\d{2})/.exec(name);
-  if (!m) return 0;
-  return (m[1] === '-' ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3]));
+  try {
+    const name =
+      new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'longOffset' })
+        .formatToParts(date)
+        .find((p) => p.type === 'timeZoneName')?.value ?? 'GMT';
+    const m = /GMT([+-])(\d{2}):(\d{2})/.exec(name);
+    if (m) return (m[1] === '-' ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3]));
+  } catch { /* 'longOffset' is missing on Safari before 15.4: measured below */ }
+  // Fallback: the wall clock in that zone minus UTC, to the minute.
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }).formatToParts(date);
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value ?? 0);
+  const wall = Date.UTC(get('year'), get('month') - 1, get('day'), get('hour') % 24, get('minute'));
+  return Math.round((wall - date.getTime()) / 60_000);
 }
 
 export function hoursApart(zoneA: string, zoneB: string, date: Date): number {

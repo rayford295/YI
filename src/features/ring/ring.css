@@ -17,6 +17,7 @@ html[lang='en'] .ring-head h1 { font-family: var(--serif-en); font-style: italic
 }
 .ring-views, .ring-which { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
 .ring-tryon-bar { position: absolute; top: 16px; right: 16px; display: flex; gap: 8px; }
+@media (max-width: 420px) { .ring-tryon-bar { top: auto; bottom: 86px; right: 12px; } .ring-views button, .ring-which button, .ring-tryon-bar button { padding: 6px 12px; font-size: 13px; } }
 .ring-tryon-bar button {
   border: 1px solid rgba(211, 165, 87, 0.55); background: rgba(16, 46, 73, 0.6); color: #f1e4c8;
   padding: 7px 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; backdrop-filter: blur(6px);

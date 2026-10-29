@@ -6,7 +6,7 @@ import '../theatre/theatre.css';
 import { pick, type L10n } from '../../core/i18n';
 import { getPlayer } from '../../core/quest';
 import { avatarHtml } from '../../core/quest-ui';
-import { go } from '../../core/router';
+import { go, refresh } from '../../core/router';
 import { pauseJukebox } from '../music/jukebox';
 import { confetti } from '../../core/celebrate';
 import { Aborted, Stage, place, type Actor } from '../theatre/stage';
@@ -16,13 +16,16 @@ import { JINGYI, JINGYI_CROWN, YIFAN_CHEF, buildCat } from '../world/sprites';
 import { BERRIES, CANDLES, cakeBack, cakeLit, candleX, heartAbove, kitchenBack, kitchenFront, newCakeUp, newKitchen } from './kitchen';
 import { markBirthdaySeen } from './seen';
 
+// Once the scene has played to the end in this tab, a re-render (the language button) shows the
+// card again instead of starting the cake over. 'Watch again' clears it.
+let finished = false;
+
 const L = (zh: string, en: string): L10n => ({ zh, en });
 const S = {
   eyebrow: L('序章 · 10 月 31 日', 'Prologue · October 31'),
   skip: L('跳过', 'Skip'),
   begin: L('打开声音，开始', 'Sound on, begin'),
   opening: L('2026 年 10 月 30 日\n<small>COLLEGE STATION · 上午</small>', '30 October 2026\n<small>COLLEGE STATION · MORNING</small>'),
-  narrator: L('', ''),
   yifan: L('一帆', 'Yifan'),
   jingyi: L('静仪', 'Jingyi'),
   n1: L('College Station，上午九点四十七分。\n深圳，晚上十点四十七分。离<em>静仪的生日</em>，还有七十三分钟。', 'College Station, 9:47 in the morning.\nShenzhen, 10:47 at night. Seventy-three minutes until <em>Jingyi’s birthday</em>.'),
@@ -56,6 +59,7 @@ const S = {
   wished: L('愿望已经许好了。', 'The wish is made.'),
   blowAsk: L('现在，把蜡烛吹灭吧。对着麦克风轻轻吹一口气，或者按住下面的按钮。', 'Now blow the candles out. Breathe gently into the microphone, or hold the button below.'),
   mic: L('🎙 用麦克风吹', '🎙 Blow into the mic'),
+  micOn: L('🎙 在听，吹吧', '🎙 Listening, blow'),
   hold: L('按住吹气', 'Hold to blow'),
   micNo: L('打不开麦克风，那就按住按钮吹吧。', 'The microphone would not open; hold the button to blow instead.'),
   left: L('还剩 {n} 根', '{n} left'),
@@ -95,6 +99,7 @@ export function renderBirthday(root: HTMLElement): () => void {
   let card: HTMLElement | undefined;
 
   const finish = () => {
+    finished = true;
     skip.hidden = true;
     markBirthdaySeen(player);
     hush();
@@ -112,9 +117,10 @@ export function renderBirthday(root: HTMLElement): () => void {
     document.body.appendChild(card);
     confetti(card, 160);
     card.querySelector('[data-go]')!.addEventListener('click', () => go('/town'));
-    card.querySelector('[data-again]')!.addEventListener('click', () => { location.reload(); });
+    card.querySelector('[data-again]')!.addEventListener('click', () => { finished = false; refresh(); });
     card.querySelector<HTMLButtonElement>('[data-go]')!.focus();
   };
+  if (finished) { stage.destroy(); finish(); return () => { card?.remove(); }; }
   const skip = root.querySelector<HTMLButtonElement>('.th-skip')!;
   skip.addEventListener('click', () => { stage.destroy(); breath?.stop(); finish(); });
 
@@ -137,6 +143,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   ov.appendChild(title);
   await stage.wait(80); title.classList.add('on');
   await stage.ask('', '', [{ label: s(S.begin), value: 1 }]);
+  markBirthdaySeen(getPlayer()!);
   audio(); twinkle();
   title.classList.remove('on');
   await stage.wait(700); title.remove();
@@ -189,7 +196,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
     const hit = () => {
       n++; whisk(); k.whisk += 1.6; k.batter = Math.min(1, 0.6 + n / 30); bar.style.width = `${(n / 12) * 100}%`;
       stage.emit({ x: 64 + (Math.random() - 0.5) * 8, y: 52, vx: (Math.random() - 0.5) * 20, vy: -14, g: 50, max: 500, color: '#f6dc9c' });
-      void stage.hop(ri, 1, 120).catch(() => undefined);
+      stage.fire(stage.hop(ri, 1, 120));
       if (n >= 12) { off(); res(); }
     };
     const key = (e: KeyboardEvent) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); hit(); } };
@@ -200,7 +207,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
     btn.focus({ preventScroll: true });
   });
   k.whisk = 0;
-  void runClock(25, 1500);
+  stage.fire(runClock(25, 1500));
   await stage.say(name(S.yifan), s(S.y2));
 
   // ---- 3. the oven
@@ -211,7 +218,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   k.ovenCake = 0.05;
   await stage.tween(900, (q) => { k.ovenGlow = q; });
   await Promise.all([runClock(53, 4200), stage.tween(4200, (q) => { k.ovenCake = 0.05 + q * 0.95; })]);
-  ding(); void stage.hop(ri, 4);
+  ding(); stage.fire(stage.hop(ri, 4));
   stage.narrate(name(S.yifan), s(S.ding));
   await stage.wait(900);
   await stage.tween(500, (q) => { k.ovenGlow = 1 - q; });
@@ -259,7 +266,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   for (const span of icing.querySelectorAll('span')) { span.classList.add('on'); await stage.wait(160); }
   stage.narrate('', s(S.n5));
   for (let i = 0; i < CANDLES; i++) { cake.candles = i + 1; await stage.wait(260); }
-  void runClock(72, 1600);
+  stage.fire(runClock(72, 1600));
   await stage.wait(700);
   await stage.say(name(S.yifan), s(S.y4));
 
@@ -297,7 +304,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   await stage.walk(jy, 82, 63, 20);
   await stage.tween(700, (q) => { k.door = 1 - q; });
   stage.glows.pop();
-  void stage.hop(ri, 3);
+  stage.fire(stage.hop(ri, 3));
   await stage.say(name(S.yifan), s(S.y5));
   jy.dir = 'down'; ri.dir = 'down';
   // Happy Birthday, with the words under the picture.
@@ -310,7 +317,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   }
 
   // ---- 7. a wish (hold), then the candles (breath or hold)
-  stage.narrate(name(S.jingyi), s(S.wish));
+  stage.narrate('', s(S.wish));
   await holdFor(stage, s(S.wishBtn), 3000, (q) => { if (Math.random() < 0.25) stage.emit({ x: Math.random() * 128, y: Math.random() * 40, max: 900, color: '#fff6c2', kind: 'spark' }); void q; });
   twinkle();
   await stage.say(name(S.jingyi), s(S.wished));
@@ -331,7 +338,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
     banner.textContent = s(S.banner);
     ov.appendChild(banner);
     await stage.wait(50); banner.classList.add('on');
-    void stage.hop(jy, 4); void stage.hop(ri, 4);
+    stage.fire(stage.hop(jy, 4)); stage.fire(stage.hop(ri, 4));
     await stage.wait(1200);
     stage.dress(jy, JINGYI_CROWN); twinkle();
     stage.burst(82, 46, ['#f3c94e', '#fff6dc'], 16, 18, 'spark');
@@ -340,7 +347,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
     let heartY = 38;
     const prevFront = stage.front;
     stage.front = (c, t) => { prevFront(c, t); heartAbove(c, 64, Math.round(heartY)); };
-    void stage.tween(1600, (q) => { heartY = 38 - q * 6; });
+    stage.fire(stage.tween(1600, (q) => { heartY = 38 - q * 6; }));
     await stage.say(name(S.yifan), s(S.y6));
     await stage.say(name(S.yifan), s(S.y7));
   } finally { clearInterval(fire); }
@@ -357,6 +364,12 @@ function kitchenLitFlames(ctx: CanvasRenderingContext2D, t: number, k: ReturnTyp
   }
 }
 
+/** Resolve once `released()` is true, so a key or finger still down does not fall through to the next line. */
+function settle(released: () => boolean, res: () => void): void {
+  const tick = () => { if (released()) res(); else requestAnimationFrame(tick); };
+  window.setTimeout(tick, 120);
+}
+
 /** A button held down for `ms` (pointer, Space or Enter); letting go early drains it slowly. */
 function holdFor(stage: Stage, label: string, ms: number, onTick: (q: number) => void): Promise<void> {
   return new Promise((res, rej) => {
@@ -369,7 +382,7 @@ function holdFor(stage: Stage, label: string, ms: number, onTick: (q: number) =>
       q = Math.max(0, Math.min(1, q + (down ? dt / ms : -dt / (ms * 2))));
       bar.style.width = `${q * 100}%`;
       if (down) onTick(q);
-      if (q >= 1) { off(); res(); return; }
+      if (q >= 1) { cancelAnimationFrame(raf); settle(() => !down, () => { off(); res(); }); return; }
       raf = requestAnimationFrame(loop);
     };
     const on = (e: Event) => { e.preventDefault(); down = true; };
@@ -392,7 +405,7 @@ function holdFor(stage: Stage, label: string, ms: number, onTick: (q: number) =>
 /** Blow the candles out: by breath into the mic, or by holding a button. Every ~0.18 s of blowing puts one out. */
 function blowOut(stage: Stage, k: ReturnType<typeof newKitchen>, onBreath: (b: Breath) => void): Promise<void> {
   return new Promise((res, rej) => {
-    stage.narrate(s(S.jingyi), s(S.blowAsk));
+    stage.narrate('', s(S.blowAsk));
     const box = stage.controls(`<span class="th-count"></span><div class="th-meter"><i></i></div><button type="button" class="btn go" data-mic>${s(S.mic)}</button><button type="button" class="btn quiet th-hold" data-hold>${s(S.hold)}</button>`);
     const count = box.querySelector<HTMLElement>('.th-count')!;
     const bar = box.querySelector<HTMLElement>('.th-meter i')!;
@@ -417,18 +430,23 @@ function blowOut(stage: Stage, k: ReturnType<typeof newKitchen>, onBreath: (b: B
           count.textContent = s(S.left, { n: lit() });
           const g = stage.glows[0];
           if (g) g.r = 10 + 20 * (lit() / CANDLES);
-          if (!lit()) { off(); res(); return; }
+          if (!lit()) { cancelAnimationFrame(raf); settle(() => !holding, () => { off(); res(); }); return; }
         }
       } else acc = Math.max(0, acc - dt);
       raf = requestAnimationFrame(loop);
     };
     const down = (e: Event) => { e.preventDefault(); holding = true; };
     const up = () => { holding = false; };
-    const key = (e: KeyboardEvent) => { if (e.key === ' ') { e.preventDefault(); holding = e.type === 'keydown'; } };
+    const key = (e: KeyboardEvent) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); holding = e.type === 'keydown'; } };
     const mic = async () => {
+      if (stage.signal.aborted) return;
       micBtn.disabled = true;
-      try { breath = await listenForBreath(); onBreath(breath); }
-      catch { stage.narrate(s(S.jingyi), s(S.micNo), true); micBtn.remove(); }
+      try {
+        const b = await listenForBreath();
+        if (stage.signal.aborted) { b.stop(); return; }
+        breath = b; onBreath(b); micBtn.textContent = s(S.micOn);
+      }
+      catch { stage.narrate('', s(S.micNo), true); micBtn.remove(); }
     };
     const abort = () => { off(); rej(new Aborted()); };
     const off = () => {
@@ -440,6 +458,8 @@ function blowOut(stage: Stage, k: ReturnType<typeof newKitchen>, onBreath: (b: B
     holdBtn.addEventListener('pointerdown', down); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
     window.addEventListener('keydown', key); window.addEventListener('keyup', key);
     stage.signal.addEventListener('abort', abort, { once: true });
+    if (!navigator.mediaDevices?.getUserMedia) micBtn.remove();
+    (micBtn.isConnected ? micBtn : holdBtn).focus({ preventScroll: true });
     raf = requestAnimationFrame(loop);
   });
 }

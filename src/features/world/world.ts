@@ -112,6 +112,7 @@ function mountWorld(root: HTMLElement): () => void {
       </p>
     </section>`;
 
+  const timers = new Set<number>();   // every timeout this page sets, cleared on teardown
   const canvas = root.querySelector<HTMLCanvasElement>('#world-canvas')!;
   const dialog = root.querySelector<HTMLElement>('#world-dialog')!;
   const nameEl = root.querySelector<HTMLElement>('#world-name')!;
@@ -301,7 +302,8 @@ function mountWorld(root: HTMLElement): () => void {
   try { introSeen = localStorage.getItem(INTRO_KEY) === '1'; } catch { introSeen = true; }
   if (!introSeen && !returning) {
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    window.setTimeout(() => {
+    const intro = window.setTimeout(() => {
+      timers.delete(intro);
       if (!dialog.hidden) return;
       const seen = () => { try { localStorage.setItem(INTRO_KEY, '1'); } catch { /* ignore */ } };
       openDialog(t('world.intro.name'), t(fine ? 'world.intro.keys' : 'world.intro.touch'), [
@@ -310,11 +312,12 @@ function mountWorld(root: HTMLElement): () => void {
       ], rayfordFace);
       panel.classList.add('pixel-face');
     }, 600);
+    timers.add(intro);
   }
-  window.setTimeout(() => { for (const w of walks) engine.walkNpc(w.id, w.to); }, returning ? 500 : 200);
+  const firstWalks = window.setTimeout(() => { timers.delete(firstWalks); for (const w of walks) engine.walkNpc(w.id, w.to); }, returning ? 500 : 200);
+  timers.add(firstWalks);
 
   // A resting cat now and then wanders one tile from its home and comes back.
-  const timers = new Set<number>();
   const fidget = window.setInterval(() => {
     if (!dialog.hidden) return;
     for (const n of cats) {
