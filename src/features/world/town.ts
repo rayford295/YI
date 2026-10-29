@@ -67,6 +67,8 @@ export const SIGNPOST: Point = { x: 22, y: 9 };
 /** The signpost at the west edge: the road to Shenzhen. */
 export const SIGNPOST_WEST: Point = { x: 1, y: 9 };
 /** Where Rayford, the guide, waits: on the grass just south of the square, beside the path. */
+/** The hole in time and space, on the grass by the last house; it opens once this player has the ring. */
+export const PORTAL_SPOT: Point = { x: 14, y: 16 };
 export const RAYFORD_SPOT: Point = { x: 12, y: 11 };
 /** Where a cat rests when it has no door to guard: Coffee by the pond, Duoduo in the middle of the square. */
 export const CAT_HOMES: Record<'coffee' | 'duoduo', Point> = { coffee: { x: 13, y: 6 }, duoduo: { x: 10, y: 10 } };

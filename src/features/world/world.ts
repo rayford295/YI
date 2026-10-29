@@ -9,10 +9,10 @@ import { go as navigate } from '../../core/router';
 import { openDoor } from '../../core/door';
 import { notesFor } from '../voice/notes';
 import { rayfordSays, type Topic } from '../guide/rayford';
-import { BUILDINGS, CAT_HOMES, MAILBOX, PARTNER, RAYFORD_SPOT, SIGNPOST, SIGNPOST_WEST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
+import { BUILDINGS, CAT_HOMES, MAILBOX, PARTNER, PORTAL_SPOT, RAYFORD_SPOT, SIGNPOST, SIGNPOST_WEST, SPAWN, buildingAt, guardSpot, walkable, type Building, type Point } from './town';
 import { WorldEngine, type Npc } from './engine';
 import { bindControls, padHtml } from './controls';
-import { JINGYI, JINGYI_BRIDE, RAYFORD, YIFAN, YIFAN_GROOM, buildCat, portraitUrl, buildMailbox, buildSheet, buildSign, type CatId, type Dir } from './sprites';
+import { JINGYI, JINGYI_BRIDE, RAYFORD, YIFAN, YIFAN_GROOM, buildCat, buildPortal, portraitUrl, buildMailbox, buildSheet, buildSign, type CatId, type Dir } from './sprites';
 import { WATER_PHASES, renderWater } from './tiles';
 import { phaseAt, tintFor } from './daylight';
 import { clockIn } from '../../core/dates';
@@ -150,6 +150,7 @@ function mountWorld(root: HTMLElement): () => void {
     { id: 'sign:sz', x: SIGNPOST_WEST.x, y: SIGNPOST_WEST.y, frames: buildSign() },   // the road to Shenzhen
     { id: 'mailbox', x: MAILBOX.x, y: MAILBOX.y, frames: buildMailbox() },   // the voice notes
     { id: 'rayford', x: RAYFORD_SPOT.x, y: RAYFORD_SPOT.y, frames: [], sheet: buildSheet(RAYFORD), dir: 'down' },   // the guide
+    ...(isCleared('ring', p) ? [{ id: 'portal', x: PORTAL_SPOT.x, y: PORTAL_SPOT.y, frames: buildPortal() }] : []),   // the way to the wedding
     ...cats,
   ];
 
@@ -226,6 +227,11 @@ function mountWorld(root: HTMLElement): () => void {
   }
   function onBump(n: Npc): void {
     if (n.id === 'rayford') { talkRayford('hello'); return; }
+    if (n.id === 'portal') {
+      if (clearedByAll('ring')) openDialog(t('world.portal.name'), t('world.portal.line'), [{ label: t('world.portal.go'), run: () => go('/wedding') }, { label: t('world.later'), run: closeDialog }]);
+      else openDialog(t('world.portal.name'), t('world.portal.wait', { other: playerName(other) }), [{ label: t('world.partner.sync'), run: () => go('/sync') }, { label: t('world.close'), run: closeDialog }]);
+      return;
+    }
     if (n.id === 'mailbox') {
       const notes = notesFor(p);
       const close = { label: t('world.close'), run: closeDialog };

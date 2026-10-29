@@ -3,7 +3,7 @@
 // server); the town page turns his choices into talk-box buttons. Pure, so it can be tested.
 import { t, type Key } from '../../core/i18n';
 import { LEVELS, levelNumber, type PlayerId } from '../../core/quest';
-import { BUILDINGS, type Point } from '../world/town';
+import { BUILDINGS, PORTAL_SPOT, type Point } from '../world/town';
 
 export type Topic = 'hello' | 'about' | 'next' | 'levels' | 'town' | 'me';
 
@@ -67,7 +67,7 @@ export function rayfordSays(topic: Topic, s: GuideState): Line {
       }
       if (s.wed) return { text: t(s.player === 'jingyi' ? 'guide.wed' : 'guide.wed.yifan'), choices: [{ label: t('world.wedding'), go: '/wedding' }, back(), bye()] };
       if (!s.cleared('ring', s.other)) return { text: t('guide.wait', { other: them }), choices: [back(), bye()] };
-      return { text: t('guide.done', { other: them }), choices: [back(), bye()] };
+      return { text: t('guide.portal'), choices: [{ label: t('guide.take'), walkTo: { x: PORTAL_SPOT.x, y: PORTAL_SPOT.y + 1 } }, back(), bye()] };
     }
   }
 }

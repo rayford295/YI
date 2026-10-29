@@ -1,4 +1,4 @@
-// The birthday scenery, painted in code at 128×80: 小日's kitchen (wide shot) and the cake up close.
+// The birthday scenery, painted in code at 128×80: Yifan's kitchen (wide shot) and the cake up close.
 import { H, W, pixelHeart, rect } from '../theatre/stage';
 
 export const CANDLES = 9;   // nine candles: nine levels, and 九 sounds like 久, "for a long time"

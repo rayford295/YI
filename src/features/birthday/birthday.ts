@@ -1,4 +1,4 @@
-// The birthday prologue: before the town opens, 小日 bakes Jingyi a cake against the clock in his
+// The birthday prologue: before the town opens, 一帆 bakes Jingyi a cake against the clock in his
 // College Station kitchen, the lights go out at Shenzhen midnight, everyone sings, she makes a
 // wish and blows the candles out (with her real breath, if the mic is allowed). Plays once per
 // player on this device before the first walk in town; the town footer replays it.
@@ -23,15 +23,15 @@ const S = {
   begin: L('打开声音，开始', 'Sound on, begin'),
   opening: L('2026 年 10 月 30 日\n<small>COLLEGE STATION · 上午</small>', '30 October 2026\n<small>COLLEGE STATION · MORNING</small>'),
   narrator: L('', ''),
-  xiaori: L('小日', 'Little Ri'),
+  yifan: L('一帆', 'Yifan'),
   jingyi: L('静仪', 'Jingyi'),
   n1: L('College Station，上午九点四十七分。\n深圳，晚上十点四十七分。离<em>静仪的生日</em>，还有七十三分钟。', 'College Station, 9:47 in the morning.\nShenzhen, 10:47 at night. Seventy-three minutes until <em>Jingyi’s birthday</em>.'),
   y1: L('来得及，来得及……今天一定要亲手做出来。', 'Plenty of time, plenty of time… today I make it with my own hands.'),
-  n2: L('小日系好围裙，戴上厨师帽。三个鸡蛋，一勺糖，一大捧面粉。', 'Little Ri ties his apron and puts on the chef’s hat. Three eggs, a spoon of sugar, a big scoop of flour.'),
-  whiskAsk: L('帮小日把面糊打匀：连点「搅」或者点画面，十二下。', 'Help Little Ri whisk the batter: tap “Whisk” or the picture, twelve times.'),
+  n2: L('一帆系好围裙，戴上厨师帽。三个鸡蛋，一勺糖，一大捧面粉。', 'Yifan ties his apron and puts on the chef’s hat. Three eggs, a spoon of sugar, a big scoop of flour.'),
+  whiskAsk: L('帮一帆把面糊打匀：连点「搅」或者点画面，十二下。', 'Help Yifan whisk the batter: tap “Whisk” or the picture, twelve times.'),
   whiskBtn: L('搅！', 'Whisk!'),
   y2: L('好了！细腻、顺滑，像……像她的声音。', 'Done! Smooth and silky, like… like her voice.'),
-  n3: L('面糊进了烤箱。小日蹲在烤箱前面，一动不动地盯着。', 'Into the oven. Little Ri crouches in front of it and does not take his eyes off the glass.'),
+  n3: L('面糊进了烤箱。一帆蹲在烤箱前面，一动不动地盯着。', 'Into the oven. Yifan crouches in front of it and does not take his eyes off the glass.'),
   ding: L('叮！', 'Ding!'),
   y3: L('起来了，起来了！她会喜欢的吧？', 'It rose, it rose! She’ll like it, won’t she?'),
   n4: L('奶油抹平，沿着边挤一圈小花。', 'Cream smoothed on, and a ring of little rosettes piped around the edge.'),
@@ -41,7 +41,7 @@ const S = {
   plaque: L('静仪 · 生日快乐', 'Happy Birthday Jingyi'),
   n5: L('最后，九根蜡烛。九关，九九，久久。', 'Last, nine candles. Nine levels; and in Chinese, nine sounds like “for a long, long time”.'),
   y4: L('深圳快零点了。关灯！', 'Almost midnight in Shenzhen. Lights off!'),
-  n6: L('小日一根一根点亮蜡烛。', 'One by one, Little Ri lights the candles.'),
+  n6: L('一帆一根一根点亮蜡烛。', 'One by one, Yifan lights the candles.'),
   midnight: L('零点。10 月 31 日。', 'Midnight. October 31.'),
   n7: L('在仪见小镇，没有十三个小时的时差。\n门开了。', 'In Yi Town there is no thirteen-hour time difference.\nThe door opens.'),
   y5: L('静仪，生日快乐！快过来，我们给你唱歌。', 'Happy birthday, Jingyi! Come here, we’re singing for you.'),
@@ -51,7 +51,7 @@ const S = {
     L('♪ 祝静仪生日快乐 ♪', '♪ Happy birthday, dear Jingyi ♪'),
     L('♪ 祝你生日快乐 ♪', '♪ Happy birthday to you ♪'),
   ],
-  wish: L('闭上眼睛，许一个愿。\n（不用说出来。小日说，他负责把它实现。）', 'Close your eyes and make a wish.\n(No need to say it. Little Ri says making it come true is his job.)'),
+  wish: L('闭上眼睛，许一个愿。\n（不用说出来。一帆说，他负责把它实现。）', 'Close your eyes and make a wish.\n(No need to say it. Yifan says making it come true is his job.)'),
   wishBtn: L('按住许愿', 'Hold to wish'),
   wished: L('愿望已经许好了。', 'The wish is made.'),
   blowAsk: L('现在，把蜡烛吹灭吧。对着麦克风轻轻吹一口气，或者按住下面的按钮。', 'Now blow the candles out. Breathe gently into the microphone, or hold the button below.'),
@@ -166,7 +166,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   await stage.walk(ri, 64, 63, 26);
   ri.dir = 'down';
   await stage.wait(1400);
-  await stage.say(name(S.xiaori), s(S.y1));
+  await stage.say(name(S.yifan), s(S.y1));
 
   // ---- 2. eggs, sugar, flour, whisk
   k.bowl = true;
@@ -201,7 +201,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   });
   k.whisk = 0;
   void runClock(25, 1500);
-  await stage.say(name(S.xiaori), s(S.y2));
+  await stage.say(name(S.yifan), s(S.y2));
 
   // ---- 3. the oven
   k.bowl = false;
@@ -212,11 +212,11 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   await stage.tween(900, (q) => { k.ovenGlow = q; });
   await Promise.all([runClock(53, 4200), stage.tween(4200, (q) => { k.ovenCake = 0.05 + q * 0.95; })]);
   ding(); void stage.hop(ri, 4);
-  stage.narrate(name(S.xiaori), s(S.ding));
+  stage.narrate(name(S.yifan), s(S.ding));
   await stage.wait(900);
   await stage.tween(500, (q) => { k.ovenGlow = 1 - q; });
   ri.dir = 'down';
-  await stage.say(name(S.xiaori), s(S.y3));
+  await stage.say(name(S.yifan), s(S.y3));
 
   // ---- 4. decorating, up close
   for (const { el } of clocks) el.style.opacity = '0';
@@ -261,7 +261,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   for (let i = 0; i < CANDLES; i++) { cake.candles = i + 1; await stage.wait(260); }
   void runClock(72, 1600);
   await stage.wait(700);
-  await stage.say(name(S.xiaori), s(S.y4));
+  await stage.say(name(S.yifan), s(S.y4));
 
   // ---- 5. lights out, candles lit, midnight
   icing.style.transition = 'opacity 800ms'; icing.style.opacity = '0.35';
@@ -298,7 +298,7 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
   await stage.tween(700, (q) => { k.door = 1 - q; });
   stage.glows.pop();
   void stage.hop(ri, 3);
-  await stage.say(name(S.xiaori), s(S.y5));
+  await stage.say(name(S.yifan), s(S.y5));
   jy.dir = 'down'; ri.dir = 'down';
   // Happy Birthday, with the words under the picture.
   for (let i = 0; i < BIRTHDAY_SONG.length; i++) {
@@ -335,14 +335,14 @@ async function play(stage: Stage, onBreath: (b: Breath) => void): Promise<void> 
     await stage.wait(1200);
     stage.dress(jy, JINGYI_CROWN); twinkle();
     stage.burst(82, 46, ['#f3c94e', '#fff6dc'], 16, 18, 'spark');
-    await stage.say(name(S.xiaori), s(S.crown));
+    await stage.say(name(S.yifan), s(S.crown));
     ri.dir = 'right'; jy.dir = 'left';
     let heartY = 38;
     const prevFront = stage.front;
     stage.front = (c, t) => { prevFront(c, t); heartAbove(c, 64, Math.round(heartY)); };
     void stage.tween(1600, (q) => { heartY = 38 - q * 6; });
-    await stage.say(name(S.xiaori), s(S.y6));
-    await stage.say(name(S.xiaori), s(S.y7));
+    await stage.say(name(S.yifan), s(S.y6));
+    await stage.say(name(S.yifan), s(S.y7));
   } finally { clearInterval(fire); }
   stage.hideCaption();
 }

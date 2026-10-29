@@ -70,7 +70,7 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 
 | Roof | # | Level | The task | Behind the door |
 |:---:|:---:|---|---|---|
-| 🎂 | · | Birthday Prologue | Whisk the batter, place ten strawberries, make a wish, blow the candles out (by breath into the mic, or a held button) | Plays once per player before the town opens; 小日 bakes against the Shenzhen-midnight clock |
+| 🎂 | · | Birthday Prologue | Whisk the batter, place ten strawberries, make a wish, blow the candles out (by breath into the mic, or a held button) | Plays once per player before the town opens; 一帆 bakes against the Shenzhen-midnight clock |
 | 🟥 | 1 | The Day We Met | Answer one question, then say the vow line out loud | Day counter, twin clocks, countdown; the vow of being each other's again, heard by the browser |
 | 🟦 | 2 | Love Map | Name six street views; each right answer puts a heart on the map to pick up | Texas, Los Angeles, Japan, Shenzhen, Hong Kong, New York, and why each is ours |
 | 🟧 | 3 | Tattoo | Handwrite a tattoo for the other one, on an arm or a shoulder, and ink it | Kept on the device; save it as a picture to send |

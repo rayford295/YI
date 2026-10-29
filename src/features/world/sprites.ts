@@ -144,7 +144,7 @@ export const RAYFORD: Figure = {
 
 // Costumes for the two cutscenes (the birthday prologue and the wedding). Same faces, new clothes.
 
-// 小日 the pastry chef: a tall white toque over his hair and a cream apron over the red top.
+// 一帆 the pastry chef: a tall white toque over his hair and a cream apron over the red top.
 export const YIFAN_CHEF: Figure = {
   palette: { ...YIFAN.palette, w: '#ffffff', a: '#fff1e2', o: '#e3c9b0' },
   body: {
@@ -306,6 +306,28 @@ export const SIGN: string[] = [
   '............',
 ];
 // A red mailbox on a post, where the voice notes wait.
+// The hole in time and space that opens by the last house once the ring is reached: a dark oval
+// with rings of violet and teal light turning around it. Four frames, so the engine's idle cycle
+// makes it swirl.
+export const PORTAL_PALETTE: Palette = { k: '#0b0620', v: '#7b4fd8', t: '#49d6c8', w: '#f3e9ff', p: '#b38cff' };
+const PORTAL_RINGS = [
+  ['....tvvt....', '..vpkkkkpv..', '.tkkkkkkkkt.', 'vkkkkkkkkkkv', 'pkkkkkkkkkkp', 'tkkkkkkkkkkt', 'vkkkkkkkkkkv', '.pkkkkkkkkp.', '..tvkkkkvt..', '....pttp....'],
+  ['....pttp....', '..tvkkkkvt..', '.pkkkkkkkkp.', 'tkkkkkkkkkkt', 'vkkkkkkkkkkv', 'pkkkkkkkkkkp', 'tkkkkkkkkkkt', '.vkkkkkkkkv.', '..ptkkkktp..', '....vppv....'],
+];
+export const PORTAL: string[][] = [0, 1, 2, 3].map((f) => {
+  const rings = PORTAL_RINGS[f % 2];
+  const spark = [['..w.........', '.........w..'], ['......w.....', '....w.......'], ['.........w..', '..w.........'], ['.w..........', '.......w....']][f];
+  return ['............', spark[0], spark[1], ...rings, '............'];
+});
+export function buildPortal(): HTMLCanvasElement[] {
+  return PORTAL.map((rows) => {
+    const c = document.createElement('canvas');
+    c.width = SPRITE_W; c.height = SPRITE_H;
+    paint(c.getContext('2d')!, rows, PORTAL_PALETTE, 0, 0);
+    return c;
+  });
+}
+
 export const MAILBOX_PALETTE: Palette = { r: '#c74b5f', d: '#7a2a3a', c: '#f4e9d6', p: '#5a3a1e', n: '#102e49' };
 export const MAILBOX: string[] = [
   '............',
