@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{37}
+\begin{thebibliography}{38}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -331,6 +331,15 @@
 \newblock \showarticletitle{Mediating Intimacy: Designing Technologies to Support Strong-Tie Relationships}. In \bibinfo{booktitle}{\emph{Proceedings of the SIGCHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '05})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{471--480}.
 \newblock
 \href{https://doi.org/10.1145/1054972.1055038}{doi:\nolinkurl{10.1145/1054972.1055038}}
+
+
+\bibitem[Yang et~al\mbox{.}(2024)]%
+        {yang2024geolocator}
+\bibfield{author}{\bibinfo{person}{Yifan Yang}, \bibinfo{person}{Siqin Wang}, \bibinfo{person}{Daoyang Li}, \bibinfo{person}{Shuju Sun}, {and} \bibinfo{person}{Qingyang Wu}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{GeoLocator}: A Location-Integrated Large Multimodal Model ({LMM}) for Inferring Geo-Privacy}.
+\newblock \bibinfo{journal}{\emph{Applied Sciences}} \bibinfo{volume}{14}, \bibinfo{number}{16} (\bibinfo{year}{2024}), \bibinfo{pages}{7091}.
+\newblock
+\href{https://doi.org/10.3390/app14167091}{doi:\nolinkurl{10.3390/app14167091}}
 
 
 \bibitem[Zhang et~al\mbox{.}(2020)]%

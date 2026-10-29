@@ -16,7 +16,7 @@ pdfLaTeX build should produce; it was compiled from exactly the files in the tar
 
 ## Form fields
 
-**Title**
+**Title** (plain text; the red colour and the heart exist only in the PDF)
 
 MERIDIAN: Memory-Encoded Rituals for Intimacy across Distance in an Interactive, Asynchronous Neighbourhood
 
@@ -30,7 +30,7 @@ Two people met on 20 September 2026 and have since lived thirteen hours and one 
 
 **Comments**
 
-10 pages, 9 figures, 5 tables
+11 pages, 9 figures, 5 tables
 
 **Primary category:** cs.HC (Human-Computer Interaction)
 **Cross-list:** cs.CY (Computers and Society)
@@ -52,8 +52,10 @@ open; one figure contains a CC BY 2.0 photograph, credited in its caption).
 
 ## Rebuild
 
+Never edit `meridian.tex` here by hand: edit `../meridian.tex`, then regenerate this folder.
+
 ```bash
 export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
-cp ../references.bib . && pdflatex meridian && bibtex meridian && pdflatex meridian && pdflatex meridian
+cd .. && python3 arxiv/make_arxiv.py && cd arxiv && cp ../references.bib . && pdflatex meridian && bibtex meridian && pdflatex meridian && pdflatex meridian
 tar -czf meridian-arxiv.tar.gz meridian.tex meridian.bbl figures
 ```
