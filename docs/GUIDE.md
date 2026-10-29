@@ -39,6 +39,7 @@ yi-town/
 │       ├── ring/               #   3D viewer, webcam try-on, photo card
 │       └── letter/             #   the epilogue
 ├── ring/                       # the ring's Blender script and renders
+├── paper/                      # the paper (LaTeX + PDF) and the Chinese report, sharing figures/
 ├── docs/
 │   ├── DEPLOY.md               # how to publish (GitHub Pages) or host privately (Cloudflare)
 │   ├── screenshots/

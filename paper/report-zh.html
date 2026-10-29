@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>仪见小镇 · 功能报告说明书</title>
+<style>
+  @page { size: A4; margin: 20mm 18mm 20mm 18mm; }
+  @page :first { margin: 0; }
+  :root {
+    --navy: #0b2036; --gold: #d3a557; --cream: #f6efe2; --rose: #c74b5f; --meadow: #5f9e5a;
+    --ink: #1f2430; --muted: #6b6f7a; --line: #e4dccb;
+  }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; color: var(--ink); background: #fff;
+    font-family: "Songti SC", "STSong", serif; font-size: 10.6pt; line-height: 1.85; text-align: justify; }
+  h1, h2, h3, h4, .sans, table, figcaption, .tag, .toc, .callout b, .kv { font-family: "PingFang SC", "STHeiti", sans-serif; }
+  h1 { font-size: 21pt; color: var(--navy); margin: 0 0 4mm; padding-bottom: 3mm; border-bottom: 2px solid var(--gold); font-weight: 600; letter-spacing: .5pt; break-before: page; }
+  h1 .no { color: var(--gold); margin-right: 3mm; font-weight: 500; }
+  h1 .en { display: block; font-size: 9.5pt; color: var(--muted); font-weight: 400; letter-spacing: 1.5pt; text-transform: uppercase; margin-top: 1mm; font-family: Georgia, serif; font-style: italic; }
+  h2 { font-size: 13.5pt; color: var(--navy); margin: 7mm 0 2mm; font-weight: 600; }
+  h2::before { content: ""; display: inline-block; width: 3.2mm; height: 3.2mm; background: var(--rose); margin-right: 2.4mm; transform: translateY(-.4mm); }
+  h2, h3 { break-after: avoid; }
+  h3 { font-size: 11.5pt; color: var(--rose); margin: 5mm 0 1.5mm; font-weight: 600; }
+  p { margin: 0 0 2.6mm; text-indent: 2em; }
+  p.noindent, li p, .callout p, td p { text-indent: 0; }
+  ul, ol { margin: 0 0 3mm; padding-left: 6mm; }
+  li { margin-bottom: 1mm; }
+  code, .mono { font-family: Menlo, "SF Mono", monospace; font-size: 8.8pt; background: #f4f0e6; padding: 0 1.2mm; border-radius: 1mm; color: #5b3a1e; }
+  table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9pt; line-height: 1.6; break-inside: avoid; }
+  th { background: var(--navy); color: var(--cream); font-weight: 500; text-align: left; padding: 1.8mm 2.4mm; }
+  td { padding: 1.6mm 2.4mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: #fbf8f1; }
+  figure { margin: 4mm 0 5mm; break-inside: avoid; text-align: center; }
+  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 1.5mm; }
+  figure.pixel img { image-rendering: pixelated; }
+  figcaption { font-size: 8.6pt; color: var(--muted); margin-top: 1.6mm; line-height: 1.55; text-align: center; }
+  figcaption b { color: var(--navy); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5mm; }
+  .grid2 figure, .grid3 figure, .grid4 figure { margin: 0; }
+  .callout { background: var(--cream); border-left: 3px solid var(--gold); padding: 3mm 4mm; margin: 3mm 0 4mm; border-radius: 0 2mm 2mm 0; break-inside: avoid; }
+  .callout.rose { border-left-color: var(--rose); background: #fbeef0; }
+  .callout.navy { border-left-color: var(--navy); background: #eef2f7; }
+  .callout b { color: var(--navy); }
+  .level { border: 1px solid var(--line); border-radius: 2.5mm; padding: 4mm 5mm 2mm; margin: 4mm 0 5mm; break-inside: avoid; background: #fffdf8; }
+  .level-head { display: flex; align-items: center; gap: 3mm; margin-bottom: 2mm; }
+  .roof { width: 9mm; height: 9mm; border-radius: 1.5mm; color: #fff; display: flex; align-items: center; justify-content: center; font: 600 12pt "PingFang SC"; }
+  .level-head h3 { margin: 0; font-size: 13pt; color: var(--navy); }
+  .level-head .en { font: italic 9pt Georgia, serif; color: var(--muted); }
+  .kv { display: grid; grid-template-columns: 19mm 1fr; gap: 1mm 3mm; font-size: 9.2pt; line-height: 1.6; margin: 1mm 0 3mm; }
+  .kv dt { color: var(--rose); font-weight: 600; }
+  .kv dd { margin: 0; font-family: "Songti SC", serif; }
+  .level .shot { float: right; width: 62mm; margin: 0 0 2mm 4mm; }
+  .level .shot img { width: 100%; border: 1px solid var(--line); border-radius: 1.5mm; }
+  .clear { clear: both; }
+  .tag { display: inline-block; font-size: 7.8pt; padding: .2mm 2mm; border-radius: 8mm; background: var(--navy); color: var(--cream); margin-right: 1mm; }
+  .tag.gold { background: var(--gold); color: var(--navy); }
+  .tag.rose { background: var(--rose); }
+  .quote { font-family: "Kaiti SC", "STKaiti", "Songti SC", serif; color: #5b3a1e; }
+
+  /* cover */
+  .cover { height: 297mm; width: 210mm; position: relative; background: var(--navy); color: var(--cream); overflow: hidden; break-after: page; }
+  .cover .map { position: absolute; left: 0; right: 0; bottom: 0; height: 150mm; background: url(figures/art-town.png) center / cover no-repeat; image-rendering: pixelated; opacity: .95; }
+  .cover .fade { position: absolute; left: 0; right: 0; bottom: 110mm; height: 50mm; background: linear-gradient(var(--navy), transparent); }
+  .cover .inner { position: absolute; top: 34mm; left: 22mm; right: 22mm; }
+  .cover .eyebrow { font: 500 9pt "PingFang SC"; letter-spacing: 4pt; color: var(--gold); }
+  .cover .title { font: 600 44pt "Songti SC"; letter-spacing: 6pt; margin: 6mm 0 2mm; }
+  .cover .title-en { font: italic 17pt Georgia, serif; color: #e9d9b5; }
+  .cover .sub { font: 400 14pt "PingFang SC"; margin-top: 9mm; letter-spacing: 1pt; }
+  .cover .meta { margin-top: 12mm; font: 400 10pt "PingFang SC"; line-height: 1.9; color: #d9cfbd; }
+  .cover .meta b { color: var(--cream); font-weight: 600; }
+  .cover .sprites { margin-top: 8mm; display: flex; gap: 5mm; align-items: flex-end; }
+  .cover .sprites img { height: 20mm; image-rendering: pixelated; }
+  .cover .sprites img.cat { height: 11mm; }
+
+  .toc { break-after: page; }
+  .toc h1 { break-before: auto; }
+  .toc ol { list-style: none; padding: 0; font-size: 11pt; line-height: 2.25; }
+  .toc li { display: flex; border-bottom: 1px dotted var(--line); }
+  .toc li span.n { color: var(--gold); width: 12mm; font-weight: 600; }
+  .toc li span.e { margin-left: auto; color: var(--muted); font: italic 9pt Georgia, serif; }
+  .lead { font-size: 11.4pt; color: #333; }
+  .small { font-size: 9pt; color: var(--muted); }
+  .center { text-align: center; text-indent: 0; }
+</style>
+</head>
+<body>
+
+<!-- ============ 封面 ============ -->
+<section class="cover">
+  <div class="map"></div>
+  <div class="fade"></div>
+  <div class="inner">
+    <div class="eyebrow">YI TOWN · 功能报告说明书 · v1.17.0</div>
+    <div class="title">仪见小镇</div>
+    <div class="title-en">Yi at First Sight — Love at First Sprite</div>
+    <div class="sub">一座为两个人建造的像素小镇：九栋房子、九段回忆，<br>隔着十三个小时和一片太平洋。</div>
+    <div class="meta">
+      <b>陈静仪</b>（第一作者）　·　<b>杨一帆</b>（通讯作者，yifan.yang@gisphere.info）<br>
+      单位：仪见小镇 · 喷泉旁的房子（深圳 · College Station）<br>
+      网址：jingyifan.love　·　代码仓库：github.com/rayford295/yi-town（私有）<br>
+      2026 年 10 月
+    </div>
+    <div class="sprites">
+      <img src="figures/art-fig_JINGYI.png" alt="静仪">
+      <img src="figures/art-fig_YIFAN.png" alt="一帆">
+      <img src="figures/art-fig_RAYFORD.png" alt="Rayford">
+      <img class="cat" src="figures/art-cat_coffee.png" alt="咖啡">
+      <img class="cat" src="figures/art-cat_duoduo.png" alt="哆哆">
+    </div>
+  </div>
+</section>
+
+<!-- ============ 目录 ============ -->
+<section class="toc">
+  <h1>目录<span class="en">Contents</span></h1>
+  <ol>
+    <li><span class="n">一</span>项目概述<span class="e">Overview</span></li>
+    <li><span class="n">二</span>快速上手：从敲门到走进小镇<span class="e">Getting Started</span></li>
+    <li><span class="n">三</span>小镇地图与居民<span class="e">The Town and Its People</span></li>
+    <li><span class="n">四</span>九个关卡详解<span class="e">The Nine Levels</span></li>
+    <li><span class="n">五</span>两座城市的一天<span class="e">Two Days</span></li>
+    <li><span class="n">六</span>生日序章与婚礼终章<span class="e">Prologue and Finale</span></li>
+    <li><span class="n">七</span>跨手机同步进度<span class="e">Progress Codes</span></li>
+    <li><span class="n">八</span>隐私、安全与“秘密”<span class="e">Privacy and Secrecy</span></li>
+    <li><span class="n">九</span>技术架构<span class="e">Architecture</span></li>
+    <li><span class="n">十</span>维护手册：日常怎么改<span class="e">Maintenance</span></li>
+    <li><span class="n">十一</span>常见问题<span class="e">FAQ</span></li>
+    <li><span class="n">十二</span>版本历史与下一步<span class="e">History and Roadmap</span></li>
+    <li><span class="n">附</span>附录：存储键、文件夹索引、术语表<span class="e">Appendices</span></li>
+  </ol>
+  <div class="callout navy">
+    <p><b>这份说明书写给谁？</b>写给第一次听说“仪见小镇”的人：想知道它是什么、怎么玩、每一关背后是什么故事；也写给以后要维护它的人：数据存在哪儿、怎么加一段回忆、怎么加一关。配套的英文学术论文《Love at First Sprite》讨论设计方法与系统原理，本说明书侧重“看得懂、用得上”。</p>
+  </div>
+</section>
+
+<!-- ============ 一 ============ -->
+<h1><span class="no">一</span>项目概述<span class="en">Overview</span></h1>
+
+<p class="lead">仪见小镇是一个只有两位玩家的网页游戏。玩家操纵一个小小的像素版自己，在一座小镇里散步；镇上每一栋房子都是一关，每一关都由两个人之间真实发生过的一件事做成。最后一栋房子里，藏着一个惊喜。</p>
+
+<h2>1.1 两个人，十三个小时</h2>
+<p>静仪在深圳，一帆在美国德州的 College Station。两地相差十三个小时：一个人下班走夜路的时候，另一个人的早晨才刚刚开始。两人在 2026 年 9 月 20 日相识，下一次见面，写在一帆第一次视频通话时手绘的一张机票上——航班 <b>CYF925</b>，深圳宝安飞纽约 JFK，2027 年 2 月 5 日，登机口 LOVE910，座位 99A。</p>
+<p>仪见小镇最初是一帆送给静仪的生日礼物（静仪生日：10 月 31 日），也是两个人以后会一直往里添东西的“共同作品”。</p>
+
+<h2>1.2 名字的由来</h2>
+<p>“仪见钟情”谐音“一见钟情”。“一帆”和“静仪”名字里都有一个 <i>yi</i>，标题里借用的是静仪名字里的那个“仪”。英文名 <i>Yi at First Sight</i> 同样双关 <i>love at first sight</i>。网站域名 <code>jingyifan.love</code> 由“静仪”和“一帆”拼成。</p>
+
+<h2>1.3 关键日期</h2>
+<table>
+  <tr><th style="width:28mm">日期</th><th>事件</th><th style="width:50mm">在小镇里的体现</th></tr>
+  <tr><td>2026-09-20</td><td>我们相识，第 1 天</td><td>所有天数计数器的起点；入口问题的答案</td></tr>
+  <tr><td>2026-09-25</td><td>一帆生日（天秤座）</td><td>第 7 关星座；静仪戒指内圈刻字</td></tr>
+  <tr><td>2026-10-10</td><td>隔着海互相比心</td><td>“时刻”关卡的第一段回忆</td></tr>
+  <tr><td>2026-10-17</td><td>第一次 Zoom，手绘机票</td><td>第 1 关倒计时的目标航班</td></tr>
+  <tr><td>2026-10-23</td><td>第一次一起下五子棋（在 Zoom 白板上）</td><td>第 5 关五子棋；紫色＝静仪，绿色＝一帆</td></tr>
+  <tr><td>2026-10-24</td><td>仪见小镇的第一次提交</td><td>—</td></tr>
+  <tr><td>2026-10-31</td><td>静仪生日（天蝎座）；首次发布</td><td>生日序章；第 7 关星座</td></tr>
+  <tr><td>2027-02-05</td><td>CYF925，深圳 → 纽约</td><td>第 1 关倒计时；婚礼证书上“将要相见的日子”</td></tr>
+</table>
+
+<h2>1.4 六条设计原则</h2>
+<table>
+  <tr><th style="width:34mm">原则</th><th>含义</th><th style="width:58mm">怎么做到的</th></tr>
+  <tr><td><b>回忆即玩法</b></td><td>每一关的规则都从一件真事里来，而不是先想好玩法再套故事。</td><td>九关各对应一件事（见第四章）</td></tr>
+  <tr><td><b>一步一步走到</b></td><td>关卡按顺序解锁，只能从房门进入，没有菜单捷径。</td><td>顺序关卡表 + 路由守卫 + 只认“从门进来”</td></tr>
+  <tr><td><b>不需要服务器</b></td><td>没有账号、没有数据库、没有统计；所有东西只留在手机上。</td><td>本地存储 + 进度码 + 离线缓存</td></tr>
+  <tr><td><b>中英对等</b></td><td>中文和英文同等重要，哪一边缺一句，测试就失败。</td><td>同一份双语词典（791 行）</td></tr>
+  <tr><td><b>画在代码里</b></td><td>每一块地砖、每一个小人都是源代码里的一串字符，游戏本身不带任何图片素材。</td><td>精灵与地砖用字符串描述；图标、横幅都由它们生成</td></tr>
+  <tr><td><b>秘密要守住</b></td><td>最后一栋房子里的惊喜，在之前任何一句话里都不能被提前说破。</td><td>一个专门的单元测试扫描所有文字</td></tr>
+</table>
+
+<h2>1.5 一图看全</h2>
+<figure class="pixel"><img src="figures/art-town.png" style="width:118mm">
+<figcaption><b>图 1-1　小镇全图。</b>24×20 个格子，每格 16×16 像素；九栋房子各有自己的屋顶颜色和编号，中间是喷泉广场和池塘。整张图由代码一笔一笔画出。</figcaption></figure>
+
+<!-- ============ 二 ============ -->
+<h1><span class="no">二</span>快速上手：从敲门到走进小镇<span class="en">Getting Started</span></h1>
+
+<h2>2.1 四步进门</h2>
+<ol>
+  <li><b>回答一个问题。</b>打开 <code>jingyifan.love</code>，首先看到一个只有我们俩才答得上来的问题（答案是一个日期）。<code>9.20</code>、<code>0920</code>、<code>9月20日</code>、<code>20260920</code> 这些写法都认，因为系统只看数字。答对一次，这台设备就记住了。</li>
+  <li><b>首页仪表盘。</b>进门后是仪表盘：我们在这个域名下做的每一样东西都有一张卡片，仪见小镇是第一张，以后的新作品也会排在这里。</li>
+  <li><b>你是谁？</b>选择“静仪”或“一帆”。进度按玩家分开保存，所以两个人可以用同一台手机各玩各的。</li>
+  <li><b>生日序章。</b>每位玩家第一次进入小镇前，会先看一段生日动画（见第六章），看完才打开镇门。之后可以从页脚或 Rayford 那里重看。</li>
+</ol>
+
+<div class="grid2">
+  <figure><img src="figures/page-dashboard.jpg"><figcaption><b>图 2-1　仪表盘。</b>一张卡片一个作品。</figcaption></figure>
+  <figure><img src="figures/page-start.jpg"><figcaption><b>图 2-2　选择玩家。</b>每台设备为两位玩家各存一份进度。</figcaption></figure>
+</div>
+
+<h2>2.2 在小镇里怎么走</h2>
+<table>
+  <tr><th style="width:36mm">设备</th><th>操作方式</th></tr>
+  <tr><td>电脑</td><td>方向键或 WASD 走一格；对着人或猫“撞”过去就是对话；走到门上就会弹出这一关的故事。</td></tr>
+  <tr><td>手机 / 平板</td><td>点地图上任意一格，小人会自己沿最短路线走过去；也可以用屏幕下方的方向键。</td></tr>
+  <tr><td>通用</td><td>右上角“中文 / EN”随时切换语言；“旅程”回到小镇；底部的点唱机可以放我们的歌。</td></tr>
+</table>
+<div class="callout"><p><b>小提示：</b>小镇的天色跟着你自己所在城市的时间走。静仪看到的是深圳的天，一帆看到的是德州的天——同一时刻，一个人看见正午，另一个人看见的是亮着灯的窗户。</p></div>
+
+<figure><img src="figures/town-phone.png" style="width:38mm"><figcaption><b>图 2-3　手机上的小镇。</b>上方是标题牌，下方是地图与方向键。</figcaption></figure>
+
+<!-- ============ 三 ============ -->
+<h1><span class="no">三</span>小镇地图与居民<span class="en">The Town and Its People</span></h1>
+
+<h2>3.1 九栋房子</h2>
+<p>每栋房子是一关，屋顶有自己的颜色和编号。走到门口，对话框会讲出这一关的一句话故事；进门就开始玩。通关后屋顶会插上一面金色小旗。</p>
+<table>
+  <tr><th style="width:10mm">#</th><th style="width:16mm">屋顶</th><th style="width:38mm">关卡</th><th>门口的那句话</th></tr>
+  <tr><td>1</td><td><span class="tag" style="background:#c74b5f">红</span></td><td>相遇</td><td>一切从 2026 年 9 月 20 日开始。这一次，把话说出口。</td></tr>
+  <tr><td>2</td><td><span class="tag" style="background:#3f7fb3">蓝</span></td><td>爱情地图</td><td>六个地方，六颗心：你读书的地方，我读书的地方，和我们会见面的地方。</td></tr>
+  <tr><td>3</td><td><span class="tag" style="background:#d8973c">橙</span></td><td>纹身</td><td>写一句话，纹在对方身上。</td></tr>
+  <tr><td>4</td><td><span class="tag" style="background:#5f9e5a">绿</span></td><td>时刻</td><td>每一个日子，你都记得；每一张脸，你都拼得回来。</td></tr>
+  <tr><td>5</td><td><span class="tag" style="background:#8d6a4b">棕</span></td><td>五子棋</td><td>第一盘棋下在 Zoom 的白板上。现在轮到你落最后一子。</td></tr>
+  <tr><td>6</td><td><span class="tag" style="background:#8c62b8">紫</span></td><td>我们的歌</td><td>前奏一响，你就知道是哪一首。</td></tr>
+  <tr><td>7</td><td><span class="tag" style="background:#2d3f6e">深蓝</span></td><td>天秤与天蝎</td><td>一个天秤，一个天蝎，在天上本来就挨着。</td></tr>
+  <tr><td>8</td><td><span class="tag" style="background:#b0413e">朱红</span></td><td>诗里的我们</td><td>古人早就替我们把话说完了，只是缺了几个字。</td></tr>
+  <tr><td>9</td><td><span class="tag gold">金</span></td><td>子午线</td><td>最后一关，不是终点。</td></tr>
+</table>
+
+<h2>3.2 镇上的居民</h2>
+<figure class="pixel"><img src="figures/art-sprites.png" style="width:100%; background:#f6efe2"><figcaption><b>图 3-1　全部角色。</b>从左到右：静仪、一帆、Rayford、厨师一帆、戴王冠的静仪、新娘、新郎（各有四个朝向），最后是两只布偶猫咖啡和哆哆。身体 12×12 像素，下面四行腿部在不同朝向之间共用。</figcaption></figure>
+<ul>
+  <li><b>另一半：</b>站在喷泉边等你，会告诉你 TA 过到第几关了（“我在这儿等你。我已经过了 5 关，你呢？”），还可以把 TA 的进度“带过来”。</li>
+  <li><b>Rayford：</b>穿西装的一帆，站在喷泉南边，是小镇的向导。他能介绍这个项目、列出所有关卡、提示下一关去哪、甚至直接带你走到那扇门前。他说的每一句话都是事先写好的（不是 AI 聊天），而且<b>永远不会提前说破最后一关的秘密</b>。他为什么一直穿西装？到婚礼那天才揭晓——他是司仪。</li>
+  <li><b>咖啡与哆哆：</b>家里两只真实的布偶猫。咖啡守着下一扇锁着的门，哆哆守着再下一扇，各用自己的方式告诉你“先去把前一关过了”。门一开，它们就起身走到新的岗位；没门可守时，一只去池塘边晒太阳，一只坐在广场中央。撞到猫会显示它的真实照片。</li>
+</ul>
+
+<h2>3.3 镇上的其他东西</h2>
+<table>
+  <tr><th style="width:30mm">地点</th><th>作用</th></tr>
+  <tr><td>东边路牌</td><td>通往“一帆在 College Station 的一天”（第五章）。</td></tr>
+  <tr><td>西边路牌</td><td>通往“静仪在深圳的一天”。</td></tr>
+  <tr><td>红色邮筒</td><td>喷泉旁，装着对方留下的语音留言。</td></tr>
+  <tr><td>点唱机</td><td>在每一页的角落，播放我们的六首歌（通过 YouTube 官方播放器，网站本身不存音频）。</td></tr>
+  <tr><td>时空裂缝</td><td>第 9 关通关后，9 号房子旁的草地上会出现一个紫色的“时间之洞”，通往婚礼。</td></tr>
+</table>
+
+<div class="grid2">
+  <figure class="pixel"><img src="figures/town-canvas.jpg"><figcaption><b>图 3-2　游玩中途的广场。</b></figcaption></figure>
+  <figure class="pixel"><img src="figures/town-done-canvas.jpg"><figcaption><b>图 3-3　全部通关后：</b>屋顶插满金旗，猫去池塘边晒太阳。</figcaption></figure>
+</div>
+
+<!-- ============ 四 ============ -->
+<h1><span class="no">四</span>九个关卡详解<span class="en">The Nine Levels</span></h1>
+<p>每一关都按“故事 → 玩法 → 通关条件 → 小细节”来介绍。关卡必须按顺序通过，且只能从小镇里对应的房门进入。关卡内的中途进度（比如已经解开了几道五子棋）会临时保存，刷新页面或切换语言都不会让你从头再来。</p>
+
+<div class="level">
+  <div class="shot"><img src="figures/page-met.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#c74b5f">1</div><div><h3>相遇</h3><span class="en">The Day We Met</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>2026 年 9 月 20 日，我们认识了。</dd>
+    <dt>页面</dt><dd>相识天数计数；深圳与德州的双时钟（带日夜图标与“相差 13 小时”）；距离 CYF925 起飞的倒计时。</dd>
+    <dt>玩法</dt><dd>先回答一个问题，再读一段“誓言”——把婚礼誓词改写成“再一次成为你的男/女朋友”——然后<b>大声说出一句话</b>：一帆说“我爱你，陈静仪，我愿意”，静仪说“我爱你，杨一帆，我愿意”。</dd>
+    <dt>通关</dt><dd>浏览器语音识别听到这句话。</dd>
+    <dt>细节</dt><dd>语音识别常把名字听成同音字，所以“陈静怡”“陈静宜”“杨一凡”“杨亦帆”等八九种写法都算对；标点、空格一律忽略。浏览器不支持听写时，可以改为打字。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="level">
+  <div class="shot"><img src="figures/page-map.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#3f7fb3">2</div><div><h3>爱情地图</h3><span class="en">Love Map</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>你读书的地方，我读书的地方，和我们会见面的地方。</dd>
+    <dt>地点</dt><dd>德州、洛杉矶、日本、深圳、香港、纽约，每一处都写着“为什么是我们的地方”。</dd>
+    <dt>玩法</dt><dd>每个地方先出一张街景照片，四选一说出这是哪儿；答对了，地图上就落下一颗心，去把它捡起来。</dd>
+    <dt>通关</dt><dd>六颗心全部收集。</dd>
+    <dt>细节</dt><dd>答错会重新洗牌选项，不能靠排除法硬猜；两座家乡城市之间画着大圆航线。街景照片来自维基共享资源，署名显示在照片下方。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="level">
+  <div class="shot"><img src="figures/page-tattoo.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#d8973c">3</div><div><h3>纹身</h3><span class="en">Tattoo</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>写一句话，纹在对方身上。</dd>
+    <dt>玩法</dt><dd>选择“手臂”或“肩膀”，用手指（或鼠标）在画出来的皮肤上手写一句话或画一个小图案，然后按“纹上”。</dd>
+    <dt>通关</dt><dd>完成一次“纹上”。</dd>
+    <dt>细节</dt><dd>纹身只保存在这台设备上，可以存成图片发给对方。它不随进度码同步——它是写给对方看的，不是存档。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="level">
+  <div class="shot"><img src="figures/page-moments.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#5f9e5a">4</div><div><h3>时刻</h3><span class="en">Moments</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>每一个日子，你都记得；每一张脸，你都拼得回来。</dd>
+    <dt>内容</dt><dd>八段带日期的回忆，每段都有照片和中英文的小故事：隔海比心（第 21 天）、第一次送花、第一次 Zoom 和手绘机票、一起练答辩、电钢琴到家、第一次下五子棋和你画我猜、第一次闹别扭又和好、棋盘上摆出的爱心和补回来的相机（第 35 天）。</dd>
+    <dt>玩法</dt><dd>先把五段回忆按时间排好（点两张交换位置），再把对方的照片拼回来（3×3 拼图）。</dd>
+    <dt>通关</dt><dd>排序正确且拼图完成。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="level">
+  <div class="shot"><img src="figures/page-gomoku.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#8d6a4b">5</div><div><h3>五子棋</h3><span class="en">Gomoku</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>第一盘棋下在 Zoom 的白板上。现在轮到你落最后一子。</dd>
+    <dt>玩法</dt><dd>15×15 棋盘上的十道“一步杀”残局，每道只有唯一一个能连成五子的点。你执自己的颜色（静仪紫、一帆绿，和第一盘棋一样）。</dd>
+    <dt>通关</dt><dd>十道全部解开。</dd>
+    <dt>细节</dt><dd>十个答案点本身连起来就是一颗爱心：每解开一道，那颗子就以金色留在棋盘上，爱心一笔一笔画出来；第十子落下时，爱心完整，画面会停留三秒再弹出通关卡。残局由三种棋形（冲四、跳四、三加一）围绕爱心点生成，并由测试逐一验证“唯一解”。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="level">
+  <div class="shot"><img src="figures/page-songs.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#8c62b8">6</div><div><h3>我们的歌</h3><span class="en">Our Songs</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>前奏一响，你就知道是哪一首。</dd>
+    <dt>歌单</dt><dd>《只对你有感觉》《跳楼机》《最后一页》《天下第一好》《直到你降临》《越来越爱》。</dd>
+    <dt>玩法</dt><dd>听一段，从四个歌名里选出正确的一个。</dd>
+    <dt>通关</dt><dd>六首都答对。</dd>
+    <dt>细节</dt><dd>在中国默认用 QQ 音乐官方外链播放器，在美国默认用 YouTube 官方嵌入，页面上可以切换；网站本身不存放任何音频文件。必须先听完那一段，选项才会解锁；答错会重新洗牌。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="level">
+  <div class="shot"><img src="figures/page-stars.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#2d3f6e">7</div><div><h3>天秤与天蝎</h3><span class="en">Libra and Scorpius</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>一帆是天秤座（9 月 25 日），静仪是天蝎座（10 月 31 日）。两个星座在天上本来就是邻居。</dd>
+    <dt>玩法</dt><dd>在星空里依次点两颗星，把它们连起来，画出两个星座。共 22 颗星、20 条连线。</dd>
+    <dt>通关</dt><dd>两个星座都画完整。</dd>
+    <dt>细节</dt><dd>星星位置来自真实的 J2000 天球坐标和亮度。天秤座最亮的两颗星至今仍叫“蝎子的钳子”——氐宿一（南螯）和氐宿四（北螯）：天秤本来就是天蝎伸出来的一部分。可以用键盘操作。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="level">
+  <div class="shot"><img src="figures/page-poems.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#b0413e">8</div><div><h3>诗里的我们</h3><span class="en">Us, in Old Verse</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>古人早就替我们把话说完了，只是缺了几个字。</dd>
+    <dt>诗句</dt><dd>苏武《留别妻》<span class="quote">“结发为夫妻，恩爱两不疑”</span>；管道升《我侬词》；李商隐的一联；《玉台新咏》里的双飞鸟；一联佚名诗。</dd>
+    <dt>玩法</dt><dd>每首诗的后半句被挖空，从字库里一个字一个字把它放回去。</dd>
+    <dt>通关</dt><dd>五首全部补全。补全后会显示一句白话英译。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="level">
+  <div class="shot"><img src="figures/hers_hero.jpg"></div>
+  <div class="level-head"><div class="roof" style="background:#e9c46a;color:#0b2036">9</div><div><h3>子午线</h3><span class="en">Meridian</span></div></div>
+  <dl class="kv">
+    <dt>故事</dt><dd>最后一关，不是终点。</dd>
+    <dt>内容</dt><dd>一对名叫“子午线”（Meridian）的对戒，由 Blender 的 Python 脚本程序化建模、渲染并导出成网页可用的 3D 模型。两只戒指共同的“签名”：铂金戒圈外镶一条黄金细线，像地球仪上的子午线；内侧底部藏着一颗蓝宝石；内圈刻着<b>对方</b>的名字与生日、相识的日子，以及将要见面的机场坐标（40.64°N 73.78°W，纽约 JFK）。</dd>
+    <dt>玩法</dt><dd>用摄像头“试戴”：伸出手，戒指会套在无名指上；按下快门拍一张照片。</dd>
+    <dt>通关</dt><dd><b>只有试戴拍照</b>才算通关——这一关要的是一个动作，而不只是看一眼。</dd>
+    <dt>细节</dt><dd>她的戒指有两版设计（v1 四爪单钻、v2 嵌入式），页面保留“设计历史”可以切换。试戴用 MediaPipe 手部关键点在本地识别，画面不离开手机；拍完还能把两个人的试戴照片拼成一张“隔着海，在一起”的合影卡。</dd>
+  </dl><div class="clear"></div>
+</div>
+
+<div class="grid3">
+  <figure><img src="figures/hers_v1_hero.jpg"><figcaption>她的 v1：四爪单钻</figcaption></figure>
+  <figure><img src="figures/hers_hero.jpg"><figcaption>她的 v2：4.2 mm 嵌入式主石</figcaption></figure>
+  <figure><img src="figures/his_hero.jpg"><figcaption>他的：拉丝平面舒适圈</figcaption></figure>
+</div>
+
+<h2>4.10 尾声：最后一封信</h2>
+<p>当<b>两位玩家</b>都在这台设备上通过了第 9 关，喷泉边的另一半会提醒你去读信。信里的天数和时差都是实时计算的。读完信，信末一句“还有最后一件事……”会把你引向婚礼。</p>
+<figure><img src="figures/page-letter.jpg" style="width:72mm"><figcaption><b>图 4-1　最后一封信。</b>（信的正文是草稿，等一帆亲手重写。）</figcaption></figure>
+
+<!-- ============ 五 ============ -->
+<h1><span class="no">五</span>两座城市的一天<span class="en">Two Days</span></h1>
+<p>喷泉广场东西两侧各有一块路牌，分别通往两张新地图：一帆在 College Station 的一天，和静仪在深圳的一天。每张图上都是这个人日常会去的地方，每个地方都标着时间段；人物的小人会站在<b>按 TA 所在城市当前时间</b>应该在的那个地方。</p>
+<div class="grid2">
+  <figure><img src="figures/page-cs.jpg"><figcaption><b>图 5-1　一帆的一天。</b>家、Southside 健身房、邹老师办公室、高尔夫球场、Rec 健身房、游泳池、超市。他开车。</figcaption></figure>
+  <figure><img src="figures/page-sz.jpg"><figcaption><b>图 5-2　静仪的一天。</b>家（两只猫守在门口）、她的特斯拉、公司、午饭、深圳湾。</figcaption></figure>
+</div>
+<div class="callout"><p><b>举个例子：</b>静仪在深圳晚上 9:49 打开一帆的一天，会看到他正在邹老师的办公室——因为那一刻德州是早上 8:49。两张图上的每一站、每一段时间，都由一帆本人校正过（比如：一帆开车而不是坐公交，静仪开特斯拉而不是坐地铁）。深圳湾那一站，保留着我们俩之间的一个小玩笑。</p></div>
+
+<!-- ============ 六 ============ -->
+<h1><span class="no">六</span>生日序章与婚礼终章<span class="en">Prologue and Finale</span></h1>
+<p>两段像素动画为整个游戏开头和收尾。它们在一个小小的“像素剧场”里演出：128×80 的画布放大显示，演员来自小镇的同一套精灵，有黑暗中的烛光、飘落的粒子、合成的配乐，下方是字幕和按钮。离开页面时剧本会立即停下。</p>
+
+<h2>6.1 生日序章：一帆做蛋糕</h2>
+<p>每位玩家第一次进镇前播放一次。德州早上 9:47，深圳晚上 10:47——离静仪生日还有 73 分钟。戴着厨师帽的一帆要赶在深圳午夜前把蛋糕做好，而你要帮他：</p>
+<ol>
+  <li><b>打蛋糊：</b>点“搅拌”或画面，十二下。</li>
+  <li><b>放草莓：</b>在蛋糕上点十次，十颗草莓摆成一颗心——和五子棋里十颗金子拼成的是同一颗心。</li>
+  <li><b>九根蜡烛：</b>九关，也因为“九”谐音“久”。</li>
+  <li><b>午夜：</b>深圳零点，灯灭，门开——“在仪见小镇，没有十三个小时的时差。”大家一起唱生日歌。</li>
+  <li><b>许愿、吹蜡烛：</b>按住许愿；对着麦克风<b>真的吹一口气</b>把蜡烛吹灭（或长按按钮）。</li>
+</ol>
+<div class="grid4">
+  <figure class="pixel"><img src="figures/bday-03.jpg"><figcaption>厨房，墙上两只钟</figcaption></figure>
+  <figure class="pixel"><img src="figures/bday-09.jpg"><figcaption>打蛋糊</figcaption></figure>
+  <figure class="pixel"><img src="figures/bday-24.jpg"><figcaption>十颗草莓摆成心</figcaption></figure>
+  <figure class="pixel"><img src="figures/bday-37.jpg"><figcaption>深圳午夜的生日歌</figcaption></figure>
+</div>
+
+<h2>6.2 婚礼：在喷泉花园</h2>
+<p>读完最后一封信、且两位玩家都已通过第 9 关之后开放（入口是 9 号房子旁的时空裂缝）。黄昏的喷泉花园里，Rayford 终于揭开他一直穿西装的秘密：他是司仪。咖啡和哆哆系着小领结坐在第一排；新郎在花拱下等待，新娘随着门德尔松的《婚礼进行曲》走过红毯；两个人说“我愿意”（浏览器能听就大声说，“我不愿意”不算数）；咖啡叼着红色小枕头把戒指送上来；3D 的子午线对戒缓缓旋转；亲吻、钟声、白鸽，最后是一张可以保存的<b>结婚证书</b>。从此小镇里的两个小人换上婚纱和礼服。</p>
+<div class="grid4">
+  <figure class="pixel"><img src="figures/wed-03.jpg"><figcaption>宾客入座</figcaption></figure>
+  <figure class="pixel"><img src="figures/wed-11.jpg"><figcaption>新娘入场</figcaption></figure>
+  <figure class="pixel"><img src="figures/wed-21.jpg"><figcaption>咖啡送戒指</figcaption></figure>
+  <figure class="pixel"><img src="figures/wed-27.jpg"><figcaption>礼成</figcaption></figure>
+</div>
+<figure><img src="figures/wed-cert.jpg" style="width:95mm"><figcaption><b>图 6-1　结婚证书。</b>记下婚礼那天、相识那天和将要相见那天；手机上可以通过分享菜单保存。</figcaption></figure>
+
+<!-- ============ 七 ============ -->
+<h1><span class="no">七</span>跨手机同步进度<span class="en">Progress Codes</span></h1>
+<p>仪见小镇没有服务器，进度只存在各自的手机里。那么静仪的手机怎么知道一帆过到第几关？答案是一串<b>最多四个字符</b>的进度码，在微信里发一下就行。</p>
+
+<h2>7.1 怎么用</h2>
+<ol>
+  <li>在小镇里找到喷泉边的另一半，或打开“同步”页面，你会看到自己的进度码，比如 <code>JVA</code>。</li>
+  <li>点“复制链接”或“复制代码”，发给对方。</li>
+  <li>对方打开链接（形如 <code>jingyifan.love/sync?c=JVA</code>）会自动导入；或把代码粘贴到输入框里按“合并”。</li>
+</ol>
+<figure><img src="figures/page-sync.jpg" style="width:78mm"><figcaption><b>图 7-1　同步页面。</b>上方是自己的进度码，下方粘贴对方的。</figcaption></figure>
+
+<h2>7.2 进度码是怎么来的</h2>
+<table>
+  <tr><th>组成</th><th>说明</th><th style="width:30mm">例子 JVA</th></tr>
+  <tr><td>第 1 位：玩家</td><td><code>J</code> 静仪，<code>Y</code> 一帆</td><td>J ＝ 静仪</td></tr>
+  <tr><td>中间：通关情况</td><td>九关各占一个二进制位，过了记 1，再写成 36 进制（0–9、A–Z）。九关全过 = 511 = <code>E7</code>，所以最多两位。</td><td>V ＝ 31 ＝ 前五关</td></tr>
+  <tr><td>最后一位：校验</td><td>按国际标准 ISO 7064 MOD 37,36 算出的校验字符，用来发现抄错。</td><td>A</td></tr>
+</table>
+<p class="noindent">更多例子：静仪全部通关 <code>JE7Z</code>；一帆全部通关 <code>YE7O</code>；一帆还没开始 <code>Y0C</code>。</p>
+
+<h2>7.3 为什么这样设计</h2>
+<ul>
+  <li><b>只增不减，怎么合并都对。</b>进度是“已通过的关卡集合”，只会变多。合并两份进度就是取并集——先合并谁、合并几次，结果都一样，旧的代码也永远不会让进度倒退。在分布式系统里，这叫“只增集合”（G-Set），是最简单的一种无冲突复制数据类型。</li>
+  <li><b>抄错了能发现。</b>我们对全部 1,024 个合法代码做了穷举检验：<b>任何一个字符抄错都会被发现</b>；相邻两个字符抄颠倒的 2,943 种情况里，只有 5 种漏网——其中 1 种（<code>JI0</code>→<code>IJ0</code>）因为玩家字母不对仍会被拒，另外 4 种都是掩码里的 <code>0</code> 和 <code>1</code> 互换（如 <code>J801</code>↔<code>J810</code>）。即使漏网，它仍是同一个玩家的合法代码，最坏只是多算几关，不会丢进度。</li>
+  <li><b>注意：</b>2026-10-28（v1.16.0）之前生成的旧代码使用旧校验方式，现在已失效，请重新分享。</li>
+</ul>
+
+<!-- ============ 八 ============ -->
+<h1><span class="no">八</span>隐私、安全与“秘密”<span class="en">Privacy and Secrecy</span></h1>
+
+<h2>8.1 数据存在哪儿</h2>
+<table>
+  <tr><th style="width:42mm">数据</th><th style="width:40mm">存放位置</th><th>说明</th></tr>
+  <tr><td>通过了哪些关</td><td>本机 localStorage</td><td>每位玩家一份；只有本机能看到。</td></tr>
+  <tr><td>关卡里的中途进度</td><td>本机 sessionStorage</td><td>关掉标签页就消失；通关后自动清除。</td></tr>
+  <tr><td>纹身、在小镇里的位置</td><td>本机 localStorage</td><td>不随进度码同步。</td></tr>
+  <tr><td>语音、摄像头画面</td><td>不保存</td><td>语音识别、吹气检测、手部识别都在浏览器里实时完成，画面和声音不上传、不录制。（注：浏览器自带的语音识别可能由浏览器厂商处理。）</td></tr>
+  <tr><td>照片、视频、语音留言</td><td>网站静态文件</td><td>随网站一起发布，只读。</td></tr>
+</table>
+<div class="callout rose"><p><b>坦白说：入口问题不是“安全措施”。</b>答案是一个日期，可能的写法很少，真想猜的人很快就能试出来；用 SHA-256 哈希存储只是为了让答案不直接出现在源代码里。它的意义是仪式感：这扇门只问一个只有我们俩答得上来的问题。网站对外是“不公开但可访问”的，请不要转发链接；照片和留言属于我们俩。</p></div>
+
+<h2>8.2 守住秘密的测试</h2>
+<p>最后一关的惊喜很容易被“剧透”：Rayford 的一句介绍、同步页的一个提示、甚至猫说的一句话，都可能不小心提到“戒指”。与其靠人记着，不如写一个测试：它会扫描双语词典里所有在第 9 关之前可能出现的文字，只要中文里出现“戒”、英文里出现 ring，或任何一种语言里出现“婚、嫁、娶、求婚、wedding、marry、propose、bride、groom”，构建就失败。唯一的例外被点名列出：深圳湾那一站上，静仪自己的那个关于房子的玩笑。</p>
+
+<!-- ============ 九 ============ -->
+<h1><span class="no">九</span>技术架构<span class="en">Architecture</span></h1>
+
+<h2>9.1 一句话版本</h2>
+<p>一个纯前端的单页网页应用：严格模式 TypeScript + Vite 构建，部署在 GitHub Pages 上，用我们自己的域名；没有后端、没有数据库；可以“安装到桌面”，离线也能打开。</p>
+
+<h2>9.2 技术栈</h2>
+<table>
+  <tr><th style="width:38mm">部分</th><th>用了什么</th></tr>
+  <tr><td>语言与构建</td><td>TypeScript（strict）、Vite；Vitest 单元测试；GitHub Actions 每次提交自动测试和构建</td></tr>
+  <tr><td>小镇与像素剧场</td><td>原生 Canvas 2D；所有地砖和角色由代码绘制</td></tr>
+  <tr><td>地图</td><td>Leaflet + OpenStreetMap 瓦片（仅爱情地图一关）</td></tr>
+  <tr><td>3D 戒指</td><td>Blender（Python 脚本程序化建模）→ glTF/GLB（meshopt 压缩）→ three.js</td></tr>
+  <tr><td>试戴</td><td>MediaPipe 手部关键点检测（本地运行）</td></tr>
+  <tr><td>声音</td><td>Web Audio 合成音效与配乐；Web Speech API 语音识别；麦克风响度检测</td></tr>
+  <tr><td>离线</td><td>Service Worker（PWA），预缓存 44 个文件，约 302 KiB</td></tr>
+</table>
+
+<h2>9.3 关键机制</h2>
+<ul>
+  <li><b>关卡锁：</b>第 i 关解锁，当且仅当它是第一关，或者第 i−1 关已通过。路由层面强制执行；另外还要求“必须从门进来”——走到门上时设置一次性令牌，直接输网址进关卡会被送回小镇。关卡编号由关卡表自动推导，插入新关后所有房子、门牌和文字自动重新编号。</li>
+  <li><b>走路：</b>每 190 毫秒走一格；点击地图时用广度优先搜索（BFS）算出最短路径再一步步走。</li>
+  <li><b>天色：</b>按玩家所在城市的时间（Asia/Shanghai 或 America/Chicago）：6–7 点黎明、7–17 点白天、17–19 点黄昏、其余是夜晚，夜晚覆盖 42% 透明度的深蓝并点亮窗户。</li>
+  <li><b>吹蜡烛：</b>关闭回声消除和降噪，每 1,024 个采样算一次均方根响度并平滑，超过阈值 0.32 即算“吹了一口气”。</li>
+  <li><b>戴戒指：</b>戒指放在无名指根部指节到第二指节之间 38% 的位置；用中指、无名指、小指三个指根之间的平均距离（成人约 19.5 毫米）当“尺子”，把真实毫米尺寸换算成屏幕像素，所以戒指大小随手的远近自然变化。</li>
+</ul>
+
+<h2>9.4 规模与质量</h2>
+<table>
+  <tr><th>指标</th><th style="width:48mm">数值（v1.17.0，2026-10-28）</th></tr>
+  <tr><td>TypeScript 源码（不含测试）</td><td>8,414 行</td></tr>
+  <tr><td>CSS</td><td>1,080 行</td></tr>
+  <tr><td>双语词典</td><td>791 行</td></tr>
+  <tr><td>测试文件 / 单元测试</td><td>36 / 153，全部通过</td></tr>
+  <tr><td>提交次数 / 版本数（10-24 至 10-28）</td><td>109 / 28</td></tr>
+  <tr><td>主包体积（压缩前 / gzip）</td><td>114 kB / 43 kB</td></tr>
+  <tr><td>功能文件夹</td><td>24 个</td></tr>
+  <tr><td>运行时依赖</td><td>3 个（Leaflet、three.js、MediaPipe）</td></tr>
+  <tr><td>服务器、账号、统计</td><td>0</td></tr>
+</table>
+<p>除单元测试外，每次发布还会用无头浏览器脚本完整通关九关，并在 320、390、1280 像素三种宽度、中英两种语言下逐页检查。语音、吹气、摄像头试戴、分享菜单这些无法在无头浏览器里验证的功能，在真手机上测试。</p>
+
+<!-- ============ 十 ============ -->
+<h1><span class="no">十</span>维护手册：日常怎么改<span class="en">Maintenance</span></h1>
+<p class="small noindent">以下路径都相对于代码仓库根目录。改完运行 <code>npm test</code> 和 <code>npm run build</code>，推送到 main 后网站自动更新。</p>
+<table>
+  <tr><th style="width:36mm">我想……</th><th>怎么做</th></tr>
+  <tr><td>本地运行</td><td><code>npm install</code> → <code>npm run dev</code>，打开 http://localhost:5173</td></tr>
+  <tr><td>加一段回忆</td><td>照片放进 <code>public/media/moments/</code>（JPEG，长边不超过 1600 像素），在 <code>src/features/moments/memories.ts</code> 末尾加一条。缺图或缺一种语言，测试会失败。</td></tr>
+  <tr><td>改最后一封信</td><td><code>src/features/letter/text.ts</code>；<code>{d}</code> 天数、<code>{h}</code> 时差会实时填入。中英两边一起改。</td></tr>
+  <tr><td>改爱情地图上的生日信</td><td><code>src/features/birthday-map/letter.ts</code></td></tr>
+  <tr><td>加一条语音留言</td><td>把 <code>日期-发送人.m4a</code> 放进 <code>public/media/voice/notes/</code>，运行 <code>npm run notes</code>；或在 Mac 上 <code>python3 scripts/record-note.py yifan</code> 直接录。</td></tr>
+  <tr><td>改两座城市的一天</td><td><code>src/features/days/cs.ts</code>、<code>sz.ts</code>（时间段），故事在 <code>src/core/i18n.ts</code> 的 <code>cs.story.*</code>、<code>sz.story.*</code>。</td></tr>
+  <tr><td>改关键日期</td><td>全部在 <code>src/core/config.ts</code>。</td></tr>
+  <tr><td>换入口问题</td><td>改 <code>i18n.ts</code> 里的 <code>gate.question</code>，运行 <code>npm run gate -- "答案1" "答案2"</code>，把哈希填进 <code>src/core/gate.ts</code> 的 <code>ANSWERS</code>。</td></tr>
+  <tr><td>加一关</td><td>在 <code>src/core/quest.ts</code> 的 <code>LEVELS</code> 里加一项；在 i18n 里加标题/故事（中英）；在 <code>src/main.ts</code> 注册路由；任务完成时调用 <code>levelCleared('id')</code>；在 <code>src/features/world/town.ts</code> 的 <code>BUILDINGS</code> 里给它一栋房子和门。门走不到时测试会失败。</td></tr>
+  <tr><td>加一个新作品</td><td>新建 <code>src/features/&lt;名字&gt;/</code>（含 README、页面、样式、测试），注册路由和双语文字，在 <code>src/features/dashboard/products.ts</code> 加一张卡片。</td></tr>
+  <tr><td>重画图标 / 横幅</td><td><code>npm run icon</code>、<code>npm run banner</code>（都从角色字符串生成）。</td></tr>
+  <tr><td>重新导出戒指</td><td><code>Blender -b -P ring/meridian.py -- --ring both --render --export</code> → <code>npm run ring:pack</code> → <code>npm run ring:thumbs</code></td></tr>
+</table>
+<div class="callout"><p><b>文字规范：</b>网站内容中英双语；代码仓库里的文档统一用英文；每个功能文件夹都有自己的 README。新页面沿用小镇的视觉语言：标题放在奶油色木牌上，面板用奶油色和海军蓝，草地上不直接放浅色小字。</p></div>
+
+<!-- ============ 十一 ============ -->
+<h1><span class="no">十一</span>常见问题<span class="en">FAQ</span></h1>
+<h3>问：换了手机，进度没了？</h3>
+<p class="noindent">进度存在每台设备的浏览器里。在旧手机上打开“同步”，把进度码或链接发到新手机上打开即可。清除浏览器数据或使用无痕模式也会让进度消失。</p>
+<h3>问：在国内听不到歌 / 在美国听不到歌？</h3>
+<p class="noindent">YouTube 在中国大陆打不开，QQ 音乐的外链在美国通常没有声音。“我们的歌”一关可以在两种来源之间切换；点唱机目前使用 YouTube。</p>
+<h3>问：为什么说话没反应？</h3>
+<p class="noindent">语音识别依赖浏览器：Chrome 和 Safari（iOS 14.5 以上）支持，微信等内置浏览器多半不支持。请允许麦克风权限，或者直接用“打字/按钮”代替。</p>
+<h3>问：吹蜡烛吹不灭？</h3>
+<p class="noindent">把手机麦克风靠近嘴，短促地用力吹一口；也可以长按按钮。</p>
+<h3>问：试戴时戒指跑到了手心？</h3>
+<p class="noindent">把手背朝向摄像头、手指张开、光线充足。前后摄像头可以切换。</p>
+<h3>问：切换语言会丢掉关卡里的进度吗？</h3>
+<p class="noindent">不会（v1.17.0 起）。关卡里的中途进度存在标签页的会话存储里，刷新或切换语言都会接着玩。</p>
+<h3>问：最后的信和婚礼怎么打不开？</h3>
+<p class="noindent">两者都要求<b>两位玩家</b>在同一台设备上都通过第 9 关。可以用进度码把对方的进度合并过来。</p>
+<h3>问：网站会收集我的信息吗？</h3>
+<p class="noindent">不会。没有账号、没有统计、没有服务器。外部只读取地图瓦片、歌曲的官方播放器和网站本身的静态文件。</p>
+
+<!-- ============ 十二 ============ -->
+<h1><span class="no">十二</span>版本历史与下一步<span class="en">History and Roadmap</span></h1>
+<table>
+  <tr><th style="width:22mm">版本</th><th style="width:22mm">日期</th><th>主要变化</th></tr>
+  <tr><td>0.1.0</td><td>10-24</td><td>第一版：首页、生日地图、回忆时间线、五子棋、你画我猜（单机轮流玩）</td></tr>
+  <tr><td>1.0.0</td><td>10-26</td><td>变成“闯关游戏”：真正的关卡锁、拼图、星空、戒指、尾声信、入口问题、可安装</td></tr>
+  <tr><td>1.1–1.2</td><td>10-26</td><td>进度码同步；第二张地图“一帆的一天”；简洁网址</td></tr>
+  <tr><td>1.3–1.5</td><td>10-26</td><td>只能从门进关；拼图换成对方的照片；“静仪的一天”；点唱机与语音邮筒</td></tr>
+  <tr><td>1.6–1.12</td><td>10-26/27</td><td>九关定型：插入“诗里的我们”；你画我猜换成“我们的歌”；星座改为天秤与天蝎；爱情地图六个地方；第一关加入誓言；纹身关；十道残局拼爱心</td></tr>
+  <tr><td>1.13–1.14</td><td>10-27</td><td>向导 Rayford；首页变成仪表盘，小镇移到 /town</td></tr>
+  <tr><td>1.15–1.16</td><td>10-28</td><td>生日序章与婚礼；守秘测试；全站审查（新校验算法、字体不阻塞、手机布局）</td></tr>
+  <tr><td>1.17.0</td><td>10-28</td><td>第 9 关改为必须试戴拍照；点唱机走 YouTube；关卡中途进度可恢复；第一条语音留言</td></tr>
+</table>
+<h2>下一步</h2>
+<ul>
+  <li>一帆亲手重写两封信（尾声信和生日信）。</li>
+  <li>更多语音留言；两座城市一天的时间表再校对一遍。</li>
+  <li>在真手机上测试：试戴拍照、吹蜡烛、说“我愿意”、证书分享、点唱机。</li>
+  <li>以后：从深圳到 College Station 的一条长路（第二张大地图）、小礼物、每日小纸条、两个人同时在线一起玩。</li>
+</ul>
+
+<!-- ============ 附录 ============ -->
+<h1><span class="no">附</span>附录<span class="en">Appendices</span></h1>
+<h2>附录 A　浏览器存储键</h2>
+<table>
+  <tr><th style="width:52mm">键</th><th style="width:26mm">位置</th><th>内容</th></tr>
+  <tr><td><code>yi.gate</code></td><td>local</td><td>入口问题已答对</td></tr>
+  <tr><td><code>yi.player</code></td><td>local</td><td>当前玩家（jingyi / yifan）</td></tr>
+  <tr><td><code>yi.quest.&lt;玩家&gt;</code></td><td>local</td><td>已通过的关卡列表</td></tr>
+  <tr><td><code>yi.birthday.&lt;玩家&gt;</code></td><td>local</td><td>是否已看过生日序章</td></tr>
+  <tr><td><code>yi.world.&lt;玩家&gt;</code></td><td>local</td><td>在小镇里的位置</td></tr>
+  <tr><td><code>yi.world.cats.&lt;玩家&gt;</code></td><td>local</td><td>两只猫的位置</td></tr>
+  <tr><td><code>yi.tattoo.&lt;玩家&gt;</code></td><td>local</td><td>纹身笔画</td></tr>
+  <tr><td><code>yi.day.&lt;cs|sz&gt;.&lt;玩家&gt;</code></td><td>local</td><td>两座城市地图上的位置</td></tr>
+  <tr><td><code>yi.wedding</code></td><td>local</td><td>婚礼日期（小镇据此换装）</td></tr>
+  <tr><td><code>yi.lang</code>、<code>yi.sound</code>、<code>yi.music*</code>、<code>yi.songs.source</code></td><td>local</td><td>语言、音效开关、点唱机、歌曲来源</td></tr>
+  <tr><td><code>yi.door</code></td><td>session</td><td>“从门进来”的一次性令牌</td></tr>
+  <tr><td><code>yi.live.&lt;关卡&gt;.&lt;玩家&gt;</code></td><td>session</td><td>关卡中途进度</td></tr>
+</table>
+
+<h2>附录 B　功能文件夹索引（src/features/）</h2>
+<table>
+  <tr><th style="width:36mm">文件夹</th><th>内容</th><th style="width:36mm">文件夹</th><th>内容</th></tr>
+  <tr><td>gate / start / sync</td><td>入口、选玩家、进度码</td><td>world</td><td>小镇：地图、地砖、角色、引擎</td></tr>
+  <tr><td>dashboard</td><td>首页仪表盘</td><td>guide</td><td>Rayford 的台词与守秘测试</td></tr>
+  <tr><td>home</td><td>第 1 关（含誓言、语音）</td><td>birthday-map</td><td>第 2 关爱情地图</td></tr>
+  <tr><td>tattoo</td><td>第 3 关纹身</td><td>moments / puzzle</td><td>第 4 关时刻与拼图</td></tr>
+  <tr><td>gomoku</td><td>第 5 关五子棋</td><td>songs / music</td><td>第 6 关与点唱机</td></tr>
+  <tr><td>stars</td><td>第 7 关星座</td><td>poems</td><td>第 8 关古诗</td></tr>
+  <tr><td>ring</td><td>第 9 关 3D 戒指与试戴</td><td>letter</td><td>尾声信</td></tr>
+  <tr><td>theatre</td><td>像素剧场引擎</td><td>birthday / wedding</td><td>生日序章 / 婚礼</td></tr>
+  <tr><td>days</td><td>两座城市的一天</td><td>voice / journey</td><td>语音邮筒 / 列表视图</td></tr>
+</table>
+
+<h2>附录 C　术语表</h2>
+<table>
+  <tr><th style="width:42mm">术语</th><th>解释</th></tr>
+  <tr><td>PWA（渐进式网页应用）</td><td>可以“添加到主屏幕”、离线打开的网页。</td></tr>
+  <tr><td>localStorage / sessionStorage</td><td>浏览器自带的本地存储；前者长期保留，后者关掉标签页就清空。</td></tr>
+  <tr><td>G-Set（只增集合）</td><td>只能添加、不能删除的集合；两份合并取并集，永远不冲突。</td></tr>
+  <tr><td>ISO 7064</td><td>国际标准的校验字符算法，用来发现抄写错误（身份证号末位也用了同一标准里的另一种算法）。</td></tr>
+  <tr><td>SHA-256</td><td>一种哈希函数，把答案变成一串无法反推的指纹。</td></tr>
+  <tr><td>BFS（广度优先搜索）</td><td>点地图时用来找最短路线的算法。</td></tr>
+  <tr><td>精灵（sprite）</td><td>游戏里的小人或物体的像素图；在这里用字符串描述。</td></tr>
+  <tr><td>MediaPipe</td><td>谷歌的开源视觉库，这里用来识别手上的 21 个关键点。</td></tr>
+</table>
+
+<p class="center small" style="margin-top:12mm">—— 仪见小镇 · 2026 年 10 月 · 献给咖啡和哆哆，它们守着每一扇门 ——<br>本说明书在 AI 编程助手 Claude Code 的协助下根据代码仓库整理，内容由作者核对。</p>
+
+</body>
+</html>
