@@ -97,17 +97,10 @@ if a product should not.
 - [x] A day of Jingyi's in Shenzhen (`/sz`): her Tesla, Tencent, the bay, the cats at the door; west signpost (v1.4.0, 2026-10-26)
 - [x] Puzzle uses portraits of the other one (`src/features/puzzle/portraits.ts`, v1.3.1, 2026-10-26)
 - [x] Levels open only through their doors; no shortcuts from the top bar, list or cleared card (v1.3.0, 2026-10-26)
-- [x] 128 unit tests; the build type-checks with `strict` TypeScript; CI runs both on every push
+- [x] 153 unit tests; the build type-checks with `strict` TypeScript; CI runs both on every push
 - [x] Checked in a real browser at desktop, 390 px and 320 px widths
-- [ ] Yifan rewrites the last letter in his own words (`src/features/birthday-map/letter.ts`)
-- [ ] Record voice lines for the cleared cards (`public/media/voice/README.md`)
-- [ ] Drop the six song files into `public/media/music/` (ids in `src/features/songs/list.ts`)
 - [x] Coffee and Duoduo, the two cats, as pixel sprites with their own lines and photos (2026-10-26)
 - [x] A Day in College Station (`/cs`): second map with seven stops, Yifan standing where the clock puts him; engine takes any map (v1.2.0, 2026-10-26)
-- [ ] Yifan checks the hours and stories of his day (`src/features/days/cs.ts`, `cs.story.*` in `i18n.ts`)
-- [ ] Songs for the jukebox: files into `public/media/music/`, lines in `src/features/music/tracks.ts`
-- [ ] Her voice notes: export from WeChat into `public/media/voice/notes/`, list in `src/features/voice/notes.ts`
-- [ ] Jingyi's day is a guess (`src/features/days/sz.ts`, `sz.story.*`): Tencent hours, where she eats, what she does after work
 - [x] Progress codes: `/sync` carries progress between phones as a code or link (v1.1.0, 2026-10-26)
 - [x] The whole site stands on the town's pixel meadow with the time-of-day wash; headings on signs, panels in cream and navy (2026-10-26)
 - [x] Town: a one-time welcome line with the controls; phone checklist in DEPLOY.md (2026-10-26)
@@ -115,6 +108,21 @@ if a product should not.
 - [x] Town: cats walk to their new posts when a door opens; iris transition in and out of houses (2026-10-26)
 - [x] Town: footsteps, thud, talk-box and door sounds (synthesised, with a switch), drifting pond and fountain glint (2026-10-26)
 - [x] Domain chosen: jingyifan.love (2026-10-26); live at https://jingyifan.love/ with HTTPS since 2026-10-26 (deploy on every push while `PUBLISH` is true)
+- [x] Rayford the guide; the dashboard at `/` with the town at `/town` (v1.13–1.14, 2026-10-27)
+- [x] Birthday prologue (`/birthday`) and the wedding (`/wedding`) as pixel cutscenes; the ring is a secret until it is reached (`secret.test.ts`); a hole in time by house 9 leads to the wedding (v1.15–1.16, 2026-10-28)
+- [x] Whole-site review pass: gate placeholder, ISO 7064 check character for codes, non-blocking fonts, phone layouts, cutscene edge cases (v1.16.0, 2026-10-28)
+- [x] The ring level is cleared by the try-on photo; jukebox on YouTube; in-level progress survives a language toggle or reload; quizzes re-deal on a wrong pick; first voice note in the mailbox (v1.17.0, 2026-10-28)
+
+### Where we stopped (2026-10-28) and what is next
+
+Owner's own work (text in his words; both languages in each file):
+- [ ] The epilogue letter: `src/features/letter/text.ts` is a draft written for him; `{d}` days and `{h}` hours fill in live.
+- [ ] The birthday letter on the Love Map: `src/features/birthday-map/letter.ts` (same draft status).
+- [ ] Yifan checks the hours and stories of his day (`src/features/days/cs.ts`, `cs.story.*` in `i18n.ts`); Jingyi's day is a guess (`src/features/days/sz.ts`, `sz.story.*`).
+- [ ] More voice notes: drop `<date>-<sender>.m4a` into `public/media/voice/notes/` and run `npm run notes`, or record on the Mac with `python3 scripts/record-note.py yifan`. Optional per-level lines for the cleared cards: `public/media/voice/README.md`.
+- [ ] Test on real phones what headless browsers cannot: the try-on camera and photo (clears level 9), blowing the candles out into the mic, saying "I do", the wedding certificate's share sheet, YouTube in the jukebox.
+
+Ideas not started:
 - [ ] Later: a long road from Shenzhen to College Station as a second map, gifts, daily notes, two players online at once
 ## Key Dates
 
