@@ -2,6 +2,21 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.17.0 (2026-10-28)
+
+- The ring level is cleared by the try-on photo, not by the reveal: put it on, take the picture.
+- A hole in time by house 9 leads to the wedding; the baker in the prologue is Yifan.
+- The jukebox plays our six songs through the YouTube player; no audio files are hosted.
+- The epilogue has its own letter (`src/features/letter/text.ts`, a draft to rewrite); the
+  birthday letter counts the days live.
+- In-level progress (gomoku, songs, stars, poems, moments, map hearts) survives a language toggle
+  or a reload (`yi.live.*` in sessionStorage; cleared when the level is cleared or reset).
+- Songs and Love Map quizzes re-deal the options after a wrong pick; Songs waits for the passage
+  to be heard before the options unlock.
+- The front page shows only this player's count; the town is taller on narrow phones; a voice note
+  dropped in `public/media/voice/notes/` is listed by `npm run notes` (or recorded with
+  `scripts/record-note.py`).
+
 ## 1.16.0 (2026-10-28)
 
 - A review pass over the whole site. The gate's placeholder no longer spells the answer; the
