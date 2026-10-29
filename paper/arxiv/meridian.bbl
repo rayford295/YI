@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{38}
+\begin{thebibliography}{37}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -74,20 +74,21 @@
 \newblock
 
 
-\bibitem[Brave and Dahley(1997)]%
-        {brave1997intouch}
-\bibfield{author}{\bibinfo{person}{Scott Brave} {and} \bibinfo{person}{Andrew Dahley}.} \bibinfo{year}{1997}\natexlab{}.
-\newblock \showarticletitle{inTouch: A Medium for Haptic Interpersonal Communication}. In \bibinfo{booktitle}{\emph{CHI '97 Extended Abstracts on Human Factors in Computing Systems}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{363}.
-\newblock
-\href{https://doi.org/10.1145/1120212.1120435}{doi:\nolinkurl{10.1145/1120212.1120435}}
-
-
 \bibitem[Desjardins and Ball(2018)]%
         {desjardins2018tensions}
 \bibfield{author}{\bibinfo{person}{Audrey Desjardins} {and} \bibinfo{person}{Aubree Ball}.} \bibinfo{year}{2018}\natexlab{}.
 \newblock \showarticletitle{Revealing Tensions in Autobiographical Design in HCI}. In \bibinfo{booktitle}{\emph{Proceedings of the 2018 Designing Interactive Systems Conference}} \emph{(\bibinfo{series}{DIS '18})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{753--764}.
 \newblock
 \href{https://doi.org/10.1145/3196709.3196781}{doi:\nolinkurl{10.1145/3196709.3196781}}
+
+
+\bibitem[Desjardins et~al\mbox{.}(2021)]%
+        {desjardins2021firstperson}
+\bibfield{author}{\bibinfo{person}{Audrey Desjardins}, \bibinfo{person}{Oscar Tomico}, \bibinfo{person}{Andr{\'e}s Lucero}, \bibinfo{person}{Marta~E. Cecchinato}, {and} \bibinfo{person}{Carman Neustaedter}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Introduction to the Special Issue on First-Person Methods in {HCI}}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Computer-Human Interaction}} \bibinfo{volume}{28}, \bibinfo{number}{6}, Article \bibinfo{articleno}{37} (\bibinfo{year}{2021}), \bibinfo{numpages}{12}~pages.
+\newblock
+\href{https://doi.org/10.1145/3492342}{doi:\nolinkurl{10.1145/3492342}}
 
 
 \bibitem[Gaver(2012)]%
@@ -183,26 +184,20 @@
 \href{https://doi.org/10.1145/1125451.1125530}{doi:\nolinkurl{10.1145/1125451.1125530}}
 
 
+\bibitem[Kirk et~al\mbox{.}(2016)]%
+        {kirk2016ritual}
+\bibfield{author}{\bibinfo{person}{David Kirk}, \bibinfo{person}{David Chatting}, \bibinfo{person}{Paulina Yurman}, {and} \bibinfo{person}{Jo-Anne Bichard}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Ritual Machines {I \& II}: Making Technology at Home}. In \bibinfo{booktitle}{\emph{Proceedings of the 2016 CHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '16})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{2474--2486}.
+\newblock
+\href{https://doi.org/10.1145/2858036.2858424}{doi:\nolinkurl{10.1145/2858036.2858424}}
+
+
 \bibitem[Kleppmann et~al\mbox{.}(2019)]%
         {kleppmann2019localfirst}
 \bibfield{author}{\bibinfo{person}{Martin Kleppmann}, \bibinfo{person}{Adam Wiggins}, \bibinfo{person}{Peter van Hardenberg}, {and} \bibinfo{person}{Mark McGranaghan}.} \bibinfo{year}{2019}\natexlab{}.
 \newblock \showarticletitle{Local-First Software: You Own Your Data, in Spite of the Cloud}. In \bibinfo{booktitle}{\emph{Proceedings of the 2019 ACM SIGPLAN International Symposium on New Ideas, New Paradigms, and Reflections on Programming and Software}} \emph{(\bibinfo{series}{Onward! 2019})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{154--178}.
 \newblock
 \href{https://doi.org/10.1145/3359591.3359737}{doi:\nolinkurl{10.1145/3359591.3359737}}
-
-
-\bibitem[Liu et~al\mbox{.}(2026)]%
-        {w3c2023speech}
-\bibfield{author}{\bibinfo{person}{Evan Liu}, \bibinfo{person}{Andr{\'e} Natal}, \bibinfo{person}{Glen Shires}, \bibinfo{person}{Philip J{\"a}genstedt}, {and} \bibinfo{person}{Hans Wennborg}.} \bibinfo{year}{2026}\natexlab{}.
-\newblock \bibinfo{title}{Web Speech {API}}.
-\newblock \bibinfo{howpublished}{W3C Draft Community Group Report, 27 October 2026}.
-\newblock
-\urldef\tempurl%
-\url{https://webaudio.github.io/web-speech-api/}
-\showURL{%
-\tempurl}
-\newblock
-\shownote{Accessed 29 October 2026}.
 
 
 \bibitem[Lottridge et~al\mbox{.}(2009)]%
@@ -223,7 +218,7 @@
 
 \bibitem[Lugaresi et~al\mbox{.}(2019)]%
         {lugaresi2019mediapipe}
-\bibfield{author}{\bibinfo{person}{Camillo Lugaresi}, \bibinfo{person}{Jiuqiang Tang}, \bibinfo{person}{Hadon Nash}, \bibinfo{person}{Chris McClanahan}, \bibinfo{person}{Esha Uboweja}, \bibinfo{person}{Michael Hays}, \bibinfo{person}{Fan Zhang}, \bibinfo{person}{Chuo-Ling Chang}, \bibinfo{person}{Ming~Guang Yong}, \bibinfo{person}{Juhyun Lee}, \bibinfo{person}{Wan-Teh Chang}, \bibinfo{person}{Wei Hua}, \bibinfo{person}{Manfred Georg}, {and} \bibinfo{person}{Matthias Grundmann}.} \bibinfo{year}{2019}\natexlab{}.
+\bibfield{author}{\bibinfo{person}{Camillo Lugaresi}, \bibinfo{person}{Jiuqiang Tang}, \bibinfo{person}{Hadon Nash}, \bibinfo{person}{Chris McClanahan}, \bibinfo{person}{Esha Uboweja}, \bibinfo{person}{Michael Hays}, \bibinfo{person}{Fan Zhang}, \bibinfo{person}{Chuo-Ling Chang}, \bibinfo{person}{Ming~Guang Yong}, \bibinfo{person}{Juhyun Lee}, \bibinfo{person}{Wan-Teh Chang}, \bibinfo{person}{Manfred Georg}, {and} \bibinfo{person}{Matthias Grundmann}.} \bibinfo{year}{2019}\natexlab{}.
 \newblock \bibinfo{title}{{MediaPipe}: A Framework for Building Perception Pipelines}.
 \newblock
 \showeprint[arxiv]{1906.08172}
@@ -235,14 +230,6 @@
 \newblock \bibinfo{booktitle}{\emph{Astronomical Algorithms} (\bibinfo{edition}{2nd} ed.)}.
 \newblock \bibinfo{publisher}{Willmann-Bell}, \bibinfo{address}{Richmond, VA}.
 \newblock
-
-
-\bibitem[Mueller et~al\mbox{.}(2005)]%
-        {mueller2005hug}
-\bibfield{author}{\bibinfo{person}{Florian~'Floyd' Mueller}, \bibinfo{person}{Frank Vetere}, \bibinfo{person}{Martin~R. Gibbs}, \bibinfo{person}{Jesper Kjeldskov}, \bibinfo{person}{Sonja Pedell}, {and} \bibinfo{person}{Steve Howard}.} \bibinfo{year}{2005}\natexlab{}.
-\newblock \showarticletitle{Hug Over a Distance}. In \bibinfo{booktitle}{\emph{CHI '05 Extended Abstracts on Human Factors in Computing Systems}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{1673--1676}.
-\newblock
-\href{https://doi.org/10.1145/1056808.1056994}{doi:\nolinkurl{10.1145/1056808.1056994}}
 
 
 \bibitem[{National Institute of Standards and Technology}(2015)]%
@@ -310,13 +297,6 @@
 \newblock
 
 
-\bibitem[Strong and Gaver(1996)]%
-        {strong1996feather}
-\bibfield{author}{\bibinfo{person}{Rob Strong} {and} \bibinfo{person}{William Gaver}.} \bibinfo{year}{1996}\natexlab{}.
-\newblock \showarticletitle{Feather, Scent and Shaker: Supporting Simple Intimacy}. In \bibinfo{booktitle}{\emph{Videos, Demonstrations, and Short Papers of CSCW '96}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}.
-\newblock
-
-
 \bibitem[Tsujita et~al\mbox{.}(2008)]%
         {tsujita2008syncdecor}
 \bibfield{author}{\bibinfo{person}{Hitomi Tsujita}, \bibinfo{person}{Koji Tsukada}, {and} \bibinfo{person}{Itiro Siio}.} \bibinfo{year}{2008}\natexlab{}.
@@ -331,6 +311,20 @@
 \newblock \showarticletitle{Mediating Intimacy: Designing Technologies to Support Strong-Tie Relationships}. In \bibinfo{booktitle}{\emph{Proceedings of the SIGCHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '05})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{471--480}.
 \newblock
 \href{https://doi.org/10.1145/1054972.1055038}{doi:\nolinkurl{10.1145/1054972.1055038}}
+
+
+\bibitem[{WebAudio Community Group}(2026)]%
+        {w3c2023speech}
+\bibfield{author}{\bibinfo{person}{{WebAudio Community Group}}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \bibinfo{title}{Web Speech {API}}.
+\newblock \bibinfo{howpublished}{W3C Draft Community Group Report, 27 October 2026}.
+\newblock
+\urldef\tempurl%
+\url{https://webaudio.github.io/web-speech-api/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Accessed 29 October 2026}.
 
 
 \bibitem[Yang et~al\mbox{.}(2024)]%

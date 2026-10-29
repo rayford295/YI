@@ -1,66 +1,31 @@
-# arXiv submission: MERIDIAN
+# arXiv Metadata for the Reviewed Draft
 
-Upload `meridian-arxiv.tar.gz` (the LaTeX source, `meridian.bbl` and `figures/`; arXiv does not
-run BibTeX, so the `.bbl` must travel with the source). `meridian-preview.pdf` is what arXiv's
-pdfLaTeX build should produce; it was compiled from exactly the files in the tarball.
+Status: editorial review draft. Complete the author, permissions, availability and actual arXiv-processing checks in ../review/2026-10-29/REVIEW.zh-CN.md before submission.
 
-## Before you submit
-
-- [ ] **Jingyi has read the paper and agrees to be an author.** arXiv requires every author's
-      consent, and the paper describes the ring and the wedding, so this waits until after she
-      has played (on or after 31 October 2026).
-- [ ] `yifan@jingyifan.love` and `jingyi@jingyifan.love` both receive mail (Cloudflare Email
-      Routing: one rule per address).
-- [ ] **Make `rayford295/yi-town` public on submission day, not before** (the abstract links it).
-      Before flipping it, decide whether to remove Yifan's street address from the College Station
-      day (`cs.story.*` in `src/core/i18n.ts`); git history keeps whatever was ever committed.
-      Command: `gh repo edit rayford295/yi-town --visibility public --accept-visibility-change-consequences`.
-- [ ] Submit from an arXiv account in Yifan's name; cs.HC may ask for an endorsement on a
-      first submission to that category.
-- [ ] Read `meridian-preview.pdf` once more; the version on arXiv stays public for good.
-
-## Form fields
-
-**Title** (plain text; the red colour and the heart exist only in the PDF)
+## Title
 
 MERIDIAN: Memory-Encoded Rituals for Intimacy across Distance in an Interactive, Asynchronous Neighbourhood
 
-**Authors**
+## Authors
 
 Jingyi Chen, Yifan Yang
 
-**Abstract** (1896 characters; the limit is 1,920)
+## Abstract
 
-Two people met on 20 September 2026 and have since lived thirteen hours and one Pacific Ocean apart, one in Shenzhen, China, the other in College Station, Texas. This paper reports the design and implementation of Yi Town, a bilingual, browser-only game made by this couple for themselves, first as a birthday gift and then as a shared artefact that keeps growing. Each player walks a pixel avatar through a small town whose nine houses are levels, and each level turns one shared memory into a game mechanic: a vow spoken aloud, street views to name on a map of six places, a tattoo handwritten on a drawn arm, a timeline to put back in order, Gomoku endgames whose answers trace a heart, songs named from a passage, the stars of two birth signs joined by hand, missing characters restored to classical Chinese love poems, and a procedurally modelled ring tried on through hand tracking. A birthday prologue and a wedding finale play as pixel cutscenes. Using research through design and autobiographical design, we state six design commitments (memory as mechanics, earned access, intimacy without a server, parity between the two languages, art drawn in code, and secrecy as narrative tension) and show how the system realises each of them. Progress is modelled as a grow-only set, so merging two devices' progress needs no server. It travels between phones as a code of at most four characters guarded by an ISO 7064 MOD 37,36 check character. The sky follows each player's own clock, and a unit test keeps the final surprise out of every string shown before it. The system comprises about 8,400 lines of strict TypeScript and 153 unit tests and was built in 109 commits over five days; its source is public at https://github.com/rayford295/yi-town. We reflect on what designing for an audience of exactly one other person reveals about privacy, asynchrony and ceremony in intimate computing.
+How can shared memories become playable structures for partners who live in different time zones? We present MERIDIAN, a pre-deployment design case of Yi Town, a bilingual browser game developed by one member of a long-distance couple as a gift for the other. Nine levels translate personally meaningful events, places and cultural references into tasks within a navigable pixel town. A birthday prologue and a fictional wedding frame the intended experience. Drawing on research through design, we reconstruct four design changes from 109 development commits, 28 changelog versions and three design specifications. These records support six situated design commitments, including memory-derived mechanics, staged access, local progress storage and bilingual coverage. The implementation combines a union-based progress model with manually exchanged, checksummed codes and time-zone-dependent scenery. An implementation audit reproduced 153 passing unit tests and examined all 1,024 canonical progress codes, while identifying limits involving resets, unversioned level registries and residual transcription errors. The application has no author-operated backend for progress, but external media services and browser speech recognition limit its privacy and offline guarantees. No recipient evaluation or relationship outcomes are reported. The contribution is an inspectable account of design decisions and their trade-offs, including the tension between authoring a personal gift and preserving the recipient's freedom to interpret, decline or reshape it.
 
-**Comments**
+## Comments
 
-11 pages, 9 figures, 5 tables; source code at https://github.com/rayford295/yi-town
+12 pages, 9 figures, 5 tables. Pre-deployment design case; no recipient evaluation reported.
 
-**Primary category:** cs.HC (Human-Computer Interaction)
-**Cross-list:** cs.CY (Computers and Society)
-**ACM class:** H.5.2; K.8.0
+## Category
 
-**License:** arXiv.org perpetual, non-exclusive license (recommended: it keeps every other option
-open; one figure contains a CC BY 2.0 photograph, credited in its caption).
+Suggested primary: cs.HC. Reassess cross-listing against the final content.
 
-## How this differs from `../meridian.pdf`
+## Source Processing
 
-- Affiliations read "Independent Researcher" (Shenzhen; College Station, Texas), with a footnote
-  saying the work was made in and for Yi Town.
-- The accepted spellings of the entry question's answer are removed.
-- No real photographs of us: the Moments screenshot has its photo strip painted over, and the
-  letter screenshot is replaced by the journey list. Jingyi's job is not named.
-- The street-view photograph is credited (Maarten Heerlien, CC BY 2.0, Wikimedia Commons).
-- Figures are recompressed (tarball about 3.5 MB); `\pdfoutput=1` is set; the Arphic font maps
-  load in replace mode so the build works with arXiv's TeX Live as well as TinyTeX.
+The source archive includes meridian.tex, references.bib, meridian.bbl and only referenced figures. arXiv currently supports bibliography processing from .bib and accepts a matching pre-generated .bbl. Local compilation used TeX Live 2026; arXiv processing has not been performed. Check the CJK fonts, bibliography and the complete generated PDF in arXiv's preview.
 
-## Rebuild
+## Availability and Permissions
 
-Never edit `meridian.tex` here by hand: edit `../meridian.tex`, then regenerate this folder.
-
-```bash
-export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
-cd .. && python3 arxiv/make_arxiv.py && cd arxiv && cp ../references.bib . && pdflatex meridian && bibtex meridian && pdflatex meridian && pdflatex meridian
-tar -czf meridian-arxiv.tar.gz meridian.tex meridian.bbl figures
-```
+The inspected implementation repository was private on 2026-10-29. The draft states this. Do not change repository visibility to satisfy this field. A future code release should separate personal assets and use synthetic examples. The review draft is not evidence of co-author approval or personal/third-party material permissions.

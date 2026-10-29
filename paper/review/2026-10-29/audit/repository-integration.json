@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-29",
+  "baseline_commit": "94ce914bdccfcc19263d74d0457293cf3fc7d71e",
+  "scope": "paper/ only; existing Chinese feature report and its figure inputs preserved",
+  "canonical_pdf_pages": 12,
+  "arxiv_pdf_pages": 12,
+  "cited_references": 37,
+  "referenced_figures": 34,
+  "local_compiler": "pdfLaTeX, TeX Live 2026",
+  "both_builds_succeeded": true,
+  "undefined_references": 0,
+  "font_substitution_warnings": 0,
+  "overfull_boxes": 0,
+  "rebuilt_pdf_text_matches_reviewed_draft": true,
+  "archive_matches_generated_sources_and_assets": true,
+  "repository_visibility": "private",
+  "arxiv_processing_verified": false,
+  "sha256": {
+    "meridian.tex": "e577b32352c58d24fb847c9a3b70b3fcdb0796431adc2df7ff7b816d10ac7a9f",
+    "references.bib": "7804a86eb8afe51f0dbf234fe04576d5043c31b2e34b9489b71cd7e4724c2016",
+    "meridian.pdf": "d89dc0028180309d9595f2b1857e7307607d10f16324b38dc23ec317016c1cd3",
+    "arxiv/meridian.tex": "17532e86088ab0e6522b7f0390f1279a13d02714dc6f0797875d3e71234a03e6",
+    "arxiv/meridian.bbl": "74836ddc7be1332f822e4af2fecdfd7c3f911744ad3e626633f5257498eecaac",
+    "arxiv/references.bib": "7804a86eb8afe51f0dbf234fe04576d5043c31b2e34b9489b71cd7e4724c2016",
+    "arxiv/meridian-preview.pdf": "404ba266815b9c106bac370791c3bae9ad647b266c2839e8c19c626deb848ef1",
+    "arxiv/meridian-arxiv.tar.gz": "852f0891bdb0677ba940cc134d055714bce65e8639257f8cbfc1266b77145b6b"
+  }
+}

@@ -1,0 +1,1951 @@
+[
+  {
+    "key": "vetere2005mediating",
+    "doi": "10.1145/1054972.1055038",
+    "title": [
+      "Mediating intimacy"
+    ],
+    "authors": [
+      {
+        "given": "Frank",
+        "family": "Vetere",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "The University of Melbourne, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Martin R.",
+        "family": "Gibbs",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "The University of Melbourne, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jesper",
+        "family": "Kjeldskov",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Aalborg University, Denmark"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Steve",
+        "family": "Howard",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "The University of Melbourne, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Florian 'Floyd'",
+        "family": "Mueller",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "The University of Melbourne, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Sonja",
+        "family": "Pedell",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "The University of Melbourne, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Karen",
+        "family": "Mecoles",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "The University of Melbourne, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Marcus",
+        "family": "Bunyan",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Charles Sturt University, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the SIGCHI Conference on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2005,
+          4,
+          2
+        ]
+      ]
+    },
+    "pages": "471-480",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/1054972.1055038"
+  },
+  {
+    "key": "hassenzahl2012love",
+    "doi": "10.1145/2395131.2395137",
+    "title": [
+      "All You Need is Love"
+    ],
+    "authors": [
+      {
+        "given": "Marc",
+        "family": "Hassenzahl",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Folkwang University of the Arts"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Stephanie",
+        "family": "Heidecker",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Folkwang University of the Arts"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Kai",
+        "family": "Eckoldt",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Folkwang University of the Arts"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Sarah",
+        "family": "Diefenbach",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Folkwang University of the Arts"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Uwe",
+        "family": "Hillmann",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Telekom Innovation Laboratories"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "ACM Transactions on Computer-Human Interaction"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2012,
+          12
+        ]
+      ]
+    },
+    "pages": "1-19",
+    "type": "journal-article",
+    "url": "https://doi.org/10.1145/2395131.2395137"
+  },
+  {
+    "key": "kaye2006clicked",
+    "doi": "10.1145/1125451.1125530",
+    "title": [
+      "I just clicked to say I love you"
+    ],
+    "authors": [
+      {
+        "given": "Joseph 'Jofish'",
+        "family": "Kaye",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Cornell University, Ithaca, NY"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "CHI '06 Extended Abstracts on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2006,
+          4,
+          21
+        ]
+      ]
+    },
+    "pages": "363-368",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/1125451.1125530"
+  },
+  {
+    "key": "neustaedter2012intimacy",
+    "doi": "10.1145/2207676.2207785",
+    "title": [
+      "Intimacy in long-distance relationships over video chat"
+    ],
+    "authors": [
+      {
+        "given": "Carman",
+        "family": "Neustaedter",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Simon Fraser University, Surrey, British Columbia, Canada"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Saul",
+        "family": "Greenberg",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Calgary, Calgary, Alberta, Canada"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the SIGCHI Conference on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2012,
+          5,
+          5
+        ]
+      ]
+    },
+    "pages": "753-762",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/2207676.2207785"
+  },
+  {
+    "key": "lottridge2009sharing",
+    "doi": "10.1145/1518701.1519058",
+    "title": [
+      "Sharing empty moments"
+    ],
+    "authors": [
+      {
+        "given": "Danielle",
+        "family": "Lottridge",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Toronto, Toronto, Canada"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Nicolas",
+        "family": "Masson",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Université Paris-Sud, Paris, France"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Wendy",
+        "family": "Mackay",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Université Paris-Sud, Paris, France"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the SIGCHI Conference on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2009,
+          4,
+          4
+        ]
+      ]
+    },
+    "pages": "2329-2338",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/1518701.1519058"
+  },
+  {
+    "key": "bales2011couplevibe",
+    "doi": "10.1145/1958824.1958835",
+    "title": [
+      "CoupleVIBE"
+    ],
+    "authors": [
+      {
+        "given": "Elizabeth",
+        "family": "Bales",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of California, San Diego, San Diego, CA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Kevin A.",
+        "family": "Li",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "AT&amp;T Labs Research, Florham Park, NJ, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "William",
+        "family": "Griwsold",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of California, San Diego, San Diego, CA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the ACM 2011 conference on Computer supported cooperative work"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2011,
+          3,
+          19
+        ]
+      ]
+    },
+    "pages": "65-74",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/1958824.1958835"
+  },
+  {
+    "key": "brave1997intouch",
+    "doi": "10.1145/1120212.1120435",
+    "title": [
+      "inTouch"
+    ],
+    "authors": [
+      {
+        "given": "Scott",
+        "family": "Brave",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Andrew",
+        "family": "Dahley",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "CHI '97 extended abstracts on Human factors in computing systems looking to the future - CHI '97"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1997
+        ]
+      ]
+    },
+    "pages": "363",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/1120212.1120435"
+  },
+  {
+    "key": "mueller2005hug",
+    "doi": "10.1145/1056808.1056994",
+    "title": [
+      "Hug over a distance"
+    ],
+    "authors": [
+      {
+        "given": "Florian 'Floyd'",
+        "family": "Mueller",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Melbourne, Victoria, Australia and CSIRO, Commonwealth Scientific and Industrial Research Organisation, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Frank",
+        "family": "Vetere",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Melbourne, Victoria, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Martin R.",
+        "family": "Gibbs",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Melbourne, Victoria, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jesper",
+        "family": "Kjeldskov",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Melbourne, Victoria, Australia and Aalborg University, Aalborg, Denmark"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Sonja",
+        "family": "Pedell",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Melbourne, Victoria, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Steve",
+        "family": "Howard",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Melbourne, Victoria, Australia and Aalborg University, Aalborg, Denmark"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "CHI '05 Extended Abstracts on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2005,
+          4,
+          2
+        ]
+      ]
+    },
+    "pages": "1673-1676",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/1056808.1056994"
+  },
+  {
+    "key": "tsujita2008syncdecor",
+    "doi": "10.1145/1385569.1385656",
+    "title": [
+      "SyncDecor"
+    ],
+    "authors": [
+      {
+        "given": "Hitomi",
+        "family": "Tsujita",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Ochanomizu University, Otsuka, Bunkyo-ku, Tokyo, Japan"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Koji",
+        "family": "Tsukada",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "National Institute of Advanced Industrial Science and Technology, Sotokanda, Chiyoda-ku, Tokyo, Japan"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "given": "Itiro",
+        "family": "Siio",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Ochanomizu University, Otsuka, Bunkyo-ku, Tokyo, Japan"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the working conference on Advanced visual interfaces"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2008,
+          5,
+          28
+        ]
+      ]
+    },
+    "pages": "449-453",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/1385569.1385656"
+  },
+  {
+    "key": "jiang2013absence",
+    "doi": "10.1111/jcom.12029",
+    "title": [
+      "Absence Makes the Communication Grow Fonder: Geographic Separation, Interpersonal Media, and Intimacy in Dating Relationships"
+    ],
+    "authors": [
+      {
+        "given": "L.",
+        "family": "Crystal Jiang",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Media and Communication; City University of Hong Kong; Kowloon Tong; Hong Kong"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jeffrey T.",
+        "family": "Hancock",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Communication; Cornell University; Ithaca; NY; 14853; USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Journal of Communication"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2013,
+          5,
+          11
+        ]
+      ]
+    },
+    "pages": "556-577",
+    "type": "journal-article",
+    "url": "https://doi.org/10.1111/jcom.12029"
+  },
+  {
+    "key": "aron1997closeness",
+    "doi": "10.1177/0146167297234003",
+    "title": [
+      "The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings"
+    ],
+    "authors": [
+      {
+        "given": "Arthur",
+        "family": "Aron",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "State University of New York at Stony Brook,"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Edward",
+        "family": "Melinat",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "California Graduate School of Family Psychology"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Elaine N.",
+        "family": "Aron",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "State University of New York at Stony Brook"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Robert Darrin",
+        "family": "Vallone",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of California, Santa Cruz"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Renee J.",
+        "family": "Bator",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Arizona State University"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Personality and Social Psychology Bulletin"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1997,
+          4
+        ]
+      ]
+    },
+    "pages": "363-377",
+    "type": "journal-article",
+    "url": "https://doi.org/10.1177/0146167297234003"
+  },
+  {
+    "key": "zimmerman2007rtd",
+    "doi": "10.1145/1240624.1240704",
+    "title": [
+      "Research through design as a method for interaction design research in HCI"
+    ],
+    "authors": [
+      {
+        "given": "John",
+        "family": "Zimmerman",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, Pittsburgh, PA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jodi",
+        "family": "Forlizzi",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, Pittsburgh, PA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Shelley",
+        "family": "Evenson",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, Pittsburgh, PA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the SIGCHI Conference on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2007,
+          4,
+          29
+        ]
+      ]
+    },
+    "pages": "493-502",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/1240624.1240704"
+  },
+  {
+    "key": "gaver2012expect",
+    "doi": "10.1145/2207676.2208538",
+    "title": [
+      "What should we expect from research through design?"
+    ],
+    "authors": [
+      {
+        "given": "William",
+        "family": "Gaver",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Goldsmiths, University of London, London, United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the SIGCHI Conference on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2012,
+          5,
+          5
+        ]
+      ]
+    },
+    "pages": "937-946",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/2207676.2208538"
+  },
+  {
+    "key": "neustaedter2012autobiographical",
+    "doi": "10.1145/2317956.2318034",
+    "title": [
+      "Autobiographical design in HCI research"
+    ],
+    "authors": [
+      {
+        "given": "Carman",
+        "family": "Neustaedter",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Simon Fraser University, Surrey, BC, Canada"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Phoebe",
+        "family": "Sengers",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Cornell University, Ithaca, NY"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the Designing Interactive Systems Conference"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2012,
+          6,
+          11
+        ]
+      ]
+    },
+    "pages": "514-523",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/2317956.2318034"
+  },
+  {
+    "key": "desjardins2018tensions",
+    "doi": "10.1145/3196709.3196781",
+    "title": [
+      "Revealing Tensions in Autobiographical Design in HCI"
+    ],
+    "authors": [
+      {
+        "given": "Audrey",
+        "family": "Desjardins",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Washington, Seattle, WA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Aubree",
+        "family": "Ball",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Washington, Seattle, WA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the 2018 Designing Interactive Systems Conference"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2018,
+          6,
+          8
+        ]
+      ]
+    },
+    "pages": "753-764",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/3196709.3196781"
+  },
+  {
+    "key": "lucero2019sample",
+    "doi": "10.1145/3301019.3319996",
+    "title": [
+      "A Sample of One"
+    ],
+    "authors": [
+      {
+        "given": "Andrés",
+        "family": "Lucero",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Aalto University, Helsinki, Finland"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Audrey",
+        "family": "Desjardins",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Washington, Seattle, WA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Carman",
+        "family": "Neustaedter",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Simon Fraser University, Surrey, BC, Canada"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Kristina",
+        "family": "Höök",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Royal Institute of Technology (KTH), Stockholm, Sweden"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Marc",
+        "family": "Hassenzahl",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Siegen, Siegen, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Marta E.",
+        "family": "Cecchinato",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Northumbria University, Newcastle upon Tyne, United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Companion Publication of the 2019 on Designing Interactive Systems Conference 2019 Companion"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2019,
+          6,
+          18
+        ]
+      ]
+    },
+    "pages": "385-388",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/3301019.3319996"
+  },
+  {
+    "key": "gaver2004drift",
+    "doi": "10.1145/985921.985947",
+    "title": [
+      "The drift table"
+    ],
+    "authors": [
+      {
+        "given": "William W.",
+        "family": "Gaver",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Royal College of Art, London, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "John",
+        "family": "Bowers",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Royal Institute of Technology, Stockholm, Sweden"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Andrew",
+        "family": "Boucher",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Royal College of Art, London, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Hans",
+        "family": "Gellerson",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Lancaster University, Lancaster, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Sarah",
+        "family": "Pennington",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Royal College of Art, London, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Albrecht",
+        "family": "Schmidt",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Lancaster University, Lancaster, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Anthony",
+        "family": "Steed",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University College London, London, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Nicholas",
+        "family": "Villars",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Lancaster University, Lancaster, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Brendan",
+        "family": "Walker",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Royal College of Art, London, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "CHI '04 Extended Abstracts on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2004,
+          4,
+          24
+        ]
+      ]
+    },
+    "pages": "885-900",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/985921.985947"
+  },
+  {
+    "key": "hallnas2001slow",
+    "doi": "10.1007/PL00000019",
+    "title": [
+      "Slow Technology – Designing for Reflection"
+    ],
+    "authors": [
+      {
+        "given": "Lars",
+        "family": "Hallnäs",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Johan",
+        "family": "Redström",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Personal and Ubiquitous Computing"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2001,
+          8
+        ]
+      ]
+    },
+    "pages": "201-212",
+    "type": "journal-article",
+    "url": "https://doi.org/10.1007/pl00000019"
+  },
+  {
+    "key": "kleppmann2019localfirst",
+    "doi": "10.1145/3359591.3359737",
+    "title": [
+      "Local-first software: you own your data, in spite of the cloud"
+    ],
+    "authors": [
+      {
+        "given": "Martin",
+        "family": "Kleppmann",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Cambridge, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Adam",
+        "family": "Wiggins",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Ink &amp; Switch, Germany"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Peter",
+        "family": "van Hardenberg",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Ink &amp; Switch, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Mark",
+        "family": "McGranaghan",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Ink &amp; Switch, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the 2019 ACM SIGPLAN International Symposium on New Ideas, New Paradigms, and Reflections on Programming and Software"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2019,
+          10,
+          23
+        ]
+      ]
+    },
+    "pages": "154-178",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/3359591.3359737"
+  },
+  {
+    "key": "shapiro2011crdt",
+    "doi": "10.1007/978-3-642-24550-3_29",
+    "title": [
+      "Conflict-Free Replicated Data Types"
+    ],
+    "authors": [
+      {
+        "given": "Marc",
+        "family": "Shapiro",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Nuno",
+        "family": "Preguiça",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Carlos",
+        "family": "Baquero",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Marek",
+        "family": "Zawirski",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Lecture Notes in Computer Science",
+      "Stabilization, Safety, and Security of Distributed Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2011
+        ]
+      ]
+    },
+    "pages": "386-400",
+    "type": "book-chapter",
+    "url": "https://doi.org/10.1007/978-3-642-24550-3_29"
+  },
+  {
+    "key": "fips1804",
+    "doi": "10.6028/NIST.FIPS.180-4",
+    "title": [
+      "Secure hash standard"
+    ],
+    "authors": [
+      {
+        "name": "National Institute of Standards and Technology (US)",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [],
+    "published": {
+      "date-parts": [
+        [
+          2015
+        ]
+      ]
+    },
+    "pages": null,
+    "type": "report",
+    "url": "https://doi.org/10.6028/nist.fips.180-4"
+  },
+  {
+    "key": "allis1994searching",
+    "doi": "10.26481/dis.19940923la",
+    "title": [
+      "Searching for solutions in games and artificial intelligence"
+    ],
+    "authors": [
+      {
+        "given": "L.V.",
+        "family": "Allis",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [],
+    "published": null,
+    "pages": null,
+    "type": "dissertation",
+    "url": "https://doi.org/10.26481/dis.19940923la"
+  },
+  {
+    "key": "gaver2003ambiguity",
+    "doi": "10.1145/642611.642653",
+    "title": [
+      "Ambiguity as a resource for design"
+    ],
+    "authors": [
+      {
+        "given": "William W.",
+        "family": "Gaver",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "The Royal College of Art, London, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jacob",
+        "family": "Beaver",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "The Royal College of Art, London, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Steve",
+        "family": "Benford",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Nottingham, Nottingham, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the SIGCHI Conference on Human Factors in Computing Systems"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2003,
+          4,
+          5
+        ]
+      ]
+    },
+    "pages": "233-240",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/642611.642653"
+  },
+  {
+    "key": "odom2012technology",
+    "doi": "10.1145/2317956.2318088",
+    "title": [
+      "Slow technology"
+    ],
+    "authors": [
+      {
+        "given": "William",
+        "family": "Odom",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, Pittsburgh, PA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Richard",
+        "family": "Banks",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Microsoft Research Cambridge, Cambridge, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Abigail",
+        "family": "Durrant",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Newcastle University, Newcastle upon Tyne, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "David",
+        "family": "Kirk",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Newcastle University, Newcastle upon Tyne, UK"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "James",
+        "family": "Pierce",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, Pittsburgh, PA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Proceedings of the Designing Interactive Systems Conference"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2012,
+          6,
+          11
+        ]
+      ]
+    },
+    "pages": "816-817",
+    "type": "proceedings-article",
+    "url": "https://doi.org/10.1145/2317956.2318088"
+  },
+  {
+    "key": "yang2024geolocator",
+    "doi": "10.3390/app14167091",
+    "title": [
+      "GeoLocator: A Location-Integrated Large Multimodal Model (LMM) for Inferring Geo-Privacy"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0009-0009-9496-6925",
+        "authenticated-orcid": false,
+        "given": "Yifan",
+        "family": "Yang",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Spatial Sciences Institute, University of Southern California, Los Angeles, CA 90089, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Siqin",
+        "family": "Wang",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Spatial Sciences Institute, University of Southern California, Los Angeles, CA 90089, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Daoyang",
+        "family": "Li",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Spatial Sciences Institute, University of Southern California, Los Angeles, CA 90089, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Shuju",
+        "family": "Sun",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Spatial Sciences Institute, University of Southern California, Los Angeles, CA 90089, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Qingyang",
+        "family": "Wu",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Environmental Health Sciences, University of California—Los Angeles, Los Angeles, CA 90095, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container": [
+      "Applied Sciences"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2024,
+          8,
+          13
+        ]
+      ]
+    },
+    "pages": "7091",
+    "type": "journal-article",
+    "url": "https://doi.org/10.3390/app14167091"
+  }
+]

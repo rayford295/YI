@@ -1,0 +1,46 @@
+{
+  "codes": 1024,
+  "single_character_substitution_attempts": 140840,
+  "accepted_substitutions": [],
+  "adjacent_unequal_swap_attempts": 2943,
+  "checksum_accepted_swaps": [
+    [
+      "JI0",
+      "IJ0"
+    ],
+    [
+      "J801",
+      "J810"
+    ],
+    [
+      "J810",
+      "J801"
+    ],
+    [
+      "YE01",
+      "YE10"
+    ],
+    [
+      "YE10",
+      "YE01"
+    ]
+  ],
+  "decoder_accepted_swaps": [
+    [
+      "J801",
+      "J810"
+    ],
+    [
+      "J810",
+      "J801"
+    ],
+    [
+      "YE01",
+      "YE10"
+    ],
+    [
+      "YE10",
+      "YE01"
+    ]
+  ]
+}

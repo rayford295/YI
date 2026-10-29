@@ -1,0 +1,43 @@
+{
+  "review_date": "2026-10-29",
+  "source_repository": "https://github.com/rayford295/yi-town",
+  "repository_private_at_review": true,
+  "manuscript_commit": "94ce914bdccfcc19263d74d0457293cf3fc7d71e",
+  "implementation_cutoff_commit": "55440aec1006e56d1d597a6f0e969445500fc6fd",
+  "unit_test_files_passed": 36,
+  "unit_tests_passed": 153,
+  "build_passed": true,
+  "typescript_non_test_lines": 8414,
+  "css_lines": 1080,
+  "i18n_lines": 791,
+  "development_commits_24_28_oct": 109,
+  "changelog_versions": 28,
+  "stars_in_source": 21,
+  "star_edges": 20,
+  "crossref_doi_records_resolved": 25,
+  "crossref_doi_records": 25,
+  "original_files": {
+    "meridian.pdf": "6169116b705b4b24e979d33132ba42508d2fe9c9dded3e348f06ec1ee83fd16d",
+    "meridian-arxiv.tex": "7cc3b08776c3a018bf9a281b1edd96a658dc2b2cabe9219f413b56cd12616c55",
+    "references.bib": "b449c78742255f964e3807b605f406c6494bab4f5079acafb12b92624d191601",
+    "meridian-arxiv.pdf": "b7ee153289595f99635de425cadb60267c29e4500a17281948bc97a9d0267e37",
+    "meridian.tex": "1bcec5ecf8e5ff81d13957fc39732a77094ed2db5308050ee58617a243efb1e9"
+  },
+  "revised_pages": 12,
+  "revised_cited_references": 37,
+  "revised_numbered_figures": 9,
+  "revised_numbered_tables": 5,
+  "editorial_changes_recorded": 57,
+  "revised_latex_exit_code": 0,
+  "revised_overfull_boxes": 0,
+  "revised_undefined_references": 0,
+  "source_archive_referenced_figures": 34,
+  "arxiv_server_processing_verified": false,
+  "recipient_evaluation_performed": false,
+  "deliverable_sha256": {
+    "output/pdf/MERIDIAN-reviewed.pdf": "b4b9645997eaca594266394c505976a2d549e183b85367719e2afdadf1315a19",
+    "MERIDIAN-review-draft-source.tar.gz": "b46ff193e109bd4587bb49879525223b0952fa1c991ca759ebbf74844d4d23b3",
+    "revised/meridian.tex": "3fa3fd966257210c571c0e26df228cd027d0beec1c516a6d71cd7da5b1bf535a",
+    "revised/references.bib": "7804a86eb8afe51f0dbf234fe04576d5043c31b2e34b9489b71cd7e4724c2016"
+  }
+}

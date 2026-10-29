@@ -1,37 +1,44 @@
 # Paper and Report
 
-Writing about Yi Town, kept apart from the code.
+The current manuscript is the 29 October 2026 reviewed draft of **MERIDIAN: Memory-Encoded Rituals for Intimacy across Distance in an Interactive, Asynchronous Neighbourhood**, by Jingyi Chen and Yifan Yang (corresponding author: yifan@jingyifan.love).
 
-| File | What it is |
+The paper reports a pre-deployment design case. It does not report a recipient evaluation or a measured effect on intimacy. Author approval, disclosure permissions, source provenance and the release decisions described in the review remain outstanding before arXiv submission.
+
+| File | Contents |
 |---|---|
-| `meridian.pdf` | **MERIDIAN: Memory-Encoded Rituals for Intimacy across Distance in an Interactive, Asynchronous Neighbourhood.** Jingyi Chen and Yifan Yang (corresponding, yifan@jingyifan.love). Two-column academic paper (ACM `sigconf` style, 10 pages). |
-| `meridian.tex`, `references.bib` | Its LaTeX source. Every DOI in the bibliography was checked against Crossref. |
-| `report-zh.pdf` | The Chinese feature report (功能报告说明书, 26 A4 pages): what the town is, how to play every level, progress codes, privacy, architecture, maintenance, FAQ. |
-| `report-zh.html` | Its source, printed to PDF with Chromium. |
-| `arxiv/` | The public arXiv version: privacy-trimmed source, `.bbl`, figures, the upload tarball, a preview PDF and `ARXIV.md` (form fields and a checklist). |
-| `figures/` | Screenshots of the live site and art rendered from the sprite code, shared by both documents. |
+| [meridian.pdf](meridian.pdf) | Reviewed manuscript: 12 pages, 9 figures, 5 tables and 37 cited references. |
+| [meridian.tex](meridian.tex), [references.bib](references.bib) | Canonical manuscript and bibliography. Edit these files for subsequent revisions. |
+| [review/2026-10-29/](review/2026-10-29/) | Review report, evidence, change record and figures used by the reviewed manuscript. |
+| [arxiv/](arxiv/) | Generated standalone source, bibliography, preview PDF, draft source archive and metadata. |
+| `report-zh.pdf`, `report-zh.html` | Original Chinese feature report and its source; not updated by the manuscript review. |
+| `figures/` | Original figures used by the Chinese report. Reviewed figures are stored separately. |
 
-This folder is the one place in the repository written partly in Chinese, by the owner's choice.
-Both documents describe the ring and the wedding, so keep them from Jingyi until she has played.
+## Rebuild the Manuscript
 
-## Rebuild
-
-The paper (TinyTeX; `CJKutf8` with Arphic fonts for the Chinese lines):
+With a TeX installation containing `acmart`, `CJKutf8` and the Arphic fonts, run from `paper/`:
 
 ```bash
-export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
-pdflatex meridian && bibtex meridian
-pdflatex meridian && pdflatex meridian
+pdflatex meridian
+bibtex meridian
+pdflatex meridian
+pdflatex meridian
 ```
 
-The report (Playwright, from this folder):
+The existing TinyTeX installation may require adding its `bin/universal-darwin` directory to `PATH`.
+
+## Rebuild the arXiv Draft
 
 ```bash
-python3 -c "
-from playwright.sync_api import sync_playwright; import pathlib
-with sync_playwright() as p:
-    b = p.chromium.launch(); pg = b.new_page()
-    pg.goto(pathlib.Path('report-zh.html').resolve().as_uri(), wait_until='load')
-    pg.pdf(path='report-zh.pdf', format='A4', print_background=True, prefer_css_page_size=True)
-    b.close()"
+python3 arxiv/make_arxiv.py
+cd arxiv
+pdflatex meridian
+bibtex meridian
+pdflatex meridian
+pdflatex meridian
+cp meridian.pdf meridian-preview.pdf
+python3 make_arxiv.py --pack
 ```
+
+The generator copies the canonical text and only referenced reviewed figures. It does not restore the former manuscript through text substitutions. The source archive includes both `.bib` and `.bbl`; arXiv currently supports bibliography processing from `.bib` and accepts a matching pre-generated `.bbl`.
+
+Compilation here uses TeX Live 2026. arXiv server processing has not been verified. Read [ARXIV.md](arxiv/ARXIV.md) and inspect the complete generated PDF before submission.
