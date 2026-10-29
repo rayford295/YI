@@ -2,6 +2,8 @@
 
 The red mailbox by the fountain plays these; each player hears the ones the other one sent.
 
+0. On the Mac, skip the rest: `python3 scripts/record-note.py yifan` records from the microphone
+   (Enter stops), names and converts the file, and refreshes the list. Then commit and push.
 1. Get the recording as an audio file (M4A or MP3). WeChat voice messages cannot be exported
    directly: play one and record it with the phone's Voice Memos / screen recorder, or record a
    fresh note in Voice Memos and share it as a file.
