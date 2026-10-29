@@ -1,7 +1,11 @@
 # Voice notes
 
-The mailbox by the fountain in the town plays these. One file per note, named by date
-(`2026-10-25.m4a`, add `-2` for a second one that day), listed in `src/features/voice/notes.ts`
-with who sent it and how long it is. M4A or MP3; WeChat voice messages need exporting first
-(play them and record on the phone, or use a desktop tool that converts `.silk`/`.amr`).
-Each player hears the notes the other one sent.
+The red mailbox by the fountain plays these; each player hears the ones the other one sent.
+
+1. Get the recording as an audio file (M4A or MP3). WeChat voice messages cannot be exported
+   directly: play one and record it with the phone's Voice Memos / screen recorder, or record a
+   fresh note in Voice Memos and share it as a file.
+2. Name it `<date>-<sender>.m4a`, where sender is who recorded it: `2026-10-25-jingyi.m4a`,
+   and `2026-10-25-jingyi-2.m4a` for a second one that day.
+3. Put it in this folder and run `npm run notes`: that rewrites `src/features/voice/notes.ts`
+   with the sender, the date and the length. Commit and push; the mailbox lists them newest first.
