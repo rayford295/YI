@@ -1,0 +1,352 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{37}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter does
+%%% not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+\makeatletter
+\@ifundefined{NAT@parse@date}{}{\let\NAT@parse@date@orig\NAT@parse@date}
+\@ifundefined{NAT@parse@date}{}{\def\NAT@parse@date#1#2#3#4#5#6@@{\NAT@parse@date@orig#1#2#3#4#5#6@@\def\NAT@tempyear{0000}\def\NAT@tempexlab{{?}}\ifx\NAT@year\NAT@tempyear\ifx\NAT@exlab\NAT@tempexlab\def\NAT@date{[n.\,d.]}\else\edef\NAT@date{[n.\,d.]\NAT@exlab}\fi\fi}}
+\makeatother
+
+\bibitem[Allis(1994)]%
+        {allis1994searching}
+\bibfield{author}{\bibinfo{person}{Louis~Victor Allis}.} \bibinfo{year}{1994}\natexlab{}.
+\newblock \emph{\bibinfo{title}{Searching for Solutions in Games and Artificial Intelligence}}.
+\newblock \bibinfo{thesistype}{Ph.\,D. Dissertation}. \bibinfo{school}{Rijksuniversiteit Limburg}, \bibinfo{address}{Maastricht, The Netherlands}.
+\newblock
+\href{https://doi.org/10.26481/dis.19940923la}{doi:\nolinkurl{10.26481/dis.19940923la}}
+
+
+\bibitem[Aron et~al\mbox{.}(1997)]%
+        {aron1997closeness}
+\bibfield{author}{\bibinfo{person}{Arthur Aron}, \bibinfo{person}{Edward Melinat}, \bibinfo{person}{Elaine~N. Aron}, \bibinfo{person}{Robert~Darrin Vallone}, {and} \bibinfo{person}{Renee~J. Bator}.} \bibinfo{year}{1997}\natexlab{}.
+\newblock \showarticletitle{The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings}.
+\newblock \bibinfo{journal}{\emph{Personality and Social Psychology Bulletin}} \bibinfo{volume}{23}, \bibinfo{number}{4} (\bibinfo{year}{1997}), \bibinfo{pages}{363--377}.
+\newblock
+\href{https://doi.org/10.1177/0146167297234003}{doi:\nolinkurl{10.1177/0146167297234003}}
+
+
+\bibitem[Bales et~al\mbox{.}(2011)]%
+        {bales2011couplevibe}
+\bibfield{author}{\bibinfo{person}{Elizabeth Bales}, \bibinfo{person}{Kevin~A. Li}, {and} \bibinfo{person}{William Griswold}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{CoupleVIBE: Mobile Implicit Communication to Improve Awareness for (Long-Distance) Couples}. In \bibinfo{booktitle}{\emph{Proceedings of the ACM 2011 Conference on Computer Supported Cooperative Work}} \emph{(\bibinfo{series}{CSCW '11})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{65--74}.
+\newblock
+\href{https://doi.org/10.1145/1958824.1958835}{doi:\nolinkurl{10.1145/1958824.1958835}}
+
+
+\bibitem[Birrell(1982)]%
+        {birrell1982jade}
+\bibfield{author}{\bibinfo{person}{Anne Birrell}.} \bibinfo{year}{1982}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{New Songs from a Jade Terrace: An Anthology of Early Chinese Love Poetry}}.
+\newblock \bibinfo{publisher}{George Allen \& Unwin}, \bibinfo{address}{London}.
+\newblock
+
+
+\bibitem[Brave and Dahley(1997)]%
+        {brave1997intouch}
+\bibfield{author}{\bibinfo{person}{Scott Brave} {and} \bibinfo{person}{Andrew Dahley}.} \bibinfo{year}{1997}\natexlab{}.
+\newblock \showarticletitle{inTouch: A Medium for Haptic Interpersonal Communication}. In \bibinfo{booktitle}{\emph{CHI '97 Extended Abstracts on Human Factors in Computing Systems}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{363}.
+\newblock
+\href{https://doi.org/10.1145/1120212.1120435}{doi:\nolinkurl{10.1145/1120212.1120435}}
+
+
+\bibitem[Desjardins and Ball(2018)]%
+        {desjardins2018tensions}
+\bibfield{author}{\bibinfo{person}{Audrey Desjardins} {and} \bibinfo{person}{Aubree Ball}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Revealing Tensions in Autobiographical Design in HCI}. In \bibinfo{booktitle}{\emph{Proceedings of the 2018 Designing Interactive Systems Conference}} \emph{(\bibinfo{series}{DIS '18})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{753--764}.
+\newblock
+\href{https://doi.org/10.1145/3196709.3196781}{doi:\nolinkurl{10.1145/3196709.3196781}}
+
+
+\bibitem[Gaver(2012)]%
+        {gaver2012expect}
+\bibfield{author}{\bibinfo{person}{William Gaver}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{What Should We Expect from Research through Design?}. In \bibinfo{booktitle}{\emph{Proceedings of the SIGCHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '12})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{937--946}.
+\newblock
+\href{https://doi.org/10.1145/2207676.2208538}{doi:\nolinkurl{10.1145/2207676.2208538}}
+
+
+\bibitem[Gaver et~al\mbox{.}(2003)]%
+        {gaver2003ambiguity}
+\bibfield{author}{\bibinfo{person}{William~W. Gaver}, \bibinfo{person}{Jacob Beaver}, {and} \bibinfo{person}{Steve Benford}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \showarticletitle{Ambiguity as a Resource for Design}. In \bibinfo{booktitle}{\emph{Proceedings of the SIGCHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '03})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{233--240}.
+\newblock
+\href{https://doi.org/10.1145/642611.642653}{doi:\nolinkurl{10.1145/642611.642653}}
+
+
+\bibitem[Gaver et~al\mbox{.}(2004)]%
+        {gaver2004drift}
+\bibfield{author}{\bibinfo{person}{William~W. Gaver}, \bibinfo{person}{John Bowers}, \bibinfo{person}{Andrew Boucher}, \bibinfo{person}{Hans Gellerson}, \bibinfo{person}{Sarah Pennington}, \bibinfo{person}{Albrecht Schmidt}, \bibinfo{person}{Anthony Steed}, \bibinfo{person}{Nicholas Villars}, {and} \bibinfo{person}{Brendan Walker}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{The Drift Table: Designing for Ludic Engagement}. In \bibinfo{booktitle}{\emph{CHI '04 Extended Abstracts on Human Factors in Computing Systems}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{885--900}.
+\newblock
+\href{https://doi.org/10.1145/985921.985947}{doi:\nolinkurl{10.1145/985921.985947}}
+
+
+\bibitem[Halln{\"a}s and Redstr{\"o}m(2001)]%
+        {hallnas2001slow}
+\bibfield{author}{\bibinfo{person}{Lars Halln{\"a}s} {and} \bibinfo{person}{Johan Redstr{\"o}m}.} \bibinfo{year}{2001}\natexlab{}.
+\newblock \showarticletitle{Slow Technology -- Designing for Reflection}.
+\newblock \bibinfo{journal}{\emph{Personal and Ubiquitous Computing}} \bibinfo{volume}{5}, \bibinfo{number}{3} (\bibinfo{year}{2001}), \bibinfo{pages}{201--212}.
+\newblock
+\href{https://doi.org/10.1007/PL00000019}{doi:\nolinkurl{10.1007/PL00000019}}
+
+
+\bibitem[Hassenzahl et~al\mbox{.}(2012)]%
+        {hassenzahl2012love}
+\bibfield{author}{\bibinfo{person}{Marc Hassenzahl}, \bibinfo{person}{Stephanie Heidecker}, \bibinfo{person}{Kai Eckoldt}, \bibinfo{person}{Sarah Diefenbach}, {and} \bibinfo{person}{Uwe Hillmann}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{All You Need is Love: Current Strategies of Mediating Intimate Relationships through Technology}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Computer-Human Interaction}} \bibinfo{volume}{19}, \bibinfo{number}{4} (\bibinfo{year}{2012}), \bibinfo{pages}{30:1--30:19}.
+\newblock
+\href{https://doi.org/10.1145/2395131.2395137}{doi:\nolinkurl{10.1145/2395131.2395137}}
+
+
+\bibitem[Huizinga(1955)]%
+        {huizinga1955homo}
+\bibfield{author}{\bibinfo{person}{Johan Huizinga}.} \bibinfo{year}{1955}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Homo Ludens: A Study of the Play-Element in Culture}}.
+\newblock \bibinfo{publisher}{Beacon Press}, \bibinfo{address}{Boston}.
+\newblock
+\newblock
+\shownote{Originally published in Dutch, 1938}.
+
+
+\bibitem[{International Organization for Standardization}(2003)]%
+        {iso7064}
+\bibfield{author}{\bibinfo{person}{{International Organization for Standardization}}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{{ISO/IEC} 7064:2003 Information Technology -- Security Techniques -- Check Character Systems}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}. \bibinfo{institution}{ISO}, \bibinfo{address}{Geneva}.
+\newblock
+
+
+\bibitem[Isbister(2016)]%
+        {isbister2016games}
+\bibfield{author}{\bibinfo{person}{Katherine Isbister}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{How Games Move Us: Emotion by Design}}.
+\newblock \bibinfo{publisher}{MIT Press}, \bibinfo{address}{Cambridge, MA}.
+\newblock
+
+
+\bibitem[Jiang and Hancock(2013)]%
+        {jiang2013absence}
+\bibfield{author}{\bibinfo{person}{L.~Crystal Jiang} {and} \bibinfo{person}{Jeffrey~T. Hancock}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Absence Makes the Communication Grow Fonder: Geographic Separation, Interpersonal Media, and Intimacy in Dating Relationships}.
+\newblock \bibinfo{journal}{\emph{Journal of Communication}} \bibinfo{volume}{63}, \bibinfo{number}{3} (\bibinfo{year}{2013}), \bibinfo{pages}{556--577}.
+\newblock
+\href{https://doi.org/10.1111/jcom.12029}{doi:\nolinkurl{10.1111/jcom.12029}}
+
+
+\bibitem[Juul(2005)]%
+        {juul2005halfreal}
+\bibfield{author}{\bibinfo{person}{Jesper Juul}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Half-Real: Video Games between Real Rules and Fictional Worlds}}.
+\newblock \bibinfo{publisher}{MIT Press}, \bibinfo{address}{Cambridge, MA}.
+\newblock
+
+
+\bibitem[Kaye(2006)]%
+        {kaye2006clicked}
+\bibfield{author}{\bibinfo{person}{Joseph~'Jofish' Kaye}.} \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{I Just Clicked to Say I Love You: Rich Evaluations of Minimal Communication}. In \bibinfo{booktitle}{\emph{CHI '06 Extended Abstracts on Human Factors in Computing Systems}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{363--368}.
+\newblock
+\href{https://doi.org/10.1145/1125451.1125530}{doi:\nolinkurl{10.1145/1125451.1125530}}
+
+
+\bibitem[Kleppmann et~al\mbox{.}(2019)]%
+        {kleppmann2019localfirst}
+\bibfield{author}{\bibinfo{person}{Martin Kleppmann}, \bibinfo{person}{Adam Wiggins}, \bibinfo{person}{Peter van Hardenberg}, {and} \bibinfo{person}{Mark McGranaghan}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Local-First Software: You Own Your Data, in Spite of the Cloud}. In \bibinfo{booktitle}{\emph{Proceedings of the 2019 ACM SIGPLAN International Symposium on New Ideas, New Paradigms, and Reflections on Programming and Software}} \emph{(\bibinfo{series}{Onward! 2019})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{154--178}.
+\newblock
+\href{https://doi.org/10.1145/3359591.3359737}{doi:\nolinkurl{10.1145/3359591.3359737}}
+
+
+\bibitem[Liu et~al\mbox{.}(2026)]%
+        {w3c2023speech}
+\bibfield{author}{\bibinfo{person}{Evan Liu}, \bibinfo{person}{Andr{\'e} Natal}, \bibinfo{person}{Glen Shires}, \bibinfo{person}{Philip J{\"a}genstedt}, {and} \bibinfo{person}{Hans Wennborg}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \bibinfo{title}{Web Speech {API}}.
+\newblock \bibinfo{howpublished}{W3C Draft Community Group Report, 27 October 2026}.
+\newblock
+\urldef\tempurl%
+\url{https://webaudio.github.io/web-speech-api/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Accessed 29 October 2026}.
+
+
+\bibitem[Lottridge et~al\mbox{.}(2009)]%
+        {lottridge2009sharing}
+\bibfield{author}{\bibinfo{person}{Danielle Lottridge}, \bibinfo{person}{Nicolas Masson}, {and} \bibinfo{person}{Wendy Mackay}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Sharing Empty Moments: Design for Remote Couples}. In \bibinfo{booktitle}{\emph{Proceedings of the SIGCHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '09})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{2329--2338}.
+\newblock
+\href{https://doi.org/10.1145/1518701.1519058}{doi:\nolinkurl{10.1145/1518701.1519058}}
+
+
+\bibitem[Lucero et~al\mbox{.}(2019)]%
+        {lucero2019sample}
+\bibfield{author}{\bibinfo{person}{Andr{\'e}s Lucero}, \bibinfo{person}{Audrey Desjardins}, \bibinfo{person}{Carman Neustaedter}, \bibinfo{person}{Kristina H{\"o}{\"o}k}, \bibinfo{person}{Marc Hassenzahl}, {and} \bibinfo{person}{Marta~E. Cecchinato}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{A Sample of One: First-Person Research Methods in HCI}. In \bibinfo{booktitle}{\emph{Companion Publication of the 2019 Designing Interactive Systems Conference}} \emph{(\bibinfo{series}{DIS '19 Companion})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{385--388}.
+\newblock
+\href{https://doi.org/10.1145/3301019.3319996}{doi:\nolinkurl{10.1145/3301019.3319996}}
+
+
+\bibitem[Lugaresi et~al\mbox{.}(2019)]%
+        {lugaresi2019mediapipe}
+\bibfield{author}{\bibinfo{person}{Camillo Lugaresi}, \bibinfo{person}{Jiuqiang Tang}, \bibinfo{person}{Hadon Nash}, \bibinfo{person}{Chris McClanahan}, \bibinfo{person}{Esha Uboweja}, \bibinfo{person}{Michael Hays}, \bibinfo{person}{Fan Zhang}, \bibinfo{person}{Chuo-Ling Chang}, \bibinfo{person}{Ming~Guang Yong}, \bibinfo{person}{Juhyun Lee}, \bibinfo{person}{Wan-Teh Chang}, \bibinfo{person}{Wei Hua}, \bibinfo{person}{Manfred Georg}, {and} \bibinfo{person}{Matthias Grundmann}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \bibinfo{title}{{MediaPipe}: A Framework for Building Perception Pipelines}.
+\newblock
+\showeprint[arxiv]{1906.08172}
+
+
+\bibitem[Meeus(1998)]%
+        {meeus1998astronomical}
+\bibfield{author}{\bibinfo{person}{Jean Meeus}.} \bibinfo{year}{1998}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Astronomical Algorithms} (\bibinfo{edition}{2nd} ed.)}.
+\newblock \bibinfo{publisher}{Willmann-Bell}, \bibinfo{address}{Richmond, VA}.
+\newblock
+
+
+\bibitem[Mueller et~al\mbox{.}(2005)]%
+        {mueller2005hug}
+\bibfield{author}{\bibinfo{person}{Florian~'Floyd' Mueller}, \bibinfo{person}{Frank Vetere}, \bibinfo{person}{Martin~R. Gibbs}, \bibinfo{person}{Jesper Kjeldskov}, \bibinfo{person}{Sonja Pedell}, {and} \bibinfo{person}{Steve Howard}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Hug Over a Distance}. In \bibinfo{booktitle}{\emph{CHI '05 Extended Abstracts on Human Factors in Computing Systems}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{1673--1676}.
+\newblock
+\href{https://doi.org/10.1145/1056808.1056994}{doi:\nolinkurl{10.1145/1056808.1056994}}
+
+
+\bibitem[{National Institute of Standards and Technology}(2015)]%
+        {fips1804}
+\bibfield{author}{\bibinfo{person}{{National Institute of Standards and Technology}}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Secure Hash Standard ({SHS})}}.
+\newblock \bibinfo{type}{Federal Information Processing Standards Publication} 180-4. \bibinfo{institution}{NIST}.
+\newblock
+\href{https://doi.org/10.6028/NIST.FIPS.180-4}{doi:\nolinkurl{10.6028/NIST.FIPS.180-4}}
+
+
+\bibitem[Neustaedter and Greenberg(2012)]%
+        {neustaedter2012intimacy}
+\bibfield{author}{\bibinfo{person}{Carman Neustaedter} {and} \bibinfo{person}{Saul Greenberg}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Intimacy in Long-Distance Relationships over Video Chat}. In \bibinfo{booktitle}{\emph{Proceedings of the SIGCHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '12})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{753--762}.
+\newblock
+\href{https://doi.org/10.1145/2207676.2207785}{doi:\nolinkurl{10.1145/2207676.2207785}}
+
+
+\bibitem[Neustaedter and Sengers(2012)]%
+        {neustaedter2012autobiographical}
+\bibfield{author}{\bibinfo{person}{Carman Neustaedter} {and} \bibinfo{person}{Phoebe Sengers}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Autobiographical Design in HCI Research: Designing and Learning through Use-It-Yourself}. In \bibinfo{booktitle}{\emph{Proceedings of the Designing Interactive Systems Conference}} \emph{(\bibinfo{series}{DIS '12})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{514--523}.
+\newblock
+\href{https://doi.org/10.1145/2317956.2318034}{doi:\nolinkurl{10.1145/2317956.2318034}}
+
+
+\bibitem[Odom et~al\mbox{.}(2012)]%
+        {odom2012technology}
+\bibfield{author}{\bibinfo{person}{William Odom}, \bibinfo{person}{Richard Banks}, \bibinfo{person}{Abigail Durrant}, \bibinfo{person}{David Kirk}, {and} \bibinfo{person}{James Pierce}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Slow Technology: Critical Reflection and Future Directions}. In \bibinfo{booktitle}{\emph{Proceedings of the Designing Interactive Systems Conference}} \emph{(\bibinfo{series}{DIS '12})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{816--817}.
+\newblock
+\href{https://doi.org/10.1145/2317956.2318088}{doi:\nolinkurl{10.1145/2317956.2318088}}
+
+
+\bibitem[Salen and Zimmerman(2003)]%
+        {salen2004rules}
+\bibfield{author}{\bibinfo{person}{Katie Salen} {and} \bibinfo{person}{Eric Zimmerman}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Rules of Play: Game Design Fundamentals}}.
+\newblock \bibinfo{publisher}{MIT Press}, \bibinfo{address}{Cambridge, MA}.
+\newblock
+
+
+\bibitem[Shapiro et~al\mbox{.}(2011)]%
+        {shapiro2011crdt}
+\bibfield{author}{\bibinfo{person}{Marc Shapiro}, \bibinfo{person}{Nuno Pregui{\c{c}}a}, \bibinfo{person}{Carlos Baquero}, {and} \bibinfo{person}{Marek Zawirski}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Conflict-Free Replicated Data Types}. In \bibinfo{booktitle}{\emph{Stabilization, Safety, and Security of Distributed Systems (SSS 2011)}} \emph{(\bibinfo{series}{Lecture Notes in Computer Science}, Vol.~\bibinfo{volume}{6976})}. \bibinfo{publisher}{Springer}, \bibinfo{address}{Berlin, Heidelberg}, \bibinfo{pages}{386--400}.
+\newblock
+\href{https://doi.org/10.1007/978-3-642-24550-3_29}{doi:\nolinkurl{10.1007/978-3-642-24550-3_29}}
+
+
+\bibitem[Sicart(2014)]%
+        {sicart2014play}
+\bibfield{author}{\bibinfo{person}{Miguel Sicart}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Play Matters}}.
+\newblock \bibinfo{publisher}{MIT Press}, \bibinfo{address}{Cambridge, MA}.
+\newblock
+
+
+\bibitem[Stafford(2005)]%
+        {stafford2005maintaining}
+\bibfield{author}{\bibinfo{person}{Laura Stafford}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Maintaining Long-Distance and Cross-Residential Relationships}}.
+\newblock \bibinfo{publisher}{Lawrence Erlbaum Associates}, \bibinfo{address}{Mahwah, NJ}.
+\newblock
+
+
+\bibitem[Strong and Gaver(1996)]%
+        {strong1996feather}
+\bibfield{author}{\bibinfo{person}{Rob Strong} {and} \bibinfo{person}{William Gaver}.} \bibinfo{year}{1996}\natexlab{}.
+\newblock \showarticletitle{Feather, Scent and Shaker: Supporting Simple Intimacy}. In \bibinfo{booktitle}{\emph{Videos, Demonstrations, and Short Papers of CSCW '96}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}.
+\newblock
+
+
+\bibitem[Tsujita et~al\mbox{.}(2008)]%
+        {tsujita2008syncdecor}
+\bibfield{author}{\bibinfo{person}{Hitomi Tsujita}, \bibinfo{person}{Koji Tsukada}, {and} \bibinfo{person}{Itiro Siio}.} \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{SyncDecor: Communication Appliances for Virtual Cohabitation}. In \bibinfo{booktitle}{\emph{Proceedings of the Working Conference on Advanced Visual Interfaces}} \emph{(\bibinfo{series}{AVI '08})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{449--453}.
+\newblock
+\href{https://doi.org/10.1145/1385569.1385656}{doi:\nolinkurl{10.1145/1385569.1385656}}
+
+
+\bibitem[Vetere et~al\mbox{.}(2005)]%
+        {vetere2005mediating}
+\bibfield{author}{\bibinfo{person}{Frank Vetere}, \bibinfo{person}{Martin~R. Gibbs}, \bibinfo{person}{Jesper Kjeldskov}, \bibinfo{person}{Steve Howard}, \bibinfo{person}{Florian~'Floyd' Mueller}, \bibinfo{person}{Sonja Pedell}, \bibinfo{person}{Karen Mecoles}, {and} \bibinfo{person}{Marcus Bunyan}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Mediating Intimacy: Designing Technologies to Support Strong-Tie Relationships}. In \bibinfo{booktitle}{\emph{Proceedings of the SIGCHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '05})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{471--480}.
+\newblock
+\href{https://doi.org/10.1145/1054972.1055038}{doi:\nolinkurl{10.1145/1054972.1055038}}
+
+
+\bibitem[Zhang et~al\mbox{.}(2020)]%
+        {zhang2020hands}
+\bibfield{author}{\bibinfo{person}{Fan Zhang}, \bibinfo{person}{Valentin Bazarevsky}, \bibinfo{person}{Andrey Vakunov}, \bibinfo{person}{Andrei Tkachenka}, \bibinfo{person}{George Sung}, \bibinfo{person}{Chuo-Ling Chang}, {and} \bibinfo{person}{Matthias Grundmann}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \bibinfo{title}{{MediaPipe Hands}: On-device Real-time Hand Tracking}.
+\newblock
+\showeprint[arxiv]{2006.10214}
+
+
+\bibitem[Zimmerman et~al\mbox{.}(2007)]%
+        {zimmerman2007rtd}
+\bibfield{author}{\bibinfo{person}{John Zimmerman}, \bibinfo{person}{Jodi Forlizzi}, {and} \bibinfo{person}{Shelley Evenson}.} \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Research through Design as a Method for Interaction Design Research in HCI}. In \bibinfo{booktitle}{\emph{Proceedings of the SIGCHI Conference on Human Factors in Computing Systems}} \emph{(\bibinfo{series}{CHI '07})}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{493--502}.
+\newblock
+\href{https://doi.org/10.1145/1240624.1240704}{doi:\nolinkurl{10.1145/1240624.1240704}}
+
+
+\end{thebibliography}

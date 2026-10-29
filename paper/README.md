@@ -8,6 +8,7 @@ Writing about Yi Town, kept apart from the code.
 | `meridian.tex`, `references.bib` | Its LaTeX source. Every DOI in the bibliography was checked against Crossref. |
 | `report-zh.pdf` | The Chinese feature report (功能报告说明书, 26 A4 pages): what the town is, how to play every level, progress codes, privacy, architecture, maintenance, FAQ. |
 | `report-zh.html` | Its source, printed to PDF with Chromium. |
+| `arxiv/` | The public arXiv version: privacy-trimmed source, `.bbl`, figures, the upload tarball, a preview PDF and `ARXIV.md` (form fields and a checklist). |
 | `figures/` | Screenshots of the live site and art rendered from the sprite code, shared by both documents. |
 
 This folder is the one place in the repository written partly in Chinese, by the owner's choice.
