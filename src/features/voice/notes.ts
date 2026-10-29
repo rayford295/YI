@@ -5,7 +5,7 @@ import type { PlayerId } from '../../core/quest';
 export interface Note { src: string; from: PlayerId; date: string; seconds: number }
 
 export const NOTES: Note[] = [
-
+  { src: 'media/voice/notes/2026-10-28-yifan.m4a', from: 'yifan', date: '2026-10-28', seconds: 34 },
 ];
 
 /** Notes addressed to `player`: the ones the other one sent, newest first, at most `limit`. */
