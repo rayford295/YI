@@ -11,7 +11,7 @@ import type { TryOnHandles } from './tryon';
 import { captureTryOn, composeTogether, download, loadImage } from './photo';
 import { config } from '../../core/config';
 import { getLang } from '../../core/i18n';
-import { getPlayer, isCleared } from '../../core/quest';
+import { getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { playIntro, stopIntro } from './intro';
 import { levelCleared } from '../../core/quest-ui';
 
@@ -39,6 +39,7 @@ export function renderRing(root: HTMLElement): () => void {
         <p class="ring-sub">${t('ring.subtitle')}</p>
         <p class="ring-foot"><button type="button" class="link" id="ring-replay">▶ ${t('ring.intro.replay')}</button></p>
       </header>
+      <p class="quest-task${isCleared('ring') ? ' done' : ''}" id="ring-task">${isCleared('ring') ? t('quest.cleared.eyebrow', { n: levelNumber('ring') }) : t('ring.task', { n: levelNumber('ring') })}</p>
       <div class="ring-stage card" id="ring-stage">
         <canvas id="ring-canvas" aria-label="${t('ring.title')}"></canvas>
         <div class="ring-which" role="group">
@@ -217,7 +218,15 @@ export function renderRing(root: HTMLElement): () => void {
   // First arrival: the reveal (black, rose, the ring surfacing), then the cleared card.
   const firstTime = !isCleared('ring');
   const intro = firstTime ? playIntro(stage) : Promise.resolve();
-  void intro.then(() => { if (!disposed) levelCleared('ring'); });
+  void intro.then(() => { if (!disposed && !isCleared('ring')) hint.textContent = t('ring.tryon.first'); });
+  // The level is cleared by the try-on photo: once the picture is taken, closing or saving it
+  // brings the cleared card (not before, so the photo is seen first).
+  const photoDone = () => {
+    if (!shot || isCleared('ring')) return;
+    root.querySelector('#ring-task')!.textContent = t('quest.cleared.eyebrow', { n: levelNumber('ring') });
+    root.querySelector('#ring-task')!.classList.add('done');
+    levelCleared('ring');
+  };
   root.querySelector('#ring-replay')!.addEventListener('click', () => { void playIntro(stage); });
 
   // Try-on: swap the orbit scene for the webcam scene and back.
@@ -273,8 +282,8 @@ export function renderRing(root: HTMLElement): () => void {
     photoImg.src = shot.toDataURL('image/jpeg', 0.92);
     photo.hidden = false;
   });
-  root.querySelector('#ring-photo-save')!.addEventListener('click', () => { if (shot) download(shot, `meridian-${which}-${Date.now()}.png`); });
-  root.querySelector('#ring-photo-close')!.addEventListener('click', () => { photo.hidden = true; });
+  root.querySelector('#ring-photo-save')!.addEventListener('click', () => { if (shot) download(shot, `meridian-${which}-${Date.now()}.png`); photoDone(); });
+  root.querySelector('#ring-photo-close')!.addEventListener('click', () => { photo.hidden = true; photoDone(); });
 
   // Together: two photos taken apart, one card.
   const slots: { hers?: HTMLImageElement; his?: HTMLImageElement } = {};

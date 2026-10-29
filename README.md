@@ -79,7 +79,7 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 | 🟪 | 6 | Our Songs | Hear a passage, pick the title from four | Six of our songs; the same files feed the jukebox |
 | ⬛ | 7 | Libra and Scorpius | Join the stars of both our signs | Real star positions; Libra's brightest stars are still the Scorpion's claws |
 | 🟥 | 8 | Us, in Old Verse | Put the missing characters of five love poems back | Su Wu, Guan Daosheng, Li Shangyin, the paired birds of the *Yutai xinyong*, one anonymous couplet |
-| 🟨 | 9 | The Ring | The reward | What is inside is not written down here |
+| 🟨 | 9 | The Ring | Try it on with the camera and take a photo; the photo clears the level | What is inside is not written down here |
 | ✉️ | · | The Last Letter | The epilogue | Opens once both players have reached the ring |
 | 💒 | · | The Wedding | Say “I do” (aloud or by button), put the rings on, kiss the bride | After the letter: Rayford officiates, the cats are guests, a certificate to save; afterwards the town dresses them as bride and groom |
 

@@ -36,7 +36,7 @@
 /* The 3D card rises above the veil and fades in, so the real ring surfaces out of the dark.
    The .ring section is its own stacking context, so the whole section is lifted while everything
    in it except the canvas is hidden; the veil's black shows through the section's transparent bg. */
-.ring-intro-on .ring { z-index: 1950; }
+.ring-intro-on .ring { z-index: 1950; pointer-events: none; }   /* above the veil for the lift, but Skip stays clickable */
 .ring-intro-on .ring > :not(.ring-stage), .ring-intro-on .ring-stage > :not(canvas) { opacity: 0 !important; pointer-events: none; }
 /* animation: none, or the stage's own rise animation (fill both) keeps it at opacity 1 above the veil */
 .ring-intro-on .ring-stage:not(.intro-lift) { opacity: 0; animation: none; }
