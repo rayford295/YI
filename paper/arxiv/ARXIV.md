@@ -16,7 +16,7 @@ How can shared memories become playable structures for partners who live in diff
 
 ## Comments
 
-12 pages, 9 figures, 5 tables. Pre-deployment design case; no recipient evaluation reported.
+13 pages, 14 figures, 5 tables. Pre-deployment design case; no recipient evaluation reported.
 
 ## Category
 

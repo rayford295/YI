@@ -29,6 +29,8 @@
 \definecolor{meadow}{HTML}{5F9E5A}
 \definecolor{sky}{HTML}{3F7FB3}
 \definecolor{merred}{HTML}{D7102F}
+\definecolor{jpurple}{HTML}{7B4FD8}
+\definecolor{ygreen}{HTML}{3E9A4E}
 
 % A heart drawn in TikZ, so it prints in any PDF viewer (no emoji font needed).
 \newsavebox{\heartbox}
@@ -50,9 +52,9 @@
 
 \begin{document}
 
-\title[MERIDIAN]{MERIDIAN}
-\subtitle{Memory-Encoded Rituals for Intimacy across Distance
-in an Interactive, Asynchronous Neighbourhood}
+\title[MERIDIAN]{\texorpdfstring{\textcolor{merred}{MERIDIAN}\hspace{0.18em}\redheart}{MERIDIAN}}
+\subtitle{\ini{M}emory-\ini{E}ncoded \ini{R}ituals for \ini{I}ntimacy across \ini{D}istance
+in an \ini{I}nteractive, \ini{A}synchronous \ini{N}eighbourhood}
 
 \author{Jingyi Chen}
 \authornote{This manuscript reports the design of Yi Town before recipient evaluation.}
@@ -111,22 +113,22 @@ games for two, local-first software, bilingual interfaces, pixel art, ceremony, 
 \begin{teaserfigure}
   \centering
   \begin{subfigure}[b]{0.25\textwidth}
-    \includegraphics[width=\linewidth]{review/2026-10-29/figures/art-town.png}
+    \includegraphics[width=\linewidth]{figures/art-town.png}
     \caption{The whole town, drawn in code}\label{fig:teaser-map}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.235\textwidth}
-    \includegraphics[width=\linewidth]{review/2026-10-29/figures/town-done-canvas.jpg}\\[2pt]
-    \includegraphics[width=\linewidth]{review/2026-10-29/figures/town-canvas.jpg}
+    \includegraphics[width=\linewidth]{figures/town-done-canvas.jpg}\\[2pt]
+    \includegraphics[width=\linewidth]{figures/town-canvas.jpg}
     \caption{The square: guide, partner, cats}\label{fig:teaser-square}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.245\textwidth}
-    \includegraphics[width=\linewidth]{review/2026-10-29/figures/bday-34.jpg}\\[2pt]
-    \includegraphics[width=\linewidth]{review/2026-10-29/figures/bday-24.jpg}
+    \includegraphics[width=\linewidth]{figures/bday-34.jpg}\\[2pt]
+    \includegraphics[width=\linewidth]{figures/bday-24.jpg}
     \caption{Prologue: the birthday cake}\label{fig:teaser-bday}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.245\textwidth}
-    \includegraphics[width=\linewidth]{review/2026-10-29/figures/wed-13.jpg}\\[2pt]
-    \includegraphics[width=\linewidth]{review/2026-10-29/figures/wed-27.jpg}
+    \includegraphics[width=\linewidth]{figures/wed-13.jpg}\\[2pt]
+    \includegraphics[width=\linewidth]{figures/wed-27.jpg}
     \caption{Finale: the wedding}\label{fig:teaser-wed}
   \end{subfigure}
   \caption{\yt{} at a glance. (a) The town map: a $24\times20$ grid of $16$-pixel tiles with nine
@@ -349,8 +351,13 @@ the mechanisms that realise it.
 
 \subsection{The Front Door}
 The site opens on a single question. The answer, a date both players know, is accepted in
-several spellings: its digits are compared against SHA-256 hashes~\cite{fips1804}. Hashing
-changes the comparison representation, but the date also appears in the application's narrative
+several spellings: its digits are compared against SHA-256 hashes~\cite{fips1804}. Writing
+$\delta(a)$ for the digits of an answer $a$ in order, $H$ for SHA-256 and $\mathcal{A}$ for the
+four stored digests,
+\begin{equation}\label{eq:gate}
+  \mathrm{pass}(a) \iff H\big(\delta(a)\big) \in \mathcal{A} .
+\end{equation}
+Hashing changes the comparison representation, but the date also appears in the application's narrative
 and source material; it is not a secret protected by cryptography. Behind it is a dashboard that lists everything the couple
 build under the domain (Figure~\ref{fig:front}a), of which \yt{} is the first. Choosing the town
 asks \emph{Who are you?} (Figure~\ref{fig:front}b). Progress is kept per player on each device,
@@ -358,10 +365,10 @@ so both can play on one phone.
 
 \begin{figure}[t]
   \centering
-  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-dashboard.jpg}\caption{Dashboard}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-start.jpg}\caption{Pick a player}\end{subfigure}\\[3pt]
-  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-sync.jpg}\caption{Progress code}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-journey.jpg}\caption{The journey list}\end{subfigure}
+  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{figures/page-dashboard.jpg}\caption{Dashboard}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{figures/page-start.jpg}\caption{Pick a player}\end{subfigure}\\[3pt]
+  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{figures/page-sync.jpg}\caption{Progress code}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{figures/page-journey.jpg}\caption{The journey list}\end{subfigure}
   \caption{Around the town. (a) The dashboard lists every product under the domain. (b) Each device
   keeps one progress per player. (c) Progress crosses phones as a code (here \code{JVA}). (d) The
   journey as a list, for players who prefer it to the map.}
@@ -395,7 +402,7 @@ sign in the town's palette, so leaving a house never leaves the world.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\columnwidth]{review/2026-10-29/figures/art-sprites.png}
+  \includegraphics[width=\columnwidth]{figures/art-sprites.png}
   \caption{Every character in \yt{} is a string of characters in the source. From left: Jingyi,
   Yifan, Rayford, Yifan as the baker, Jingyi crowned, the bride and the groom (four facings each),
   then the cats Coffee and Duoduo. Bodies are $12\times12$ pixels over four rows of shared legs.}
@@ -431,14 +438,14 @@ and Figure~\ref{fig:levels} shows them in play.
 
 \begin{figure*}[t]
   \centering
-  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-met.jpg}\caption{1 The Day We Met}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-map.jpg}\caption{2 Love Map}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-tattoo.jpg}\caption{3 Tattoo}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-moments.jpg}\caption{4 Moments}\end{subfigure}\\[4pt]
-  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-gomoku.jpg}\caption{5 Gomoku}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-songs.jpg}\caption{6 Our Songs}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-stars.jpg}\caption{7 Libra and Scorpius}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-poems.jpg}\caption{8 Us, in Old Verse}\end{subfigure}
+  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{figures/page-met.jpg}\caption{1 The Day We Met}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{figures/page-map.jpg}\caption{2 Love Map}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{figures/page-tattoo.jpg}\caption{3 Tattoo}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{figures/page-moments.jpg}\caption{4 Moments}\end{subfigure}\\[4pt]
+  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{figures/page-gomoku.jpg}\caption{5 Gomoku}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{figures/page-songs.jpg}\caption{6 Our Songs}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{figures/page-stars.jpg}\caption{7 Libra and Scorpius}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.24\textwidth}\includegraphics[width=\linewidth]{figures/page-poems.jpg}\caption{8 Us, in Old Verse}\end{subfigure}
   \caption{Eight of the nine levels in play (the ninth is shown in Figure~\ref{fig:ring}). (a) Day
   counter, twin clocks and the countdown to CYF925. (b) Name the place in the street view (photograph: Maarten Heerlien, CC~BY~2.0, via Wikimedia Commons). (c)~A
   heart inked on an arm. (d) Put the first days in order (the photographs below are omitted here). (e) Position~1 of~10: one stone wins.
@@ -477,9 +484,47 @@ for the player's own colour (purple for Jingyi, green for Yifan, as in their fir
 answers are the ten points of a heart; solved answers stay on the board in gold, so the heart draws
 itself as the player progresses. Positions are generated from three patterns (a four closed at one
 end, a broken four, three-and-one) placed around each heart point in varied directions with decoy
-stones, and a test checks that each has a unique winning move. Gomoku is a first-player win under
-optimal play~\cite{allis1994searching}; win-in-one puzzles avoid that question entirely and make
-every move feel like a find.
+stones (Figure~\ref{fig:heart}). Writing $M$ for the mover's stones, $\mathcal{E}$ for the empty
+cells and $\mathrm{five}(\cdot)$ for ``contains five in a row'', a test requires of every position
+$k$ that
+\begin{equation}\label{eq:win}
+  \big|\{\, c \in \mathcal{E} : \mathrm{five}(M_k \cup \{c\}) \,\}\big| = 1, \qquad
+  \{c^{\ast}_1, \dots, c^{\ast}_{10}\} = \mathcal{H},
+\end{equation}
+where $c^{\ast}_k$ is that unique cell and $\mathcal{H}$ the ten cells of the heart. Gomoku is a
+first-player win under optimal play~\cite{allis1994searching}; win-in-one puzzles avoid that
+question entirely and make every move feel like a find.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}[x=5.4mm, y=5.4mm, hpt/.style={circle, draw=gold!80!black, fill=gold!35, inner sep=0pt, minimum size=4.2mm, font=\scriptsize}]
+    \fill[cream] (-0.6,-0.6) rectangle (14.6,14.6);
+    \draw[gray!60, line width=0.3pt, step=1] (0,0) grid (14,14);
+    \foreach \i in {3,7,11} \foreach \j in {3,7,11} \fill[gray!60] (\i,\j) circle (0.09);
+    \node[hpt] at (7,9) {\tiny 1};
+    \node[hpt] at (6,10) {\tiny 2};
+    \node[hpt] at (5,9) {\tiny 3};
+    \node[hpt] at (5,8) {\tiny 4};
+    \node[hpt] at (6,7) {\tiny 5};
+    \node[hpt] at (7,6) {\tiny 6};
+    \node[hpt] at (8,7) {\tiny 7};
+    \node[hpt] at (9,8) {\tiny 8};
+    \node[hpt] at (9,9) {\tiny 9};
+    \node[hpt] at (8,10) {\tiny 10};
+    \fill[ygreen] (12,4) circle (0.36); \fill[ygreen] (5,11) circle (0.36); \fill[ygreen] (6,12) circle (0.36); \fill[ygreen] (10,8) circle (0.36); \fill[ygreen] (5,6) circle (0.36);
+    \fill[jpurple] (8,8) circle (0.36); \fill[jpurple] (9,7) circle (0.36); \fill[jpurple] (10,6) circle (0.36); \fill[jpurple] (11,5) circle (0.36); \fill[jpurple] (4,7) circle (0.36); \fill[jpurple] (9,12) circle (0.36);
+    \draw[merred, line width=1.1pt, dashed] (7,9) -- (11,5);
+    \draw[merred, line width=1pt] (7,9) circle (0.5);
+    \node[anchor=north west, font=\scriptsize\sffamily, text=navy] at (-0.6,-0.9) {$15\times15$ board, rows 4--8 of the heart highlighted; purple: mover (Jingyi), green: partner};
+  \end{tikzpicture}
+  \caption{Ten answers draw a heart. The gold discs are the ten cells of $\mathcal{H}$ in the order they
+  are found (Eq.~\ref{eq:win}); the stones are position~1 as generated in the source
+  (\code{heart-1}): six purple stones for the mover, five green decoys, and the unique winning cell
+  (red ring) completing a diagonal five. Later positions are built the same way around the other nine
+  cells, so solved answers accumulate into the outline.}
+  \Description{A Gomoku grid with ten numbered gold discs forming a heart, a few purple and green stones, and a red ring marking the winning cell on a dashed diagonal.}
+  \label{fig:heart}
+\end{figure}
 
 \paragraph{6. Our Songs.} Six songs the couple share (among them \zh{只对你有感觉} and
 \zh{天下第一好}) play a passage through the official embedded players: QQ Music for the player in
@@ -514,9 +559,9 @@ photo (Section~\ref{sec:sensing}).
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.325\columnwidth]{review/2026-10-29/figures/hers_v1_hero.jpg}\hfill
-  \includegraphics[width=0.325\columnwidth]{review/2026-10-29/figures/hers_hero.jpg}\hfill
-  \includegraphics[width=0.325\columnwidth]{review/2026-10-29/figures/his_hero.jpg}
+  \includegraphics[width=0.325\columnwidth]{figures/hers_v1_hero.jpg}\hfill
+  \includegraphics[width=0.325\columnwidth]{figures/hers_hero.jpg}\hfill
+  \includegraphics[width=0.325\columnwidth]{figures/his_hero.jpg}
   \caption{The Meridian pair, path-traced from the procedural Blender model: hers v1 (solitaire,
   halo and graduated shoulder stones), hers v2 (flush-set 4.2\,mm stone in a 5\,mm flat band), and
   his (brushed flat comfort-fit band). The gold meridian runs around each band.}
@@ -537,8 +582,8 @@ Shenzhen Bay stop keeps a joke between them about where they will one day live.
 
 \begin{figure}[t]
   \centering
-  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-cs.jpg}\caption{A day of Yifan's}\end{subfigure}\hfill
-  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{review/2026-10-29/figures/page-sz.jpg}\caption{A day of Jingyi's}\end{subfigure}
+  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{figures/page-cs.jpg}\caption{A day of Yifan's}\end{subfigure}\hfill
+  \begin{subfigure}[b]{0.49\columnwidth}\includegraphics[width=\linewidth]{figures/page-sz.jpg}\caption{A day of Jingyi's}\end{subfigure}
   \caption{The two cities as maps. The person stands at the stop whose hours contain the current
   local time in their own city: (a) Yifan at his advisor's office at 8:49 a.m.\ in College
   Station; (b) Jingyi at home at 9:49 p.m.\ in Shenzhen, the same instant.}
@@ -571,14 +616,14 @@ recognition where supported, Coffee carries the rings down the aisle on a red pi
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.245\textwidth]{review/2026-10-29/figures/bday-03.jpg}\hfill
-  \includegraphics[width=0.245\textwidth]{review/2026-10-29/figures/bday-09.jpg}\hfill
-  \includegraphics[width=0.245\textwidth]{review/2026-10-29/figures/bday-27.jpg}\hfill
-  \includegraphics[width=0.245\textwidth]{review/2026-10-29/figures/bday-37.jpg}\\[3pt]
-  \includegraphics[width=0.245\textwidth]{review/2026-10-29/figures/wed-03.jpg}\hfill
-  \includegraphics[width=0.245\textwidth]{review/2026-10-29/figures/wed-11.jpg}\hfill
-  \includegraphics[width=0.245\textwidth]{review/2026-10-29/figures/wed-21.jpg}\hfill
-  \includegraphics[width=0.245\textwidth]{review/2026-10-29/figures/wed-23.jpg}
+  \includegraphics[width=0.245\textwidth]{figures/bday-03.jpg}\hfill
+  \includegraphics[width=0.245\textwidth]{figures/bday-09.jpg}\hfill
+  \includegraphics[width=0.245\textwidth]{figures/bday-27.jpg}\hfill
+  \includegraphics[width=0.245\textwidth]{figures/bday-37.jpg}\\[3pt]
+  \includegraphics[width=0.245\textwidth]{figures/wed-03.jpg}\hfill
+  \includegraphics[width=0.245\textwidth]{figures/wed-11.jpg}\hfill
+  \includegraphics[width=0.245\textwidth]{figures/wed-21.jpg}\hfill
+  \includegraphics[width=0.245\textwidth]{figures/wed-23.jpg}
   \caption{The two cutscenes, left to right. Top, the birthday prologue: the kitchen at 9:47 a.m.\
   in College Station (10:47 p.m.\ in Shenzhen) with both clocks on the wall; whisking the batter;
   nine candles on the finished cake; singing at Shenzhen midnight with the cats. Bottom, the
@@ -592,7 +637,7 @@ recognition where supported, Coffee carries the rings down the aisle on a red pi
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.78\columnwidth]{review/2026-10-29/figures/wed-cert.jpg}
+  \includegraphics[width=0.78\columnwidth]{figures/wed-cert.jpg}
   \caption{The certificate at the end of the wedding, saved as an image through the phone's share
   sheet. It records the day of the ceremony, the day they met and the day they will meet.}
   \Description{A cream certificate card with two cartoon avatars and the names Yifan Yang and Jingyi Chen joined by a heart, on confetti.}
@@ -653,20 +698,81 @@ guaranteed offline; cache eviction and previously unfetched assets also limit av
 Let $L = (\ell_1,\dots,\ell_9)$ be the ordered level registry and $C_p \subseteq L$ the set of
 levels player $p$ has cleared on a device. A level is unlocked iff it is first or its predecessor
 is cleared:
-\begin{equation}
+\begin{equation}\label{eq:unlock}
   \mathrm{unlocked}_p(\ell_i) \iff i = 1 \;\lor\; \ell_{i-1} \in C_p .
 \end{equation}
-Clearing adds to $C_p$ and nothing ever removes from it, except an explicit reset. The router
-enforces the lock, and a second guard requires that a level be entered through its door: walking
-onto the door sets a one-shot token in \code{sessionStorage}, and a level route without the token
-redirects to the town. Level numbers are derived from the registry, so inserting a level (the
+Clearing adds to $C_p$ and nothing ever removes from it, except an explicit reset. The next level
+to play is the first one not yet cleared, $\mathrm{current}(p) = \ell_{\min\{i : \ell_i \notin C_p\}}$.
+The router enforces the lock, and a second guard requires that a level be entered through its door:
+walking onto the door sets a one-shot token $\tau$ in \code{sessionStorage}, and a level route
+without the token redirects to the town, so that
+\begin{equation}\label{eq:enter}
+  \mathrm{enter}_p(\ell_i) \iff \mathrm{unlocked}_p(\ell_i) \;\land\; \tau = \mathrm{route}(\ell_i) .
+\end{equation}
+Figure~\ref{fig:chain} shows the whole sequence, including the two scenes gated on both players. Level numbers are derived from the registry, so inserting a level (the
 Poems level was inserted before the last one during development) renumbers every house, sign and
 string at once; a test fails until the new house has a door that the town's path search can reach.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize\sffamily, node distance=1.1mm,
+      lv/.style={draw=navy, line width=0.5pt, fill=cream, minimum width=6.2mm, minimum height=6.2mm, inner sep=0pt},
+      scene/.style={draw=navy, line width=0.5pt, fill=navy, text=cream, rounded corners=1pt, minimum height=6.2mm, inner sep=2pt, align=center},
+      arr/.style={-{Stealth[length=1.3mm]}, navy, line width=0.45pt}]
+    \node[scene] (pro) {Prologue\\\tiny per player};
+    \definecolor{roof1}{HTML}{C74B5F}
+    \node[lv, right=of pro] (l1) {1};
+    \fill[roof1] ([yshift=-0.2pt]l1.north west) -- ([yshift=1.6mm]l1.north) -- ([yshift=-0.2pt]l1.north east) -- cycle;
+    \draw[arr] (pro) -- (l1);
+    \definecolor{roof2}{HTML}{3F7FB3}
+    \node[lv, right=of l1] (l2) {2};
+    \fill[roof2] ([yshift=-0.2pt]l2.north west) -- ([yshift=1.6mm]l2.north) -- ([yshift=-0.2pt]l2.north east) -- cycle;
+    \draw[arr] (l1) -- (l2);
+    \definecolor{roof3}{HTML}{D8973C}
+    \node[lv, right=of l2] (l3) {3};
+    \fill[roof3] ([yshift=-0.2pt]l3.north west) -- ([yshift=1.6mm]l3.north) -- ([yshift=-0.2pt]l3.north east) -- cycle;
+    \draw[arr] (l2) -- (l3);
+    \definecolor{roof4}{HTML}{5F9E5A}
+    \node[lv, right=of l3] (l4) {4};
+    \fill[roof4] ([yshift=-0.2pt]l4.north west) -- ([yshift=1.6mm]l4.north) -- ([yshift=-0.2pt]l4.north east) -- cycle;
+    \draw[arr] (l3) -- (l4);
+    \definecolor{roof5}{HTML}{8D6A4B}
+    \node[lv, right=of l4] (l5) {5};
+    \fill[roof5] ([yshift=-0.2pt]l5.north west) -- ([yshift=1.6mm]l5.north) -- ([yshift=-0.2pt]l5.north east) -- cycle;
+    \draw[arr] (l4) -- (l5);
+    \definecolor{roof6}{HTML}{8C62B8}
+    \node[lv, right=of l5] (l6) {6};
+    \fill[roof6] ([yshift=-0.2pt]l6.north west) -- ([yshift=1.6mm]l6.north) -- ([yshift=-0.2pt]l6.north east) -- cycle;
+    \draw[arr] (l5) -- (l6);
+    \definecolor{roof7}{HTML}{2D3F6E}
+    \node[lv, right=of l6] (l7) {7};
+    \fill[roof7] ([yshift=-0.2pt]l7.north west) -- ([yshift=1.6mm]l7.north) -- ([yshift=-0.2pt]l7.north east) -- cycle;
+    \draw[arr] (l6) -- (l7);
+    \definecolor{roof8}{HTML}{B0413E}
+    \node[lv, right=of l7] (l8) {8};
+    \fill[roof8] ([yshift=-0.2pt]l8.north west) -- ([yshift=1.6mm]l8.north) -- ([yshift=-0.2pt]l8.north east) -- cycle;
+    \draw[arr] (l7) -- (l8);
+    \definecolor{roof9}{HTML}{E9C46A}
+    \node[lv, right=of l8] (l9) {9};
+    \fill[roof9] ([yshift=-0.2pt]l9.north west) -- ([yshift=1.6mm]l9.north) -- ([yshift=-0.2pt]l9.north east) -- cycle;
+    \draw[arr] (l8) -- (l9);
+    \node[scene, below=4mm of l5] (let) {Letter};
+    \node[scene, right=5mm of let] (wed) {Wedding};
+    \draw[arr] (l9.south) |- node[pos=0.75, above, font=\tiny] {$C_J \ni \ell_9 \land C_Y \ni \ell_9$} (let.east);
+    \draw[arr] (let) -- (wed);
+    \node[below=0.3mm of let.south west, anchor=north west, font=\tiny, text=navy!70] {gated on both players' local progress};
+    \node[above=1.8mm of l1.north, anchor=south west, font=\tiny, text=navy!70, xshift=-2mm] {Eq.~\ref{eq:unlock}: $\ell_i$ opens when $\ell_{i-1} \in C_p$; Eq.~\ref{eq:enter}: only through its door};
+  \end{tikzpicture}
+  \caption{The sequence of play. Nine houses open in order per player; the letter and the wedding
+  open only when both players' completion sets on the device contain the last level.}
+  \Description{A chain of nine numbered boxes with coloured roofs following a prologue box, and a branch from box nine down to letter and wedding boxes.}
+  \label{fig:chain}
+\end{figure}
 
 \subsection{Progress without a Server}
 Each phone holds its own $C_p$. Because $C_p$ only grows, it is a grow-only set (G-Set), the
 simplest state-based CRDT~\cite{shapiro2011crdt}: the merge of two replicas is their union,
-\begin{equation}
+\begin{equation}\label{eq:merge}
   C_p \sqcup C'_p = C_p \cup C'_p ,
 \end{equation}
 which is commutative, associative and idempotent. Replicas converge if all updates are eventually exchanged, both phones use the same
@@ -675,13 +781,20 @@ completion flags, but incomplete exchange can leave the two views different. The
 only channel needed is one the couple already use every day: a chat message.
 
 \paragraph{Progress codes.} A code encodes one player and a bitmask of cleared levels,
-$m = \sum_{\ell_i \in C_p} 2^{\,i-1}$, written in base 36 after a player letter (\code{J} or
-\code{Y}) and followed by one check character. With nine levels $m \le 511 = \mathrm{E7}_{36}$, so a
+written in base 36 after a player letter $\lambda_p \in \{\code{J}, \code{Y}\}$ and followed by one
+check character $\chi$ (Figure~\ref{fig:sync}):
+\begin{equation}\label{eq:code}
+  m = \sum_{\ell_i \in C_p} 2^{\,i-1}, \qquad
+  \mathrm{code}(p, C_p) = \lambda_p \,\Vert\, \beta_{36}(m) \,\Vert\, \chi\big(\lambda_p \Vert \beta_{36}(m)\big),
+\end{equation}
+where $\Vert$ is concatenation and $\beta_{36}$ writes a number in base 36. The decoder accepts a
+string only if its last character equals $\chi$ of the rest, its first is a player letter and
+$0 \le m < 2^{9}$. With nine levels $m \le 511 = \mathrm{E7}_{36}$, so a
 code is at most four characters: \code{JVA} says that Jingyi has cleared $m = 31$, the first five
 levels (Table~\ref{tab:codes}). The check character follows the hybrid system ISO~7064
 MOD~37,36~\cite{iso7064}. Writing $a_j \in \{0,\dots,35\}$ for the value of the $j$-th body
 character and starting from $p_0 = 36$,
-\begin{equation}
+\begin{equation}\label{eq:check}
   s_j = \big((p_{j-1} + a_j) \bmod 36\big) \text{ or } 36 \text{ if } 0, \qquad
   p_j = 2 s_j \bmod 37 ,
 \end{equation}
@@ -703,7 +816,7 @@ travel in a link (\code{/sync?c=JVA}), exposing its payload to the hosting reque
 to browser history or the channel through which it is sent.
 
 \begin{table}[t]
-  \caption{Example progress codes: player letter, base-36 mask and the check character of Eq.~3.}
+  \caption{Example progress codes: player letter, base-36 mask (Eq.~\ref{eq:code}) and the check character of Eq.~\ref{eq:check}.}
   \label{tab:codes}
   \small
   \begin{tabular}{@{}lrll@{}}
@@ -719,6 +832,38 @@ to browser history or the channel through which it is sent.
 
 \end{table}
 
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize\sffamily,
+      phone/.style={draw=navy, line width=0.6pt, rounded corners=2mm, fill=cream, minimum width=24mm, minimum height=26mm},
+      chip/.style={draw=navy!60, fill=white, rounded corners=0.6pt, inner sep=1.5pt, font=\scriptsize\ttfamily},
+      arr/.style={-{Stealth[length=1.4mm]}, navy, line width=0.5pt}]
+    \node[phone] (a) at (0,0) {};
+    \node[phone] (b) at (5.4,0) {};
+    \node[anchor=north, text=navy] at ([yshift=-1.2mm]a.north) {Jingyi's phone};
+    \node[anchor=north, text=navy] at ([yshift=-1.2mm]b.north) {Yifan's phone};
+    \node[anchor=north, align=center] at ([yshift=-6mm]a.north) {$C_J = \{\ell_1,\dots,\ell_5\}$\\$C_Y = \{\ell_1, \ell_2\}$};
+    \node[anchor=north, align=center] at ([yshift=-6mm]b.north) {$C_J = \{\ell_1, \ell_2, \ell_3\}$\\$C_Y = \{\ell_1,\dots,\ell_7\}$};
+    \node[anchor=south, align=center, text=merred] at ([yshift=1.2mm]a.south) {after import:\\$C_Y = \{\ell_1,\dots,\ell_7\}$};
+    \node[anchor=south, align=center, text=merred] at ([yshift=1.2mm]b.south) {after import:\\$C_J = \{\ell_1,\dots,\ell_5\}$};
+    \draw[arr] ([yshift=3mm]a.east) -- node[above, chip] {JVA} node[below, font=\tiny] {chat message} ([yshift=3mm]b.west);
+    \draw[arr] ([yshift=-3mm]b.west) -- node[above, chip] {Y3J} node[below, font=\tiny] {or a link \code{/sync?c=Y3J}} ([yshift=-3mm]a.east);
+    \node[below=1.5mm of a.south west, anchor=north west, font=\scriptsize] (lay) {
+      \begin{tikzpicture}[font=\scriptsize\ttfamily, every node/.style={draw=navy, fill=white, minimum height=5mm, inner sep=2pt}]
+        \node (p) {J}; \node[right=0pt of p, fill=gold!30] (m) {V}; \node[right=0pt of m] (c) {A};
+        \node[draw=none, fill=none, below=0.3mm of p, font=\tiny\sffamily] {$\lambda_p$};
+        \node[draw=none, fill=none, below=0.3mm of m, font=\tiny\sffamily] {$\beta_{36}(31)$};
+        \node[draw=none, fill=none, below=0.3mm of c, font=\tiny\sffamily] {$\chi$};
+      \end{tikzpicture}};
+    \node[right=2mm of lay, anchor=west, font=\scriptsize\sffamily, align=left, text=navy] {$m = 31 = 000011111_2$: bit $i$ is set when $\ell_i \in C_J$\\union merge (Eq.~\ref{eq:merge}) never removes a level and\\converges once both codes have travelled};
+  \end{tikzpicture}
+  \caption{Progress without a server. Each phone keeps both players' completion sets; a short code
+  (Eq.~\ref{eq:code}) carries one set across in a chat message or a link, and the receiver takes the
+  union (Eq.~\ref{eq:merge}). Below: the three fields of \code{JVA}.}
+  \Description{Two phone outlines with sets of levels inside, two arrows between them labelled with three-letter codes, and a three-cell diagram of a code's fields below.}
+  \label{fig:sync}
+\end{figure}
+
 \paragraph{Three layers of storage.} Cleared levels live in \code{localStorage} under a key per
 player; half-finished state inside a level (the Gomoku position reached, the stars joined so far)
 lives in \code{sessionStorage}, so a reload or a language switch inside a level does not restart it,
@@ -728,7 +873,7 @@ browser blocks storage, an in-memory store keeps progress for the visit.
 \subsection{The Town Engine}
 The town is a grid of characters (\code{.}\ grass, \code{\#} path, \code{\textasciitilde}\ water,
 \code{T} tree, \code{O} fountain, and so on). Movement is one tile per 190\,ms with an ease-out
-interpolation; the pure functions \code{step} and \code{faced} decide movement and facing and are
+interpolation $e(t) = 1 - (1-t)^2$ of the step's progress $t \in [0,1]$; the pure functions \code{step} and \code{faced} decide movement and facing and are
 unit-tested, while a class wires them to a canvas and one animation loop. A tap on the map runs a
 breadth-first search over walkable tiles and queues the resulting steps. The camera follows the
 player. The same engine takes any map, so the two cities reuse it with their own grids, roads and a
@@ -743,10 +888,46 @@ and the app icons are generated from the same strings by scripts, so a new outfi
 everywhere at once.
 
 \paragraph{Daylight by city.} Let $h_p$ be the current hour in player $p$'s time zone
-(\code{Asia/Shanghai} or \code{America/Chicago}). The phase is dawn for $h_p \in [6,7)$, day for
-$[7,17)$, dusk for $[17,19)$ and night otherwise; dawn, dusk and night each lay a coloured wash over
-the map (night: navy at 42\% opacity) and light the windows. In the two cities the person's
-position is $\mathrm{stopAt}(h) = $ the first stop whose hour windows contain $h \bmod 24$.
+(\code{Asia/Shanghai} or \code{America/Chicago}). The phase of the sky and the person's place in a
+city day are
+\begin{equation}\label{eq:phase}
+  \phi(h) = \begin{cases} \text{dawn} & 6 \le h < 7, \\ \text{day} & 7 \le h < 17, \\ \text{dusk} & 17 \le h < 19, \\ \text{night} & \text{otherwise,} \end{cases}
+\end{equation}
+\begin{equation}\label{eq:stop}
+  \mathrm{stop}(h) = \min\big\{\, j : \exists\,[a,b) \in W_j,\; a \le h \bmod 24 < b \,\big\},
+\end{equation}
+where $W_j$ is the set of hour windows of the $j$-th stop. Dawn, dusk and night each lay a coloured
+wash over the map (night: navy at 42\% opacity) and light the windows. Because $h_J$ and $h_Y$
+differ by the two cities' offset, the same instant falls in different phases for the two players
+(Figure~\ref{fig:bands}).
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}[x=3.3mm, y=1mm, font=\scriptsize\sffamily]
+    \definecolor{cday}{HTML}{BFE3F7}\definecolor{cdawn}{HTML}{F6B18A}\definecolor{cdusk}{HTML}{E8893F}\definecolor{cnight}{HTML}{3E5A78}
+    % bars span 24 h of UTC; Shenzhen is UTC+8, College Station UTC-5 (CDT, as during development)
+    \foreach \name/\off/\yy in {Shenzhen (UTC+8)/8/11, College Station (UTC-5)/-5/0} {
+      \foreach \u in {0,...,23} {
+        \pgfmathtruncatemacro{\h}{mod(\u+\off+24,24)}
+        \pgfmathsetmacro{\col}{(\h>=6 && \h<7) ? "cdawn" : ((\h>=7 && \h<17) ? "cday" : ((\h>=17 && \h<19) ? "cdusk" : "cnight"))}
+        \fill[\col] (\u,\yy) rectangle (\u+1,\yy+5);
+      }
+      \draw[navy, line width=0.4pt] (0,\yy) rectangle (24,\yy+5);
+      \node[anchor=south west, text=navy, font=\tiny\sffamily, inner sep=0.4mm] at (0,\yy+5) {\name};
+    }
+    \foreach \u in {0,6,12,18,24} \node[anchor=north, font=\tiny] at (\u,-0.5) {\u:00};
+    \node[anchor=north, font=\tiny, text=navy!70] at (12,-4) {UTC};
+    % the same instant: 13:49 UTC = 21:49 Shenzhen = 08:49 College Station
+    \draw[merred, line width=0.9pt] (13.82,-1) -- (13.82,19.5);
+    \node[anchor=south east, text=merred, font=\tiny] at (24,19.3) {one instant: 21:49 in Shenzhen, 08:49 in College Station};
+    \node[anchor=north west, font=\tiny, text=navy] at (0,-7) {\tikz\fill[cdawn] (0,0) rectangle (2mm,2mm); dawn\quad \tikz\fill[cday] (0,0) rectangle (2mm,2mm); day\quad \tikz\fill[cdusk] (0,0) rectangle (2mm,2mm); dusk\quad \tikz\fill[cnight] (0,0) rectangle (2mm,2mm); night};
+  \end{tikzpicture}
+  \caption{The two skies over one UTC day (Eq.~\ref{eq:phase}), with the thirteen-hour offset in force
+  during development. Night in one town overlaps day in the other for most of every day; the red line is
+  the instant shown in Figure~\ref{fig:days}.}
+  \Description{Two horizontal bars coloured by dawn, day, dusk and night phases, offset by thirteen hours, with a red vertical line marking one instant.}
+  \label{fig:bands}
+\end{figure}
 
 \subsection{Sensing in the Browser}\label{sec:sensing}
 Camera tracking and breath-amplitude processing run in application code on the device.
@@ -756,28 +937,85 @@ Browser speech recognition has a different processing boundary.
 Mandarin. The implementation does not require on-device recognition; the API allows a
 remote recognition service unless local processing is explicitly required~\cite{w3c2023speech}.
 The application therefore cannot guarantee that voice samples remain on-device. A typed fallback
-is available for the vow. Recognition alternatives are normalised to Han characters and Latin
-letters; the matcher accepts a phrase when it contains \zh{我爱你}, \zh{我愿意} and any accepted spelling of the
-partner's name.
+is available for the vow. Recognition alternatives are joined into one string $w$ and normalised
+by $\nu$, which keeps only Han characters and Latin letters; with $\sqsubseteq$ for ``is a substring
+of'' and $\mathcal{N}_p$ the accepted spellings of the partner's name,
+\begin{align}
+  \mathrm{vow}_p(w) \iff\;& \text{\zh{我爱你}} \sqsubseteq \nu(w) \;\land\; \text{\zh{我愿意}} \sqsubseteq \nu(w) \label{eq:vow} \\
+  &\land\; \exists\, n \in \mathcal{N}_p :\ n \sqsubseteq \nu(w) . \nonumber
+\end{align}
 
 \emph{Breath.} Blowing out the candles reads the microphone with echo cancellation, noise
-suppression and gain control off, computes the root-mean-square loudness of each 1{,}024-sample
-frame, smooths it ($s \leftarrow 0.6s + 0.4\min(1, 5\,\mathrm{rms})$), and blows when $s > 0.32$.
+suppression and gain control off. For each frame $t$ of $N = 1{,}024$ samples $x_{t,i}$,
+\begin{align}
+  r_t &= \sqrt{\tfrac{1}{N}\textstyle\sum_{i=1}^{N} x_{t,i}^{2}}, \qquad
+  s_t = 0.6\, s_{t-1} + 0.4 \min(1, 5 r_t), \label{eq:breath} \\
+  \mathrm{blow}_t &\iff s_t > 0.32 . \nonumber
+\end{align}
 We rely on a breath being a loud, broadband rush on a phone microphone; the threshold was set by
 hand and has not yet been calibrated across devices.
 
 \emph{Hands.} The try-on runs MediaPipe's hand landmarker~\cite{lugaresi2019mediapipe,zhang2020hands}
-on the camera stream. The ring sits on the ring finger's proximal phalanx, 38\% of the way from
-landmark 13 (the knuckle) to landmark 14; its axis follows the finger, and its ``up'' is the back of
-the hand, from the palm normal and the reported handedness. Scale comes from anatomy: the mean
-spacing of the middle, ring and little knuckles serves as the ruler, set to a constant of 19.5\,mm
-(our working estimate for an adult hand, not a measured value), so
-\begin{equation}
-  \text{px/mm} = \tfrac{1}{2}\,\big(\lVert k_9 - k_{13}\rVert + \lVert k_{13} - k_{17}\rVert\big) \,/\, 19.5 ,
+on the camera stream, which returns 21 landmarks $\mathbf{k}_0, \dots, \mathbf{k}_{20}$ per hand
+(Figure~\ref{fig:hand}). The ring's axis $\mathbf{a}$ follows the ring finger's proximal phalanx,
+its ``up'' $\mathbf{u}$ is the back of the hand, taken from the palm normal $\mathbf{n}$ with the
+sign given by the reported handedness, and its centre $\mathbf{c}$ sits a fraction $\beta = 0.38$
+along the phalanx:
+\begin{align}
+  \mathbf{a} &= \frac{\mathbf{k}_{14} - \mathbf{k}_{13}}{\lVert \mathbf{k}_{14} - \mathbf{k}_{13} \rVert}, &
+  \mathbf{n} &= \pm\,\frac{(\mathbf{k}_5 - \mathbf{k}_0) \times (\mathbf{k}_{17} - \mathbf{k}_0)}{\lVert (\mathbf{k}_5 - \mathbf{k}_0) \times (\mathbf{k}_{17} - \mathbf{k}_0) \rVert}, \label{eq:hand-axes} \\
+  \mathbf{u} &= \frac{\mathbf{n} - (\mathbf{n}\cdot\mathbf{a})\,\mathbf{a}}{\lVert \mathbf{n} - (\mathbf{n}\cdot\mathbf{a})\,\mathbf{a} \rVert}, &
+  \mathbf{c} &= (1-\beta)\,\mathbf{k}_{13} + \beta\,\mathbf{k}_{14}, \label{eq:hand-pose}
+\end{align}
+and the rotation is the orthonormal basis $R = [\,\mathbf{u} \times \mathbf{a},\ \mathbf{u},\ \mathbf{a}\,]$.
+Scale comes from anatomy: the mean spacing of the middle, ring and little knuckles serves as the
+ruler, set to a constant of 19.5\,mm (our working estimate for an adult hand, not a measured value),
+\begin{equation}\label{eq:scale}
+  \text{px/mm} = \tfrac{1}{2}\,\big(\lVert \mathbf{k}_9 - \mathbf{k}_{13}\rVert + \lVert \mathbf{k}_{13} - \mathbf{k}_{17}\rVert\big) \,/\, 19.5 ,
 \end{equation}
-and nominal model dimensions map to the screen under this assumed scale. The display
-is a stylised overlay, not a validated measurement of ring size or fit. Position, rotation and scale are
-smoothed (factor 0.45 per frame). The shutter composes the photo with a caption, and a second card
+so nominal model dimensions map to the screen under this assumed scale. The display is a stylised
+overlay, not a validated measurement of ring size or fit. Position, rotation and scale are smoothed
+exponentially with $\alpha = 0.45$ per frame, $\mathbf{c}_t = \mathbf{c}_{t-1} + \alpha(\mathbf{c} - \mathbf{c}_{t-1})$
+and $q_t = \mathrm{slerp}(q_{t-1}, q, \alpha)$ for the rotation quaternion.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}[x=1.35mm, y=1.35mm, font=\scriptsize\sffamily, lm/.style={circle, fill=navy, inner sep=0pt, minimum size=1.7mm}, vec/.style={-{Stealth[length=1.7mm]}, line width=0.9pt}]
+    % a schematic right hand, back towards the viewer; fingers are rounded strips
+    \fill[rose!22, draw=rose!70!black, line width=0.5pt, rounded corners=3mm] (8,0) -- (34,0) -- (37,20) -- (6,20) -- cycle;
+    \foreach \x/\h in {11/37, 18/44, 25/46, 32/41} { \draw[rose!70!black, fill=rose!22, line width=0.5pt, rounded corners=2mm] (\x-3,20) -- (\x-2.6,\h) -- (\x+2.6,\h) -- (\x+3,20); }
+    \draw[rose!70!black, fill=rose!22, line width=0.5pt, rounded corners=2mm] (34,4) -- (46,12) -- (44,16) -- (35,13);
+    % the knuckle ruler
+    \draw[gold!80!black, line width=0.7pt] (25,21) -- (18,20) -- (11,19);
+    \node[font=\tiny, text=gold!60!black, anchor=south] at (21.5,22) {ruler};
+    % landmarks
+    \node[lm] (k0) at (21,0) {};   \node[font=\tiny, anchor=north] at (21,-1.2) {$\mathbf{k}_0$ (wrist)};
+    \node[lm] (k5) at (32,20) {};  \node[font=\tiny, anchor=west] at (33.5,20) {$\mathbf{k}_5$};
+    \node[lm] (k9) at (25,21) {};  \node[font=\tiny, anchor=south west] at (25.8,21.4) {$\mathbf{k}_9$};
+    \node[lm] (k13) at (18,20) {}; \node[font=\tiny, anchor=north east] at (16.8,19.2) {$\mathbf{k}_{13}$};
+    \node[lm] (k14) at (17.6,30) {}; \node[font=\tiny, anchor=east] at (15.6,30) {$\mathbf{k}_{14}$};
+    \node[lm] (k17) at (11,19) {}; \node[font=\tiny, anchor=east] at (9.6,19) {$\mathbf{k}_{17}$};
+    % axis along the proximal phalanx
+    \draw[vec, navy] (18,20) -- (17.68,28);
+    \node[font=\tiny, text=navy, anchor=west] at (19,27.5) {$\mathbf{a}$};
+    % palm normal, out of the page
+    \fill[meadow!70!black] (21,9) circle (1.1); \draw[white, line width=0.5pt] (21,9) circle (0.5);
+    \node[font=\tiny, text=meadow!50!black, anchor=west] at (22.8,9) {$\mathbf{n}$ (towards the viewer)};
+    % the ring at c, seen edge-on across the finger
+    \coordinate (c) at (17.85,23.8);
+    \draw[merred, line width=1.8pt] (c) ellipse (3.7 and 1.15);
+    \draw[gold, line width=0.5pt] (c) ellipse (3.7 and 1.15);
+    \draw[merred!70, line width=0.4pt] (21.6,23.8) -- (28,34);
+    \node[font=\tiny, text=merred, anchor=west, align=left] at (28.3,34) {$\mathbf{c} = (1-\beta)\,\mathbf{k}_{13} + \beta\,\mathbf{k}_{14}$\\ $\beta = 0.38$};
+    \node[font=\tiny, text=gold!60!black, anchor=west, align=left] at (28.3,41) {$\tfrac12(\lVert\mathbf{k}_9-\mathbf{k}_{13}\rVert + \lVert\mathbf{k}_{13}-\mathbf{k}_{17}\rVert)$\\ $\approx 19.5$\,mm (assumed)};
+  \end{tikzpicture}
+  \caption{Placing the ring from hand landmarks (Eqs.~\ref{eq:hand-axes}--\ref{eq:scale}). The
+  band's axis follows $\mathbf{k}_{13} \to \mathbf{k}_{14}$, its centre sits 38\% along that segment,
+  the back of the hand is the palm normal $\mathbf{n}$ oriented by handedness, and the knuckle spacing
+  $\mathbf{k}_9$--$\mathbf{k}_{13}$--$\mathbf{k}_{17}$ is the millimetre ruler.}
+  \Description{A schematic hand seen from the back with labelled landmark dots at the wrist and knuckles, an arrow along the ring finger, and a red ring drawn across the finger.}
+  \label{fig:hand}
+\end{figure} The shutter composes the photo with a caption, and a second card
 puts both players' try-on photos side by side.
 
 \subsection{Keeping a Secret with a Test (\dc{6})}
@@ -786,8 +1024,16 @@ town, the progress page and the cats all speak before the ring is reached, and t
 written and rewritten over days. Rather than rely on vigilance, a unit test scans every key in
 the bilingual dictionary, except the keys shown only after the ring, and fails if any contains
 \zh{戒} (ring) in Chinese, \emph{ring} as a word in English, or any word for wedding, marriage,
-proposal, bride or groom in either language. One exception is listed by name: Jingyi's own joke on
-the Shenzhen Bay stop, which is about a flat, not a ring. The test establishes absence of specified lexical patterns in the selected dictionary
+proposal, bride or groom in either language. With $K$ the set of dictionary keys,
+$K_{\mathrm{after}}$ those shown only after the ring, $A$ the allow-list and $R_{\mathrm{zh}}, R_{\mathrm{en}}$
+the two pattern tests, the test asserts
+\begin{equation}\label{eq:secret}
+  \forall\, k \in K \setminus (K_{\mathrm{after}} \cup A):\quad
+  \neg R_{\mathrm{zh}}\big(D_{\mathrm{zh}}[k]\big) \;\land\; \neg R_{\mathrm{en}}\big(D_{\mathrm{en}}[k]\big),
+\end{equation}
+and a companion test asserts coverage, $\forall k \in K: D_{\mathrm{zh}}[k] \neq \varepsilon \land D_{\mathrm{en}}[k] \neq \varepsilon$
+(\dc{4}). One element of $A$ is listed by name: Jingyi's own joke on the Shenzhen Bay stop, which is
+about a flat, not a ring. The test establishes absence of specified lexical patterns in the selected dictionary
 entries. It does not inspect all assets, routes, source code or indirect visual cues, and therefore
 does not establish secrecy against inspection or unexpected navigation.
 
