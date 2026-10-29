@@ -1,21 +1,35 @@
 // Level: five lines about love with their second half missing. Tap the characters back in order.
 import './poems.css';
 import { t, pick } from '../../core/i18n';
-import { isCleared, levelNumber } from '../../core/quest';
+import { getPlayer, isCleared, levelNumber } from '../../core/quest';
+import { liveKey, sessionState } from '../../core/storage';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { escapeAttr } from '../../core/html';
 import { POEMS, bank, blank, chars, solved, type Poem } from './lines';
 
 const esc = (s: string) => escapeAttr(s);
 
+export interface PoemsLive { i: number; solved: number[] }
+/** Which poem is open and which are solved, from what the tab remembers (junk falls back to the start). */
+export function restorePoems(saved: unknown, total: number, done: boolean): PoemsLive {
+  if (done) return { i: total - 1, solved: Array.from({ length: total }, (_, k) => k) };
+  const s = (saved ?? {}) as Partial<PoemsLive>;
+  const ok = (k: unknown): k is number => typeof k === 'number' && Number.isInteger(k) && k >= 0 && k < total;
+  const solved = Array.isArray(s.solved) ? s.solved.filter(ok) : [];
+  return { i: ok(s.i) ? s.i : 0, solved };
+}
+
 export function renderPoems(root: HTMLElement): () => void {
   const done = isCleared('poems');
-  let i = done ? POEMS.length - 1 : 0;      // which poem is on the page
+  const live = sessionState<PoemsLive>(liveKey('poems', getPlayer() ?? 'jingyi'));   // a language toggle re-renders the page
+  const was = restorePoems(live.get(), POEMS.length, done);
+  let i = was.i;                            // which poem is on the page
   let filled: string[] = [];                // characters placed so far (from the bank, by index)
   let used: number[] = [];                  // bank indices already placed, parallel to `filled`
   let tiles: string[] = [];
   let open = done;                          // the current poem is solved and shown in full
-  const solvedIds = new Set<number>(done ? POEMS.map((_, k) => k) : []);   // lines solved this visit
+  const solvedIds = new Set<number>(was.solved);   // lines solved this visit
+  const remember = () => live.set({ i, solved: [...solvedIds] });
   let timer = 0;
 
   root.innerHTML = `
@@ -69,7 +83,7 @@ export function renderPoems(root: HTMLElement): () => void {
     const p = POEMS[i];
     if (filled.length < chars(p.answer).length) return;
     if (solved(p, filled)) {
-      open = true; solvedIds.add(i);
+      open = true; solvedIds.add(i); remember();
       paint();
       if (i === POEMS.length - 1) levelCleared('poems'); else toast(t('poems.right'));
     } else {
@@ -94,8 +108,8 @@ export function renderPoems(root: HTMLElement): () => void {
       if (k < filled.length) { filled.splice(k); used.splice(k); paint(); }   // take this and later ones back
       return;
     }
-    if (el.closest('#po-next')) { i++; start(POEMS[i]); paint(); }
-    else if (el.closest('#po-prev')) { i--; open = true; paint(); }
+    if (el.closest('#po-next')) { i++; start(POEMS[i]); remember(); paint(); }
+    else if (el.closest('#po-prev')) { i--; open = true; remember(); paint(); }
   });
   hint.addEventListener('click', () => {
     const p = POEMS[i];

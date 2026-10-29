@@ -76,7 +76,7 @@ Each roof in the town has its own colour and carries its number. Walk into the d
 | 🟧 | 3 | Tattoo | Handwrite a tattoo for the other one, on an arm or a shoulder, and ink it | Kept on the device; save it as a picture to send |
 | 🟩 | 4 | Moments | Put five memories in order, then put the other one's photo back together | The timeline, each memory badged with its day number; the portrait puzzle |
 | 🟫 | 5 | Gomoku | Ten endgames, one stone each; the stones you place stay and the tenth completes a heart | Your own colour to move, after our first game on a Zoom whiteboard |
-| 🟪 | 6 | Our Songs | Hear a passage, pick the title from four | Six of our songs; the same files feed the jukebox |
+| 🟪 | 6 | Our Songs | Hear a passage, pick the title from four | Six of our songs through the official embeds; the jukebox in the corner plays them whole on YouTube |
 | ⬛ | 7 | Libra and Scorpius | Join the stars of both our signs | Real star positions; Libra's brightest stars are still the Scorpion's claws |
 | 🟥 | 8 | Us, in Old Verse | Put the missing characters of five love poems back | Su Wu, Guan Daosheng, Li Shangyin, the paired birds of the *Yutai xinyong*, one anonymous couplet |
 | 🟨 | 9 | The Ring | Try it on with the camera and take a photo; the photo clears the level | What is inside is not written down here |

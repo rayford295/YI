@@ -5,6 +5,7 @@ import { t } from '../../core/i18n';
 import { nameOf } from '../../core/players';
 import { clear, getPlayer, isCleared, levelNumber } from '../../core/quest';
 import { levelCleared, toast } from '../../core/quest-ui';
+import { liveKey, sessionState } from '../../core/storage';
 import { SIZE, boardWith, other, winningLine, type Board, type Cell, type Stone } from './core';
 import { HEART, PUZZLES } from './puzzles';
 
@@ -22,10 +23,15 @@ function gridSvg(): string {
   return `<svg class="board-lines" viewBox="0 0 ${SIZE} ${SIZE}" aria-hidden="true">${lines}${stars}</svg>`;
 }
 
+/** How many puzzles are solved given what the tab remembers: the gold stones are HEART[0..i). */
+export const restoreSolved = (saved: unknown, total: number, done: boolean): number =>
+  done ? total : typeof saved === 'number' && Number.isInteger(saved) ? Math.min(Math.max(saved, 0), total - 1) : 0;
+
 export function renderGomoku(root: HTMLElement): () => void {
   const me: Stone = getPlayer() === 'yifan' ? 'green' : 'purple';
   const done = isCleared('gomoku');
-  let i = done ? PUZZLES.length : 0;     // puzzles solved so far; PUZZLES[i] is the one on the board
+  const live = sessionState<number>(liveKey('gomoku', getPlayer() ?? 'jingyi'));   // a language toggle re-renders the page; the heart so far survives it
+  let i = restoreSolved(live.get(), PUZZLES.length, done);     // puzzles solved so far; PUZZLES[i] is the one on the board
   let board: Board = boardFor(i);
   let win: Cell[] = [];                  // the line lit after a right answer
   let timer = 0, burstTimer = 0, wrongTimer = 0, clearTimer = 0;
@@ -99,6 +105,7 @@ export function renderGomoku(root: HTMLElement): () => void {
       clearTimeout(timer);
       timer = window.setTimeout(() => {           // the stone turns gold and the next position is laid
         i++; win = []; board = boardFor(i); update();
+        live.set(i);
         if (i === PUZZLES.length) {           // let the finished heart glow on its own before the card covers it
           celebrate();
           clearTimer = window.setTimeout(() => { clearTimer = 0; levelCleared('gomoku'); }, HEART_HOLD_MS);

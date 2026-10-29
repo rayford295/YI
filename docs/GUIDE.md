@@ -61,7 +61,7 @@ Chinese and English in step. `{h}` is replaced with the live hour difference.
 
 **Add the song files.** Put each song at `public/media/music/<id>.mp3`, with the ids from
 `src/features/songs/list.ts` (`start` and `length` pick the passage the level plays). The jukebox
-plays the same files whole. A Gomoku position is a list of stones in `src/features/gomoku/puzzles.ts`;
+plays them whole through the YouTube player (no files are hosted). A Gomoku position is a list of stones in `src/features/gomoku/puzzles.ts`;
 the test fails unless the mover has exactly one winning point.
 
 **Change a key date.** Everything is in `src/core/config.ts`.

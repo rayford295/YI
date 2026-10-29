@@ -1,7 +1,8 @@
 // Level: Libra and Scorpius, our two signs, side by side. Tap two stars to join them; draw both.
 import './stars.css';
 import { t, pick } from '../../core/i18n';
-import { isCleared, levelNumber } from '../../core/quest';
+import { getPlayer, isCleared, levelNumber } from '../../core/quest';
+import { liveKey, sessionState } from '../../core/storage';
 import { levelCleared, toast } from '../../core/quest-ui';
 import { escapeAttr } from '../../core/html';
 import { ALL_EDGES, ALL_STARS, CONSTELLATIONS, edgeKey, isEdge, project, type Star } from './constellations';
@@ -43,9 +44,17 @@ function chartSvg(drawn: Set<string>, picked: string | null, hint: boolean): str
     <g class="lines">${lines}</g>${dots}${labels}</svg>`;
 }
 
+/** The edges drawn so far, from what the tab remembers; anything that is not one of ours is dropped. */
+export const restoreDrawn = (saved: unknown, done: boolean): Set<string> => {
+  const all = ALL_EDGES.map((e) => edgeKey(e[0], e[1]));
+  if (done) return new Set(all);
+  return new Set(Array.isArray(saved) ? saved.filter((k): k is string => typeof k === 'string' && all.includes(k)) : []);
+};
+
 export function renderStars(root: HTMLElement): () => void {
   const done = isCleared('stars');
-  const drawn = new Set<string>(done ? ALL_EDGES.map((e) => edgeKey(e[0], e[1])) : []);
+  const live = sessionState<string[]>(liveKey('stars', getPlayer() ?? 'jingyi'));   // lines joined so far outlive a language toggle
+  const drawn = restoreDrawn(live.get(), done);
   let picked: string | null = null;
   let hint = false;
   root.innerHTML = `
@@ -78,6 +87,7 @@ export function renderStars(root: HTMLElement): () => void {
     const key = edgeKey(picked, id);
     if (isEdge(picked, id) && !drawn.has(key)) {
       drawn.add(key); picked = id; paint();
+      live.set([...drawn]);
       const finished = CONSTELLATIONS.find((c) => c.edges.every((x) => drawn.has(edgeKey(x[0], x[1]))) && c.edges.some((x) => edgeKey(x[0], x[1]) === key));
       if (drawn.size === ALL_EDGES.length) { picked = null; paint(); levelCleared('stars'); }
       else if (finished) toast(t('stars.done.one', { name: pick(finished.name) }));

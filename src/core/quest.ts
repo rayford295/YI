@@ -1,6 +1,7 @@
 // The journey: who is playing, which levels exist, which are cleared.
 // Progress is per player and per device (localStorage); there is no server.
 import type { Key } from './i18n';
+import { clearLive } from './storage';
 
 export type PlayerId = 'yifan' | 'jingyi';
 export interface Level { id: string; route: string; title: Key; story: Key }
@@ -91,17 +92,18 @@ export function clear(id: string, p: PlayerId | null = getPlayer()): boolean {
   if (!p || levelIndex(id) < 0 || !isUnlocked(id, p) || isCleared(id, p)) return false;
   const pr = getProgress(p);
   save(p, { cleared: [...pr.cleared, id] });
+  clearLive(id, p);   // a cleared level's half-way state is no longer wanted
   emit();
   return true;
 }
 /** Add levels cleared elsewhere (a code from the other phone); never removes anything. */
 export function mergeProgress(p: PlayerId, cleared: string[]): void {
   const have = new Set(getProgress(p).cleared);
-  for (const id of cleared) if (levelIndex(id) >= 0) have.add(id);
+  for (const id of cleared) if (levelIndex(id) >= 0) { have.add(id); clearLive(id, p); }
   save(p, { cleared: LEVELS.filter((l) => have.has(l.id)).map((l) => l.id) });
   emit();
 }
 export function reset(p: PlayerId | null = getPlayer()): void {
-  if (p) store.removeItem(progressKey(p));
+  if (p) { store.removeItem(progressKey(p)); clearLive('*', p); }
   emit();
 }
