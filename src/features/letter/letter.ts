@@ -1,14 +1,15 @@
-// Epilogue: the last letter. It opens only when both players have cleared the ring on this device.
+// Epilogue: the last letter. It opens for a player once they have cleared the ring; the seals show
+// who has arrived so far.
 import './letter.css';
 import { t, pick, getLang } from '../../core/i18n';
 import { config } from '../../core/config';
 import { dayNumberSince, hoursApart } from '../../core/dates';
 import { epilogue, epilogueParagraphs } from './text';
-import { PLAYERS, clearedByAll, isCleared } from '../../core/quest';
+import { PLAYERS, isCleared } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
 
 export function renderLetter(root: HTMLElement): () => void {
-  const open = clearedByAll('ring');
+  const open = isCleared('ring');
   const here = PLAYERS.filter((p) => isCleared('ring', p));
   root.innerHTML = `
     <section class="letter-page">

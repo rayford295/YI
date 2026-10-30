@@ -4,7 +4,7 @@ import { t, getLang, setLang, onLangChange } from './core/i18n';
 import { renderStart } from './features/start/start';
 import { renderJourney } from './features/journey/journey';
 import { renderWorld } from './features/world/world';
-import { getPlayer, isCleared, isUnlocked, levelByRoute, clearedByAll } from './core/quest';
+import { getPlayer, isCleared, isUnlocked, levelByRoute } from './core/quest';
 import { avatarHtml, toast } from './core/quest-ui';
 import { gatePassed } from './core/gate';
 import { renderGate } from './features/gate/gate';
@@ -75,10 +75,9 @@ async function render(): Promise<void> {
     if (level && !isUnlocked(level.id)) { path = '/town'; toast(t('quest.locked')); }
     // A level opens only from its door: no top-bar link, no typed address, no 'next' button.
     else if (level && !enteredThrough(path)) { path = '/town'; toast(t('quest.walk')); }
-    // The epilogue is not a level: it opens once both players have reached the ring on this device.
+    // The epilogue and the wedding are not levels: they open for whoever has reached the ring.
     if (path === '/letter' && !isCleared('ring')) { path = '/town'; toast(t('quest.locked')); }
-    // The wedding comes after the letter, so it needs both players past the last level.
-    if (path === '/wedding' && !clearedByAll('ring')) { path = '/town'; toast(t('quest.locked')); }
+    if (path === '/wedding' && !isCleared('ring')) { path = '/town'; toast(t('quest.locked')); }
     // Her birthday comes first: the town opens after the prologue has played once for this player.
     if (path === '/town' && !birthdaySeen(getPlayer()!)) { path = '/birthday'; closeDoors(); }
   }
@@ -99,7 +98,7 @@ async function render(): Promise<void> {
   // The top bar never links to a level: every house is entered on foot. Only the town and, at the
   // end, the epilogue.
   const navLinks = player
-    ? [link('/town', t('nav.journey')), ...(clearedByAll('ring') ? [link('/letter', t('letter.title'))] : [])].join('')
+    ? [link('/town', t('nav.journey')), ...(isCleared('ring') ? [link('/letter', t('letter.title'))] : [])].join('')
     : '';
   app.innerHTML = `
     <header class="topbar">

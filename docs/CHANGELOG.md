@@ -7,6 +7,10 @@ Versions are tags of feeling more than of code; the site deploys on every push.
 - The birthday letter is now the real one: Yifan's handwritten card (dated 10.31.2026) is shown at
   the end of the Love Map story, with the same words typed beneath it in Chinese and rendered in
   English (`src/features/birthday-map/letter.ts`, `public/media/letter/birthday-card.jpg`).
+- The last letter and what follows it open for a player as soon as they have cleared the ring;
+  the other player no longer has to have arrived on the same device. Rayford, the partner by the
+  fountain, the journey map and the portal all agree.
+- The README no longer names the prologue or the finale; the town tells you when you get there.
 - The last letter (`/letter`) is written: it ends, on purpose, with “to be continued”.
 - A LICENSE: the code is MIT; the photos, letters, voice notes and other personal material in the
   repository are not, and stay ours. Preparation for making the repository public.

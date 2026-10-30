@@ -1,7 +1,7 @@
 // The town page: the new home. A canvas with the walking engine, a d-pad for phones, the talk box.
 import './world.css';
 import { t, type Key } from '../../core/i18n';
-import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange, clearedByAll, levelIndex, levelNumber, type PlayerId } from '../../core/quest';
+import { LEVELS, getPlayer, isCleared, isUnlocked, current, reset, setPlayer, onQuestChange, levelIndex, levelNumber, type PlayerId } from '../../core/quest';
 import { avatarHtml, playerName } from '../../core/quest-ui';
 import { prefersReducedMotion } from '../../core/motion';
 import { escapeAttr } from '../../core/html';
@@ -229,8 +229,8 @@ function mountWorld(root: HTMLElement): () => void {
   function onBump(n: Npc): void {
     if (n.id === 'rayford') { talkRayford('hello'); return; }
     if (n.id === 'portal') {
-      if (clearedByAll('ring')) openDialog(t('world.portal.name'), t('world.portal.line'), [{ label: t('world.portal.go'), run: () => go('/wedding') }, { label: t('world.later'), run: closeDialog }]);
-      else openDialog(t('world.portal.name'), t('world.portal.wait', { other: playerName(other) }), [{ label: t('world.partner.sync'), run: () => go('/sync') }, { label: t('world.close'), run: closeDialog }]);
+      // The portal only stands once this player has cleared the ring, so it is always open here.
+      openDialog(t('world.portal.name'), t('world.portal.line'), [{ label: t('world.portal.go'), run: () => go('/wedding') }, { label: t('world.later'), run: closeDialog }]);
       return;
     }
     if (n.id === 'mailbox') {
@@ -265,7 +265,7 @@ function mountWorld(root: HTMLElement): () => void {
         { label: t('world.partner.epilogue.go'), cls: 'quiet', run: () => go('/letter') },
         { label: t('world.close'), run: closeDialog },
       ]);
-    } else if (clearedByAll('ring')) {
+    } else if (isCleared('ring', p)) {
       openDialog(playerName(other), t('world.partner.epilogue'), [
         { label: t('world.partner.epilogue.go'), run: () => go('/letter') },
         { label: t('world.close'), run: closeDialog },

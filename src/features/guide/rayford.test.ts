@@ -36,12 +36,12 @@ describe('Rayford', () => {
     }
   });
 
-  it('after the ring, waits for the other one, then points to the letter', () => {
+  it('after the ring, points to the portal whether or not the other one has arrived', () => {
     const all = LEVELS.map((l) => l.id);
-    const waiting = rayfordSays('next', state(all, []));
-    const done = rayfordSays('next', state(all, all));
-    expect(waiting.choices.some((c) => 'walkTo' in c)).toBe(false);
-    expect(waiting.text).not.toBe(done.text);
+    const alone = rayfordSays('next', state(all, []));
+    const both = rayfordSays('next', state(all, all));
+    expect(alone.choices.some((c) => 'walkTo' in c)).toBe(true);
+    expect(alone.text).toBe(both.text);
   });
 });
 

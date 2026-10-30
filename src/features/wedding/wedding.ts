@@ -2,7 +2,7 @@
 // (who kept his suit a secret all along) is the master of ceremonies, Coffee and Duoduo are the
 // guests, the bride walks the aisle to the Wedding March, both say "I do" (aloud, if the browser
 // can listen), Coffee brings the Meridian rings, the kiss, bells, doves, and a marriage certificate
-// to keep. Opens only once both players have cleared the last level on this device.
+// to keep. Opens for a player once they have cleared the last level on this device.
 import '../theatre/theatre.css';
 import { pick, getLang, type L10n } from '../../core/i18n';
 import { config } from '../../core/config';

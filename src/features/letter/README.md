@@ -1,6 +1,4 @@
 # The Last Letter (epilogue)
 
-Route `/letter`. Not a level: it is reachable once the player has cleared the ring, but the
-letter text only renders when *both* players have cleared the ring on this device
-(`clearedByAll('ring')`). Until then the page shows two avatar seals, lit for whoever has
-arrived, and a one-line note. The text lives in `text.ts` and ends with “to be continued”: the town is finished, the story is not.
+Route `/letter`. Not a level: it opens once the player has cleared the ring (the other player
+need not have). Two avatar seals at the top light up for whoever has arrived on this device. The text lives in `text.ts` and ends with “to be continued”: the town is finished, the story is not.

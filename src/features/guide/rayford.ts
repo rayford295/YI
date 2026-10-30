@@ -66,7 +66,6 @@ export function rayfordSays(topic: Topic, s: GuideState): Line {
         };
       }
       if (s.wed) return { text: t(s.player === 'jingyi' ? 'guide.wed' : 'guide.wed.yifan'), choices: [{ label: t('world.wedding'), go: '/wedding' }, back(), bye()] };
-      if (!s.cleared('ring', s.other)) return { text: t('guide.wait', { other: them, total: LEVELS.length }), choices: [back(), bye()] };
       return { text: t('guide.portal'), choices: [{ label: t('guide.take'), walkTo: { x: PORTAL_SPOT.x, y: PORTAL_SPOT.y + 1 } }, back(), bye()] };
     }
   }
