@@ -110,7 +110,7 @@ Node 22. CI runs the tests and the build on every push.
 - [docs/GUIDE.md](docs/GUIDE.md): repository layout, everyday edits (add a memory, a word, a level), status, key dates, screenshots of every level
 - [docs/DEPLOY.md](docs/DEPLOY.md): publishing and private hosting
 - Design notes: [the site](docs/superpowers/specs/2026-10-24-yi-at-first-sight-design.md) · [the game of levels](docs/superpowers/specs/2026-10-25-quest-design.md) · [the town](docs/superpowers/specs/2026-10-26-town-design.md)
-- [paper/](paper/): the paper *MERIDIAN* and the Chinese feature report
+- [paper/](paper/): the paper *MERIDIAN* (submitted to arXiv, 30 October 2026) and the Chinese feature report
 - Each folder under `src/features/` has its own README.
 
 <p align="center">

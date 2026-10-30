@@ -2,7 +2,7 @@
 
 The current manuscript is the final version (30 October 2026) of **MERIDIAN: Memory-Encoded Rituals for Intimacy across Distance in an Interactive, Asynchronous Neighbourhood**, by Jingyi Chen and Yifan Yang (corresponding author: yifan@jingyifan.love).
 
-The paper reports a pre-deployment design case; it does not report a recipient evaluation or a measured effect on intimacy. Both authors have approved the manuscript and the disclosure of the personal material it describes, and the repository it inspects is public. The abstract and the availability statement give the repository address.
+The paper reports a pre-deployment design case; it does not report a recipient evaluation or a measured effect on intimacy. Both authors have approved the manuscript and the disclosure of the personal material it describes, and the repository it inspects is public. The abstract and the availability statement give the repository address. Submitted to arXiv on 30 October 2026 (submit/8305865, cs.HC and cs.CY, CC BY 4.0); the arXiv identifier will be added here when announced.
 
 | File | Contents |
 |---|---|
