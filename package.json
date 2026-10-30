@@ -1,6 +1,6 @@
 {
   "name": "yi-town",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

@@ -1,0 +1,45 @@
+Yi at First Sight / yi-town
+===========================
+
+This repository holds two kinds of things, under two different terms.
+
+1. Source code: MIT License
+---------------------------
+
+Everything in `src/`, `scripts/`, `ring/` (the modelling scripts, not the ring models),
+`.github/`, `index.html`, `vite.config.ts`, `tsconfig.json`, `package.json` and the other
+build files, and the prose of `docs/` that documents the code.
+
+Copyright (c) 2026 Yifan Yang
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+2. Personal material: all rights reserved
+-----------------------------------------
+
+The photos, videos, voice notes, letters, poems, place descriptions, memories,
+names, dates, avatars, the ring models and renders, and every other personal
+item in this repository, in particular everything under `public/media/` and the
+texts in `src/features/*/text.ts`, `src/features/*/letter.ts`,
+`src/features/moments/memories.ts` and the other data files, belong to
+Yifan Yang and Jingyi Chen. They are published so the game can be read and run,
+not so they can be reused. Please do not copy, redistribute, train on or
+republish them. If you fork the code, replace them with your own.
+
+The manuscript in `paper/` carries the license stated in its own files.

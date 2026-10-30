@@ -110,7 +110,7 @@ Node 22. CI runs the tests and the build on every push.
 - Each folder under `src/features/` has its own README.
 
 <p align="center">
-  <sub>Live at <a href="https://jingyifan.love/">jingyifan.love</a>, unlisted. Personal photos and messages live here; please do not redistribute.</sub>
+  <sub>Live at <a href="https://jingyifan.love/">jingyifan.love</a>, unlisted. Code is MIT; the personal photos and messages here are ours, please do not redistribute (<a href="LICENSE">LICENSE</a>).</sub>
 </p>
 
 <p align="center">

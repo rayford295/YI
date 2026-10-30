@@ -216,13 +216,17 @@ export function renderMap(root: HTMLElement): () => void {
 
   function showFinale(): void {
     map.flyToBounds(overview, { duration: 1.6, animate: !still });
-    showCard(`
+    // The handwritten card comes first; the typed text below it is the same letter, readable
+    // (and, in English, translated) for anyone who cannot make out the handwriting.
+    const el = showCard(`
+      <div class="card-media letter-card"><img src="${import.meta.env.BASE_URL}media/letter/birthday-card.jpg" alt="${t('home.letter.title')}" loading="lazy" /></div>
       <div class="card-body finale">
         <p class="finale-hearts" aria-hidden="true">❤ ❤ ❤</p>
         <h3>${t('home.letter.title')}</h3>
         ${letterParagraphs(getLang(), hoursApart(config.her.zone, config.him.zone, new Date()), dayNumberSince(config.metOn, new Date(), config.her.zone)).map((p) => `<p>${p}</p>`).join('')}
         <p class="signature">— ${pick(letter.signature)}</p>
       </div>`);
+    attachMediaFallback(el, t('map.media.missing'));
   }
 
   function playStory(idx: number): void {

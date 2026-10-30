@@ -1,25 +1,30 @@
 import type { L10n } from '../../core/i18n';
 
-// Draft — Yifan rewrites this in his own words. `{h}` becomes the live hour difference, `{d}` the day count.
+// The birthday letter, as Yifan wrote it by hand on the card dated 10.31.2026
+// (`public/media/letter/birthday-card.jpg`). The Chinese is the letter itself, transcribed
+// line for line; the English is a rendering for Jingyi's friends who read the site in English.
+// `{d}` and `{h}` stay supported by letterParagraphs() but this letter does not use them.
 export const letter: { paragraphs: { zh: string[]; en: string[] }; signature: L10n } = {
   paragraphs: {
     zh: [
-      '静仪，生日快乐。',
-      '我们认识才 {d} 天，我已经习惯了每天醒来先算一算深圳现在几点。',
-      '你的早晨是我的夜晚。隔着 {h} 个小时和一整片太平洋，我们看的还是同一个月亮。',
-      '谢谢你陪我在 Zoom 上一遍一遍练答辩。还记得我画给你的那张机票吗？CYF925，2027 年 2 月 5 日，深圳飞纽约。那一天，我在出口等你。',
+      '亲爱的陈静仪老婆：',
+      '首先祝你生日快乐。认识你已经是够惊喜，能够陪你共度未来的时光，乃三生有幸。',
+      '你说，我从来没有告诉你，你到底是什么角色。我想说，你是我的宝贝，是我爱的人，是我的女朋友，是我未来的老婆。似乎风象的人总是很有魅力，但也难以捉摸。这样性格的我，是有足够的勇气也爱你，但也让你吃尽了我的坏。因此，我想我们是彼此人生的巧克力。《阿甘正传》的台词，生活就像一盒巧克力，你永远不知道下一颗是什么味道。我们的爱情也是！只是，我只知道我要选择陈静仪这块未知的巧克力！你是我的选择。',
+      '我爱你，陈静仪！',
+      '人一生中最重要的就是两天，一天是生日这天，另一天则是知道自己为什么而生的一天。因此，感谢你生日这一天，让我知道了最重要的两天。未来有你，我无怨无悔。',
     ],
     en: [
-      'Happy birthday, Jingyi.',
-      'We have known each other for only {d} days, and I already wake up working out what time it is in Shenzhen.',
-      'Your morning is my night. {h} hours and a whole Pacific apart, we still look up at the same moon.',
-      'Thank you for sitting through my defense rehearsals on Zoom, again and again. Remember the ticket I drew you? CYF925, February 5, 2027, Shenzhen to New York. That day, I’ll be waiting for you at arrivals.',
+      'Dear Jingyi, my wife-to-be,',
+      'First of all, happy birthday. Meeting you was already surprise enough; getting to spend the years ahead with you is the luck of three lifetimes.',
+      'You said I never told you what you are to me. So: you are my treasure, the one I love, my girlfriend, my future wife. Air signs, they say, are charming and hard to read. Someone like me has had the courage to love you, and has also made you put up with the worst of me. That is why I think we are each other’s chocolate. As Forrest Gump says, life is like a box of chocolates: you never know what the next one will taste like. So is our love! The only thing I know is that I choose Jingyi, this unknown chocolate. You are my choice.',
+      'I love you, Jingyi!',
+      'The two most important days in a life are the day you are born and the day you find out why. Thank you for your birthday, which taught me both. With you in the future, I have no regrets.',
     ],
   },
-  signature: { zh: '一帆', en: 'Yifan' },
+  signature: { zh: '杨一帆 · 10.31.2026', en: 'Yifan Yang · Oct 31, 2026' },
 };
 
-/** The letter's paragraphs for `lang`, with `{h}` filled in. */
+/** The letter's paragraphs for `lang`, with `{h}` and `{d}` filled in. */
 export function letterParagraphs(lang: 'zh' | 'en', hours: number, days: number): string[] {
   return letter.paragraphs[lang].map((p) => p.replace('{h}', String(hours)).replace('{d}', String(days)));
 }

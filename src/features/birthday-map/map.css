@@ -52,3 +52,6 @@ html[lang='en'] .mq-right { font-family: var(--serif-en); font-style: italic; fo
 .mq-credit { margin: 0; font-size: 11px; color: var(--muted); }
 .mq-credit a { color: inherit; }
 .heart-marker.hidden.waiting span { opacity: 1; font-size: 30px; filter: none; color: var(--rose); animation: beat 0.9s ease-in-out infinite; }
+
+/* The handwritten birthday card at the end of the story: whole card visible, paper behind it */
+.letter-card img { height: min(46dvh, 400px); background: var(--paper-2); }

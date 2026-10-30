@@ -2,6 +2,14 @@
 
 Versions are tags of feeling more than of code; the site deploys on every push.
 
+## 1.18.0 (2026-10-30)
+
+- The birthday letter is now the real one: Yifan's handwritten card (dated 10.31.2026) is shown at
+  the end of the Love Map story, with the same words typed beneath it in Chinese and rendered in
+  English (`src/features/birthday-map/letter.ts`, `public/media/letter/birthday-card.jpg`).
+- A LICENSE: the code is MIT; the photos, letters, voice notes and other personal material in the
+  repository are not, and stay ours. Preparation for making the repository public.
+
 ## 1.17.0 (2026-10-28)
 
 - The ring level is cleared by the try-on photo, not by the reveal: put it on, take the picture.

@@ -112,6 +112,7 @@ if a product should not.
 - [x] Rayford the guide; the dashboard at `/` with the town at `/town` (v1.13–1.14, 2026-10-27)
 - [x] Birthday prologue (`/birthday`) and the wedding (`/wedding`) as pixel cutscenes; the ring is a secret until it is reached (`secret.test.ts`); a hole in time by house 9 leads to the wedding (v1.15–1.16, 2026-10-28)
 - [x] Whole-site review pass: gate placeholder, ISO 7064 check character for codes, non-blocking fonts, phone layouts, cutscene edge cases (v1.16.0, 2026-10-28)
+- [x] The birthday letter is the handwritten card, with its text in both languages; LICENSE added for going public (v1.18.0, 2026-10-30)
 - [x] The ring level is cleared by the try-on photo; jukebox on YouTube; in-level progress survives a language toggle or reload; quizzes re-deal on a wrong pick; first voice note in the mailbox (v1.17.0, 2026-10-28)
 
 ### Where we stopped (2026-10-28) and what is next
