@@ -2,9 +2,10 @@
 
 ## Status
 
-Live at <https://jingyifan.love/> since 2026-10-26. The repository is **private** again (the
-account's plan allows Pages from a private repository, checked 2026-10-26: the site stayed up and
-redeployed after the switch), GitHub Pages has
+Live at <https://jingyifan.love/> since 2026-10-26. The repository has been **public** since
+2026-10-30, with Jingyi's consent (see `LICENSE`: MIT code, personal material reserved). It was
+private from 2026-10-24 to 2026-10-30; the account's plan allowed Pages from a private repository,
+checked 2026-10-26. GitHub Pages has
 `jingyifan.love` as its custom domain with **Enforce HTTPS** on, `www.` and the old
 `rayford295.github.io/YI/` address redirect there, and the DNS at Cloudflare is in place. Every push to
 `main` redeploys through the `deploy` job in `.github/workflows/ci.yml`, which only runs while
