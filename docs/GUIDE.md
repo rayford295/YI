@@ -118,8 +118,8 @@ if a product should not.
 ### Where we stopped (2026-10-28) and what is next
 
 Owner's own work (text in his words; both languages in each file):
-- [ ] The epilogue letter: `src/features/letter/text.ts` is a draft written for him; `{d}` days and `{h}` hours fill in live.
-- [ ] The birthday letter on the Love Map: `src/features/birthday-map/letter.ts` (same draft status).
+- [x] The epilogue letter (`src/features/letter/text.ts`) ends on purpose with “to be continued”; `{d}` days and `{h}` hours fill in live (2026-10-30).
+- [x] The birthday letter on the Love Map is the handwritten card (`src/features/birthday-map/letter.ts`, 2026-10-30).
 - [ ] Yifan checks the hours and stories of his day (`src/features/days/cs.ts`, `cs.story.*` in `i18n.ts`); Jingyi's day is a guess (`src/features/days/sz.ts`, `sz.story.*`).
 - [ ] More voice notes: drop `<date>-<sender>.m4a` into `public/media/voice/notes/` and run `npm run notes`, or record on the Mac with `python3 scripts/record-note.py yifan`. Optional per-level lines for the cleared cards: `public/media/voice/README.md`.
 - [ ] Test on real phones what headless browsers cannot: the try-on camera and photo (clears level 9), blowing the candles out into the mic, saying "I do", the wedding certificate's share sheet, YouTube in the jukebox.
