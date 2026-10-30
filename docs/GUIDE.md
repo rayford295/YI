@@ -138,6 +138,9 @@ Ideas not started:
 
 ## The Levels in Pictures
 
+Moving pictures first: Yifan's full rehearsal run, start to finish, is on YouTube at
+<https://youtu.be/C0-oPjvNzZk> (静仪小镇，一见钟情).
+
 <p align="center">
   <img src="screenshots/met.png" width="32%" alt="Level 1: The Day We Met" />
   <img src="screenshots/map.png" width="32%" alt="Level 2: Love Map" />

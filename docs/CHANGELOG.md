@@ -10,6 +10,7 @@ Versions are tags of feeling more than of code; the site deploys on every push.
 - The last letter and what follows it open for a player as soon as they have cleared the ring;
   the other player no longer has to have arrived on the same device. Rayford, the partner by the
   fountain, the journey map and the portal all agree.
+- A full rehearsal run of the town, recorded by Yifan, is on YouTube: <https://youtu.be/C0-oPjvNzZk>.
 - The README no longer names the prologue or the finale; the town tells you when you get there.
 - The last letter (`/letter`) is written: it ends, on purpose, with “to be continued”.
 - A LICENSE: the code is MIT; the photos, letters, voice notes and other personal material in the

@@ -23,6 +23,10 @@
 </p>
 
 <p align="center">
+  <sub>▶ <a href="https://youtu.be/C0-oPjvNzZk">Watch Yifan's full rehearsal run on YouTube</a> (静仪小镇，一见钟情). It plays the town through to the very end, so it spoils everything the README keeps quiet.</sub>
+</p>
+
+<p align="center">
   <sub>Yifan and Jingyi live thirteen hours and one Pacific Ocean apart, in College Station, Texas and Shenzhen, China.<br/>
   Built as a gift, and meant to keep growing. The name puns on 一见钟情, <i>love at first sight</i>: both names carry the syllable <i>Yi</i>, and the title borrows the 仪 from Jingyi's.</sub>
 </p>
