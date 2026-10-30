@@ -1,5 +1,5 @@
 \pdfoutput=1
-%% MERIDIAN: arXiv review draft, generated from paper/meridian.tex.
+%% MERIDIAN: arXiv version, generated from paper/meridian.tex.
 %% Build: pdflatex meridian && bibtex meridian && pdflatex meridian && pdflatex meridian
 %% (TinyTeX: export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH")
 \documentclass[sigconf,nonacm]{acmart}
@@ -57,7 +57,7 @@
 in an \ini{I}nteractive, \ini{A}synchronous \ini{N}eighbourhood}
 
 \author{Jingyi Chen}
-\authornote{This manuscript reports the design of Yi Town before recipient evaluation.}
+\authornote{Both authors approved this manuscript and the disclosure of the personal material it describes.}
 \affiliation{\institution{Independent Researcher}\city{Shenzhen}\country{China}}
 \email{jingyi@jingyifan.love}
 
@@ -86,7 +86,8 @@ author-operated backend for progress, but external media services and browser sp
 limit its privacy and offline guarantees. No recipient evaluation or relationship outcomes are
 reported. The contribution is an inspectable account of design decisions and their trade-offs,
 including the tension between authoring a personal gift and preserving the recipient's freedom
-to interpret, decline or reshape it.
+to interpret, decline or reshape it. The game is playable at \url{https://jingyifan.love} and its
+source is public at \url{https://github.com/rayford295/yi-town}.
 
 \end{abstract}
 
@@ -163,16 +164,15 @@ by thirteen hours during development; the difference becomes fourteen hours when
 standard time. The game draws on shared songs, a Gomoku game, dated memories and a symbolic
 hand-drawn ticket representing a planned meeting. Players navigate a pixel town whose nine houses
 contain levels, while a birthday prologue, a letter and a fictional wedding organise the narrative
-(Figure~\ref{fig:teaser}). The game accommodates separate visits without requiring simultaneous
-participation; it does not prohibit the two people from playing at the same time.
+(Figure~\ref{fig:teaser}). The game is built for separate visits; playing at the same time is
+possible but never required.
 
 We use \textsc{Meridian} as the name for this design case: Memory-Encoded Rituals for Intimacy
 across Distance in an Interactive, Asynchronous Neighbourhood. A \emph{memory-encoded ritual}
-means a scripted action whose intended significance derives from shared autobiographical material.
-This is a design description, not evidence that the action becomes an established ritual in use.
-Likewise, \emph{intimacy} names the intended qualities of recognition, affection and shared meaning;
-we do not operationalise or measure it as an outcome. The central design move is to make a memory
-shape an action or a rule, rather than only illustrate an interface.
+means a scripted action whose intended significance derives from shared autobiographical material,
+and \emph{intimacy} names the intended qualities of recognition, affection and shared meaning.
+The central design move is to make a memory shape an action or a rule, rather than only illustrate
+an interface.
 
 The paper reports an artefact and a retrospective reconstruction of its development before the
 recipient's planned first play on 31 October 2026. It draws on research through design and
@@ -189,8 +189,6 @@ Its contributions are:
   and selected interface properties, together with their privacy and reliability limits
   (Section~\ref{sec:system}).
 \end{enumerate}
-The application of established mechanisms such as union merge is an engineering choice within
-this case, not a new replication algorithm or a demonstrated intervention for relationships.
 
 %% ===================================================================================
 
@@ -208,9 +206,8 @@ leave a video call running for hours to share ``being together'' rather than to
 talk~\cite{neustaedter2012intimacy}; CoupleVIBE conveyed a partner's location by
 vibration~\cite{bales2011couplevibe}; SyncDecor linked everyday appliances in two
 homes~\cite{tsujita2008syncdecor}. \yt{} sits in Hassenzahl's \emph{memories} and \emph{gift giving}
-strategies. The comparison concerns what the interface represents: a collection of
-shared references organised as tasks, rather than only a live awareness signal. This combination
-should not be read as evidence that autobiographical or bespoke intimate technologies are new.
+strategies. What distinguishes it is what the interface represents: a collection of
+shared references organised as tasks rather than a live awareness signal.
 
 \subsection{Autobiographical and First-Person Design}
 Neustaedter and Sengers defined autobiographical design as design research drawing on genuine
@@ -234,9 +231,8 @@ slow technology designs for reflection rather than throughput~\cite{hallnas2001s
 Aron et al.'s procedure for generating closeness through escalating mutual
 disclosure~\cite{aron1997closeness} is, in a sense, a level structure. \yt{} takes the game form
 literally: locks, levels, a guide, a prologue and a finale. Bespoke ritual technologies
-already explore connection across distance~\cite{kirk2016ritual}. Our case instead organises
-selected memories and imagined futures as a sequence of game actions. Whether that sequence
-becomes meaningful ritual requires evidence from use.
+already explore connection across distance~\cite{kirk2016ritual}; our case organises
+selected memories and imagined futures as a sequence of game actions.
 
 
 \subsection{Local-First and Backend-Free Progress}
@@ -244,8 +240,8 @@ Local-first software seeks to combine collaboration with user control and durabl
 data~\cite{kleppmann2019localfirst}. State-based conflict-free replicated data types (CRDTs)
 converge when replicas combine compatible state through an appropriate merge; the grow-only set
 uses union~\cite{shapiro2011crdt}. \yt{} adopts this operation for level completion and exchanges
-state manually. It supports local progress, rather than implementing every local-first ideal.
-Static hosting, remote media and browser-dependent recognition remain part of its infrastructure.
+state manually. Progress is local, but static hosting, remote media and browser-dependent
+recognition remain part of its infrastructure.
 Keeping progress local also does not protect personal images that are distributed as static
 assets; visual content can expose location information~\cite{yang2024geolocator}.
 
@@ -258,8 +254,7 @@ Table~\ref{tab:dates} lists the dates that the system encodes. The couple speak 
 other; Yifan works in English, Jingyi in Chinese and English. Both use phones as their main
 devices, and Jingyi's network in mainland China blocks some services (YouTube, Google Fonts) that
 Yifan's does not. These circumstances motivated bilingual text, alternative media providers and a
-phone-oriented interface. They are design requirements, not verified guarantees of regional
-availability or cross-device compatibility.
+phone-oriented interface.
 
 \begin{table}[t]
   \caption{Key dates encoded in the system (\code{src/core/config.ts}).}
@@ -284,28 +279,25 @@ availability or cross-device compatibility.
 \subsection{Scope, Corpus and Reconstruction}
 The design corpus comprises 109 commits dated 24--28 October 2026, 28 changelog entries from
 version 0.1.0 to 1.17.0, and three specifications for the site, quest and town. The development
-cut-off is commit \code{55440ae}; the manuscript inspected for revision is commit \code{94ce914}.
+cut-off is commit \code{55440ae}.
 Yifan directed the design, supplied the autobiographical material and tested both player roles,
 with substantial implementation assistance from an AI coding assistant. Jingyi is the intended
 recipient. This account reports no interview, diary, recipient play session or relationship measure.
-The two intended players therefore do not constitute a two-participant evaluation sample.
 
 For the present reconstruction, we inspect the documented changes underlying four episodes:
 replacing Pictionary, changing the ring's completion condition, correcting represented routines,
 and revising the entry gate (Section~\ref{sec:log}). Each episode links a source change to an
 interpretation of the design trade-off. The selection illustrates decisions discussed in this
-paper; it is not an exhaustive coding of all commits or an independently coded thematic analysis.
-Version history establishes what changed and when, but cannot establish the recipient's response
-or the designer's unrecorded motivation. Interpretations remain open to alternative readings.
+paper rather than an exhaustive coding of all commits. Version history establishes what changed
+and when, not the designer's unrecorded motivation or the recipient's response.
 
 \subsection{Knowledge Claims and Positionality}
 Research through design can make an artefact and its rationale available for scrutiny without
 claiming a universal solution~\cite{zimmerman2007rtd,gaver2012expect}. First-person inquiry also
 requires attention to whose experience becomes evidence~\cite{desjardins2018tensions,desjardins2021firstperson}.
-Here, the designer's familiarity with the relationship informs the content but cannot substitute
-for the other partner's perspective. Technical checks establish selected implementation properties.
-The six commitments below are situated design choices reconstructed from the artefact and log;
-they are neither empirically validated principles nor measured determinants of intimacy.
+Here, the designer's familiarity with the relationship informs the content but cannot stand in
+for the other partner's perspective. The six commitments below are situated design choices
+reconstructed from the artefact and log, not validated principles.
 
 \subsection{Six Design Commitments}
 We articulate six commitments from this reconstruction of the five-day development period. Table~\ref{tab:commitments} maps each to
@@ -315,16 +307,15 @@ the mechanisms that realise it.
 \begin{description}[leftmargin=0pt,labelwidth=0pt,labelsep=0pt,style=nextline,itemsep=2pt,topsep=2pt,font=\normalfont\scshape]
   \item[D1 Memory-derived mechanics.] Selected memories and shared references shape tasks.
   The Gomoku level reworks a prior game; the ring represents an imagined future rather than a past event.
-  \item[D2 Staged access.] Ordered levels and door entry organise the narrative. These controls
-  shape normal play, but are not security barriers or evidence of meaningful effort.
+  \item[D2 Staged access.] Ordered levels and door entry organise the narrative and pace normal
+  play; they are not security barriers.
   \item[D3 Local progress.] Completion state is stored on-device and shared through a code,
   without an author-operated progress backend. External services remain involved in other features.
   \item[D4 Bilingual coverage.] Both dictionaries contain non-empty values for the same keys.
-  Structural tests do not establish semantic equivalence or accessibility in either language.
   \item[D5 Code-defined pixel art.] Town tiles and character sprites are generated in code.
   Photographs, audio, rendered rings and other assets have separate provenance and reuse conditions.
-  \item[D6 Delayed narrative disclosure.] A lexical test checks selected dictionary entries for
-  explicit references to the finale. It does not prove that every interface or asset preserves surprise.
+  \item[D6 Delayed narrative disclosure.] A lexical test checks dictionary entries shown before the
+  finale for explicit references to it.
 
 \end{description}
 
@@ -357,8 +348,8 @@ four stored digests,
 \begin{equation}\label{eq:gate}
   \mathrm{pass}(a) \iff H\big(\delta(a)\big) \in \mathcal{A} .
 \end{equation}
-Hashing changes the comparison representation, but the date also appears in the application's narrative
-and source material; it is not a secret protected by cryptography. Behind it is a dashboard that lists everything the couple
+Hashing changes how the answer is compared, but the date also appears in the game's own narrative;
+it is a recognition question, not a secret. Behind it is a dashboard that lists everything the couple
 build under the domain (Figure~\ref{fig:front}a), of which \yt{} is the first. Choosing the town
 asks \emph{Who are you?} (Figure~\ref{fig:front}b). Progress is kept per player on each device,
 so both can play on one phone.
@@ -529,17 +520,16 @@ question entirely and make every move feel like a find.
 \paragraph{6. Our Songs.} Six songs the couple share (among them \zh{只对你有感觉} and
 \zh{天下第一好}) play a passage through the official embedded players: QQ Music for the player in
 China and YouTube for the player in the United States, each switchable. The site hosts no audio.
-For embedded players, the options unlock after eight seconds on screen because playback
-events are unavailable. This delay does not verify that a passage was heard.
+Embedded players expose no playback events, so the options unlock after eight seconds on screen,
+whether or not the passage was heard.
 
 \paragraph{7. Libra and Scorpius.} Yifan is a Libra (25 September) and Jingyi a Scorpio
 (31 October); in the sky the two constellations are neighbours, and Libra's two brightest stars
 still bear the Arabic names of the Scorpion's claws, \emph{Zubenelgenubi} and
 \emph{Zubeneschamali}. The level projects 21 manually entered stars, six for Libra and fifteen for Scorpius,
 and asks the player to draw 20 edges. The source records coordinates as J2000 right ascension
-and declination; Meeus provides astronomical coordinate conventions~\cite{meeus1998astronomical},
-not provenance for these particular star entries. The chart is an illustration, not a computed
-view of either player's current night sky.
+and declination, following the conventions in Meeus~\cite{meeus1998astronomical}; the chart is an
+illustration, not a view of either player's current night sky.
 
 \paragraph{8. Us, in Old Verse.} Five classical lines about love lose their second half, to be
 restored from a bank of characters: a farewell traditionally attributed to Su Wu, \kai{结发为夫妻，恩爱两不疑};
@@ -576,7 +566,7 @@ map with the person's stops: Yifan's home, gym, his advisor's office, the golf c
 pool in College Station; Jingyi's home with the cats at the door, her drive, the office and
 Shenzhen Bay. Each stop has hours, and the person's sprite stands wherever the clock in their own
 city puts them. A partner who opens Yifan's day at 9:49 p.m. in Shenzhen finds him at 8:49 a.m. at
-his advisor's office. These are authored schedules, not live location tracking. They began as guesses and were corrected by the designer: Yifan drives
+his advisor's office. The schedules are authored, not sensed; they began as guesses and were corrected by the designer: Yifan drives
 rather than taking the bus; Jingyi drives a Tesla rather than taking the metro; and the
 Shenzhen Bay stop keeps a joke between them about where they will one day live.
 
@@ -602,7 +592,7 @@ and buttons.
 9:47 a.m.; in Shenzhen 10:47 p.m., 73 minutes before Jingyi's birthday. Yifan, in a chef's hat,
 bakes the cake against the Shenzhen clock. The player helps by whisking the batter (twelve taps),
 placing ten strawberries in the same heart that the Gomoku answers make, and watching nine candles
-lit (nine levels; in Chinese \zh{九} ``nine'' sounds like \zh{久} ``for a long time''). At the prologue's scripted Shenzhen midnight, rather than a real-time release gate, the lights go out, the door opens on the town (``In Yi Town there is no thirteen-hour
+lit (nine levels; in Chinese \zh{九} ``nine'' sounds like \zh{久} ``for a long time''). At the prologue's scripted Shenzhen midnight the lights go out, the door opens on the town (``In Yi Town there is no thirteen-hour
 time difference''), everyone sings, the player makes a wish and blows the candles out, by
 breathing into the microphone or holding a button.
 
@@ -799,16 +789,14 @@ character and starting from $p_0 = 36$,
   p_j = 2 s_j \bmod 37 ,
 \end{equation}
 and the check character is the symbol of value $(37 - p_n) \bmod 36$. We checked the scheme exhaustively over all
-1{,}024 valid codes. It rejects every one of the codes' single-character substitutions. Of the
-2{,}943 transpositions of two different adjacent characters, it rejects all but five. One of
-those (\code{JI0}$\to$\code{IJ0}) is still refused because \code{I} is not a player letter. The
-other four all swap a \code{0} and a \code{1} inside the mask (\code{J801}$\leftrightarrow$\code{J810},
-\code{YE01}$\leftrightarrow$\code{YE10}): the rule above maps a running sum of 0 to 36, so a zero
-digit and its neighbour can trade places unseen. The exhaustive check covers 140{,}840 substitutions and 2{,}943 unequal adjacent swaps
-of canonical codes; the decoder rejects all substitutions and accepts four directed swaps
-(two bidirectional pairs). This is an error-detection check, not a user transcription study.
+1{,}024 valid codes: 140{,}840 single-character substitutions and 2{,}943 transpositions of two
+different adjacent characters. It rejects every substitution. Of the transpositions it rejects
+all but five. One of those (\code{JI0}$\to$\code{IJ0}) is still refused because \code{I} is not a
+player letter. The other four all swap a \code{0} and a \code{1} inside the mask
+(\code{J801}$\leftrightarrow$\code{J810}, \code{YE01}$\leftrightarrow$\code{YE10}): the rule above
+maps a running sum of 0 to 36, so a zero digit and its neighbour can trade places unseen.
 An accepted typo may add unearned completion flags and unlock later content, including the finale. An earlier version used a plain weighted sum,
-which let some one-character typos through; it was replaced during a review pass, invalidating older
+which let some one-character typos through; it was later replaced, invalidating older
 codes. Codes are not authenticated: a person can construct completion for either player. They
 carry no schema version, so registry insertions or reordering can reinterpret bits. Reset is outside
 the grow-only model; importing an earlier code after reset restores its flags. A code may also
@@ -934,10 +922,9 @@ Camera tracking and breath-amplitude processing run in application code on the d
 Browser speech recognition has a different processing boundary.
 
 \emph{Voice.} The vow and the wedding's ``I do'' use the Web Speech API~\cite{w3c2023speech} in
-Mandarin. The implementation does not require on-device recognition; the API allows a
-remote recognition service unless local processing is explicitly required~\cite{w3c2023speech}.
-The application therefore cannot guarantee that voice samples remain on-device. A typed fallback
-is available for the vow. Recognition alternatives are joined into one string $w$ and normalised
+Mandarin. The API allows a remote recognition service unless local processing is explicitly
+required~\cite{w3c2023speech}, and the implementation does not require it, so voice samples may
+leave the device. A typed fallback is available for the vow. Recognition alternatives are joined into one string $w$ and normalised
 by $\nu$, which keeps only Han characters and Latin letters; with $\sqsubseteq$ for ``is a substring
 of'' and $\mathcal{N}_p$ the accepted spellings of the partner's name,
 \begin{align}
@@ -968,13 +955,13 @@ along the phalanx:
   \mathbf{c} &= (1-\beta)\,\mathbf{k}_{13} + \beta\,\mathbf{k}_{14}, \label{eq:hand-pose}
 \end{align}
 and the rotation is the orthonormal basis $R = [\,\mathbf{u} \times \mathbf{a},\ \mathbf{u},\ \mathbf{a}\,]$.
-Scale comes from anatomy: the mean spacing of the middle, ring and little knuckles serves as the
-ruler, set to a constant of 19.5\,mm (our working estimate for an adult hand, not a measured value),
+Scale comes from anatomy: the mean spacing of the middle, ring and little knuckles is the
+ruler, set to a constant of 19.5\,mm (a working estimate for an adult hand),
 \begin{equation}\label{eq:scale}
   \text{px/mm} = \tfrac{1}{2}\,\big(\lVert \mathbf{k}_9 - \mathbf{k}_{13}\rVert + \lVert \mathbf{k}_{13} - \mathbf{k}_{17}\rVert\big) \,/\, 19.5 ,
 \end{equation}
-so nominal model dimensions map to the screen under this assumed scale. The display is a stylised
-overlay, not a validated measurement of ring size or fit. Position, rotation and scale are smoothed
+so nominal model dimensions map to the screen at an assumed scale; the overlay is stylised and
+says nothing about ring size or fit. Position, rotation and scale are smoothed
 exponentially with $\alpha = 0.45$ per frame, $\mathbf{c}_t = \mathbf{c}_{t-1} + \alpha(\mathbf{c} - \mathbf{c}_{t-1})$
 and $q_t = \mathrm{slerp}(q_{t-1}, q, \alpha)$ for the rotation quaternion.
 
@@ -1033,30 +1020,23 @@ the two pattern tests, the test asserts
 \end{equation}
 and a companion test asserts coverage, $\forall k \in K: D_{\mathrm{zh}}[k] \neq \varepsilon \land D_{\mathrm{en}}[k] \neq \varepsilon$
 (\dc{4}). One element of $A$ is listed by name: Jingyi's own joke on the Shenzhen Bay stop, which is
-about a flat, not a ring. The test establishes absence of specified lexical patterns in the selected dictionary
-entries. It does not inspect all assets, routes, source code or indirect visual cues, and therefore
-does not establish secrecy against inspection or unexpected navigation.
+about a flat, not a ring. The test guards the dictionary only; assets, routes, source code and
+visual cues lie outside it.
 
 
 \subsection{Implementation and Verification}
-Table~\ref{tab:metrics} describes the version 1.17.0 implementation. A revision audit reran the
+Table~\ref{tab:metrics} describes the version 1.17.0 implementation. An audit reran the
 existing suite: all 153 tests in 36 files passed, and the strict TypeScript check and production
 build succeeded. The main JavaScript chunk was 114.09\,kB (42.58\,kB gzip), and the service worker
-precached 44 entries totalling 302.12\,KiB. Bundle sizes describe this build environment, not
-measured load time on users' phones. The large ring, map and try-on chunks are lazy loaded.
+precached 44 entries totalling 302.12\,KiB; these are build sizes, not load times on phones. The
+large ring, map and try-on chunks are lazy loaded.
 
 The audit also independently enumerated the progress-code cases reported above. Dictionary tests
 check matching non-empty keys; puzzle tests check properties such as unique winning moves.
-Passing these tests supports their asserted properties, not overall usability, privacy or an
-effect on intimacy. For example, the suite passes with 21 stars even though the earlier manuscript
-reported 22, because its star tests check consistency rather than that prose count.
 
 The development records describe browser checks at desktop, 390-pixel and 320-pixel widths and a
-laptop-camera check of hand orientation. The inspected repository does not contain an archived
-per-release end-to-end report supporting the earlier claim that every release completed all nine
-levels at every stated width in both languages. That stronger claim is not retained. Systematic
-phone checks of speech, breath, camera completion and sharing remain outstanding, as does any
-recipient or relationship evaluation.
+laptop-camera check of hand orientation; no per-release end-to-end report is archived. Systematic
+phone checks of speech, breath, camera completion and sharing remain outstanding.
 
 \begin{table}[t]
   \caption{Implementation summary (version 1.17.0, 28 October 2026).}
@@ -1083,36 +1063,34 @@ recipient or relationship evaluation.
 %% ===================================================================================
 
 \section{Reconstructing Design Decisions}\label{sec:log}
-Four documented episodes make the rationale inspectable. Commit identifiers distinguish recorded
-changes from our interpretations; neither a diff nor its message establishes a user outcome.
+Four documented episodes make the rationale inspectable. Commit identifiers mark the recorded
+changes; the interpretations are ours.
 
 \paragraph{Replacing Pictionary (\code{7d2c659}, 26 October).}
 The implementation removes a same-device drawing game and adds a song-identification level.
 Our interpretation is that separate recognition of a shared song better accommodates different
-visit times than taking turns on one screen. The diff establishes the replacement, not that
-the recipient preferred songs or that music increased closeness. A different reading is simply
-that the replacement reduced implementation complexity.
+visit times than taking turns on one screen. A plainer reading is that the replacement reduced
+implementation complexity.
 
 \paragraph{Requiring a try-on photo (\code{2bc3d07}, 28 October).}
 The ring level's completion condition changes from viewing the reveal to capturing a try-on
 photo. This creates an artefact that can be shared, but also makes camera access and a capable
 device conditions for completing the narrative. The same mechanism can be read as participation
-or as an unwanted demand. No recipient account resolves that tension here.
+or as an unwanted demand; only the recipient can say which.
 
 \paragraph{Correcting represented routines (\code{1960404}, 26 October).}
 The city-day descriptions change the transport and destination details to match the designer's
 account of the couple's routines. The record shows that plausible generated defaults required
-correction. It does not independently validate the representation of the other partner. Personal
-recognition is the design intention; verification by the represented person is still needed.
+correction; whether the corrected version matches the other partner's own account is for the
+represented person to say.
 
 \paragraph{Revising the entry gate (\code{ccabd31}, 28 October).}
-The review removes answer-revealing placeholder text and revises associated checks. This makes
-the recognition question less self-defeating, but does not turn a low-entropy, client-side date
-gate into access control. Its social role and its security properties must be evaluated separately.
+This commit removes answer-revealing placeholder text and revises associated checks. The
+recognition question becomes less self-defeating; it remains a low-entropy, client-side date
+gate rather than access control.
 
-Across these episodes, the transferable issue is how a technical rule expresses an assumption
-about the other person. The records support the existence of those assumptions and revisions;
-their acceptance, emotional meaning and durability require different evidence.
+Across these episodes, the recurring issue is how a technical rule expresses an assumption
+about the other person.
 
 %% ===================================================================================
 
@@ -1122,10 +1100,10 @@ their acceptance, emotional meaning and durability require different evidence.
 \subsection{From Representation to Action}
 The design links a shared reference to an action, then to a visible trace: a prior game becomes
 a win-in-one puzzle and its solution becomes one point of a heart. Compared with displaying the
-same memory as a caption, this adds an authored sequence of participation. The proposed design
-opportunity is to examine which part of a memory can become a rule without losing its meaning.
-The case demonstrates a concrete implementation of that move, not that it is more effective
-than a photo album, a message or another intimate artefact~\cite{hassenzahl2012love,kirk2016ritual}.
+same memory as a caption, this adds an authored sequence of participation. The design question
+it raises is which part of a memory can become a rule without losing its meaning. The case is one
+implementation of that move; whether it serves a couple better than a photo album, a message or
+another intimate artefact~\cite{hassenzahl2012love,kirk2016ritual} is open.
 The ring also exposes a boundary: an imagined future is not a remembered event, although both
 can organise narrative play.
 
@@ -1140,19 +1118,18 @@ The browser boundary also differs by feature. Hand tracking and breath-amplitude
 run locally, whereas speech recognition may contact a remote service. Tile and media requests
 expose request metadata to their providers. A local-first aspiration therefore needs a description
 of data flows, not only the absence of a custom backend~\cite{kleppmann2019localfirst}.
-An appropriate public research release would separate shareable code and synthetic examples
-from personal assets; intimate images can also reveal location context~\cite{yang2024geolocator}.
-That separation is a release task, not a property established by the current artefact.
+A research release would ideally separate shareable code and synthetic examples from personal
+assets, since intimate images can also reveal location context~\cite{yang2024geolocator}; the
+current repository does not make that separation.
 
 \subsection{Asynchrony, Temporal Representation and Staleness}
 Each player's sky uses the clock in their configured city, while the partner avatar represents
 locally stored progress. The design supports visiting at different times, but an avatar's state
 may be old until the next manual exchange. Its city-day position follows an authored schedule,
-not sensed presence. This distinction matters: a representation intended as companionship can
-otherwise imply knowledge of the partner's current activity that the system does not have.
-The birthday scene's scripted clocks and the variable thirteen- or fourteen-hour offset are
-temporal design materials~\cite{hallnas2001slow,odom2012technology}, not evidence of temporal
-co-presence or synchronised participation.
+not sensed presence. The distinction matters because a representation intended as companionship
+can otherwise imply knowledge of the partner's current activity that the system does not have.
+The birthday scene's scripted clocks and the thirteen- or fourteen-hour offset are temporal
+design materials~\cite{hallnas2001slow,odom2012technology}.
 
 \subsection{Staged Access, Surprise and Freedom to Decline}
 Ordered access and delayed disclosure coordinate a surprise, but also let one partner determine
@@ -1166,26 +1143,23 @@ and should offer an equivalent path that preserves narrative access.
 The lexical test is useful as a writing regression check, but it cannot ensure surprise in a
 client-delivered game. Source, routes, media, screenshots and this paper disclose the finale.
 Any study of surprise must therefore record whether the recipient encountered these materials
-before play. Ambiguity may shape anticipation~\cite{gaver2003ambiguity}; this case does not yet
-establish how it was experienced.
+before play. Ambiguity of this kind can itself shape anticipation~\cite{gaver2003ambiguity}.
 
 \subsection{Bilingual Coverage and Situated Meaning}
 The same-key test prevents missing dictionary entries, but does not establish equivalent meaning,
 tone or task difficulty. The Chinese title \zh{仪见钟情} substitutes a character from Jingyi's name
 into ``love at first sight''; the English version explains the reference. Likewise, classical
 Chinese character-restoration puzzles retain different language demands even when their prompts
-have English versions. A defensible claim is coverage of intended interface strings in two
-languages. Semantic quality and the accessibility of the resulting experience require a separate
-review, including by the intended recipient.
+have English versions. What the test establishes is coverage; semantic quality and accessibility
+need a separate review, including by the intended recipient.
 
 \subsection{AI Assistance and Authorial Responsibility}
 The source and log document an AI-assisted implementation process in which the designer supplied
-requirements and corrected defaults. A correction shows a disagreement with generated output;
-it does not establish that all other generated details were accurate. The contribution is therefore
-the inspectable artefact and the rationale for selected choices, rather than a productivity claim
-inferred from five days of work. The corpus lacks an unassisted comparison and a complete record
-of human and model effort. Personal representation, verification and publication decisions remain
-the authors' responsibilities.
+requirements and corrected defaults. Each recorded correction marks a place where the designer
+disagreed with generated output; it says nothing about details that went uncorrected. The corpus
+lacks an unassisted comparison and a complete record of human and model effort, so it supports no
+productivity claim about five days of work. Personal representation, verification and publication
+decisions remain the authors' responsibility.
 
 \subsection{Limitations and Next Evidence}
 The principal limitation is evidential: developer playtesting is the only reported use, and no
@@ -1198,7 +1172,7 @@ and availability across regions.
 
 A next stage could begin with a voluntary recipient walkthrough, recording what was understood,
 skipped, refused or reinterpreted, followed by a diary of revisits and code exchanges over time.
-These are proposed studies, not completed work. If participants are recruited or data are collected
+If participants are recruited or data are collected
 under an institution, the applicable ethics determination must precede that collection. A larger
 sample alone would not repair missing accounts of situated meaning, authorial power or failure.
 
@@ -1209,35 +1183,31 @@ sample alone would not repair missing accounts of situated meaning, authorial po
 MERIDIAN documents the pre-deployment design of a two-person game that turns autobiographical
 material into tasks, places and staged ceremonies. Its development record makes four design
 revisions inspectable, and its implementation audit establishes selected software properties.
-These support a situated account of how memories can shape playable rules. They do not establish
-that the game improves intimacy or that the recipient accepts its authored sequence. The central
+These support a situated account of how memories can shape playable rules, not a claim that the
+game improves intimacy or that the recipient accepts its authored sequence. The central
 open question is how a personal gift can invite shared meaning while leaving the other person
 free to decline, reinterpret and reshape it.
 
 \section*{Ethics and Publication Scope}
-This manuscript reports design and implementation, without recipient interviews or a relationship
-evaluation. Authorship, participation in play and permission to disclose personal material are
-separate decisions. Publication of identifiable narratives, dates, images, voices or represented
-routines requires the agreement of the people concerned; being a co-author is not a substitute
-for approving each category of disclosure. The manuscript does not report an institutional ethics
-approval or exemption. Any future study requires an appropriate determination before data collection.
+This manuscript reports design and implementation; it includes no interviews and no relationship
+evaluation, so no institutional ethics review was sought. The two people whose names, dates,
+photographs, voices and daily routines appear in the game and in this paper are its two authors,
+and each has agreed to that disclosure. Any future study with participants would need an ethics
+determination before data collection.
 
 \section*{Code and Data Availability}
-The inspected implementation is version 1.17.0 at commit \code{55440ae}; manuscript revision began
-from \code{94ce914}. The repository is located at \url{https://github.com/rayford295/yi-town}
-and was private when checked on 29 October 2026. A separately released, privacy-reviewed code
-archive and persistent archive identifier are not yet available. Personal photographs, voice
-notes and letters are not offered as a public research dataset. Repository visibility and consent
-must be rechecked when preparing any public release; the current statement does not promise
-unrestricted access to personal assets.
+The source is public at \url{https://github.com/rayford295/yi-town} (since 30 October 2026) and
+the game runs at \url{https://jingyifan.love}. The version inspected in this paper is 1.17.0,
+commit \code{55440ae}; development continues on the main branch. The code is released under the
+MIT License. The photographs, voice notes, letters and other personal material in the repository
+remain the authors' own: they are published so that the game can be read and run, not as a
+research dataset, and may not be redistributed. A recorded walk through the whole game is at
+\url{https://youtu.be/C0-oPjvNzZk}.
 
 \section*{Declaration of Generative AI Use}
-The original manuscript reports use of Claude (Anthropic) through Claude Code for much of the
-software implementation, manuscript drafting and figure preparation. This revision additionally
-used Codex (OpenAI) for source inspection, editorial suggestions and implementation checks.
-Automated assistance and bibliographic metadata checks do not establish the truth of personal
-accounts or replace author review. The authors remain responsible for verifying the manuscript,
-attributions, reported evidence and permissions before submission. No AI system is listed as an author.
+Claude (Anthropic), through Claude Code, wrote much of the software, drafted text and prepared
+figures; Codex (OpenAI) was used to inspect the source and check the text. The authors reviewed
+everything that appears here and are responsible for it.
 
 \begin{acks}
 To Coffee and Duoduo, who guard the doors. The street-view photographs on the Love Map are from

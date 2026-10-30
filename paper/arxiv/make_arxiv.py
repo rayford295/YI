@@ -18,8 +18,8 @@ src = (PAPER / 'meridian.tex').read_text()
 if not src.startswith('\\pdfoutput=1\n'):
     raise SystemExit('Canonical source must select pdfLaTeX with \\pdfoutput=1.')
 src = src.replace(
-    '%% MERIDIAN: reviewed manuscript, 2026-10-29; canonical source in paper/meridian.tex.',
-    '%% MERIDIAN: arXiv review draft, generated from paper/meridian.tex.',
+    '%% MERIDIAN: final manuscript, 2026-10-30; canonical source in paper/meridian.tex.',
+    '%% MERIDIAN: arXiv version, generated from paper/meridian.tex.',
 )
 assets = set(re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}', src))
 names = {}
@@ -41,8 +41,8 @@ if args.pack:
     if not (HERE / 'meridian.bbl').is_file():
         raise SystemExit('Compile generated source to create meridian.bbl before packing.')
     with tarfile.open(HERE / 'meridian-arxiv.tar.gz', 'w:gz') as archive:
-        for filename in ['meridian.tex', 'references.bib', 'meridian.bbl', 'README-REVIEW-DRAFT.txt']:
+        for filename in ['meridian.tex', 'references.bib', 'meridian.bbl', 'README.txt']:
             archive.add(HERE / filename, arcname=filename)
         for name in sorted(names):
             archive.add(HERE / 'figures' / name, arcname='figures/' + name)
-    print('Packed meridian-arxiv.tar.gz (review draft; author and release checks remain).')
+    print('Packed meridian-arxiv.tar.gz.')
